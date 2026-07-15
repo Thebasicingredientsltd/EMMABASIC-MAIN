@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% set active = "products" %}
+{% block content %}
+<h1>{{ 'New product' if is_new else 'Edit: ' + p.name }}</h1>
+<p class="sub">Fields left blank are hidden on the site.</p>
+
+<form method="post" action="{{ url_for('product_save') }}" enctype="multipart/form-data">
+  <input type="hidden" name="index" value="{{ index }}"/>
+  <input type="hidden" name="is_new" value="{{ '1' if is_new else '0' }}"/>
+
+  <div class="card">
+    <label>Image</label>
+    <div class="img-field">
+      <img class="preview" src="{{ url_for('site_assets', filename=p.image[7:]) if p.image and p.image.startswith('assets/') else (p.image or '') }}" alt="preview"/>
+      <div class="grow">
+        <input type="text" name="image" value="{{ p.image }}" placeholder="assets/..."/>
+        <div class="field-help">Path to current image. Or upload a new one below (replaces the path).</div>
+        <input type="file" name="image_file" accept="image/*" style="margin-top:8px;"/>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label>Image position</label>
+        <input type="text" name="imagePosition" value="{{ p.imagePosition or '' }}" placeholder="center center"/>
+      </div>
+      <div>
+        <label>Image zoom</label>
+        <input type="text" name="imageZoom" value="{{ p.imageZoom if p.imageZoom is not none else '' }}" placeholder="e.g. 1.3"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <div>
+        <label>ID (used internally, no spaces)</label>
+        <input type="text" name="id" value="{{ p.id }}" placeholder="curry-cubes" required/>
+      </div>
+      <div>
+        <label>Name</label>
+        <input type="text" name="name" value="{{ p.name }}" required/>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label>Origin line</label>
+        <input type="text" name="origin" value="{{ p.origin }}" placeholder="Produced in Japan"/>
+      </div>
+      <div>
+        <label>Lot code</label>
+        <input type="text" name="lot" value="{{ p.lot }}"/>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label>Pill / badge (blank = none)</label>
+        <input type="text" name="pill" value="{{ p.pill or '' }}" placeholder="BEST SELLER"/>
+      </div>
+      <div>
+        <label>Tone</label>
+        <select name="tone">
+          {% for t in ['warm','cool','ink'] %}
+          <option value="{{ t }}" {{ 'selected' if p.tone==t }}>{{ t }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    <label>Tagline</label>
+    <input type="text" name="tagline" value="{{ p.tagline }}"/>
+    <label>Amazon URL (optional)</label>
+    <input type="url" name="amazon" value="{{ p.amazon or '' }}" placeholder="https://www.amazon.co.uk/dp/..."/>
+  </div>
+
+  <div class="card">
+    <label>Selling points — one per line</label>
+    <textarea name="usps" rows="6">{{ p.usps | join('\n') }}</textarea>
+    <div class="row">
+      <div>
+        <label>Ingredients — one per line</label>
+        <textarea name="ingredients" rows="6">{{ p.ingredients | join('\n') }}</textarea>
+      </div>
+      <div>
+        <label>Never in the jar — one per line</label>
+        <textarea name="notTested" rows="6">{{ p.notTested | join('\n') }}</textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions-bar">
+    <button class="btn" type="submit">Save product</button>
+    <a class="btn secondary" href="{{ url_for('products') }}">Cancel</a>
+  </div>
+</form>
+{% endblock %}

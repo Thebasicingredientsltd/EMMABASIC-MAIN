@@ -3,7 +3,10 @@
    it, peaks near full-bleed, zooms back out as you leave.
    ============================================================ */
 
-const FOUNDER_PARAGRAPHS = [
+const _EB_FOUNDER = (typeof window !== "undefined" && window.EB_HOME && window.EB_HOME.founder) || {};
+const FOUNDER_IMAGE = _EB_FOUNDER.image || "assets/homepage/office-photo.webp";
+const FOUNDER_INTRO = _EB_FOUNDER.introLine || "I am a mum, who has learned to read food labels over the years.";
+const FOUNDER_PARAGRAPHS = (Array.isArray(_EB_FOUNDER.paragraphs) && _EB_FOUNDER.paragraphs.length) ? _EB_FOUNDER.paragraphs : [
   "Not just food labels, but also skincare, clothing, furniture — anything that comes into direct contact with the human body, I always check the components first. We cook most meals at home, from scratch. Some of the veggies, home grown from our allotment. We never cook alone. Home cooking is not a chore but a way of spending time together. Our daughter is 12. Every moment with her is precious before she flies away from the nest of mum & dad.",
   "Born and bred in a food manufacturer, reading labels comes naturally to me. These days, food packaging is cunningly designed. When you see an &ldquo;organic&rdquo; logo or a nutrition claim, it leads you to believe the product is healthy. The reality is that even organic and &ldquo;nutritious&rdquo; foods can contain ultra-processed ingredients (UPFs) and additives.",
   "There are over 1,000 additives approved by EU food authorities and thousands more worldwide — legal but harmful to us. Additives are sneaky — they can alter colours, create addictive flavours, and extend shelf life indefinitely. If you're not in the food industry — whether you're an engineer, an accountant, or even a doctor — reading food labels can be daunting.",
@@ -87,7 +90,7 @@ function FounderNarrative({ hideReadMore = false }) {
               willChange: "transform",
             }}>
               <img
-                src="assets/homepage/office-photo.webp"
+                src={FOUNDER_IMAGE}
                 alt="Emma Basic — founder"
                 style={{
                   display: "block",
@@ -118,7 +121,7 @@ function FounderNarrative({ hideReadMore = false }) {
               lineHeight: 1.25, letterSpacing: "-0.01em",
               color: "var(--ink)", margin: "0 0 clamp(32px, 5vh, 52px)",
             }}>
-              I am a mum, who has learned to read food labels over the years.
+              {FOUNDER_INTRO}
             </p>
           </Reveal>
           <div style={{

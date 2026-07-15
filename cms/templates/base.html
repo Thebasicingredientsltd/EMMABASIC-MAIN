@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>{% block title %}Emma Basic CMS{% endblock %}</title>
+<style>
+  :root {
+    --ink: #0A0A0A; --ink-60: #6b6b6b; --paper: #F6F4EF; --paper-bright: #fff;
+    --rule: rgba(10,10,10,0.14); --accent: #0A0A0A; --ok: #1c7c3a; --err: #b3261e;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 15px; line-height: 1.5;
+  }
+  a { color: var(--ink); }
+  header.top {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 28px; border-bottom: 1px solid var(--rule);
+    background: var(--paper-bright); position: sticky; top: 0; z-index: 10;
+  }
+  header.top .brand { font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; font-size: 14px; text-decoration: none; }
+  nav.tabs { display: flex; gap: 6px; }
+  nav.tabs a {
+    padding: 7px 14px; text-decoration: none; font-size: 13px;
+    letter-spacing: 0.04em; border: 1px solid transparent; border-radius: 6px;
+  }
+  nav.tabs a.active, nav.tabs a:hover { border-color: var(--rule); background: var(--paper); }
+  main { max-width: 960px; margin: 0 auto; padding: 32px 28px 96px; }
+  h1 { font-size: 26px; margin: 0 0 4px; letter-spacing: -0.01em; }
+  .sub { color: var(--ink-60); margin: 0 0 28px; }
+  .card { background: var(--paper-bright); border: 1px solid var(--rule); border-radius: 10px; padding: 20px 22px; margin-bottom: 16px; }
+  label { display: block; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-60); margin: 14px 0 6px; }
+  input[type=text], input[type=url], textarea, select {
+    width: 100%; padding: 9px 11px; border: 1px solid var(--rule); border-radius: 7px;
+    font: inherit; background: #fff; color: var(--ink);
+  }
+  textarea { resize: vertical; min-height: 70px; }
+  .row { display: flex; gap: 16px; flex-wrap: wrap; }
+  .row > div { flex: 1; min-width: 180px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+    padding: 10px 18px; border: 1px solid var(--ink); background: var(--ink); color: #fff;
+    border-radius: 7px; font: inherit; text-decoration: none; font-size: 14px;
+  }
+  .btn.secondary { background: transparent; color: var(--ink); }
+  .btn.danger { background: transparent; border-color: var(--err); color: var(--err); }
+  .btn.small { padding: 6px 12px; font-size: 13px; }
+  .list-item { display: flex; align-items: center; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+  .list-item:last-child { border-bottom: none; }
+  .thumb { width: 60px; height: 60px; object-fit: cover; border-radius: 6px; border: 1px solid var(--rule); background: var(--paper); flex-shrink: 0; }
+  .grow { flex: 1; min-width: 0; }
+  .muted { color: var(--ink-60); font-size: 13px; }
+  .pill { display: inline-block; font-size: 11px; padding: 2px 8px; border: 1px solid var(--ink); border-radius: 20px; letter-spacing: 0.08em; }
+  .flash { padding: 12px 16px; border-radius: 8px; margin-bottom: 14px; font-size: 14px; }
+  .flash.ok { background: #e7f5ec; color: var(--ok); border: 1px solid #bfe4cc; }
+  .flash.error { background: #fdeceb; color: var(--err); border: 1px solid #f3c9c6; }
+  .field-help { font-size: 12px; color: var(--ink-60); margin-top: 4px; }
+  .img-field { display: flex; gap: 14px; align-items: flex-start; }
+  .img-field .preview { width: 96px; height: 96px; object-fit: cover; border: 1px solid var(--rule); border-radius: 8px; background: var(--paper); flex-shrink: 0; }
+  .actions-bar { display: flex; gap: 10px; align-items: center; margin-top: 24px; }
+  .tile-editor { border: 1px solid var(--rule); border-radius: 8px; padding: 14px; margin-bottom: 12px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .dash-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .dash-cards a { text-decoration: none; }
+  .dash-num { font-size: 40px; font-weight: 700; letter-spacing: -0.02em; }
+  .hr { height: 1px; background: var(--rule); border: none; margin: 28px 0; }
+</style>
+</head>
+<body>
+<header class="top">
+  <a href="{{ url_for('index') }}" class="brand">Emma Basic · CMS</a>
+  <nav class="tabs">
+    <a href="{{ url_for('index') }}" class="{{ 'active' if active=='home' }}">Dashboard</a>
+    <a href="{{ url_for('products') }}" class="{{ 'active' if active=='products' }}">Products</a>
+    <a href="{{ url_for('journal') }}" class="{{ 'active' if active=='journal' }}">Blog</a>
+    <a href="{{ url_for('homepage') }}" class="{{ 'active' if active=='homepage' }}">Homepage</a>
+    <a href="http://localhost:8080/Emma%20Basic%20Homepage.html" target="_blank">View site ↗</a>
+  </nav>
+</header>
+<main>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, message in messages %}
+      <div class="flash {{ category }}">{{ message }}</div>
+    {% endfor %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</main>
+<script>
+  // Live image preview when choosing a file
+  document.addEventListener("change", function (e) {
+    if (e.target.matches('input[type=file]')) {
+      var prev = e.target.closest('.img-field')?.querySelector('.preview');
+      if (prev && e.target.files[0]) prev.src = URL.createObjectURL(e.target.files[0]);
+    }
+  });
+</script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

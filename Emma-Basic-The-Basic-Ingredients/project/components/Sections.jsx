@@ -4,7 +4,12 @@
    ============================================================ */
 
 function LifestyleGrid() {
-  const tiles = [
+  const L = (typeof window !== "undefined" && window.EB_HOME && window.EB_HOME.lifestyle) || {};
+  const headingLine1 = L.headingLine1 || "The Grit /";
+  const headingLine2 = L.headingLine2 || "The Purity.";
+  const handle = L.handle || "@emmabasic";
+  const followHref = L.followHref || "https://www.instagram.com/emmabasic.london/";
+  const tiles = (Array.isArray(L.tiles) && L.tiles.length) ? L.tiles : [
     { image: "assets/homepage/sesame-tennis.png", label: "SESAME SEEDS — TENNIS",     tone: "warm", kind: "purity", span: "tall", position: "center center" },
     { image: "assets/homepage/lifestyle-3.png",   label: "KITCHEN — FAMILY DINNER",   tone: "warm", kind: "purity",              position: "center center" },
     { image: "assets/homepage/lifestyle-4.png",   label: "THE GRIT",                  tone: "cool", kind: "grit",               position: "center center" },
@@ -30,14 +35,14 @@ function LifestyleGrid() {
               letterSpacing: "-0.03em", lineHeight: 0.9, margin: 0,
               fontVariationSettings: '"opsz" 144, "SOFT" 30',
             }}>
-              <span style={{ whiteSpace: "nowrap" }}>The Grit /</span><br/>
+              <span style={{ whiteSpace: "nowrap" }}>{headingLine1}</span><br/>
               <em style={{ fontStyle: "normal", fontFamily: "var(--f-body)", fontWeight: 400, letterSpacing: "-0.02em" }}>
-                The Purity.
+                {headingLine2}
               </em>
             </h2>
             <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "end", gap: 20, paddingBottom: 12 }}>
-              <span style={{ fontFamily: "var(--f-body)", fontSize: 11, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-60)" }}>@emmabasic</span>
-              <a href="https://www.instagram.com/emmabasic.london/" target="_blank" rel="noopener noreferrer" style={{
+              <span style={{ fontFamily: "var(--f-body)", fontSize: 11, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-60)" }}>{handle}</span>
+              <a href={followHref} target="_blank" rel="noopener noreferrer" style={{
                 fontFamily: "var(--f-body)", fontSize: 11, letterSpacing: "0.22em",
                 textTransform: "uppercase", color: "var(--ink)",
                 textDecoration: "none", borderBottom: "1px solid var(--ink)",
@@ -264,6 +269,9 @@ function SiteFooter() {
 
 function AdditiveFreeBanner() {
   const [ref, visible] = useReveal(0.2);
+  const B = (typeof window !== "undefined" && window.EB_HOME && window.EB_HOME.banner) || {};
+  const bannerText = B.text || "The only mainstream brand in UK retail committed to additive-free across the entire range.";
+  const bannerTag = B.tag || "Never Any Additives.";
   return (
     <section ref={ref} style={{
       background: "var(--ink)",
@@ -281,8 +289,7 @@ function AdditiveFreeBanner() {
           transition: "opacity 900ms var(--ease-out), transform 900ms var(--ease-out)",
           maxWidth: "72ch",
         }}>
-          The only mainstream brand in UK retail{" "}
-          committed to additive-free across the entire range.
+          {bannerText}
         </p>
         <span style={{
           fontFamily: '"Futura", sans-serif', fontWeight: 400, fontStyle: "normal", fontSize: "clamp(13px, 1vw, 17px)",
@@ -291,7 +298,7 @@ function AdditiveFreeBanner() {
           opacity: visible ? 1 : 0,
           transition: "opacity 900ms var(--ease-out) 200ms",
         }}>
-          Never Any Additives.
+          {bannerTag}
         </span>
       </div>
     </section>

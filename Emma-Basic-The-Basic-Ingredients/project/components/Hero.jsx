@@ -5,6 +5,15 @@
    React commits both states in one paint.
    ============================================================ */
 function Hero() {
+  const H = (typeof window !== "undefined" && window.EB_HOME && window.EB_HOME.hero) || {};
+  const heroImage = H.image || "assets/Hero-Home-Page-Running.png";
+  const headlineLine1 = H.headlineLine1 || "Recovery,";
+  const headlineLine2 = H.headlineLine2 || "uncompromised.";
+  const heroBody = H.body || "Pure ingredients for pure effort<br/>for the run, the kitchen, and everything between.";
+  const heroButtons = Array.isArray(H.buttons) && H.buttons.length ? H.buttons : [
+    { label: "Browse the Collection", href: "Our Products.html", primary: true },
+    { label: "Read Our Story", href: "People%20%26%20Places.html", primary: false },
+  ];
   const [imgRef, p] = useScrollProgress();
   const [loaded, setLoaded] = React.useState(false);
   React.useLayoutEffect(() => {
@@ -49,7 +58,7 @@ function Hero() {
         transition: "transform 40ms linear",
       }}>
         <img
-          src="assets/Hero-Home-Page-Running.png"
+          src={heroImage}
           alt="Sport trainers on grit"
           style={{
             width: "100%", height: "100%",
@@ -81,11 +90,11 @@ function Hero() {
             fontWeight: 400,
           }}>
             <span className="eb-hero__mask">
-              <span className="eb-hero__slide eb-hero__slide--1">Recovery,</span>
+              <span className="eb-hero__slide eb-hero__slide--1">{headlineLine1}</span>
             </span>
             <br/>
             <span className="eb-hero__mask">
-              <em className="eb-hero__slide eb-hero__slide--2" style={{ fontStyle: "italic" }}>uncompromised.</em>
+              <em className="eb-hero__slide eb-hero__slide--2" style={{ fontStyle: "italic" }}>{headlineLine2}</em>
             </span>
           </h1>
 
@@ -95,12 +104,11 @@ function Hero() {
               fontSize: "clamp(18px, 1.6vw, 24px)", lineHeight: 1.35,
               maxWidth: 640, margin: 0,
               fontWeight: 400,
-            }}>
-              Pure ingredients for pure effort<br/>for the run, the kitchen, and everything between.
-            </p>
+            }} dangerouslySetInnerHTML={{ __html: heroBody }} />
             <div className="eb-hero__buttons" style={{ display: "flex", gap: 12, flexWrap: "wrap", alignSelf: "end" }}>
-              <HeroButton label="Browse the Collection" href="Our Products.html" primary />
-              <HeroButton label="Read Our Story" href="People%20%26%20Places.html" />
+              {heroButtons.map((b, i) => (
+                <HeroButton key={i} label={b.label} href={b.href} primary={b.primary} />
+              ))}
             </div>
           </div>
         </div>

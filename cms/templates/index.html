@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% set active = "home" %}
+{% block content %}
+<h1>Dashboard</h1>
+<p class="sub">Edit your website content, then publish to GitHub when you're ready.</p>
+
+<div class="dash-cards">
+  <a href="{{ url_for('products') }}"><div class="card">
+    <div class="dash-num">{{ product_count }}</div>
+    <div>Products</div>
+    <div class="muted">Images, taglines, ingredients</div>
+  </div></a>
+  <a href="{{ url_for('journal') }}"><div class="card">
+    <div class="dash-num">{{ post_count }}</div>
+    <div>Blog posts</div>
+    <div class="muted">Field Notes / Journal</div>
+  </div></a>
+  <a href="{{ url_for('homepage') }}"><div class="card">
+    <div class="dash-num">★</div>
+    <div>Homepage</div>
+    <div class="muted">Hero, founder, lifestyle</div>
+  </div></a>
+</div>
+
+<hr class="hr"/>
+
+<div class="card">
+  <h2 style="margin-top:0;">Publish to GitHub</h2>
+  {% if git.ok %}
+    {% if git.changes %}
+      <p class="muted">{{ git.changes }} unpublished change(s) ready.</p>
+      <details style="margin-bottom:14px;">
+        <summary class="muted" style="cursor:pointer;">Show changed files</summary>
+        <ul class="muted">{% for f in git.files %}<li>{{ f }}</li>{% endfor %}</ul>
+      </details>
+    {% else %}
+      <p class="muted">Everything is published — no pending changes.</p>
+    {% endif %}
+  {% else %}
+    <p class="flash error">Git not available: {{ git.detail }}</p>
+  {% endif %}
+  <form method="post" action="{{ url_for('publish') }}">
+    <label>Change note (optional)</label>
+    <input type="text" name="message" placeholder="e.g. Updated matcha photo and blog post"/>
+    <div class="actions-bar">
+      <button class="btn" type="submit" {{ 'disabled' if git.ok and not git.changes }}>Publish to GitHub</button>
+      <span class="muted">Commits all changes and pushes to Thebasicingredientsltd/EMMABASIC-MAIN</span>
+    </div>
+  </form>
+</div>
+{% endblock %}

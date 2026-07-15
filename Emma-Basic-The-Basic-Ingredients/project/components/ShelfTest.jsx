@@ -4,9 +4,14 @@
    Dramatizes the ingredient-list difference.
    ============================================================ */
 function ShelfTest() {
+  const S = (typeof window !== "undefined" && window.EB_HOME && window.EB_HOME.shelfTest) || {};
+  const headingLine1 = S.headingLine1 || "Flip the pack.";
+  const headingLine2 = S.headingLine2 || "Read the jar.";
+  const subtitle = S.subtitle || 'Two packs of crispy seaweed.<br/>Both in the "healthy snacks" aisle.';
+  const closingLine1 = S.closingLine1 || "If it's in the pack, it's on the label.";
+  const closingLine2 = S.closingLine2 || "That's the whole promise.";
   // Competitor: Yutaka Seasoned Seaweed Snack (widely sold in UK supermarkets)
-  // Source: Yutaka product label / Ocado listing
-  const supermarket = [
+  const supermarket = (Array.isArray(S.theirs) && S.theirs.length) ? S.theirs : [
     "Seaweed (70%)",
     "Soybean oil",
     "Sugar",
@@ -18,7 +23,7 @@ function ShelfTest() {
     "Flavour enhancer: disodium 5'-ribonucleotides (E635)",
   ];
   // Emma Basic Crispy Seaweed — product label
-  const emma = [
+  const emma = (Array.isArray(S.ours) && S.ours.length) ? S.ours : [
     "Roasted nori seaweed",
     "Extra virgin olive oil",
     "Sea salt",
@@ -44,9 +49,9 @@ function ShelfTest() {
               lineHeight: 0.9, letterSpacing: "-0.03em", margin: 0,
               fontFeatureSettings: "normal",
             }}>
-              <span style={{ fontFamily: "'Minerva Modern'", fontWeight: 400 }}>Flip the pack.</span><br/>
+              <span style={{ fontFamily: "'Minerva Modern'", fontWeight: 400 }}>{headingLine1}</span><br/>
               <em style={{ fontStyle: "normal", fontFamily: "var(--f-body)", fontWeight: 400, letterSpacing: "-0.02em" }}>
-                Read the jar.
+                {headingLine2}
               </em>
             </h2>
           </Reveal>
@@ -55,10 +60,7 @@ function ShelfTest() {
               fontFamily: "var(--f-body)", fontSize: 15, lineHeight: 1.6,
               maxWidth: 320, margin: 0, color: "var(--ink-90)",
               textAlign: "right", paddingBottom: 12,
-            }}>
-              Two packs of crispy seaweed.<br/>
-              Both in the "healthy snacks" aisle.
-            </p>
+            }} dangerouslySetInnerHTML={{ __html: subtitle }} />
           </Reveal>
         </div>
 
@@ -83,9 +85,9 @@ function ShelfTest() {
               maxWidth: 720,
               fontVariationSettings: '"opsz" 144, "SOFT" 80',
             }}>
-              If it's in the pack, it's on the label.<br/>
+              {closingLine1}<br/>
               <span style={{ fontStyle: "normal", fontFamily: "var(--f-display)", fontVariationSettings: '"opsz" 144, "SOFT" 30' }}>
-                That's the whole promise.
+                {closingLine2}
               </span>
             </p>
           </div>

@@ -3,7 +3,7 @@
    Props:
      - hasHero: true on homepage (dark hero) → adapts text color.
                 false on interior pages → always ink on paper.
-   Dropdown: "Our Products" reveals a submenu (All / Matcha Lab).
+   Dropdown: "Our Products" reveals a submenu (All Products).
    ============================================================ */
 function TopNav({ hasHero = false }) {
   const [scrolled, setScrolled] = React.useState(false);
@@ -31,7 +31,6 @@ function TopNav({ hasHero = false }) {
   const leftLinks = [
     { label: "Our Products", href: "Our Products.html", dropdown: [
       { label: "All Products", href: "Our Products.html" },
-      { label: "Matcha Lab",  href: "Matcha Lab.html" },
     ]},
     { label: "Places", href: "Places.html", dropdown: [
       { label: "Find us",      href: "Places.html" },

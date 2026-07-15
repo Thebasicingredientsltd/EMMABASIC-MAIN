@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% set active = "products" %}
+{% block content %}
+<div style="display:flex; align-items:center; justify-content:space-between;">
+  <div>
+    <h1>Products</h1>
+    <p class="sub">The items shown on the homepage rail and label drawer.</p>
+  </div>
+  <a class="btn" href="{{ url_for('product_new') }}">+ New product</a>
+</div>
+
+<div class="card">
+  {% for p in products %}
+  <div class="list-item">
+    {% if p.image %}
+      <img class="thumb" src="{{ url_for('site_assets', filename=p.image[7:]) if p.image.startswith('assets/') else p.image }}" alt=""/>
+    {% else %}
+      <div class="thumb"></div>
+    {% endif %}
+    <div class="grow">
+      <div style="font-weight:600;">{{ p.name }}
+        {% if p.pill %}<span class="pill">{{ p.pill }}</span>{% endif %}
+      </div>
+      <div class="muted">{{ p.origin }}</div>
+    </div>
+    <a class="btn secondary small" href="{{ url_for('product_edit', index=loop.index0) }}">Edit</a>
+    <form method="post" action="{{ url_for('product_delete', index=loop.index0) }}" onsubmit="return confirm('Delete {{ p.name }}?');">
+      <button class="btn danger small" type="submit">Delete</button>
+    </form>
+  </div>
+  {% else %}
+  <p class="muted">No products yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

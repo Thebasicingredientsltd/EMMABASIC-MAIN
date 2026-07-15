@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% set active = "journal" %}
+{% block content %}
+<div style="display:flex; align-items:center; justify-content:space-between;">
+  <div>
+    <h1>Blog posts</h1>
+    <p class="sub">Field Notes / Journal articles.</p>
+  </div>
+  <a class="btn" href="{{ url_for('journal_new') }}">+ New post</a>
+</div>
+
+<div class="card">
+  {% for p in posts %}
+  <div class="list-item">
+    {% if p.image %}
+      <img class="thumb" src="{{ url_for('site_assets', filename=p.image[7:]) if p.image.startswith('assets/') else p.image }}" alt=""/>
+    {% else %}
+      <div class="thumb"></div>
+    {% endif %}
+    <div class="grow">
+      <div style="font-weight:600;">{{ p.title }}
+        {% if p.featured %}<span class="pill">Featured</span>{% endif %}
+      </div>
+      <div class="muted">{{ p.category }} · {{ p.date }}</div>
+    </div>
+    <a class="btn secondary small" href="{{ url_for('journal_edit', index=loop.index0) }}">Edit</a>
+    <form method="post" action="{{ url_for('journal_delete', index=loop.index0) }}" onsubmit="return confirm('Delete this post?');">
+      <button class="btn danger small" type="submit">Delete</button>
+    </form>
+  </div>
+  {% else %}
+  <p class="muted">No posts yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

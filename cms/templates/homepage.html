@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+{% set active = "homepage" %}
+{% macro imgsrc(path) %}{{ url_for('site_assets', filename=path[7:]) if path and path.startswith('assets/') else (path or '') }}{% endmacro %}
+{% block content %}
+<h1>Homepage content</h1>
+<p class="sub">Everything on the homepage. <code>&lt;br/&gt;</code> forces a line break where allowed.</p>
+
+<form method="post" action="{{ url_for('homepage_save') }}" enctype="multipart/form-data">
+
+  <div class="card">
+    <h2 style="margin-top:0;">Hero</h2>
+    <label>Background image</label>
+    <div class="img-field">
+      <img class="preview" src="{{ imgsrc(h.hero.image) }}" alt="preview"/>
+      <div class="grow">
+        <input type="text" name="hero_image" value="{{ h.hero.image }}"/>
+        <input type="file" name="hero_image_file" accept="image/*" style="margin-top:8px;"/>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label>Headline line 1</label>
+        <input type="text" name="hero_headlineLine1" value="{{ h.hero.headlineLine1 }}"/>
+      </div>
+      <div>
+        <label>Headline line 2 (italic)</label>
+        <input type="text" name="hero_headlineLine2" value="{{ h.hero.headlineLine2 }}"/>
+      </div>
+    </div>
+    <label>Body text</label>
+    <textarea name="hero_body" rows="2">{{ h.hero.body }}</textarea>
+    <div class="row">
+      <div>
+        <label>Button 1 label</label>
+        <input type="text" name="hero_btn1_label" value="{{ h.hero.buttons[0].label if h.hero.buttons|length > 0 }}"/>
+        <label>Button 1 link</label>
+        <input type="text" name="hero_btn1_href" value="{{ h.hero.buttons[0].href if h.hero.buttons|length > 0 }}"/>
+      </div>
+      <div>
+        <label>Button 2 label</label>
+        <input type="text" name="hero_btn2_label" value="{{ h.hero.buttons[1].label if h.hero.buttons|length > 1 }}"/>
+        <label>Button 2 link</label>
+        <input type="text" name="hero_btn2_href" value="{{ h.hero.buttons[1].href if h.hero.buttons|length > 1 }}"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;">Additive-free banner</h2>
+    <label>Statement</label>
+    <textarea name="banner_text" rows="2">{{ h.banner.text }}</textarea>
+    <label>Tag</label>
+    <input type="text" name="banner_tag" value="{{ h.banner.tag }}"/>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;">Founder narrative</h2>
+    <label>Founder image</label>
+    <div class="img-field">
+      <img class="preview" src="{{ imgsrc(h.founder.image) }}" alt="preview"/>
+      <div class="grow">
+        <input type="text" name="founder_image" value="{{ h.founder.image }}"/>
+        <input type="file" name="founder_image_file" accept="image/*" style="margin-top:8px;"/>
+      </div>
+    </div>
+    <label>Intro line</label>
+    <input type="text" name="founder_introLine" value="{{ h.founder.introLine }}"/>
+    <label>Paragraphs (separate each with a blank line)</label>
+    <textarea name="founder_paragraphs" rows="10">{{ h.founder.paragraphs | join('\n\n') }}</textarea>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;">"Flip the pack" comparison</h2>
+    <div class="row">
+      <div><label>Heading line 1</label><input type="text" name="shelf_headingLine1" value="{{ h.shelfTest.headingLine1 }}"/></div>
+      <div><label>Heading line 2</label><input type="text" name="shelf_headingLine2" value="{{ h.shelfTest.headingLine2 }}"/></div>
+    </div>
+    <label>Subtitle</label>
+    <textarea name="shelf_subtitle" rows="2">{{ h.shelfTest.subtitle }}</textarea>
+    <div class="row">
+      <div>
+        <label>Competitor ingredients — one per line</label>
+        <textarea name="shelf_theirs" rows="9">{{ h.shelfTest.theirs | join('\n') }}</textarea>
+      </div>
+      <div>
+        <label>Emma Basic ingredients — one per line</label>
+        <textarea name="shelf_ours" rows="9">{{ h.shelfTest.ours | join('\n') }}</textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div><label>Closing line 1</label><input type="text" name="shelf_closingLine1" value="{{ h.shelfTest.closingLine1 }}"/></div>
+      <div><label>Closing line 2</label><input type="text" name="shelf_closingLine2" value="{{ h.shelfTest.closingLine2 }}"/></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;">Lifestyle grid</h2>
+    <div class="row">
+      <div><label>Heading line 1</label><input type="text" name="life_headingLine1" value="{{ h.lifestyle.headingLine1 }}"/></div>
+      <div><label>Heading line 2</label><input type="text" name="life_headingLine2" value="{{ h.lifestyle.headingLine2 }}"/></div>
+    </div>
+    <div class="row">
+      <div><label>Instagram handle</label><input type="text" name="life_handle" value="{{ h.lifestyle.handle }}"/></div>
+      <div><label>Follow link</label><input type="text" name="life_followHref" value="{{ h.lifestyle.followHref }}"/></div>
+    </div>
+
+    <label>Tiles</label>
+    <div id="tiles">
+      {% for t in h.lifestyle.tiles %}
+      <div class="tile-editor" data-tile>
+        <div class="img-field">
+          <img class="preview" src="{{ imgsrc(t.image) }}" alt="preview"/>
+          <div class="grow">
+            <input type="text" name="tile{{ loop.index0 }}_image" value="{{ t.image }}"/>
+            <input type="file" name="tile{{ loop.index0 }}_image_file" accept="image/*" style="margin-top:8px;"/>
+          </div>
+        </div>
+        <label>Label</label>
+        <input type="text" name="tile{{ loop.index0 }}_label" value="{{ t.label }}"/>
+        <div class="grid4">
+          <div><label>Tone</label>
+            <select name="tile{{ loop.index0 }}_tone">
+              {% for v in ['warm','cool','ink'] %}<option value="{{ v }}" {{ 'selected' if t.tone==v }}>{{ v }}</option>{% endfor %}
+            </select>
+          </div>
+          <div><label>Kind</label>
+            <select name="tile{{ loop.index0 }}_kind">
+              {% for v in ['purity','grit'] %}<option value="{{ v }}" {{ 'selected' if t.kind==v }}>{{ v }}</option>{% endfor %}
+            </select>
+          </div>
+          <div><label>Span</label>
+            <select name="tile{{ loop.index0 }}_span">
+              {% for v in ['','tall','wide'] %}<option value="{{ v }}" {{ 'selected' if (t.span or '')==v }}>{{ v or 'normal' }}</option>{% endfor %}
+            </select>
+          </div>
+          <div><label>Position</label><input type="text" name="tile{{ loop.index0 }}_position" value="{{ t.position or 'center center' }}"/></div>
+        </div>
+        <div style="margin-top:10px;"><button type="button" class="btn danger small" onclick="this.closest('[data-tile]').remove()">Remove tile</button></div>
+      </div>
+      {% endfor %}
+    </div>
+    <input type="hidden" name="tile_count" id="tile_count" value="{{ h.lifestyle.tiles|length }}"/>
+    <button type="button" class="btn secondary small" id="add-tile">+ Add tile</button>
+  </div>
+
+  <div class="actions-bar">
+    <button class="btn" type="submit">Save homepage</button>
+    <a class="btn secondary" href="{{ url_for('index') }}">Cancel</a>
+  </div>
+</form>
+
+<template id="tile-template">
+  <div class="tile-editor" data-tile>
+    <div class="img-field">
+      <img class="preview" src="" alt="preview"/>
+      <div class="grow">
+        <input type="text" name="tileIDX_image" value=""/>
+        <input type="file" name="tileIDX_image_file" accept="image/*" style="margin-top:8px;"/>
+      </div>
+    </div>
+    <label>Label</label>
+    <input type="text" name="tileIDX_label" value=""/>
+    <div class="grid4">
+      <div><label>Tone</label><select name="tileIDX_tone"><option value="warm">warm</option><option value="cool">cool</option><option value="ink">ink</option></select></div>
+      <div><label>Kind</label><select name="tileIDX_kind"><option value="purity">purity</option><option value="grit">grit</option></select></div>
+      <div><label>Span</label><select name="tileIDX_span"><option value="">normal</option><option value="tall">tall</option><option value="wide">wide</option></select></div>
+      <div><label>Position</label><input type="text" name="tileIDX_position" value="center center"/></div>
+    </div>
+    <div style="margin-top:10px;"><button type="button" class="btn danger small" onclick="this.closest('[data-tile]').remove()">Remove tile</button></div>
+  </div>
+</template>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  // "Add tile" appends a fresh tile block with the next index.
+  document.getElementById('add-tile').addEventListener('click', function () {
+    var count = parseInt(document.getElementById('tile_count').value, 10);
+    var tpl = document.getElementById('tile-template').innerHTML.replace(/IDX/g, count);
+    var wrap = document.createElement('div');
+    wrap.innerHTML = tpl.trim();
+    document.getElementById('tiles').appendChild(wrap.firstChild);
+    document.getElementById('tile_count').value = count + 1;
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% set active = "journal" %}
+{% block content %}
+<h1>{{ 'New post' if is_new else 'Edit post' }}</h1>
+<p class="sub">The card fields show in the blog grid; the article fields build the full post page.</p>
+
+<form method="post" action="{{ url_for('journal_save') }}" enctype="multipart/form-data">
+  <input type="hidden" name="index" value="{{ index }}"/>
+  <input type="hidden" name="is_new" value="{{ '1' if is_new else '0' }}"/>
+  <input type="hidden" name="old_id" value="{{ post.id }}"/>
+
+  <div class="card">
+    <h2 style="margin-top:0;">Card (blog grid)</h2>
+    <label>Cover image</label>
+    <div class="img-field">
+      <img class="preview" src="{{ url_for('site_assets', filename=post.image[7:]) if post.image and post.image.startswith('assets/') else (post.image or '') }}" alt="preview"/>
+      <div class="grow">
+        <input type="text" name="image" value="{{ post.image }}" placeholder="assets/journal/..."/>
+        <input type="file" name="image_file" accept="image/*" style="margin-top:8px;"/>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label>ID (no spaces)</label>
+        <input type="text" name="id" value="{{ post.id }}" placeholder="matcha-preparation" required/>
+      </div>
+      <div>
+        <label>Category</label>
+        <select name="category">
+          {% for c in ['Recipes','Ingredient Stories','Behind the Product','The Grit'] %}
+          <option value="{{ c }}" {{ 'selected' if post.category==c }}>{{ c }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label>Date (display text)</label>
+        <input type="text" name="date" value="{{ post.date }}" placeholder="14 Apr 2026"/>
+      </div>
+      <div>
+        <label>Tone</label>
+        <select name="tone">
+          {% for t in ['warm','cool','ink'] %}
+          <option value="{{ t }}" {{ 'selected' if post.tone==t }}>{{ t }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    <label>Title</label>
+    <input type="text" name="title" value="{{ post.title }}" required/>
+    <label>Excerpt (shown on card)</label>
+    <textarea name="excerpt" rows="3">{{ post.excerpt }}</textarea>
+    <label style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0;">
+      <input type="checkbox" name="featured" style="width:auto;" {{ 'checked' if post.featured }}/> Featured (large post at top of the grid)
+    </label>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;">Full article page</h2>
+    <label>Hero image (blank = use cover image)</label>
+    <div class="img-field">
+      <img class="preview" src="{{ url_for('site_assets', filename=article.image[7:]) if article.image and article.image.startswith('assets/') else (article.image or '') }}" alt="preview"/>
+      <div class="grow">
+        <input type="text" name="article_image" value="{{ article.image }}" placeholder="assets/journal/..."/>
+        <input type="file" name="article_image_file" accept="image/*" style="margin-top:8px;"/>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label>Article title (blank = card title)</label>
+        <input type="text" name="article_title" value="{{ article.title }}"/>
+      </div>
+      <div>
+        <label>Read time</label>
+        <input type="text" name="readTime" value="{{ article.readTime }}" placeholder="5 min read"/>
+      </div>
+    </div>
+    <label>Image position</label>
+    <input type="text" name="imagePosition" value="{{ article.imagePosition or '' }}" placeholder="center 35%"/>
+    <label>Intro (large opening paragraph)</label>
+    <textarea name="intro" rows="3">{{ article.intro }}</textarea>
+    <label>Body</label>
+    <textarea name="body" rows="14">{{ body_text }}</textarea>
+    <div class="field-help">
+      Separate paragraphs with a blank line. Start a line with <code>##</code> for a section heading,
+      or use <code>---</code> on its own line for a divider.
+    </div>
+  </div>
+
+  <div class="actions-bar">
+    <button class="btn" type="submit">Save post</button>
+    <a class="btn secondary" href="{{ url_for('journal') }}">Cancel</a>
+  </div>
+</form>
+{% endblock %}
