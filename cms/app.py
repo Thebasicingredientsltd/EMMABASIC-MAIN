@@ -880,11 +880,47 @@ def git_status_summary():
     return {"ok": True, "changes": len(changed), "files": changed[:50]}
 
 
+# Cache-busting for the content data files. The HTML pages load products/
+# catalog/homepage/journal JSON via <script src="data/xxx.js"> tags. Browsers
+# and the Vercel edge CDN can serve a stale copy of these files after a deploy,
+# which means the page renders old content (e.g. an old product image path)
+# even though the new file is live. Rewriting the ?v= query on every publish
+# gives each data file a brand-new URL, forcing a fresh fetch every time.
+DATA_SCRIPT_RE = re.compile(
+    r"(data/(?:products|catalog|homepage|journal)\.js)(\?v=[^\"'\s>]*)?"
+)
+
+
+def bump_data_cache_bust():
+    """Stamp a fresh ?v=<timestamp> onto every data-file <script> tag across the
+    site's HTML pages. Returns the number of HTML files changed."""
+    stamp = datetime.now().strftime("%Y%m%d%H%M%S")
+    changed = 0
+    for name in os.listdir(PROJECT_DIR):
+        if not name.lower().endswith(".html"):
+            continue
+        path = os.path.join(PROJECT_DIR, name)
+        try:
+            with open(path, "r", encoding="utf-8") as fh:
+                text = fh.read()
+        except (OSError, UnicodeDecodeError):
+            continue
+        new_text = DATA_SCRIPT_RE.sub(r"\g<1>?v=" + stamp, text)
+        if new_text != text:
+            with open(path, "w", encoding="utf-8") as fh:
+                fh.write(new_text)
+            changed += 1
+    return changed
+
+
 @app.route("/publish", methods=["POST"])
 def publish():
     message = request.form.get("message", "").strip() or (
         "CMS update — %s" % datetime.now().strftime("%Y-%m-%d %H:%M")
     )
+    # Refresh the cache-busting query on the data-file script tags so the new
+    # content is fetched immediately after this deploy goes live.
+    bump_data_cache_bust()
     add = run_git(["add", "-A"])
     if add.returncode != 0:
         flash("git add failed: %s" % add.stderr.strip(), "error")

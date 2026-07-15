@@ -12,10 +12,10 @@ window.EB_CATALOG = [
         "pdpImageScale": 3.5,
         "name": "Nori Furikake Seasoning",
         "japanese": "のりふりかけ",
-        "image": "assets/products-nobg/Nori furikake.png",
+        "image": "assets/uploads/B098D5RKP9.MAIN-20260715-172250.jpg",
         "images": [
-          "assets/products-nobg/Nori furikake.png",
-          "assets/back-of-pack/Nori furikake back of pack 2.jpg",
+          "assets/uploads/B098D5RKP9.MAIN-20260715-172250.jpg",
+          "assets/uploads/B098D5RKP9.BACK-20260715-172258.jpg",
           "assets/Range-image.png"
         ],
         "tone": "warm",
