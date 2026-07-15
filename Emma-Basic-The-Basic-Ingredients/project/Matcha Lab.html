@@ -1,0 +1,1222 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8"/>
+
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<title>Matcha Lab " Emma Basic</title>
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+
+
+
+<link rel="stylesheet" href="components/tokens.css"/>
+
+
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+
+
+<script>
+
+const TWEAK_DEFAULTS = { "serif": "fraunces", "paper": "warm" };
+
+</script>
+
+<style>
+
+  @media (max-width: 640px) {
+
+    .matcha-methods-grid { grid-template-columns: 1fr !important; }
+
+  }
+
+  @media (max-width: 768px) {
+
+    .matcha-testing-grid { grid-template-columns: 1fr !important; }
+
+    .matcha-usp-row { grid-template-columns: 32px 1fr !important; }
+
+    .matcha-usp-body { display: none !important; }
+
+    .matcha-intro-grid { grid-template-columns: 1fr !important; }
+
+    .matcha-nutrition-grid { grid-template-columns: 1fr !important; }
+
+  }
+
+</style>
+
+</head>
+
+
+
+<body data-screen-label="Matcha Lab">
+
+<div id="root"></div>
+
+
+
+<script type="text/babel" src="components/Placeholder.jsx"></script>
+
+<script type="text/babel" src="components/motion.jsx"></script>
+
+<script type="text/babel" src="components/TopNav.jsx?v=13"></script>
+
+<script type="text/babel" src="components/PageHero.jsx"></script>
+
+<script type="text/babel" src="components/Sections.jsx"></script>
+
+
+
+<script type="text/babel">
+
+
+
+/* ============================================================
+
+   Matcha Lab page " editorial deep-dive.
+
+   USPs sourced from M002 data sheet. No health claims.
+
+   ============================================================ */
+
+
+
+const MATCHA_USPS = [
+
+  {
+
+    number: "01",
+
+    heading: "100% Pure Matcha",
+
+    body: "Matcha made from Tencha. No additives. No fillers. No added extract. Every batch is tested by accredited laboratories for pesticides and heavy metals.",
+
+  },
+
+  {
+
+    number: "02",
+
+    heading: "Made for Lattes and Beyond",
+
+    body: "Sieve 1&ndash;2g of matcha into a cup. Add 40ml warm water (75&deg;C) and whisk until smooth. Enjoy hot or iced with your choice of milk for a latte. Although designed for lattes, it's premium enough to sip neat as a traditional matcha short. Or " if you feel like indulging " use in baking for cakes, cookies, bread and matcha desserts.",
+
+  },
+
+  {
+
+    number: "03",
+
+    heading: "25 Days Shaded Pre-Harvest",
+
+    body: "Made from Longjin 43 and Yabukita tea leaves, carefully shaded for 25 days before hand-picking to develop natural sweetness, vibrant green colour and umami depth.",
+
+  },
+
+  {
+
+    number: "04",
+
+    heading: "Sealed for Freshness, Generous Value",
+
+    body: "Supplied in a multi-layer PET/AL/PE foil pouch " resealable and light-protected to preserve the vibrant green colour, delicate aroma and fresh flavour. 100g delivers approximately 50&ndash;100 cups " ideal for daily matcha drinkers.",
+
+  },
+
+  {
+
+    number: "05",
+
+    heading: "Naturally Occurring Compounds",
+
+    body: "Matcha is produced from the leaves of Camellia sinensis and naturally contains catechins (tea polyphenols) and L-theanine, a naturally occurring amino acid.",
+
+  },
+
+];
+
+
+
+const NUTRITION = [
+
+  { label: "Energy", value: "382 kcal / 1596 kJ" },
+
+  { label: "Fat", value: "3.2g" },
+
+  { label: "of which saturates", value: "0.8g", sub: true },
+
+  { label: "Carbohydrate", value: "59.8g" },
+
+  { label: "of which sugars", value: "2.0g", sub: true },
+
+  { label: "Fibre", value: "35.3g" },
+
+  { label: "Protein", value: "27.1g" },
+
+  { label: "Salt", value: "0g" },
+
+];
+
+
+
+/* ---- Matcha Lab Hero ---- */
+
+function MatchaHero() {
+
+  const [loaded, setLoaded] = React.useState(false);
+
+  React.useLayoutEffect(() => {
+
+    let r2;
+
+    const r1 = requestAnimationFrame(() => { r2 = requestAnimationFrame(() => setLoaded(true)); });
+
+    return () => { cancelAnimationFrame(r1); cancelAnimationFrame(r2); };
+
+  }, []);
+
+
+
+  return (
+
+    <section style={{
+
+      position: "relative",
+
+      height: "80vh", minHeight: 600,
+
+      overflow: "hidden",
+
+      background: "var(--ink)",
+
+      color: "var(--paper)",
+
+    }}>
+
+      <img
+
+        src="assets/homepage/matcha-lab.png"
+
+        alt="Premium Grade Matcha"
+
+        style={{
+
+          position: "absolute", inset: 0,
+
+          width: "100%", height: "100%",
+
+          objectFit: "cover", objectPosition: "center 25%",
+
+          transform: "scale(1.06)",
+
+          opacity: 0.55,
+
+        }}
+
+      />
+
+      <div style={{
+
+        position: "absolute", inset: 0,
+
+        background: "linear-gradient(180deg, rgba(10,10,10,0.2) 0%, rgba(10,10,10,0.55) 100%)",
+
+      }}/>
+
+      <div style={{
+
+        position: "relative", zIndex: 2,
+
+        height: "100%",
+
+        display: "flex", flexDirection: "column", justifyContent: "flex-end",
+
+        padding: "0 var(--pad-x) clamp(60px, 10vh, 100px)",
+
+        maxWidth: "calc(var(--maxw) + 2 * var(--pad-x))", margin: "0 auto", width: "100%",
+
+        boxSizing: "border-box",
+
+      }}>
+
+        <span style={{
+
+          fontFamily: "var(--f-mono)", fontSize: 10.5, letterSpacing: "0.28em",
+
+          textTransform: "uppercase", color: "rgba(246,246,246,0.6)",
+
+          display: "block", marginBottom: 24,
+
+          opacity: loaded ? 1 : 0,
+
+          transition: "opacity 600ms var(--ease-out) 400ms",
+
+        }}>
+
+          The Matcha Lab " M002
+
+        </span>
+
+        <h1 style={{
+
+          fontFamily: "var(--f-display)", fontWeight: 400,
+
+          fontSize: "clamp(52px, 9vw, 140px)",
+
+          letterSpacing: "-0.035em", lineHeight: 0.9, margin: "0 0 28px",
+
+          fontVariationSettings: '"opsz" 144, "SOFT" 30',
+
+          opacity: loaded ? 1 : 0,
+
+          transform: loaded ? "translateY(0)" : "translateY(24px)",
+
+          transition: "opacity 900ms var(--ease-out) 600ms, transform 900ms var(--ease-out) 600ms",
+
+        }}>
+
+          Premium<br/>
+
+          <em style={{ fontStyle: "normal", fontFamily: "var(--f-body)", fontWeight: 400, letterSpacing: "-0.02em" }}>
+
+            Grade Matcha.
+
+          </em>
+
+        </h1>
+
+        <p style={{
+
+          fontFamily: "var(--f-body)", fontWeight: 400,
+
+          fontSize: "clamp(15px, 1.4vw, 19px)", lineHeight: 1.5,
+
+          maxWidth: 520, margin: 0, color: "rgba(246,246,246,0.85)",
+
+          opacity: loaded ? 1 : 0,
+
+          transition: "opacity 800ms var(--ease-out) 1000ms",
+
+        }}>
+
+          Shade-grown for 25 days. 100% pure Tencha leaf.<br/>Every batch tested by accredited laboratories.
+
+        </p>
+
+      </div>
+
+    </section>
+
+  );
+
+}
+
+
+
+/* ---- Intro band ---- */
+
+function MatchaIntro() {
+
+  return (
+
+    <section style={{
+
+      padding: "clamp(80px, 12vh, 140px) var(--pad-x)",
+
+      background: "var(--paper)", color: "var(--ink)",
+
+    }}>
+
+      <div style={{ maxWidth: "var(--maxw)", margin: "0 auto" }}>
+
+        <div className="matcha-intro-grid" style={{
+
+          display: "grid",
+
+          gridTemplateColumns: "1fr 1fr",
+
+          gap: "clamp(40px, 8vw, 120px)",
+
+          alignItems: "start",
+
+        }}>
+
+          <Reveal>
+
+            <h2 style={{
+
+              fontFamily: "var(--f-display)", fontWeight: 400,
+
+              fontSize: "clamp(40px, 5.5vw, 80px)",
+
+              letterSpacing: "-0.03em", lineHeight: 0.93, margin: 0,
+
+              fontVariationSettings: '"opsz" 144, "SOFT" 30',
+
+            }}>
+
+              What's in<br/>
+
+              <em style={{ fontStyle: "normal", fontFamily: "var(--f-body)", fontWeight: 400, letterSpacing: "-0.02em" }}>
+
+                the pouch.
+
+              </em>
+
+            </h2>
+
+          </Reveal>
+
+          <Reveal delay={160}>
+
+            <div style={{ display: "grid", gap: 20, paddingTop: 8 }}>
+
+              <p style={{
+
+                fontFamily: "var(--f-body)", fontSize: "clamp(17px, 1.5vw, 20px)",
+
+                lineHeight: 1.7, margin: 0, color: "var(--ink-90)",
+
+              }}>
+
+                One ingredient: Tencha (green tea). Shade-grown for 25 days before hand-picking to develop natural sweetness, vibrant green colour and umami depth. Nothing added before or after milling.
+
+              </p>
+
+              <p style={{
+
+                fontFamily: "var(--f-body)", fontSize: "clamp(17px, 1.5vw, 20px)",
+
+                lineHeight: 1.7, margin: 0, color: "var(--ink-90)",
+
+              }}>
+
+                Longjin 43 and Yabukita cultivars " two varieties selected for their distinct characters: one brings brightness, the other depth. Together they make a matcha that works whisked in water, in a latte, or stirred into baking.
+
+              </p>
+
+              <div style={{
+
+                display: "inline-flex",
+
+                padding: "16px 20px",
+
+                background: "var(--paper-bright)",
+
+                border: "1px solid var(--rule)",
+
+              }}>
+
+                <span style={{
+
+                  fontFamily: "var(--f-mono)", fontSize: 10.5, letterSpacing: "0.22em",
+
+                  textTransform: "uppercase", color: "var(--ink-60)",
+
+                }}>
+
+                  Ingredients " Tencha (green tea). Shade-grown for 25 days prior to harvest.
+
+                </span>
+
+              </div>
+
+            </div>
+
+          </Reveal>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  );
+
+}
+
+
+
+/* ---- USP list ---- */
+
+function MatchaUSPs() {
+
+  return (
+
+    <section style={{
+
+      padding: "clamp(80px, 12vh, 140px) var(--pad-x)",
+
+      background: "var(--ink)", color: "var(--paper)",
+
+    }}>
+
+      <div style={{ maxWidth: "var(--maxw)", margin: "0 auto" }}>
+
+        <Reveal>
+
+          <div style={{
+
+            display: "flex", justifyContent: "space-between", alignItems: "baseline",
+
+            borderBottom: "1px solid rgba(246,246,246,0.15)",
+
+            paddingBottom: 20, marginBottom: "clamp(48px, 7vh, 80px)",
+
+          }}>
+
+            <h2 style={{
+
+              fontFamily: "var(--f-display)", fontWeight: 400,
+
+              fontSize: "clamp(36px, 4.5vw, 64px)",
+
+              letterSpacing: "-0.03em", lineHeight: 0.95, margin: 0,
+
+              fontVariationSettings: '"opsz" 144, "SOFT" 30',
+
+            }}>
+
+              Why this matcha.<br/>
+
+              <em style={{ fontStyle: "normal", fontFamily: "var(--f-body)", fontWeight: 400, letterSpacing: "-0.02em" }}>
+
+                Five things to know.
+
+              </em>
+
+            </h2>
+
+            <span style={{
+
+              fontFamily: "var(--f-mono)", fontSize: 10, letterSpacing: "0.24em",
+
+              textTransform: "uppercase", color: "rgba(246,246,246,0.4)",
+
+            }}>M002</span>
+
+          </div>
+
+        </Reveal>
+
+
+
+        <div style={{ display: "grid", gap: 0 }}>
+
+          {MATCHA_USPS.map((usp, i) => (
+
+            <USPRow key={i} usp={usp} index={i} />
+
+          ))}
+
+        </div>
+
+      </div>
+
+    </section>
+
+  );
+
+}
+
+
+
+function USPRow({ usp, index }) {
+
+  const [ref, visible] = useReveal(0.1);
+
+  const [hover, setHover] = React.useState(false);
+
+  return (
+
+    <div
+
+      ref={ref}
+
+      className="matcha-usp-row"
+
+      onMouseEnter={() => setHover(true)}
+
+      onMouseLeave={() => setHover(false)}
+
+      style={{
+
+        display: "grid",
+
+        gridTemplateColumns: "56px 1fr 1fr",
+
+        gap: "clamp(24px, 4vw, 64px)",
+
+        padding: "clamp(28px, 4vh, 44px) 0",
+
+        borderTop: "1px solid rgba(246,246,246,0.12)",
+
+        background: hover ? "rgba(246,246,246,0.03)" : "transparent",
+
+        transition: "background 200ms var(--ease-out)",
+
+        opacity: visible ? 1 : 0,
+
+        transform: `translateY(${visible ? 0 : 20}px)`,
+
+        transitionProperty: "opacity, transform, background",
+
+        transitionDuration: `700ms, 700ms, 200ms`,
+
+        transitionDelay: `${index * 80}ms, ${index * 80}ms, 0ms`,
+
+        transitionTimingFunction: "var(--ease-out)",
+
+      }}
+
+    >
+
+      <span style={{
+
+        fontFamily: "var(--f-mono)", fontSize: 10, letterSpacing: "0.22em",
+
+        color: "rgba(246,246,246,0.35)", paddingTop: 4,
+
+      }}>{usp.number}</span>
+
+      <h3 style={{
+
+        fontFamily: "var(--f-display)", fontWeight: 400,
+
+        fontSize: "clamp(20px, 2vw, 30px)",
+
+        letterSpacing: "-0.02em", lineHeight: 1.1, margin: 0,
+
+        fontVariationSettings: '"opsz" 144, "SOFT" 30',
+
+        color: "var(--paper)",
+
+      }}>{usp.heading}</h3>
+
+      <p className="matcha-usp-body" style={{
+
+        fontFamily: "var(--f-body)", fontSize: "clamp(16px, 1.3vw, 18px)",
+
+        lineHeight: 1.7, margin: 0, color: "rgba(246,246,246,0.75)",
+
+      }}>{usp.body}</p>
+
+    </div>
+
+  );
+
+}
+
+
+
+/* ---- Testing section ---- */
+
+function MatchaTesting() {
+
+  return (
+
+    <section style={{
+
+      padding: "clamp(80px, 12vh, 140px) var(--pad-x)",
+
+      background: "var(--paper)", color: "var(--ink)",
+
+    }}>
+
+      <div style={{ maxWidth: "var(--maxw)", margin: "0 auto" }}>
+
+        <div className="matcha-testing-grid" style={{
+
+          display: "grid",
+
+          gridTemplateColumns: "1fr 1fr",
+
+          gap: "clamp(40px, 8vw, 120px)",
+
+          alignItems: "center",
+
+        }}>
+
+          <Reveal>
+
+            <div style={{ display: "grid", gap: 28 }}>
+
+              <span style={{
+
+                fontFamily: "var(--f-mono)", fontSize: 10.5, letterSpacing: "0.26em",
+
+                textTransform: "uppercase", color: "var(--ink-60)",
+
+              }}>Batch Testing</span>
+
+              <h2 style={{
+
+                fontFamily: "var(--f-display)", fontWeight: 400,
+
+                fontSize: "clamp(36px, 4.5vw, 64px)",
+
+                letterSpacing: "-0.03em", lineHeight: 0.93, margin: 0,
+
+                fontVariationSettings: '"opsz" 144, "SOFT" 30',
+
+              }}>
+
+                Every batch.<br/>
+
+                <em style={{ fontStyle: "normal", fontFamily: "var(--f-body)", fontWeight: 400, letterSpacing: "-0.02em" }}>
+
+                  No exceptions.
+
+                </em>
+
+              </h2>
+
+              <p style={{
+
+                fontFamily: "var(--f-body)", fontSize: "clamp(17px, 1.5vw, 20px)",
+
+                lineHeight: 1.7, margin: 0, color: "var(--ink-90)",
+
+              }}>
+
+                Every batch of our matcha is tested by accredited laboratories for pesticides and heavy metals before it ships. We don't self-certify. Results are on file and available on request.
+
+              </p>
+
+              <p style={{
+
+                fontFamily: "var(--f-body)", fontSize: "clamp(17px, 1.5vw, 20px)",
+
+                lineHeight: 1.7, margin: 0, color: "var(--ink-90)",
+
+              }}>
+
+                This is the standard we hold ourselves to because it's the standard we'd want if we were buying.
+
+              </p>
+
+            </div>
+
+          </Reveal>
+
+          <Reveal delay={200}>
+
+            <div style={{
+
+              display: "grid", gap: 1,
+
+              background: "var(--rule)",
+
+              border: "1px solid var(--rule)",
+
+            }}>
+
+              {[
+
+                { label: "Pesticide residues", result: "Tested every batch" },
+
+                { label: "Heavy metals (Pb, Cd, As, Hg)", result: "Tested every batch" },
+
+                { label: "Testing standard", result: "Accredited laboratory" },
+
+                { label: "Results available", result: "On request" },
+
+                { label: "Additives", result: "None" },
+
+                { label: "Fillers", result: "None" },
+
+              ].map((row, i) => (
+
+                <div key={i} style={{
+
+                  display: "grid", gridTemplateColumns: "1fr 1fr",
+
+                  gap: 16, padding: "16px 20px",
+
+                  background: "var(--paper-bright)",
+
+                }}>
+
+                  <span style={{
+
+                    fontFamily: "var(--f-mono)", fontSize: 10.5, letterSpacing: "0.16em",
+
+                    textTransform: "uppercase", color: "var(--ink-60)",
+
+                  }}>{row.label}</span>
+
+                  <span style={{
+
+                    fontFamily: "var(--f-body)", fontSize: 13.5,
+
+                    color: "var(--ink)", fontWeight: 500,
+
+                  }}>{row.result}</span>
+
+                </div>
+
+              ))}
+
+            </div>
+
+          </Reveal>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  );
+
+}
+
+
+
+/* ---- How to use ---- */
+
+function MatchaHowTo() {
+
+  const METHODS = [
+
+    {
+
+      label: "Traditional Short",
+
+      steps: ["Sieve 1&ndash;2g matcha into a chawan or small bowl", "Add 40ml water at 75&deg;C", "Whisk in a W motion until frothy", "Drink immediately"],
+
+    },
+
+    {
+
+      label: "Latte",
+
+      steps: ["Sieve 1&ndash;2g matcha into a cup", "Add 40ml water at 75&deg;C, whisk until smooth", "Top with steamed or cold milk of choice", "Iced: pour over ice after whisking"],
+
+    },
+
+    {
+
+      label: "Baking",
+
+      steps: ["Sieve directly into dry ingredients", "1 tsp (2g) per serving for clear colour and flavour", "Works in cakes, cookies, bread, energy balls", "Does not require pre-dissolving"],
+
+    },
+
+  ];
+
+
+
+  return (
+
+    <section style={{
+
+      padding: "clamp(80px, 12vh, 140px) var(--pad-x)",
+
+      background: "var(--paper-bright)", color: "var(--ink)",
+
+      borderTop: "1px solid var(--rule)",
+
+    }}>
+
+      <div style={{ maxWidth: "var(--maxw)", margin: "0 auto" }}>
+
+        <Reveal>
+
+          <h2 style={{
+
+            fontFamily: "var(--f-display)", fontWeight: 400,
+
+            fontSize: "clamp(36px, 4.5vw, 64px)",
+
+            letterSpacing: "-0.03em", lineHeight: 0.93, margin: "0 0 clamp(48px, 7vh, 80px)",
+
+            fontVariationSettings: '"opsz" 144, "SOFT" 30',
+
+          }}>
+
+            How to use it.<br/>
+
+            <em style={{ fontStyle: "normal", fontFamily: "var(--f-body)", fontWeight: 400, letterSpacing: "-0.02em" }}>
+
+              Three ways.
+
+            </em>
+
+          </h2>
+
+        </Reveal>
+
+        <div className="matcha-methods-grid" style={{
+
+          display: "grid",
+
+          gridTemplateColumns: "repeat(3, 1fr)",
+
+          gap: "clamp(24px, 3vw, 48px)",
+
+        }}>
+
+          {METHODS.map((m, i) => (
+
+            <Reveal key={i} delay={i * 120}>
+
+              <div style={{
+
+                padding: "clamp(24px, 3vw, 40px)",
+
+                background: "var(--paper)",
+
+                border: "1px solid var(--rule)",
+
+                display: "grid", gap: 20,
+
+              }}>
+
+                <span style={{
+
+                  fontFamily: "var(--f-mono)", fontSize: 10.5, letterSpacing: "0.24em",
+
+                  textTransform: "uppercase", color: "var(--ink-60)",
+
+                }}>{String(i + 1).padStart(2, "0")} " {m.label}</span>
+
+                <ol style={{ listStyle: "none", padding: 0, margin: 0, display: "grid", gap: 12 }}>
+
+                  {m.steps.map((s, j) => (
+
+                    <li key={j} style={{
+
+                      display: "grid", gridTemplateColumns: "20px 1fr", gap: 10,
+
+                      fontFamily: "var(--f-body)", fontSize: 14, lineHeight: 1.55,
+
+                      color: "var(--ink-90)",
+
+                    }}>
+
+                      <span style={{
+
+                        fontFamily: "var(--f-mono)", fontSize: 9.5,
+
+                        color: "var(--ink-40)", paddingTop: 2,
+
+                      }}>{j + 1}.</span>
+
+                      <span>{s}</span>
+
+                    </li>
+
+                  ))}
+
+                </ol>
+
+              </div>
+
+            </Reveal>
+
+          ))}
+
+        </div>
+
+      </div>
+
+    </section>
+
+  );
+
+}
+
+
+
+/* ---- Nutrition ---- */
+
+function MatchaNutrition() {
+
+  return (
+
+    <section style={{
+
+      padding: "clamp(80px, 12vh, 140px) var(--pad-x)",
+
+      background: "var(--paper)", color: "var(--ink)",
+
+      borderTop: "1px solid var(--rule)",
+
+    }}>
+
+      <div style={{ maxWidth: "var(--maxw)", margin: "0 auto" }}>
+
+        <div className="matcha-nutrition-grid" style={{
+
+          display: "grid",
+
+          gridTemplateColumns: "1fr 1fr",
+
+          gap: "clamp(40px, 8vw, 120px)",
+
+          alignItems: "start",
+
+        }}>
+
+          <Reveal>
+
+            <div style={{ display: "grid", gap: 24 }}>
+
+              <h2 style={{
+
+                fontFamily: "var(--f-display)", fontWeight: 400,
+
+                fontSize: "clamp(36px, 4.5vw, 64px)",
+
+                letterSpacing: "-0.03em", lineHeight: 0.93, margin: 0,
+
+                fontVariationSettings: '"opsz" 144, "SOFT" 30',
+
+              }}>
+
+                Nutritional<br/>
+
+                <em style={{ fontStyle: "normal", fontFamily: "var(--f-body)", fontWeight: 400, letterSpacing: "-0.02em" }}>
+
+                  information.
+
+                </em>
+
+              </h2>
+
+              <p style={{
+
+                fontFamily: "var(--f-mono)", fontSize: 10.5, letterSpacing: "0.18em",
+
+                textTransform: "uppercase", color: "var(--ink-60)", margin: 0,
+
+              }}>Per 100g</p>
+
+              <p style={{
+
+                fontFamily: "var(--f-body)", fontSize: "clamp(14px, 1.1vw, 16px)",
+
+                lineHeight: 1.7, margin: 0, color: "var(--ink-90)",
+
+              }}>
+
+                Matcha is a concentrated whole-leaf powder. A typical serving is 1&ndash;2g, making the per-100g figures higher than most food labels. The numbers below are accurate.
+
+              </p>
+
+              <div style={{
+
+                padding: "16px 20px",
+
+                background: "var(--paper-bright)",
+
+                border: "1px solid var(--rule)",
+
+              }}>
+
+                <div style={{
+
+                  fontFamily: "var(--f-mono)", fontSize: 10.5, letterSpacing: "0.18em",
+
+                  textTransform: "uppercase", color: "var(--ink-60)", marginBottom: 10,
+
+                }}>Allergens</div>
+
+                <p style={{ fontFamily: "var(--f-body)", fontSize: 14, margin: 0, lineHeight: 1.6 }}>
+
+                  Free from all major allergens.
+
+                </p>
+
+              </div>
+
+            </div>
+
+          </Reveal>
+
+          <Reveal delay={160}>
+
+            <div style={{ border: "1px solid var(--rule)" }}>
+
+              {NUTRITION.map((row, i) => (
+
+                <div key={i} style={{
+
+                  display: "grid", gridTemplateColumns: "1fr auto",
+
+                  padding: `${row.sub ? "10px 20px 10px 32px" : "14px 20px"}`,
+
+                  borderTop: i > 0 ? "1px solid var(--rule)" : "none",
+
+                  background: i % 2 === 0 ? "var(--paper-bright)" : "var(--paper)",
+
+                }}>
+
+                  <span style={{
+
+                    fontFamily: "var(--f-mono)", fontSize: row.sub ? 9.5 : 10.5,
+
+                    letterSpacing: "0.16em", textTransform: "uppercase",
+
+                    color: row.sub ? "var(--ink-60)" : "var(--ink)",
+
+                  }}>{row.label}</span>
+
+                  <span style={{
+
+                    fontFamily: "var(--f-body)", fontSize: 14,
+
+                    fontWeight: row.sub ? 400 : 500, color: "var(--ink)",
+
+                  }}>{row.value}</span>
+
+                </div>
+
+              ))}
+
+            </div>
+
+          </Reveal>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  );
+
+}
+
+
+
+/* ---- Closing statement ---- */
+
+function MatchaCTA() {
+
+  return (
+
+    <section style={{
+
+      padding: "clamp(80px, 12vh, 120px) var(--pad-x)",
+
+      background: "var(--ink)", color: "var(--paper)",
+
+      textAlign: "center",
+
+    }}>
+
+      <div style={{ maxWidth: 640, margin: "0 auto", display: "grid", gap: 32 }}>
+
+        <Reveal>
+
+          <h2 style={{
+
+            fontFamily: "var(--f-display)", fontWeight: 400,
+
+            fontSize: "clamp(40px, 5vw, 72px)",
+
+            letterSpacing: "-0.03em", lineHeight: 1.15, margin: 0,
+
+            fontVariationSettings: '"opsz" 144, "SOFT" 30',
+
+          }}>
+
+            100g pouch.<br/>
+
+            <em style={{ fontStyle: "normal", fontFamily: "var(--f-body)", fontWeight: 400, letterSpacing: "-0.02em" }}>
+
+              50&ndash;100 cups.
+
+            </em>
+
+          </h2>
+
+        </Reveal>
+
+      </div>
+
+    </section>
+
+  );
+
+}
+
+
+
+/* ---- App ---- */
+
+function MatchaLabApp() {
+
+  return (
+
+    <>
+
+      <TopNav hasHero={true} />
+
+      <main>
+
+        <MatchaHero />
+
+        <MatchaIntro />
+
+        <MatchaUSPs />
+
+        <MatchaTesting />
+
+        <MatchaHowTo />
+
+        <MatchaNutrition />
+
+        <MatchaCTA />
+
+      </main>
+
+      <SiteFooter />
+
+    </>
+
+  );
+
+}
+
+
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+root.render(<MatchaLabApp />);
+
+</script>
+
+
+
+<script type="text/babel" src="components/FeedbackPopup.jsx"></script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+

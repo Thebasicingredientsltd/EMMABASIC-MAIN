@@ -1,0 +1,419 @@
+{
+  "hero": {
+    "image": "assets/Hero-Home-Page-Running.png",
+    "headlineLine1": "Recovery,",
+    "headlineLine2": "uncompromised.",
+    "body": "Pure ingredients for pure effort<br/>for the run, the kitchen, and everything between.",
+    "buttons": [
+      {
+        "label": "Browse the Collection",
+        "href": "Our Products.html",
+        "primary": true
+      },
+      {
+        "label": "Read Our Story",
+        "href": "People%20%26%20Places.html",
+        "primary": false
+      }
+    ]
+  },
+  "productRail": {
+    "heading": "Our team's staples.",
+    "terminalLabel": "The Full Collection →",
+    "terminalHref": "#"
+  },
+  "products": [
+    {
+      "id": "curry-cubes",
+      "name": "Japanese Curry Cube",
+      "origin": "Produced in China",
+      "lot": "CC-240410",
+      "pill": "BEST SELLER",
+      "tagline": "Block-style roux. Dissolve into stock, add what's in the fridge.",
+      "tone": "warm",
+      "image": "assets/products-original-backup/curry-cubes-homepage.png",
+      "amazon": "https://www.amazon.co.uk/dp/B09K6SJ3V3",
+      "usps": [
+        "Addictively tasty — formulated without additives while maintaining full flavour",
+        "Ready in approximately 20 minutes",
+        "Mild spice level — suitable for children",
+        "Free from MSG, colourings, and preservatives",
+        "Versatile — use with rice, udon noodles, or whatever vegetables you have",
+        "Block form with 8 pieces per packet — serves up to 8 people"
+      ],
+      "ingredients": [
+        "Palm oil (RSPO certified)",
+        "Chickpea powder",
+        "Curry powder",
+        "Coconut milk powder",
+        "Sugar",
+        "Salt",
+        "Tomato powder",
+        "Yeast extract",
+        "Garlic powder",
+        "Onion powder"
+      ],
+      "notTested": [
+        "MSG",
+        "Artificial colourings",
+        "Preservatives",
+        "Flavour enhancers"
+      ]
+    },
+    {
+      "id": "premium-matcha",
+      "name": "Premium Grade Matcha",
+      "origin": "Shaded 25 days · Produced in China",
+      "lot": "HB-240418",
+      "pill": "BEST SELLER",
+      "tagline": "100% pure Tencha leaf. No additives. Batch tested.",
+      "tone": "warm",
+      "image": "assets/products-original-backup/matcha-homepage.jpg",
+      "imagePosition": "center 30%",
+      "imageZoom": 1.3,
+      "amazon": "https://www.amazon.co.uk/dp/B0G8MW2WB7",
+      "usps": [
+        "100% pure matcha from Tencha leaves — no additives, no fillers, no added extract",
+        "Every batch tested by accredited laboratories for pesticides and heavy metals",
+        "Shade-grown for 25 days before hand-picking — develops natural sweetness, vibrant colour and umami depth",
+        "Longjin 43 and Yabukita cultivars — brightness and depth combined",
+        "Sealed in multi-layer resealable foil pouch — light-protected to preserve colour and freshness",
+        "100g delivers approximately 50–100 cups — ideal for daily use",
+        "Naturally contains catechins (tea polyphenols) and L-theanine, a naturally occurring amino acid"
+      ],
+      "ingredients": [
+        "Tencha (green tea). Shade-grown for 25 days prior to harvest."
+      ],
+      "notTested": [
+        "Additives",
+        "Fillers",
+        "Colourants",
+        "Sugar",
+        "Anti-caking agents"
+      ]
+    },
+    {
+      "id": "soba-noodles",
+      "name": "Soba Noodles",
+      "origin": "Buckwheat · Japan",
+      "lot": "SN-240501",
+      "pill": "SOURCE OF PROTEIN",
+      "tagline": "100% buckwheat. Nothing added.",
+      "tone": "cool",
+      "image": "assets/products-original-backup/soba-noodles-homepage.png",
+      "ingredients": [
+        "Buckwheat flour",
+        "Water"
+      ],
+      "notTested": [
+        "Wheat flour",
+        "Preservatives",
+        "Additives"
+      ]
+    },
+    {
+      "id": "sushi-rice",
+      "name": "Sushi Rice",
+      "origin": "Single-variety · Vietnam",
+      "lot": "SR-240501",
+      "pill": null,
+      "tagline": "Short-grain Japonica. Perfect texture every time.",
+      "tone": "cool",
+      "image": "assets/products-original-backup/sushi-rice-homepage.png",
+      "imagePosition": "40% center",
+      "imageZoom": 1.35,
+      "amazon": "https://www.amazon.co.uk/dp/B0G6M7F5BW",
+      "usps": [
+        "Superior-grade Japonica variety — selected by professionals with 140+ years specialising in rice",
+        "Perfect texture — balances stickiness and firmness; holds shape without going mushy",
+        "Grown in Vietnam's Mekong Delta nutrient-rich soil",
+        "Single variety — behaves predictably every time you cook it",
+        "Beyond sushi — works as everyday rice with vegetables, meat, or fish",
+        "Manufacturer operates under BRC and FSSC food safety programmes"
+      ],
+      "ingredients": [
+        "Japonica rice."
+      ],
+      "notTested": [
+        "Added glucose",
+        "Polishing compounds",
+        "Preservatives"
+      ]
+    },
+    {
+      "id": "sesame-oil",
+      "name": "Pure Toasted Sesame Oil",
+      "origin": "Physically pressed · Japan",
+      "lot": "SO-240319",
+      "pill": "NEW FORMULA",
+      "tagline": "Physically pressed — never chemically refined.",
+      "tone": "warm",
+      "image": "assets/products-original-backup/sesame-oil-homepage.jpg",
+      "amazon": "https://www.amazon.co.uk/dp/B089LPHTCZ",
+      "usps": [
+        "100% pure — made from a single ingredient: the finest roasted sesame seeds",
+        "Physically pressed, not chemically extracted with hexane",
+        "Rich flavour and nutty aroma from properly roasted and gently pressed sesame",
+        "Dark caramel colour — widely used across Asian cuisines",
+        "Only 14% saturated fats",
+        "A kitchen staple — every kitchen needs a bottle"
+      ],
+      "ingredients": [
+        "Sesame oil (100%). Physically pressed, unrefined."
+      ],
+      "notTested": [
+        "Hexane residue",
+        "Bleaching agents",
+        "Trans fats"
+      ]
+    },
+    {
+      "id": "dashi-soy-sauce",
+      "name": "Dashi Soy Sauce",
+      "origin": "Brewed · Japan",
+      "lot": "DS-240501",
+      "pill": "GLUTEN FREE",
+      "tagline": "Brewed slowly. No shortcuts.",
+      "tone": "warm",
+      "image": "assets/products-original-backup/dashi-soy-sauce-homepage.jpg",
+      "imageZoom": 1.1,
+      "imagePosition": "left center",
+      "ingredients": [
+        "Soy sauce",
+        "Dashi (kombu, bonito)",
+        "Salt"
+      ],
+      "notTested": [
+        "MSG",
+        "Artificial flavourings",
+        "Preservatives"
+      ],
+      "usps": [
+        "DASHI: Dashi is the very foundation of Japanse cuisine. Emma Basic Dashi is skillfully made by simmering natural kelp and shiitake mushrooms. Dedicated in making dashi in Japan since 1789. ",
+        "NEVER ANY ADDITIVES: No-MSG No Colourings No Acidity regulators No Potassium Sorbate. ",
+        "GREAT FOR SAUCES:  Gluten free and rich in umami and sweetness simultaneously. only a small amount adds depth of flavour to a variety of different sauces.",
+        "UDON SOUP: Mix 50ml of Dashi Soy Sauce into 200ml boiling water, serve with cooked udon noodles.",
+        "VERSATILE: This item can be used as a dipping sauce, as a soup base, and for stir fries."
+      ]
+    },
+    {
+      "id": "white-miso-1kg",
+      "name": "Miso 1kg",
+      "origin": "Traditionally fermented · Produced in China",
+      "lot": "MS-240319",
+      "pill": "UNPASTEURISED",
+      "tagline": "Raw, unpasteurised white miso. Fermented from soybeans, rice, and salt — nothing else.",
+      "tone": "cool",
+      "image": "assets/products-original-backup/miso-homepage.png",
+      "usps": [
+        "Raw &amp; unpasteurised — never heat-treated, preserving live cultures and enzymes",
+        "Four ingredients only: water, soybeans, rice, salt — nothing added",
+        "Non-GMO soybeans, traditionally fermented using time-honoured artisanal methods",
+        "Bold umami depth — works in soups, glazes, dressings, stir-fries, and ramen broth",
+        "Vegan and suitable for vegetarians",
+        "Naturally rich amber colour deepens as the miso continues to age and develop flavour"
+      ],
+      "ingredients": [
+        "Water",
+        "Soybeans (28.8%)",
+        "Rice (23%)",
+        "Salt (11.5%)"
+      ],
+      "notTested": [
+        "MSG",
+        "Preservatives",
+        "Additives",
+        "Artificial flavourings"
+      ]
+    },
+    {
+      "id": "wakame",
+      "name": "Wakame 50g",
+      "origin": "Wild-harvested · Japan",
+      "lot": "WK-240501",
+      "pill": null,
+      "tagline": "Dried at source. Rehydrates in minutes.",
+      "tone": "cool",
+      "image": "assets/products-original-backup/wakame-homepage.png",
+      "ingredients": [
+        "Wakame seaweed"
+      ],
+      "notTested": [
+        "Salt",
+        "Preservatives",
+        "Flavour enhancers"
+      ]
+    }
+  ],
+  "banner": {
+    "text": "The only mainstream brand in UK retail committed to additive-free across the entire range.",
+    "tag": "Never Any Additives."
+  },
+  "founder": {
+    "image": "assets/homepage/office-photo.webp",
+    "introLine": "I am a mum, who has learned to read food labels over the years.",
+    "paragraphs": [
+      "Not just food labels, but also skincare, clothing, furniture — anything that comes into direct contact with the human body, I always check the components first. We cook most meals at home, from scratch. Some of the veggies, home grown from our allotment. We never cook alone. Home cooking is not a chore but a way of spending time together. Our daughter is 12. Every moment with her is precious before she flies away from the nest of mum &amp; dad.",
+      "Born and bred in a food manufacturer, reading labels comes naturally to me. These days, food packaging is cunningly designed. When you see an &amp;ldquo;organic&amp;rdquo; logo or a nutrition claim, it leads you to believe the product is healthy. The reality is that even organic and &amp;ldquo;nutritious&amp;rdquo; foods can contain ultra-processed ingredients (UPFs) and additives.",
+      "There are over 1,000 additives approved by EU food authorities and thousands more worldwide — legal but harmful to us. Additives are sneaky — they can alter colours, create addictive flavours, and extend shelf life indefinitely. If you're not in the food industry — whether you're an engineer, an accountant, or even a doctor — reading food labels can be daunting.",
+      "For this reason, Emma Basic was born.",
+      "Emma Basic promises \"Never Any Additives.\" We've removed additives from all our products, so you don't have to spend 10,000 hours decoding unpronounceable ingredients. By choosing Emma Basic, you protect yourself and your family from the thousands of additives widely used in today's food industry."
+    ],
+    "readMoreLabel": "Read more",
+    "readMoreHref": "Our Story.html"
+  },
+  "lifestyle": {
+    "headingLine1": "The Grit /",
+    "headingLine2": "The Purity.",
+    "handle": "@emmabasic",
+    "followLabel": "Follow →",
+    "followHref": "https://www.instagram.com/emmabasic.london/",
+    "tiles": [
+      {
+        "image": "assets/homepage/sesame-tennis.png",
+        "label": "SESAME SEEDS — TENNIS",
+        "tone": "warm",
+        "kind": "purity",
+        "span": "tall",
+        "position": "center center"
+      },
+      {
+        "image": "assets/homepage/lifestyle-3.png",
+        "label": "KITCHEN — FAMILY DINNER",
+        "tone": "warm",
+        "kind": "purity",
+        "position": "center center"
+      },
+      {
+        "image": "assets/homepage/lifestyle-4.png",
+        "label": "THE GRIT",
+        "tone": "cool",
+        "kind": "grit",
+        "position": "center center"
+      },
+      {
+        "image": "assets/homepage/lifestyle-1.png",
+        "label": "POST-RUN — HEATH, 06:14",
+        "tone": "ink",
+        "kind": "grit",
+        "span": "tall",
+        "position": "center center"
+      },
+      {
+        "image": "assets/homepage/sesame-family.png",
+        "label": "SESAME OIL — FAMILY",
+        "tone": "ink",
+        "kind": "grit",
+        "span": "wide",
+        "position": "center center"
+      },
+      {
+        "image": "assets/homepage/lifestyle-2.png",
+        "label": "MATCHA POUR — STUDIO",
+        "tone": "warm",
+        "kind": "purity",
+        "position": "center center"
+      },
+      {
+        "image": "assets/homepage/lifestyle-5.png",
+        "label": "LONG RUN NOTES",
+        "tone": "ink",
+        "kind": "grit",
+        "position": "center center"
+      },
+      {
+        "image": "assets/homepage/sushi-vinegar.png",
+        "label": "SUSHI VINEGAR — NATURAL",
+        "tone": "warm",
+        "kind": "purity",
+        "span": "tall",
+        "position": "center center"
+      },
+      {
+        "image": "assets/homepage/gallery-1.jpg",
+        "label": "EMMA BASIC",
+        "tone": "warm",
+        "kind": "purity",
+        "position": "center center"
+      },
+      {
+        "image": "assets/homepage/gallery-2.jpg",
+        "label": "EMMA BASIC",
+        "tone": "warm",
+        "kind": "purity",
+        "position": "center center"
+      }
+    ]
+  },
+  "footer": {
+    "contactEyebrow": "Get in touch",
+    "contactCopy": "If any Emma Basic product does not live up to your expectations, reach out and we will make every effort to arrange a replacement or refund.",
+    "emailLabel": "Email",
+    "email": "Boris@thebasicingredients.com",
+    "addresses": [
+      {
+        "city": "London",
+        "lines": [
+          "The Basic Ingredients Ltd",
+          "4 New Concordia Wharf",
+          "Mill Street",
+          "London SE1 2BB"
+        ]
+      },
+      {
+        "city": "Rotterdam",
+        "lines": [
+          "The Basic Ingredients B.V.",
+          "Westplein 12–14",
+          "3016BM Rotterdam",
+          "The Netherlands"
+        ]
+      }
+    ],
+    "columns": [
+      {
+        "heading": "Browse",
+        "links": [
+          {
+            "label": "Matcha",
+            "href": "Our Products.html#cat-matcha"
+          },
+          {
+            "label": "Oils",
+            "href": "Our Products.html#cat-oils"
+          },
+          {
+            "label": "Pantry",
+            "href": "Our Products.html#cat-pantry"
+          },
+          {
+            "label": "Full Collection",
+            "href": "Our Products.html"
+          }
+        ]
+      },
+      {
+        "heading": "Company",
+        "links": [
+          {
+            "label": "Our Story",
+            "href": "Our Story.html"
+          },
+          {
+            "label": "People &amp; Places",
+            "href": "People%20%26%20Places.html"
+          },
+          {
+            "label": "Journal",
+            "href": "Journal.html"
+          }
+        ]
+      }
+    ],
+    "bottom": [
+      "© The Basic Ingredients Ltd · MMXXVI",
+      "No Additives. Ever.",
+      "London · Rotterdam"
+    ]
+  }
+}

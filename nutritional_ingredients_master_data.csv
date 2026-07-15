@@ -1,0 +1,602 @@
+﻿Source_File,Sheet_Name,Data_Type,Ingredient,Components,Composition_pct,Supplier,Country,GMO,Nutrient,Value_per_100g
+A006 Rice Wine from Shaoxing 10% 17042026.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Water,,0.516,浙江绍兴,,中国,,
+A006 Rice Wine from Shaoxing 10% 17042026.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Rice,,0.413,安徽庐江,,中国,,
+A006 Rice Wine from Shaoxing 10% 17042026.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Wheat,,0.071,安徽宣城,,中国,,
+A006 Rice Wine from Shaoxing 10% 17042026.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,"* If any processing aid is used, please explain here:",,,,,,,
+A006 Rice Wine from Shaoxing 10% 17042026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),Kcal: KJ:255
+A006 Rice Wine from Shaoxing 10% 17042026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,0.1
+A006 Rice Wine from Shaoxing 10% 17042026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,未检出
+A006 Rice Wine from Shaoxing 10% 17042026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,
+A006 Rice Wine from Shaoxing 10% 17042026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",
+A006 Rice Wine from Shaoxing 10% 17042026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,3.6
+A006 Rice Wine from Shaoxing 10% 17042026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,1.6
+A006 Rice Wine from Shaoxing 10% 17042026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,
+A006 Rice Wine from Shaoxing 10% 17042026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,
+A006 Rice Wine from Shaoxing 10% 17042026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,
+A006 Rice Wine from Shaoxing 10% 17042026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,0.92
+A006 Rice Wine from Shaoxing 10% 17042026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,
+C010 - Dashi Soy Sauce.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Soy Sauce,"Water, Soybeans, Salt, Corn",0.4,Ichibiki,Japan,NO,,
+C010 - Dashi Soy Sauce.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Water,-,0.336,Local Public Water,Japan,NO,,
+C010 - Dashi Soy Sauce.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Sugar,-,0.2,Nisshinseito,Japan,NO (Sugar Beet),,
+C010 - Dashi Soy Sauce.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Salt,-,0.03,Nihonkaisui,Japan,NO,,
+C010 - Dashi Soy Sauce.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Yeast Extract,-,0.02,Mitsubishi Shoji Life Science,Japan,NO,,
+C010 - Dashi Soy Sauce.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Dried Kelp Stock,-,0.007,Kinkaishokuhin,Japan,NO,,
+C010 - Dashi Soy Sauce.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Dried Shiitake Mushroom Stock,-,0.007,"Sugimotoshoten, Kashii",Japan,NO,,
+C010 - Dashi Soy Sauce.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),Kcal: 150 Kcal KJ: 630 KJ
+C010 - Dashi Soy Sauce.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,0.1 g
+C010 - Dashi Soy Sauce.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,0 g
+C010 - Dashi Soy Sauce.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,-
+C010 - Dashi Soy Sauce.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",-
+C010 - Dashi Soy Sauce.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,30.9 g
+C010 - Dashi Soy Sauce.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,27.0 g
+C010 - Dashi Soy Sauce.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,-
+C010 - Dashi Soy Sauce.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,-
+C010 - Dashi Soy Sauce.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,-
+C010 - Dashi Soy Sauce.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,6.0 g
+C010 - Dashi Soy Sauce.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,11.8 g
+C011 - Light Soy Sauce.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Water,-,0.4,Local Public Water,Japan,NO,,
+C011 - Light Soy Sauce.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Soybeans,-,0.25,Not Disclosed,"India, USA, Canada, Japan (Not in order of weight)",NO,,
+C011 - Light Soy Sauce.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Wheat,-,0.2,Not Disclosed,Japan,NO,,
+C011 - Light Soy Sauce.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Salt,-,0.15,"Dia-salt, Naruto",Japan,NO,,
+C011 - Light Soy Sauce.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),96kcal/400kJ
+C011 - Light Soy Sauce.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,0g
+C011 - Light Soy Sauce.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,0g
+C011 - Light Soy Sauce.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,
+C011 - Light Soy Sauce.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",
+C011 - Light Soy Sauce.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,12g
+C011 - Light Soy Sauce.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,2.0g
+C011 - Light Soy Sauce.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,
+C011 - Light Soy Sauce.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,
+C011 - Light Soy Sauce.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,
+C011 - Light Soy Sauce.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,11g
+C011 - Light Soy Sauce.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,14.4g
+C014W C014WE -1L Gluten Free Reduced Salt Soy Sauce without vinegar.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,water,,0.505,INNER MONGOLIA KIND WANJIA FOODS CO. LTD,,China,,
+C014W C014WE -1L Gluten Free Reduced Salt Soy Sauce without vinegar.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,soybeans,,0.39,WANJIA FARM,,China,,
+C014W C014WE -1L Gluten Free Reduced Salt Soy Sauce without vinegar.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,salt,,0.105,"Shandong Daiyue Salt Refine Co.,LTD.",,China,,
+C014W C014WE -1L Gluten Free Reduced Salt Soy Sauce without vinegar.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),247KJ/59kcal
+C014W C014WE -1L Gluten Free Reduced Salt Soy Sauce without vinegar.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,0g
+C014W C014WE -1L Gluten Free Reduced Salt Soy Sauce without vinegar.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,0 g
+C014W C014WE -1L Gluten Free Reduced Salt Soy Sauce without vinegar.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,0 g
+C014W C014WE -1L Gluten Free Reduced Salt Soy Sauce without vinegar.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",0 g
+C014W C014WE -1L Gluten Free Reduced Salt Soy Sauce without vinegar.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,7.5 g
+C014W C014WE -1L Gluten Free Reduced Salt Soy Sauce without vinegar.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,0 g
+C014W C014WE -1L Gluten Free Reduced Salt Soy Sauce without vinegar.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,0 g
+C014W C014WE -1L Gluten Free Reduced Salt Soy Sauce without vinegar.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,0 g
+C014W C014WE -1L Gluten Free Reduced Salt Soy Sauce without vinegar.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,0.2 g
+C014W C014WE -1L Gluten Free Reduced Salt Soy Sauce without vinegar.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,7.0 g
+C014W C014WE -1L Gluten Free Reduced Salt Soy Sauce without vinegar.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,10.3g
+C041B - Japanese style curry EPD 12012026.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Palm oil (RSPO certified),,0.28,"Jiali Grain and Oil Tianjin Co., LTD",,China,,
+C041B - Japanese style curry EPD 12012026.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Chickpea powder,,0.23,"Mulei Yingge Biological Co., LTD",,China,,
+C041B - Japanese style curry EPD 12012026.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Curry powder,"Turmeric, Coriander, Cumin, Paprika powder, Black pepper, Cardamom, Cinnamon, Fennel, Chili powder, Clove, Celery seed, Fenugreek",0.12,"Amari Spcie Food Co., LTD",,Japan,,
+C041B - Japanese style curry EPD 12012026.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Coconut milk powder,,0.1,"Shanghai Xige Trading Co., LTD",,China,,
+C041B - Japanese style curry EPD 12012026.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Sugar,,0.1,"Korea CJ Sugar Co., LTD",,Korea,,
+C041B - Japanese style curry EPD 12012026.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Salt,,0.073,"Jiangsu Jingshen Salt Industrial Co., ltd",,China,,
+C041B - Japanese style curry EPD 12012026.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Tomato powder,,0.034,"Zhongliang Tunhe Tomato Co., LTD",,China,,
+C041B - Japanese style curry EPD 12012026.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Yeast extract,,0.023,"Angel Yeast Co., LTD",,China,,
+C041B - Japanese style curry EPD 12012026.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Garlic powder,,0.02,"Shandong Wanxing Food Co., LTD",,China,,
+C041B - Japanese style curry EPD 12012026.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Onion powder,,0.02,"Shandong Pangda Seasoning Food Co., LTD",,China,,
+C041B - Japanese style curry EPD 12012026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),540Kcal: 2259KJ:
+C041B - Japanese style curry EPD 12012026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,37g
+C041B - Japanese style curry EPD 12012026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,18g
+C041B - Japanese style curry EPD 12012026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,g
+C041B - Japanese style curry EPD 12012026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",g
+C041B - Japanese style curry EPD 12012026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,45g
+C041B - Japanese style curry EPD 12012026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,10g
+C041B - Japanese style curry EPD 12012026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,g
+C041B - Japanese style curry EPD 12012026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,g
+C041B - Japanese style curry EPD 12012026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,1g
+C041B - Japanese style curry EPD 12012026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,7g
+C041B - Japanese style curry EPD 12012026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,9.55g
+C068 - Reduced salt GF soy sauce cylinder 2.1ml.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,water,,0.54,"Guangzhou PRB Bio-tech Co.,,LTD",,China,,
+C068 - Reduced salt GF soy sauce cylinder 2.1ml.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,soybeans,,0.31,"Guangzhou PRB Bio-tech Co.,,LTD",,China,,
+C068 - Reduced salt GF soy sauce cylinder 2.1ml.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,salt,,0.09,"Guangzhou PRB Bio-tech Co.,,LTD",,China,,
+C068 - Reduced salt GF soy sauce cylinder 2.1ml.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,vinegar,"rice, water",0.06,"Dalian Tianzhou Wine Industry Co., LTD",,China,,
+C068 - Reduced salt GF soy sauce cylinder 2.1ml.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),42 Kcal: 179 KJ:
+C068 - Reduced salt GF soy sauce cylinder 2.1ml.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,g
+C068 - Reduced salt GF soy sauce cylinder 2.1ml.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,0 g
+C068 - Reduced salt GF soy sauce cylinder 2.1ml.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,g
+C068 - Reduced salt GF soy sauce cylinder 2.1ml.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",g
+C068 - Reduced salt GF soy sauce cylinder 2.1ml.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,3.8 g
+C068 - Reduced salt GF soy sauce cylinder 2.1ml.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,0 g
+C068 - Reduced salt GF soy sauce cylinder 2.1ml.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,g
+C068 - Reduced salt GF soy sauce cylinder 2.1ml.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,g
+C068 - Reduced salt GF soy sauce cylinder 2.1ml.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,0.5 g
+C068 - Reduced salt GF soy sauce cylinder 2.1ml.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,6.51 g
+C068 - Reduced salt GF soy sauce cylinder 2.1ml.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,8.03 g
+C075 White Miso 1kg Emma reviewed 30032026.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,water,,0.367,China Wulanhot,,China,,
+C075 White Miso 1kg Emma reviewed 30032026.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,soybeans,,0.288,own farm,,China,,
+C075 White Miso 1kg Emma reviewed 30032026.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,rice,,0.23,own farm,,China,,
+C075 White Miso 1kg Emma reviewed 30032026.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,salt,,0.115,China Inner Mongolia,,China,,
+C075 White Miso 1kg Emma reviewed 30032026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),Kcal:154 KJ:647
+C075 White Miso 1kg Emma reviewed 30032026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,2.9
+C075 White Miso 1kg Emma reviewed 30032026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,0.4
+C075 White Miso 1kg Emma reviewed 30032026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,
+C075 White Miso 1kg Emma reviewed 30032026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",
+C075 White Miso 1kg Emma reviewed 30032026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,19
+C075 White Miso 1kg Emma reviewed 30032026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,13
+C075 White Miso 1kg Emma reviewed 30032026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,
+C075 White Miso 1kg Emma reviewed 30032026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,
+C075 White Miso 1kg Emma reviewed 30032026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,4.6
+C075 White Miso 1kg Emma reviewed 30032026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,10
+C075 White Miso 1kg Emma reviewed 30032026.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,11
+F024 - Fried tofu 4cm 20x500g.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Water,,0.57,Jinhua water supply group,China,,,
+F024 - Fried tofu 4cm 20x500g.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,soybean,,0.25,"SG Cresco/INNER MONGOLIA KIND WANJIA FOODS CO., LTD.",Canada/China,,,
+F024 - Fried tofu 4cm 20x500g.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Palm oil,,0.18,"Kerry Specialty fats Co., Ltd",Malaysia,,,
+F024 - Fried tofu 4cm 20x500g.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Total,,1,,,,,
+F024 - Fried tofu 4cm 20x500g.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Magnesium chloride E511 Firming agent as processing Aid,,,,,,,
+F024 - Fried tofu 4cm 20x500g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),Kcal:252 kJ:1053
+F024 - Fried tofu 4cm 20x500g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,19.4g
+F024 - Fried tofu 4cm 20x500g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,5.78g
+F024 - Fried tofu 4cm 20x500g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,g
+F024 - Fried tofu 4cm 20x500g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",g
+F024 - Fried tofu 4cm 20x500g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,2.2g
+F024 - Fried tofu 4cm 20x500g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,0.12g
+F024 - Fried tofu 4cm 20x500g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,g
+F024 - Fried tofu 4cm 20x500g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,g
+F024 - Fried tofu 4cm 20x500g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,g
+F024 - Fried tofu 4cm 20x500g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,17.5g
+F024 - Fried tofu 4cm 20x500g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,0.2g
+F029 - Soybean Curd Sheet 油豆皮.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Water,,0.54,Jinhua water supply group,China,,,
+F029 - Soybean Curd Sheet 油豆皮.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,soybean,,0.46,SG Cresco,Canada,,,
+F029 - Soybean Curd Sheet 油豆皮.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Processing aids Defoamer Function: anti-foaming agents,calcium carbonate E170,0.92,Guangde Rifeng Food Technology,China,,,
+F029 - Soybean Curd Sheet 油豆皮.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),Kcal:200 KJ: 838
+F029 - Soybean Curd Sheet 油豆皮.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,8.2g
+F029 - Soybean Curd Sheet 油豆皮.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,1.34g
+F029 - Soybean Curd Sheet 油豆皮.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,1.82g
+F029 - Soybean Curd Sheet 油豆皮.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",4.68g
+F029 - Soybean Curd Sheet 油豆皮.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,7.4g
+F029 - Soybean Curd Sheet 油豆皮.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,0.5g
+F029 - Soybean Curd Sheet 油豆皮.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,g
+F029 - Soybean Curd Sheet 油豆皮.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,g
+F029 - Soybean Curd Sheet 油豆皮.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,0.7g
+F029 - Soybean Curd Sheet 油豆皮.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,23.7g
+F029 - Soybean Curd Sheet 油豆皮.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,<0.025g
+F051 Wakame Salad non coloured 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Wakame Seaweed,,0.8272,"Dalian Haibao Foods Co., Ltd.",CHINA,No,,
+F051 Wakame Salad non coloured 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Cane Sugar,,0.091,"China Sugar Grain Industry Liaoning Co., Ltd.",CHINA,No,,
+F051 Wakame Salad non coloured 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Rice Vinegar,"Water, Rice, Corn, Koji",0.0235,"Henan Weichuang Bio-tech Co., Ltd",CHINA,No,,
+F051 Wakame Salad non coloured 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Sesame seed oil,,0.021,"Jia Li Cereals and Oils (Qingdao) Co., Ltd.",CHINA,No,,
+F051 Wakame Salad non coloured 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,White Sesame seeds,,0.0201,"Ruifu Oil Co., Ltd.",CHINA,No,,
+F051 Wakame Salad non coloured 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Salt,,0.0147,"Jiangsu Suyan Chain Co., Ltd.",CHINA,No,,
+F051 Wakame Salad non coloured 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Red chilli,,0.0014,"Hebei Huatian Food Co., Ltd.",CHINA,No,,
+F051 Wakame Salad non coloured 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Yeast extract,,0.0011,"Guangxi Yipinxian Biotechnology Co., Ltd.",CHINA,No,,
+F051 Wakame Salad non coloured 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),Kcal: 105 KJ: 438
+F051 Wakame Salad non coloured 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,3.01
+F051 Wakame Salad non coloured 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,0.479
+F051 Wakame Salad non coloured 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,0
+F051 Wakame Salad non coloured 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",0
+F051 Wakame Salad non coloured 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,16.5
+F051 Wakame Salad non coloured 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,9.2
+F051 Wakame Salad non coloured 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,0
+F051 Wakame Salad non coloured 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,0
+F051 Wakame Salad non coloured 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,3.4
+F051 Wakame Salad non coloured 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,1.14
+F051 Wakame Salad non coloured 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,2.26
+F101Q Green Vegan Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Green cabbage,,0.2733,,China,No,,
+F101Q Green Vegan Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Wheat flour,,0.262,,China,No,,
+F101Q Green Vegan Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Water,,0.1156,,China,No,,
+F101Q Green Vegan Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Carrot,,0.0804,,China,No,,
+F101Q Green Vegan Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Pak choi,,0.0782,,China,No,,
+F101Q Green Vegan Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Sunflower seed oil,,0.0689,,China,No,,
+F101Q Green Vegan Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Chives,,0.0359,,China,No,,
+F101Q Green Vegan Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Ginger,,0.0203,,China,No,,
+F101Q Green Vegan Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Sugar,,0.0174,,China,No,,
+F101Q Green Vegan Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Mushroom,,0.0152,,China,No,,
+F101Q Green Vegan Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Sesame oil,,0.0106,,China,No,,
+F101Q Green Vegan Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Garlic,,0.0094,,China,No,,
+F101Q Green Vegan Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Soy sauce,"soybean(42%), water(42%), salt(16%)",0.0053,,China,No,,
+F101Q Green Vegan Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Salt,,0.0042,,China,No,,
+F101Q Green Vegan Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,White pepper,,0.0018,,China,No,,
+F101Q Green Vegan Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Yeast extract,,0.0013,,China,No,,
+F101Q Green Vegan Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Spinach powder,,0.0002,,China,No,,
+F101Q Green Vegan Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),Kcal: 139 KJ: 580
+F101Q Green Vegan Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,1.98
+F101Q Green Vegan Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,0.29
+F101Q Green Vegan Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,
+F101Q Green Vegan Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",
+F101Q Green Vegan Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,25.4
+F101Q Green Vegan Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,2.3
+F101Q Green Vegan Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,
+F101Q Green Vegan Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,
+F101Q Green Vegan Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,2.4
+F101Q Green Vegan Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,3.27
+F101Q Green Vegan Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,0.48
+F103 - Chicken Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Wheat flour,,0.2548,,China,,,
+F103 - Chicken Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Chicken,,0.1968,,China,,,
+F103 - Chicken Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Cabbage,,0.1868,,China,,,
+F103 - Chicken Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Water,,0.1157,,China,,,
+F103 - Chicken Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Onion,,0.0702,,China,,,
+F103 - Chicken Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Pressed Sunflower oil,,0.0498,,,,,
+F103 - Chicken Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Garlic chive,,0.0323,,China,,,
+F103 - Chicken Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Bamboo shoot,,0.0306,,China,,,
+F103 - Chicken Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Tofu puff,"Water, soybean, soybean oil, nigari (firming agent: magnesium chloride)",0.0165,,China,,,
+F103 - Chicken Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Garlic,,0.0095,,,,,
+F103 - Chicken Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Ginger,,0.0095,,China,,,
+F103 - Chicken Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Sugar,,0.0083,,,,,
+F103 - Chicken Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Soy sauce,"Soybean, water, salt, wheat",0.0064,,China,,,
+F103 - Chicken Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Salt,,0.0061,,China,,,
+F103 - Chicken Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Sesame oil,,0.0058,,China,,,
+F103 - Chicken Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Yeast extract,,0.0006,,China,,,
+F103 - Chicken Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,White pepper,,0.0003,,China,,,
+F103 - Chicken Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),Kcal: 179 KJ: 749
+F103 - Chicken Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,3.3 g
+F103 - Chicken Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,2.5 g
+F103 - Chicken Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,
+F103 - Chicken Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",
+F103 - Chicken Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,27 g
+F103 - Chicken Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,2.7 g
+F103 - Chicken Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,
+F103 - Chicken Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,
+F103 - Chicken Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,
+F103 - Chicken Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,10.3 g
+F103 - Chicken Gyoza 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,2.3 g
+"G008, G008E - Kimchi Furikake 100g.xlsx",6-8.Ingre&Nutrition&Allergens,Ingredient,Breadcrumbs,"wheat flour, yeast, salt",0.45,"Lion Foods(Jiaxing)Co.,Ltd.",china,N/A,,
+"G008, G008E - Kimchi Furikake 100g.xlsx",6-8.Ingre&Nutrition&Allergens,Ingredient,White sesame,,0.165,"Anyang Dingzhi Food Co., Ltd",china,N/A,,
+"G008, G008E - Kimchi Furikake 100g.xlsx",6-8.Ingre&Nutrition&Allergens,Ingredient,sugar,,0.1,"Dandong Jiangrun Trading Co., Ltd",china,N/A,,
+"G008, G008E - Kimchi Furikake 100g.xlsx",6-8.Ingre&Nutrition&Allergens,Ingredient,garlic,,0.085,Dalian Qingyou Green Agriculture Demonstration Zone,china,N/A,,
+"G008, G008E - Kimchi Furikake 100g.xlsx",6-8.Ingre&Nutrition&Allergens,Ingredient,Sunflower oil,,0.058,"XIWANG FOOD CO.,LTD",china,N/A,,
+"G008, G008E - Kimchi Furikake 100g.xlsx",6-8.Ingre&Nutrition&Allergens,Ingredient,Soy Sauce,"Water, Non-GMO Soybeans, Salt, Yeast Extract",0.055,"DALIAN TIANZHOU WINE INDUSTRY CO.,LTD.",china,No,,
+"G008, G008E - Kimchi Furikake 100g.xlsx",6-8.Ingre&Nutrition&Allergens,Ingredient,Chilli powder,,0.027,"Longyao County Xuri Food Co.,Ltd.",china,N/A,,
+"G008, G008E - Kimchi Furikake 100g.xlsx",6-8.Ingre&Nutrition&Allergens,Ingredient,Salt,,0.025,Dalian Qiyu Salt Factory,china,N/A,,
+"G008, G008E - Kimchi Furikake 100g.xlsx",6-8.Ingre&Nutrition&Allergens,Ingredient,Yeast extract,"yeast extract, salt",0.02,Guangxi Yipinxian Biotechnology Co.. Ltd,china,N/A,,
+"G008, G008E - Kimchi Furikake 100g.xlsx",6-8.Ingre&Nutrition&Allergens,Ingredient,chives,,0.015,Dalian Qingyou Green Agriculture Demonstration Zone,china,N/A,,
+"G008, G008E - Kimchi Furikake 100g.xlsx",6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),446Kcal/ 1866KJ
+"G008, G008E - Kimchi Furikake 100g.xlsx",6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,19
+"G008, G008E - Kimchi Furikake 100g.xlsx",6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,2.3
+"G008, G008E - Kimchi Furikake 100g.xlsx",6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,7
+"G008, G008E - Kimchi Furikake 100g.xlsx",6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",8.8
+"G008, G008E - Kimchi Furikake 100g.xlsx",6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,52
+"G008, G008E - Kimchi Furikake 100g.xlsx",6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,14
+"G008, G008E - Kimchi Furikake 100g.xlsx",6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,─
+"G008, G008E - Kimchi Furikake 100g.xlsx",6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,─
+"G008, G008E - Kimchi Furikake 100g.xlsx",6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,7.5
+"G008, G008E - Kimchi Furikake 100g.xlsx",6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,14
+"G008, G008E - Kimchi Furikake 100g.xlsx",6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,3.8
+G009 - Seaweed Furikake 100g.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,white sesame seed,−,0.59,"Zhumadian Dingzhi Food Co., Ltd",,,,
+G009 - Seaweed Furikake 100g.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,black sesame seed,−,0.18,"Zhumadian Dingzhi Food Co., Ltd",,,,
+G009 - Seaweed Furikake 100g.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,green laver/sea lettuce/Ulva lactuca L,−,0.14,"Dalian Fengyu Food Co., Ltd",,,,
+G009 - Seaweed Furikake 100g.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,dried nori seaweed/Porphyra,−,0.05,"Nantong Sun Food Co., Ltd",,,,
+G009 - Seaweed Furikake 100g.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,sugar,−,0.025,"Guangdong Huatang Industrial Co., Ltd",,,,
+G009 - Seaweed Furikake 100g.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,salt,−,0.014,"Dalian Yanhua Group Co., Ltd",,,,
+G009 - Seaweed Furikake 100g.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,yeast extract powder,"yeast extract, salt",0.001,"Weiling Food Technology Co., Ltd",,,,
+G009 - Seaweed Furikake 100g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),481Kcal/2014kJ
+G009 - Seaweed Furikake 100g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,35.2g
+G009 - Seaweed Furikake 100g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,2.4g
+G009 - Seaweed Furikake 100g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,
+G009 - Seaweed Furikake 100g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",
+G009 - Seaweed Furikake 100g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,15.9g
+G009 - Seaweed Furikake 100g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,10.6g
+G009 - Seaweed Furikake 100g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,
+G009 - Seaweed Furikake 100g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,
+G009 - Seaweed Furikake 100g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,15.0g
+G009 - Seaweed Furikake 100g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,18.9g
+G009 - Seaweed Furikake 100g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,5.77g
+G011 Black Sesame Seed 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Black sesame seeds,,1,"ANHUI XINMAO FOOD CO.,LTD",CHINA,,,
+G011 Black Sesame Seed 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),Kcal: 649 KJ:2715
+G011 Black Sesame Seed 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,55.15
+G011 Black Sesame Seed 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,8.39
+G011 Black Sesame Seed 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,
+G011 Black Sesame Seed 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",
+G011 Black Sesame Seed 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,1.8
+G011 Black Sesame Seed 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,0.5
+G011 Black Sesame Seed 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,
+G011 Black Sesame Seed 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,
+G011 Black Sesame Seed 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,16
+G011 Black Sesame Seed 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,20.4
+G011 Black Sesame Seed 1kg.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,0.0145
+G012A White sesame seed 1kg Emma amended 30102025.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,White sesame seeds,,1,"ANHUI XINMAO FOOD CO., LTD",CHINA,,,
+G012A White sesame seed 1kg Emma amended 30102025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),Kcal:664 KJ:2778
+G012A White sesame seed 1kg Emma amended 30102025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,57.79
+G012A White sesame seed 1kg Emma amended 30102025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,8.76
+G012A White sesame seed 1kg Emma amended 30102025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,
+G012A White sesame seed 1kg Emma amended 30102025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",
+G012A White sesame seed 1kg Emma amended 30102025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,1
+G012A White sesame seed 1kg Emma amended 30102025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,1
+G012A White sesame seed 1kg Emma amended 30102025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,
+G012A White sesame seed 1kg Emma amended 30102025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,
+G012A White sesame seed 1kg Emma amended 30102025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,16.4
+G012A White sesame seed 1kg Emma amended 30102025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,18.5
+G012A White sesame seed 1kg Emma amended 30102025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,0.01075
+G013 - Shichimi togarashi.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Chilli Powder,,0.48,"QINGDAO BOLAN GROUP CO.,LTD",China,N/A,,
+G013 - Shichimi togarashi.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Orange Peel,,0.3,兴化市顶萃食品有限公司,China,N/A,,
+G013 - Shichimi togarashi.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Aonori Seaweed,,0.08,兴化市顶萃食品有限公司,China,N/A,,
+G013 - Shichimi togarashi.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Black Sesame,,0.06,"QINGDAO BOLAN GROUP CO.,LTD",China,N/A,,
+G013 - Shichimi togarashi.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,White Sesame,,0.05,"QINGDAO BOLAN GROUP CO.,LTD",China,N/A,,
+G013 - Shichimi togarashi.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Ginger,,0.02,哈尔滨康源食品原料有限公司,China,N/A,,
+G013 - Shichimi togarashi.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Bay Leaf,,0.01,兴化市顶萃食品有限公司,China,N/A,,
+G013 - Shichimi togarashi.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),Kcal:328 KJ:1371
+G013 - Shichimi togarashi.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,16.9
+G013 - Shichimi togarashi.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,1.74
+G013 - Shichimi togarashi.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,
+G013 - Shichimi togarashi.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",
+G013 - Shichimi togarashi.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,13.8
+G013 - Shichimi togarashi.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,12.2
+G013 - Shichimi togarashi.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,
+G013 - Shichimi togarashi.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,
+G013 - Shichimi togarashi.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,37.8
+G013 - Shichimi togarashi.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,12.3
+G013 - Shichimi togarashi.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,4.85
+G017H Sesame Oil 500ml Haitian 08112025.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,SESAME SEED OIL,,1,HAITIAN YAN ZHUANG,,Togo，Niger，Ethiopia,,
+G017H Sesame Oil 500ml Haitian 08112025.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,"* If any processing aid is used, please explain here: Perlite(Pearl rock) — food grade, used as a processing aid for filtration.",,,,,,,
+G017H Sesame Oil 500ml Haitian 08112025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),Kcal: 828 KJ: 3404
+G017H Sesame Oil 500ml Haitian 08112025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,92g
+G017H Sesame Oil 500ml Haitian 08112025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,14g
+G017H Sesame Oil 500ml Haitian 08112025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,
+G017H Sesame Oil 500ml Haitian 08112025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",
+G017H Sesame Oil 500ml Haitian 08112025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,0g
+G017H Sesame Oil 500ml Haitian 08112025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,0g
+G017H Sesame Oil 500ml Haitian 08112025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,
+G017H Sesame Oil 500ml Haitian 08112025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,
+G017H Sesame Oil 500ml Haitian 08112025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,
+G017H Sesame Oil 500ml Haitian 08112025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,0g
+G017H Sesame Oil 500ml Haitian 08112025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,0g
+M002 Matcha 100g  21042026 Emma udpated USPs.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Tencha (green tea),Tencha (green tea),1,贵州太羿茶业有限公司,,CHINA,,
+M002 Matcha 100g  21042026 Emma udpated USPs.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,"* If any processing aid is used, please explain here:",,,,,,,
+M002 Matcha 100g  21042026 Emma udpated USPs.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),Kcal:381.69 KJ:1596
+M002 Matcha 100g  21042026 Emma udpated USPs.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,3.2
+M002 Matcha 100g  21042026 Emma udpated USPs.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,0.8
+M002 Matcha 100g  21042026 Emma udpated USPs.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,
+M002 Matcha 100g  21042026 Emma udpated USPs.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",
+M002 Matcha 100g  21042026 Emma udpated USPs.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,59.8
+M002 Matcha 100g  21042026 Emma udpated USPs.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,2
+M002 Matcha 100g  21042026 Emma udpated USPs.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,
+M002 Matcha 100g  21042026 Emma udpated USPs.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,
+M002 Matcha 100g  21042026 Emma udpated USPs.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,35.3
+M002 Matcha 100g  21042026 Emma udpated USPs.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,27.1
+M002 Matcha 100g  21042026 Emma udpated USPs.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,0
+N000 - Konjac Fettuccine 27082025.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Water,,0.955,"SHANDONG HEARUN DIETARY HALL CO.,LTD.",China,No,,
+N000 - Konjac Fettuccine 27082025.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Konjac flour,,0.045,"Chengdu Xinxing Chengming Biotechnology Co., LTD Development Co., Ltd.",China,No,,
+N000 - Konjac Fettuccine 27082025.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,*Firming agent: Calcium hydroxide(E526),,,,,,,
+N000 - Konjac Fettuccine 27082025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),Kcal: 8 KJ: 32
+N000 - Konjac Fettuccine 27082025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,0
+N000 - Konjac Fettuccine 27082025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,0
+N000 - Konjac Fettuccine 27082025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,
+N000 - Konjac Fettuccine 27082025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",
+N000 - Konjac Fettuccine 27082025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,0
+N000 - Konjac Fettuccine 27082025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,0
+N000 - Konjac Fettuccine 27082025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,
+N000 - Konjac Fettuccine 27082025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,
+N000 - Konjac Fettuccine 27082025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,4
+N000 - Konjac Fettuccine 27082025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,0
+N000 - Konjac Fettuccine 27082025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,0
+N001 - shirataki konjac 3 inner.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Water,,0.9532,"SHANDONG HEARUN DIETARY HALL CO.,LTD.",China,No,,
+N001 - shirataki konjac 3 inner.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Konjac flour,,0.045,"Chengdu Xinxing Chengming Biotechnology Co., LTD Development Co., Ltd.",China,No,,
+N001 - shirataki konjac 3 inner.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Firming agent: Calcium hydroxide(E526),Processing aid - not declarable,0.0018,"shanghai Jianghu titanium white product co. , ltd",China,No,,
+N001 - shirataki konjac 3 inner.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),Kcal: 11 KJ: 46
+N001 - shirataki konjac 3 inner.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,0
+N001 - shirataki konjac 3 inner.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,0
+N001 - shirataki konjac 3 inner.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,
+N001 - shirataki konjac 3 inner.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",
+N001 - shirataki konjac 3 inner.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,0
+N001 - shirataki konjac 3 inner.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,0
+N001 - shirataki konjac 3 inner.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,
+N001 - shirataki konjac 3 inner.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,
+N001 - shirataki konjac 3 inner.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,4
+N001 - shirataki konjac 3 inner.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,0
+N001 - shirataki konjac 3 inner.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,0
+N010 - Soba Noodles.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Wheat flour,,0.72,"YinNiu Flour Co., LTD.",China,No,,
+N010 - Soba Noodles.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Buckwheat flour,,0.15,"YinNiu Flour Co., LTD.",China,No,,
+N010 - Soba Noodles.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Water,,0.12,,China,No,,
+N010 - Soba Noodles.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Salt,,0.01,"Jiangsu Ruifeng Salt Industry Co., Ltd.",China,No,,
+N010 - Soba Noodles.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),Kcal: 358 KJ: 1518
+N010 - Soba Noodles.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,1.7
+N010 - Soba Noodles.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,0.3
+N010 - Soba Noodles.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,
+N010 - Soba Noodles.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",
+N010 - Soba Noodles.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,72
+N010 - Soba Noodles.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,4.5
+N010 - Soba Noodles.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,
+N010 - Soba Noodles.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,
+N010 - Soba Noodles.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,3.4
+N010 - Soba Noodles.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,12
+N010 - Soba Noodles.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,1.6g
+N011 - Udon Noodles.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Wheat flour,,0.87,"YinNiu Flour Co., LTD.",China,No,,
+N011 - Udon Noodles.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Water,,0.12,"YinNiu Flour Co., LTD.",China,No,,
+N011 - Udon Noodles.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Salt,,0.01,"Jiangsu Ruifeng Salt Industry Co., Ltd.",China,No,,
+N011 - Udon Noodles.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),Kcal: 352 KJ: 1473
+N011 - Udon Noodles.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,1.4
+N011 - Udon Noodles.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,0.3
+N011 - Udon Noodles.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,
+N011 - Udon Noodles.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",
+N011 - Udon Noodles.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,71
+N011 - Udon Noodles.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,6.6
+N011 - Udon Noodles.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,
+N011 - Udon Noodles.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,
+N011 - Udon Noodles.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,2.97
+N011 - Udon Noodles.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,11
+N011 - Udon Noodles.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,1.6
+N017 - Rice vermicelli 400g Emma 15122025.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Rice,,1,Hong Nhut,Vietnam,No,,
+N017 - Rice vermicelli 400g Emma 15122025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),Kcal: 352 KJ: 1473
+N017 - Rice vermicelli 400g Emma 15122025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,0.6 g
+N017 - Rice vermicelli 400g Emma 15122025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,0.3 g
+N017 - Rice vermicelli 400g Emma 15122025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,N/A
+N017 - Rice vermicelli 400g Emma 15122025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",N/A
+N017 - Rice vermicelli 400g Emma 15122025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,78 g
+N017 - Rice vermicelli 400g Emma 15122025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,1.2 g
+N017 - Rice vermicelli 400g Emma 15122025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,N/A
+N017 - Rice vermicelli 400g Emma 15122025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,N/A
+N017 - Rice vermicelli 400g Emma 15122025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,1.7 g
+N017 - Rice vermicelli 400g Emma 15122025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,7.8 g
+N017 - Rice vermicelli 400g Emma 15122025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,0.06 g
+P002A - Panko 1kg NEW nutritional table updated.xlsx,6-8_Ingre&Nutrition&Allergens,Ingredient,Wheat flour,Wheat,0.985,"Dongguan Surfree Grain Group Co.,Ltd",CHINA,NO,,
+P002A - Panko 1kg NEW nutritional table updated.xlsx,6-8_Ingre&Nutrition&Allergens,Ingredient,Yeast,,0.007,"Angel Yeast Co., Ltd.",CHINA,NO,,
+P002A - Panko 1kg NEW nutritional table updated.xlsx,6-8_Ingre&Nutrition&Allergens,Ingredient,Salt,,0.008,"Guangdong Salt Industry Group Co.,Ltd.",CHINA,NO,,
+P002A - Panko 1kg NEW nutritional table updated.xlsx,6-8_Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),359kcal/1504kJ
+P002A - Panko 1kg NEW nutritional table updated.xlsx,6-8_Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,1.6g
+P002A - Panko 1kg NEW nutritional table updated.xlsx,6-8_Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,0.4g
+P002A - Panko 1kg NEW nutritional table updated.xlsx,6-8_Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,0.2g
+P002A - Panko 1kg NEW nutritional table updated.xlsx,6-8_Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",0.8g
+P002A - Panko 1kg NEW nutritional table updated.xlsx,6-8_Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,71g
+P002A - Panko 1kg NEW nutritional table updated.xlsx,6-8_Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,2.8g
+P002A - Panko 1kg NEW nutritional table updated.xlsx,6-8_Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,
+P002A - Panko 1kg NEW nutritional table updated.xlsx,6-8_Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,67g
+P002A - Panko 1kg NEW nutritional table updated.xlsx,6-8_Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,4.8g
+P002A - Panko 1kg NEW nutritional table updated.xlsx,6-8_Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,12g
+P002A - Panko 1kg NEW nutritional table updated.xlsx,6-8_Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,1.24g
+P003 - Panko 200g Nutritional table updated.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Wheat flour,Wheat,0.985,"Dongguan Surfree Grain Group Co.,Ltd",CHINA,NO,,
+P003 - Panko 200g Nutritional table updated.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Yeast,,0.007,"Angel Yeast Co., Ltd.",CHINA,NO,,
+P003 - Panko 200g Nutritional table updated.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Salt,,0.008,"Guangdong Salt Industry Group Co.,Ltd.",CHINA,NO,,
+P003 - Panko 200g Nutritional table updated.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),359kcal/1504kJ
+P003 - Panko 200g Nutritional table updated.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,1.6g
+P003 - Panko 200g Nutritional table updated.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,0.4g
+P003 - Panko 200g Nutritional table updated.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,0.2g
+P003 - Panko 200g Nutritional table updated.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",0.8g
+P003 - Panko 200g Nutritional table updated.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,71g
+P003 - Panko 200g Nutritional table updated.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,2.8g
+P003 - Panko 200g Nutritional table updated.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,
+P003 - Panko 200g Nutritional table updated.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,67g
+P003 - Panko 200g Nutritional table updated.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,4.8g
+P003 - Panko 200g Nutritional table updated.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,12g
+P003 - Panko 200g Nutritional table updated.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,1.24g
+S000A- Crispy Seaweed 20g EPD26122025 SINGED.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Seaweed,,0.545,Hyungje Fishery,Korea,No,,
+S000A- Crispy Seaweed 20g EPD26122025 SINGED.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Olive oil(must be extra virgin oliv oil),,0.44,Lotte Food,Spain,No,,
+S000A- Crispy Seaweed 20g EPD26122025 SINGED.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,sea salt,"Seaweed, Olive Oil, Sea Salt",0.015,Seoul Business,Korea,No,,
+S000A- Crispy Seaweed 20g EPD26122025 SINGED.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),Kcal: 566 KJ: 2339
+S000A- Crispy Seaweed 20g EPD26122025 SINGED.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,45.4g
+S000A- Crispy Seaweed 20g EPD26122025 SINGED.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,6.3g
+S000A- Crispy Seaweed 20g EPD26122025 SINGED.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,
+S000A- Crispy Seaweed 20g EPD26122025 SINGED.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",
+S000A- Crispy Seaweed 20g EPD26122025 SINGED.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,5.76g
+S000A- Crispy Seaweed 20g EPD26122025 SINGED.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,<0.1g
+S000A- Crispy Seaweed 20g EPD26122025 SINGED.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,
+S000A- Crispy Seaweed 20g EPD26122025 SINGED.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,
+S000A- Crispy Seaweed 20g EPD26122025 SINGED.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,16.7g
+S000A- Crispy Seaweed 20g EPD26122025 SINGED.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,25.3g
+S000A- Crispy Seaweed 20g EPD26122025 SINGED.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,1.5g
+S001 - Seaweed Sushi Nori 5 Full Sheets 5X12X20.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Dried Nori Seaweed (Neopyropia yezoensis),,1,"NANTONG XIEHE FOODS CO., LTD",China,No,,
+S001 - Seaweed Sushi Nori 5 Full Sheets 5X12X20.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),Kcal:358 KJ:1499
+S001 - Seaweed Sushi Nori 5 Full Sheets 5X12X20.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,4
+S001 - Seaweed Sushi Nori 5 Full Sheets 5X12X20.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,1
+S001 - Seaweed Sushi Nori 5 Full Sheets 5X12X20.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,
+S001 - Seaweed Sushi Nori 5 Full Sheets 5X12X20.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",
+S001 - Seaweed Sushi Nori 5 Full Sheets 5X12X20.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,36
+S001 - Seaweed Sushi Nori 5 Full Sheets 5X12X20.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,0
+S001 - Seaweed Sushi Nori 5 Full Sheets 5X12X20.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,
+S001 - Seaweed Sushi Nori 5 Full Sheets 5X12X20.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,
+S001 - Seaweed Sushi Nori 5 Full Sheets 5X12X20.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,
+S001 - Seaweed Sushi Nori 5 Full Sheets 5X12X20.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,45
+S001 - Seaweed Sushi Nori 5 Full Sheets 5X12X20.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,1.3
+S002 - Dried Seaweed Sushi Nori 3-4 Cut 40x100sheets.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Dried seaweed,,1,Nantong Xiehe,China,NON-GMO,,
+S002 - Dried Seaweed Sushi Nori 3-4 Cut 40x100sheets.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),Kcal:358 KJ:1498
+S002 - Dried Seaweed Sushi Nori 3-4 Cut 40x100sheets.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,3.5g
+S002 - Dried Seaweed Sushi Nori 3-4 Cut 40x100sheets.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,0.9g
+S002 - Dried Seaweed Sushi Nori 3-4 Cut 40x100sheets.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,g
+S002 - Dried Seaweed Sushi Nori 3-4 Cut 40x100sheets.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",g
+S002 - Dried Seaweed Sushi Nori 3-4 Cut 40x100sheets.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,3.8g
+S002 - Dried Seaweed Sushi Nori 3-4 Cut 40x100sheets.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,0g
+S002 - Dried Seaweed Sushi Nori 3-4 Cut 40x100sheets.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,g
+S002 - Dried Seaweed Sushi Nori 3-4 Cut 40x100sheets.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,g
+S002 - Dried Seaweed Sushi Nori 3-4 Cut 40x100sheets.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,32g
+S002 - Dried Seaweed Sushi Nori 3-4 Cut 40x100sheets.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,45g
+S002 - Dried Seaweed Sushi Nori 3-4 Cut 40x100sheets.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,1.3g
+S005 - Dried Seaweed Sushi Nori 40x100sheets.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Dried seaweed,,1,Nantong Xiehe,China,NON-GMO,,
+S005 - Dried Seaweed Sushi Nori 40x100sheets.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),Kcal:358 KJ:1498
+S005 - Dried Seaweed Sushi Nori 40x100sheets.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,3.5g
+S005 - Dried Seaweed Sushi Nori 40x100sheets.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,0.9g
+S005 - Dried Seaweed Sushi Nori 40x100sheets.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,g
+S005 - Dried Seaweed Sushi Nori 40x100sheets.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",g
+S005 - Dried Seaweed Sushi Nori 40x100sheets.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,3.8g
+S005 - Dried Seaweed Sushi Nori 40x100sheets.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,0g
+S005 - Dried Seaweed Sushi Nori 40x100sheets.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,g
+S005 - Dried Seaweed Sushi Nori 40x100sheets.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,g
+S005 - Dried Seaweed Sushi Nori 40x100sheets.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,32g
+S005 - Dried Seaweed Sushi Nori 40x100sheets.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,45g
+S005 - Dried Seaweed Sushi Nori 40x100sheets.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,1.3g
+S007KZ - Seaweed Sushi Nori 50sheets South Korea 21042026 Kozen signed.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,SEAWEED,SEAWEED,1,-,,Made in Korea,,
+S007KZ - Seaweed Sushi Nori 50sheets South Korea 21042026 Kozen signed.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,"* If any processing aid is used, please explain here:",,,,,,,
+S007KZ - Seaweed Sushi Nori 50sheets South Korea 21042026 Kozen signed.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),Kcal:296.23 KJ:
+S007KZ - Seaweed Sushi Nori 50sheets South Korea 21042026 Kozen signed.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,5.13
+S007KZ - Seaweed Sushi Nori 50sheets South Korea 21042026 Kozen signed.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,1.22
+S007KZ - Seaweed Sushi Nori 50sheets South Korea 21042026 Kozen signed.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,-
+S007KZ - Seaweed Sushi Nori 50sheets South Korea 21042026 Kozen signed.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",-
+S007KZ - Seaweed Sushi Nori 50sheets South Korea 21042026 Kozen signed.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,46.63
+S007KZ - Seaweed Sushi Nori 50sheets South Korea 21042026 Kozen signed.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,0
+S007KZ - Seaweed Sushi Nori 50sheets South Korea 21042026 Kozen signed.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,-
+S007KZ - Seaweed Sushi Nori 50sheets South Korea 21042026 Kozen signed.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,-
+S007KZ - Seaweed Sushi Nori 50sheets South Korea 21042026 Kozen signed.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,45.05
+S007KZ - Seaweed Sushi Nori 50sheets South Korea 21042026 Kozen signed.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,38.41
+S007KZ - Seaweed Sushi Nori 50sheets South Korea 21042026 Kozen signed.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,2.38
+S014 - Dried Wakame 50g.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,wakame,,1,"Dalian Tianhao Food Co., LTD",,,,
+S014 - Dried Wakame 50g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),205.5Kcal: 860KJ:
+S014 - Dried Wakame 50g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,1.6g
+S014 - Dried Wakame 50g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,0.36g
+S014 - Dried Wakame 50g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,g
+S014 - Dried Wakame 50g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",g
+S014 - Dried Wakame 50g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,10.5g
+S014 - Dried Wakame 50g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,4.9g
+S014 - Dried Wakame 50g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,g
+S014 - Dried Wakame 50g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,g
+S014 - Dried Wakame 50g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,36.1g
+S014 - Dried Wakame 50g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,19.6g
+S014 - Dried Wakame 50g.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,21.1g
+V019R - Dried Shiitake Mushroom 38g 08042026 1105am.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Shiitake Mushroom,,1,TIANHE AGRICULTURAL GROUP,,,,
+V019R - Dried Shiitake Mushroom 38g 08042026 1105am.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),266kcal /1 115 kJ
+V019R - Dried Shiitake Mushroom 38g 08042026 1105am.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,2.16
+V019R - Dried Shiitake Mushroom 38g 08042026 1105am.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,0.43
+V019R - Dried Shiitake Mushroom 38g 08042026 1105am.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,
+V019R - Dried Shiitake Mushroom 38g 08042026 1105am.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",
+V019R - Dried Shiitake Mushroom 38g 08042026 1105am.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,20.2
+V019R - Dried Shiitake Mushroom 38g 08042026 1105am.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,0.27
+V019R - Dried Shiitake Mushroom 38g 08042026 1105am.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,
+V019R - Dried Shiitake Mushroom 38g 08042026 1105am.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,
+V019R - Dried Shiitake Mushroom 38g 08042026 1105am.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,40.9
+V019R - Dried Shiitake Mushroom 38g 08042026 1105am.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,21.1
+V019R - Dried Shiitake Mushroom 38g 08042026 1105am.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,0.023350000000000003
+V020R - Dried Porcini Mushroom 35g08042026 11am.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Boletus Mushroom,,1,TIANHE AGRICULTURAL GROUP,,,,
+V020R - Dried Porcini Mushroom 35g08042026 11am.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),Kcal: 362 KJ:1362
+V020R - Dried Porcini Mushroom 35g08042026 11am.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,2.3g
+V020R - Dried Porcini Mushroom 35g08042026 11am.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,0g
+V020R - Dried Porcini Mushroom 35g08042026 11am.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,g
+V020R - Dried Porcini Mushroom 35g08042026 11am.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",g
+V020R - Dried Porcini Mushroom 35g08042026 11am.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,51.3g
+V020R - Dried Porcini Mushroom 35g08042026 11am.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,4.6g
+V020R - Dried Porcini Mushroom 35g08042026 11am.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,g
+V020R - Dried Porcini Mushroom 35g08042026 11am.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,g
+V020R - Dried Porcini Mushroom 35g08042026 11am.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,25g
+V020R - Dried Porcini Mushroom 35g08042026 11am.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,23.8g
+V020R - Dried Porcini Mushroom 35g08042026 11am.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,0.03g
+V021R - Wood Ear 55g 08042026 5pm.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Wood Ear Mushrooms,,1,TIANHE AGRICULTURAL GROUP,,,,
+V021R - Wood Ear 55g 08042026 5pm.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),Kcal: 348 KJ:1454
+V021R - Wood Ear 55g 08042026 5pm.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,0.8g
+V021R - Wood Ear 55g 08042026 5pm.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,0g
+V021R - Wood Ear 55g 08042026 5pm.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,g
+V021R - Wood Ear 55g 08042026 5pm.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",g
+V021R - Wood Ear 55g 08042026 5pm.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,73g
+V021R - Wood Ear 55g 08042026 5pm.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,2g
+V021R - Wood Ear 55g 08042026 5pm.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,g
+V021R - Wood Ear 55g 08042026 5pm.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,g
+V021R - Wood Ear 55g 08042026 5pm.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,30g
+V021R - Wood Ear 55g 08042026 5pm.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,10.8g
+V021R - Wood Ear 55g 08042026 5pm.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,0.07g
+V060 - Emma Basic Crispy Bean Curd Roll 180g Emma 24052025.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Soybean oil,,0.7,"Jiangsu Yongyou/Kerry Specialty fats Co., Ltd",China,No,,
+V060 - Emma Basic Crispy Bean Curd Roll 180g Emma 24052025.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Soybean,,0.23,"SG Cresco/INNER MONGOLIA KIND WANJIA FOODS CO., LTD.",Canada/China,No,,
+V060 - Emma Basic Crispy Bean Curd Roll 180g Emma 24052025.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Water,,0.07,Jinhua water supply group,China,N/A,,
+V060 - Emma Basic Crispy Bean Curd Roll 180g Emma 24052025.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Processing aids Defoamer Function: anti-foaming agents,calcium carbonate E170,,Guangde Rifeng Food Technology,China,N/A,,
+V060 - Emma Basic Crispy Bean Curd Roll 180g Emma 24052025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),Kcal:754 kJ:3156
+V060 - Emma Basic Crispy Bean Curd Roll 180g Emma 24052025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,75.7g
+V060 - Emma Basic Crispy Bean Curd Roll 180g Emma 24052025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,13.1g
+V060 - Emma Basic Crispy Bean Curd Roll 180g Emma 24052025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,g
+V060 - Emma Basic Crispy Bean Curd Roll 180g Emma 24052025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",g
+V060 - Emma Basic Crispy Bean Curd Roll 180g Emma 24052025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,8.1g
+V060 - Emma Basic Crispy Bean Curd Roll 180g Emma 24052025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,0.03g
+V060 - Emma Basic Crispy Bean Curd Roll 180g Emma 24052025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,g
+V060 - Emma Basic Crispy Bean Curd Roll 180g Emma 24052025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,g
+V060 - Emma Basic Crispy Bean Curd Roll 180g Emma 24052025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,g
+V060 - Emma Basic Crispy Bean Curd Roll 180g Emma 24052025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,12.8g
+V060 - Emma Basic Crispy Bean Curd Roll 180g Emma 24052025.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,0g
+W003 -Wasabi powder 1kg 03032026 Emma signed.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Horseradish powder,,0.64,"Dalian Tianpeng Food Co., LTD",,,,
+W003 -Wasabi powder 1kg 03032026 Emma signed.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Wasabi Japonica  powder,,0.2,"Baoshan City Wasabi Industry Development Co., LTD",,,,
+W003 -Wasabi powder 1kg 03032026 Emma signed.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Mustard powder,,0.147,"A-NEX CO., LTD",,,,
+W003 -Wasabi powder 1kg 03032026 Emma signed.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Spirulina powder,,0.008,"Inner Mongolia Rejuve Biotech Co., LTD",,,,
+W003 -Wasabi powder 1kg 03032026 Emma signed.xlsx,6-8.Ingre&Nutrition&Allergens,Ingredient,Turmeric powder,,0.005,"Dezhou Lantian Food Co.,LTD",,,,
+W003 -Wasabi powder 1kg 03032026 Emma signed.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Energy (Kcal/KJ),Kcal:338.4  KJ:1416
+W003 -Wasabi powder 1kg 03032026 Emma signed.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fat,6.0 g
+W003 -Wasabi powder 1kg 03032026 Emma signed.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which saturate fat,0.56 g
+W003 -Wasabi powder 1kg 03032026 Emma signed.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which monounsaturated fat*,0 g
+W003 -Wasabi powder 1kg 03032026 Emma signed.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,"of which, polyunsaturated fat*",0 g
+W003 -Wasabi powder 1kg 03032026 Emma signed.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Carbohydrate,58.2 g
+W003 -Wasabi powder 1kg 03032026 Emma signed.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which sugar,24.2 g
+W003 -Wasabi powder 1kg 03032026 Emma signed.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which Polyols*,0 g
+W003 -Wasabi powder 1kg 03032026 Emma signed.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,of which starch*,0 g
+W003 -Wasabi powder 1kg 03032026 Emma signed.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Fibre*,0 g
+W003 -Wasabi powder 1kg 03032026 Emma signed.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Protein,12.9 g
+W003 -Wasabi powder 1kg 03032026 Emma signed.xlsx,6-8.Ingre&Nutrition&Allergens,Nutrition,,,,,,,Salt,0.0565 g

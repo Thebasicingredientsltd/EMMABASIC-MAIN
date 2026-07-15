@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Our Story " Emma Basic</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+
+<link rel="stylesheet" href="components/tokens.css"/>
+
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<style>
+  .eb-map-wrap .leaflet-control-attribution { display: none; }
+  .eb-map-wrap .leaflet-control-zoom a {
+    font-family: 'JetBrains Mono', monospace !important;
+    color: #0A0A0A !important;
+    border-color: rgba(10,10,10,0.15) !important;
+  }
+  .eb-map-wrap .leaflet-control-zoom {
+    border: 1px solid rgba(10,10,10,0.15) !important;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.12) !important;
+  }
+</style>
+</head>
+
+<body style="overflow-x: hidden;">
+<div id="root"></div>
+
+<script type="text/babel" src="components/Placeholder.jsx"></script>
+<script type="text/babel" src="components/motion.jsx"></script>
+<script type="text/babel" src="components/TopNav.jsx?v=13"></script>
+<script type="text/babel" src="components/PageHero.jsx"></script>
+<script type="text/babel" src="components/FounderNarrative.jsx?v=3"></script>
+<script type="text/babel" src="components/Sections.jsx"></script>
+
+<script type="text/babel">
+function LocationMap() {
+  const mapRef = React.useRef(null);
+  const instanceRef = React.useRef(null);
+
+  React.useEffect(() => {
+    if (!mapRef.current || instanceRef.current) return;
+
+    const LAT = 51.5016;
+    const LNG = -0.0710;
+
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+    const map = L.map(mapRef.current, {
+      center: [LAT, LNG],
+      zoom: 17,
+      zoomControl: true,
+      scrollWheelZoom: false,
+      dragging: !isMobile,
+      attributionControl: false,
+    });
+    instanceRef.current = map;
+
+    // Esri World Imagery " satellite tiles
+    L.tileLayer(
+      "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+      { maxZoom: 19 }
+    ).addTo(map);
+
+    // Esri reference/label overlay " place names on top of satellite
+    L.tileLayer(
+      "https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
+      { maxZoom: 19, opacity: 0.85 }
+    ).addTo(map);
+
+    // Custom SVG pin
+    const pinSvg = `
+      <svg width="52" height="64" viewBox="0 0 52 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="26" cy="61" rx="9" ry="3" fill="rgba(0,0,0,0.25)"/>
+        <path d="M26 2C15.5 2 7 10.5 7 21C7 34 26 60 26 60C26 60 45 34 45 21C45 10.5 36.5 2 26 2Z"
+          fill="white" stroke="#0A0A0A" stroke-width="1.5"/>
+        <circle cx="26" cy="21" r="12" fill="white" stroke="#0A0A0A" stroke-width="1.2"/>
+        <text x="26" y="25.5" text-anchor="middle"
+          font-family="'JetBrains Mono', monospace"
+          font-size="9.5" font-weight="500" letter-spacing="1"
+          fill="#0A0A0A">HQ</text>
+      </svg>`;
+
+    const icon = L.divIcon({
+      html: pinSvg,
+      iconSize: [52, 64],
+      iconAnchor: [26, 62],
+      className: "",
+    });
+
+    L.marker([LAT, LNG], { icon }).addTo(map);
+
+    return () => { map.remove(); instanceRef.current = null; };
+  }, []);
+
+  return (
+    <section style={{ background: "var(--paper)", padding: "0 0 clamp(80px, 12vh, 160px)" }}>
+      <div style={{ maxWidth: "var(--maxw)", margin: "0 auto", padding: "0 var(--pad-x)" }}>
+
+        {/* Label row */}
+        <div style={{
+          display: "flex", justifyContent: "space-between", alignItems: "baseline",
+          flexWrap: "wrap", gap: 16,
+          paddingBottom: "clamp(24px, 3vh, 36px)",
+          borderBottom: "1px solid var(--rule)",
+          marginBottom: "clamp(24px, 3vh, 36px)",
+        }}>
+          <span style={{
+            fontFamily: "var(--f-mono)", fontSize: 10.5, letterSpacing: "0.24em",
+            textTransform: "uppercase", color: "var(--ink-60)",
+          }}>London HQ</span>
+          <address style={{
+            fontStyle: "normal",
+            fontFamily: "var(--f-mono)", fontSize: 10.5, letterSpacing: "0.14em",
+            color: "var(--ink-60)", textAlign: "right",
+          }}>
+            4 New Concordia Wharf · Mill Street · London SE1 2BB
+          </address>
+        </div>
+
+        {/* Map container */}
+        <div className="eb-map-wrap" style={{
+          width: "100%", height: "clamp(360px, 50vw, 580px)",
+          border: "1px solid var(--rule)", position: "relative",
+        }}>
+          <div ref={mapRef} style={{ width: "100%", height: "100%" }} />
+
+          {/* Address chip */}
+          <div style={{
+            position: "absolute", bottom: 20, left: 20, zIndex: 1000,
+            background: "white", border: "1px solid rgba(10,10,10,0.12)",
+            padding: "14px 18px", boxShadow: "0 2px 16px rgba(0,0,0,0.14)",
+            pointerEvents: "none", minWidth: 220,
+          }}>
+            <div style={{
+              fontFamily: "var(--f-body)", fontWeight: 400, fontSize: 9, letterSpacing: "0.22em",
+              textTransform: "uppercase", color: "rgba(10,10,10,0.45)", marginBottom: 8,
+            }}>London HQ</div>
+            <div style={{
+              fontFamily: "var(--f-body)", fontWeight: 400, fontSize: 10.5, letterSpacing: "0.04em",
+              color: "#0A0A0A", lineHeight: 1.6, marginBottom: 14,
+            }}>
+              4 New Concordia Wharf<br/>
+              Mill Street, SE1 2BB
+            </div>
+            <div style={{
+              borderTop: "1px solid rgba(10,10,10,0.1)", paddingTop: 10,
+              display: "grid", gap: 6,
+            }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 16 }}>
+                <span style={{ fontFamily: "var(--f-body)", fontWeight: 400, fontSize: 9, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(10,10,10,0.45)" }}>London Bridge</span>
+                <span style={{ fontFamily: "var(--f-body)", fontWeight: 400, fontSize: 10, letterSpacing: "0.04em", color: "#0A0A0A" }}>18 min walk</span>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 16 }}>
+                <span style={{ fontFamily: "var(--f-body)", fontWeight: 400, fontSize: 9, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(10,10,10,0.45)" }}>Bermondsey</span>
+                <span style={{ fontFamily: "var(--f-body)", fontWeight: 400, fontSize: 10, letterSpacing: "0.04em", color: "#0A0A0A" }}>12 min walk</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* â&mdash;€â&mdash;€ Team Photo Gallery â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€â&mdash;€ */
+const TEAM_PHOTOS = [
+  // col 1
+  "assets/team-photos/20260222_112643585_iOS.jpg",
+  "assets/team-photos/DSC01812.jpg",
+  "assets/team-photos/20251217_132319000_iOS.jpg",
+  "assets/team-photos/4da2d245.jpg",
+  "assets/team-photos/20220918_181154000_iOS.jpg",
+  "assets/team-photos/DSC00966.jpg",
+  "assets/team-photos/DSC02458.jpg",
+  // col 2
+  "assets/team-photos/20240205_200218518_iOS.jpg",
+  "assets/team-photos/CD04.jpg",
+  "assets/team-photos/20240205_141514000_iOS.jpg",
+  "assets/team-photos/20240823_171646000_iOS.jpg",
+  "assets/team-photos/mmexport1621928184504.jpg",
+  "assets/team-photos/089DSC08669.jpg",
+  "assets/team-photos/20260402_172039.jpg",
+  "assets/team-photos/20260402_172134.jpg",
+  // col 3
+  "assets/team-photos/Image_20260514174039_1484_5.png",
+  "assets/team-photos/callum nancu.jpg",
+  "assets/team-photos/8289c49645bec2dc82e75f499dcae746.png",
+  "assets/team-photos/20251217_183443099_iOS.jpg",
+  "assets/team-photos/3ef0d13240bfc9d9b204bd1505de2a5.jpg",
+  "assets/team-photos/20240108_080751000_iOS.jpg",
+  "assets/team-photos/DSC02366.jpg",
+];
+
+function TeamPhotoGallery() {
+  return (
+    <section style={{
+      background: "var(--paper)",
+      borderTop: "1px solid var(--rule)",
+      padding: "clamp(80px, 12vw, 140px) var(--pad-x)",
+    }}>
+      <div style={{ maxWidth: "var(--maxw)", margin: "0 auto" }}>
+        <Reveal>
+          <div style={{
+            display: "flex", justifyContent: "space-between", alignItems: "baseline",
+            marginBottom: "clamp(40px, 6vh, 64px)",
+          }}>
+            <h2 style={{
+              fontFamily: "var(--f-display)", fontWeight: 400,
+              fontSize: "clamp(32px, 4vw, 56px)",
+              letterSpacing: "-0.03em", lineHeight: 0.95, margin: 0,
+              fontVariationSettings: '"opsz" 144, "SOFT" 30',
+            }}>
+              The team,<br/>
+              <em style={{ fontStyle: "normal", fontFamily: "var(--f-body)", fontWeight: 400, letterSpacing: "-0.02em" }}>in the wild.</em>
+            </h2>
+          </div>
+        </Reveal>
+
+        <div style={{
+          columns: "3 280px", columnGap: "clamp(10px, 1.2vw, 16px)",
+        }} className="eb-team-gallery">
+          {TEAM_PHOTOS.map((src, i) => (
+            <GalleryThumb key={src} src={src} index={i} />
+          ))}
+        </div>
+      </div>
+
+      <style>{`
+        .eb-team-gallery { break-inside: avoid; }
+        @media (max-width: 560px) {
+          .eb-team-gallery { columns: 2 !important; }
+        }
+      `}</style>
+    </section>
+  );
+}
+
+function GalleryThumb({ src, index }) {
+  const [ref, visible] = useReveal(0.05);
+  return (
+    <div
+      ref={ref}
+      style={{
+        breakInside: "avoid",
+        marginBottom: "clamp(10px, 1.2vw, 16px)",
+        overflow: "hidden",
+        opacity: visible ? 1 : 0,
+        transform: `translateY(${visible ? 0 : 20}px)`,
+        transition: `opacity 700ms var(--ease-out) ${(index % 3) * 60}ms, transform 700ms var(--ease-out) ${(index % 3) * 60}ms`,
+      }}
+    >
+      <img
+        src={src}
+        style={{ width: "100%", display: "block" }}
+      />
+    </div>
+  );
+}
+
+function OurStoryApp() {
+  return (
+    <>
+      <TopNav hasHero={false} />
+      <main>
+        <PageHero
+          eyebrow="Our Story"
+          title="Made for the shelf"
+          titleItalic="we couldn't find."
+          subtitle="Emma Basic is an additive-free food brand for home cooking. It's still run the same way " real ingredients, nothing hidden."
+        />
+        <FounderNarrative hideReadMore />
+        <LocationMap />
+        <TeamPhotoGallery />
+      </main>
+      <SiteFooter />
+    </>
+  );
+}
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<OurStoryApp />);
+</script>
+
+</body>
+</html>
+
+
+

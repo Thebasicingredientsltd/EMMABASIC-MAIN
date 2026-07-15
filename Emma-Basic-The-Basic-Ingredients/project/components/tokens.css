@@ -1,0 +1,119 @@
+/* ============================================================
+   EMMA BASIC — Minimalist Grit Design Tokens
+   Drop into app/globals.css (Next.js) or import where needed.
+   ============================================================ */
+
+/* ---------- Custom Fonts ---------- */
+@font-face {
+  font-family: "Minerva Modern";
+  src: url("../fonts/MinervaModern-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Minerva Modern";
+  src: url("../fonts/MinervaModern-Italic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Minerva Modern";
+  src: url("../fonts/MinervaModern-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Minerva Modern";
+  src: url("../fonts/MinervaModern-BoldItalic.ttf") format("truetype");
+  font-weight: 700;
+  font-style: italic;
+}
+@font-face {
+  font-family: "Minerva Modern";
+  src: url("../fonts/MinervaModern-Black.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Futura";
+  src: url("../fonts/Futura-Light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Futura";
+  src: url("../fonts/Futura-Book.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Futura";
+  src: url("../fonts/Futura-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Futura";
+  src: url("../fonts/Futura-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+:root {
+  /* ---------- Color (strict B&W) ---------- */
+  --ink: #0A0A0A;          /* near-black, never pure #000 */
+  --ink-90: #1A1A1A;
+  --ink-60: #6B6B6B;
+  --ink-40: #9A9A9A;
+  --ink-20: #CFCFCF;
+  --rule:   rgba(10, 10, 10, 0.12);
+  --rule-strong: rgba(10, 10, 10, 0.22);
+
+  --paper:        #F6F6F6;  /* warm off-white "daylight paper" */
+  --paper-bright: #FFFFFF;  /* product pedestal / drawer bg */
+  --paper-shade:  #ECECEC;  /* subtle shade for card hover */
+
+  /* Single natural-daylight accent, used sparingly on indicator pills. */
+  --daylight: oklch(0.88 0.08 95);
+
+  /* ---------- Type ---------- */
+  --f-display: "Minerva Modern", "Fraunces", "Times New Roman", serif;
+  --f-body:    "Futura", "Inter Tight", "Helvetica Neue", Arial, sans-serif;
+  --f-mono:    "JetBrains Mono", ui-monospace, Menlo, monospace;
+
+  /* ---------- Rhythm ---------- */
+  --maxw: 1440px;
+  --pad-x: clamp(24px, 5vw, 96px);
+  --section-y: clamp(96px, 14vw, 180px);
+
+  /* ---------- Motion ---------- */
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --dur-drawer: 420ms;
+  --dur-hover:  200ms;
+}
+
+* { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink); font-family: var(--f-body); overflow-x: hidden; }
+body { font-feature-settings: "ss01", "ss02", "cv11"; }
+
+/* Editorial display */
+.h-display {
+  font-family: var(--f-display);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 0.92;
+}
+
+.eyebrow {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-60);
+}
+
+.rule { border: 0; border-top: 1px solid var(--rule); }
+.rule-strong { border: 0; border-top: 1px solid var(--ink); }
+
+button, a { font-family: inherit; color: inherit; }
+img { display: block; max-width: 100%; }
