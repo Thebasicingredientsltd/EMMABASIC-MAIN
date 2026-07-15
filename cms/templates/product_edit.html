@@ -14,8 +14,7 @@
       <img class="preview" src="{{ url_for('site_assets', filename=p.image[7:]) if p.image and p.image.startswith('assets/') else (p.image or '') }}" alt="preview"/>
       <div class="grow">
         <input type="text" name="image" value="{{ p.image }}" placeholder="assets/..."/>
-        <div class="field-help">Path to current image. Or upload a new one below (replaces the path).</div>
-        <input type="file" name="image_file" accept="image/*" style="margin-top:8px;"/>
+        <div class="field-help">Drag a new image onto the box (or click it) to replace this. Large images are shrunk automatically.</div>
       </div>
     </div>
     <div class="row">

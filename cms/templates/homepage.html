@@ -179,8 +179,11 @@
     var tpl = document.getElementById('tile-template').innerHTML.replace(/IDX/g, count);
     var wrap = document.createElement('div');
     wrap.innerHTML = tpl.trim();
-    document.getElementById('tiles').appendChild(wrap.firstChild);
+    var node = wrap.firstChild;
+    document.getElementById('tiles').appendChild(node);
     document.getElementById('tile_count').value = count + 1;
+    // Wire up drag-and-drop on the new tile's image field
+    if (window.ebInitImgField) window.ebInitImgField(node.querySelector('.img-field'));
   });
 </script>
 {% endblock %}

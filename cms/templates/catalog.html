@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% set active = "catalog" %}
+{% block content %}
+<div style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+  <div>
+    <h1>Product Catalog</h1>
+    <p class="sub">The full range on the <em>Our Products</em> page and every product detail page.</p>
+  </div>
+  <a class="btn secondary" href="{{ url_for('catalog_category_new') }}">+ New category</a>
+</div>
+
+{% for c in catalog %}
+<div class="card">
+  <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+    <div class="grow">
+      <div class="muted" style="letter-spacing:0.12em;">{{ c.number }} {% if c.japanese %}· {{ c.japanese }}{% endif %}</div>
+      <div style="font-size:20px; font-weight:700;">{{ c.name }}</div>
+      {% if c.blurb %}<div class="muted" style="max-width:640px; margin-top:4px;">{{ c.blurb }}</div>{% endif %}
+    </div>
+    <div style="display:flex; gap:8px; align-items:center;">
+      <a class="btn secondary small" href="{{ url_for('catalog_product_new') }}?cat={{ loop.index0 }}">+ Product</a>
+      <a class="btn secondary small" href="{{ url_for('catalog_category_edit', ci=loop.index0) }}">Edit category</a>
+      <form method="post" action="{{ url_for('catalog_category_delete', ci=loop.index0) }}" onsubmit="return confirm('Delete the whole {{ c.name }} category and its {{ c.products|length }} products?');">
+        <button class="btn danger small" type="submit">Delete</button>
+      </form>
+    </div>
+  </div>
+
+  <hr class="hr" style="margin:16px 0;"/>
+
+  {% set ci = loop.index0 %}
+  {% for p in c.products %}
+  <div class="list-item">
+    {% if p.image %}
+      <img class="thumb" src="{{ url_for('site_assets', filename=p.image[7:]) if p.image.startswith('assets/') else p.image }}" alt=""/>
+    {% else %}
+      <div class="thumb"></div>
+    {% endif %}
+    <div class="grow">
+      <div style="font-weight:600;">{{ p.name }}</div>
+      <div class="muted">{{ p.origin }}{% if p.badges %} · {{ p.badges|join(', ') }}{% endif %}</div>
+    </div>
+    <a class="btn secondary small" href="{{ url_for('catalog_product_edit', ci=ci, pi=loop.index0) }}">Edit</a>
+    <form method="post" action="{{ url_for('catalog_product_delete', ci=ci, pi=loop.index0) }}" onsubmit="return confirm('Delete {{ p.name }}?');">
+      <button class="btn danger small" type="submit">Delete</button>
+    </form>
+  </div>
+  {% else %}
+  <p class="muted">No products in this category yet.</p>
+  {% endfor %}
+</div>
+{% else %}
+<div class="card"><p class="muted">No catalog data found.</p></div>
+{% endfor %}
+{% endblock %}

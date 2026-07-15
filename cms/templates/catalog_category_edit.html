@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% set active = "catalog" %}
+{% block content %}
+<h1>{{ 'New category' if is_new else 'Edit category: ' + c.name }}</h1>
+<p class="sub">Categories group products on the <em>Our Products</em> page (e.g. Seasonings, Oils).</p>
+
+<form method="post" action="{{ url_for('catalog_category_save') }}">
+  <input type="hidden" name="index" value="{{ index }}"/>
+  <input type="hidden" name="is_new" value="{{ '1' if is_new else '0' }}"/>
+
+  <div class="card">
+    <div class="row">
+      <div>
+        <label>ID (used internally, no spaces)</label>
+        <input type="text" name="id" value="{{ c.id }}" placeholder="seasonings" required/>
+      </div>
+      <div>
+        <label>Number label</label>
+        <input type="text" name="number" value="{{ c.number }}" placeholder="N°01"/>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label>Name</label>
+        <input type="text" name="name" value="{{ c.name }}" placeholder="Seasonings" required/>
+      </div>
+      <div>
+        <label>Japanese (optional)</label>
+        <input type="text" name="japanese" value="{{ c.japanese or '' }}" placeholder="調味料"/>
+      </div>
+    </div>
+    <label>Blurb</label>
+    <textarea name="blurb" rows="3">{{ c.blurb or '' }}</textarea>
+  </div>
+
+  <div class="actions-bar">
+    <button class="btn" type="submit">Save category</button>
+    <a class="btn secondary" href="{{ url_for('catalog') }}">Cancel</a>
+  </div>
+</form>
+{% endblock %}

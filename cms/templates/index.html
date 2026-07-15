@@ -5,10 +5,15 @@
 <p class="sub">Edit your website content, then publish to GitHub when you're ready.</p>
 
 <div class="dash-cards">
+  <a href="{{ url_for('catalog') }}"><div class="card">
+    <div class="dash-num">{{ catalog_products }}</div>
+    <div>Catalog products</div>
+    <div class="muted">{{ catalog_categories }} categories · Our Products page</div>
+  </div></a>
   <a href="{{ url_for('products') }}"><div class="card">
     <div class="dash-num">{{ product_count }}</div>
-    <div>Products</div>
-    <div class="muted">Images, taglines, ingredients</div>
+    <div>Homepage rail</div>
+    <div class="muted">Featured products on the home page</div>
   </div></a>
   <a href="{{ url_for('journal') }}"><div class="card">
     <div class="dash-num">{{ post_count }}</div>

@@ -60,11 +60,35 @@
   .field-help { font-size: 12px; color: var(--ink-60); margin-top: 4px; }
   .img-field { display: flex; gap: 14px; align-items: flex-start; }
   .img-field .preview { width: 96px; height: 96px; object-fit: cover; border: 1px solid var(--rule); border-radius: 8px; background: var(--paper); flex-shrink: 0; }
+  /* Drag-and-drop zone */
+  .dropzone {
+    position: relative; width: 120px; height: 120px; flex-shrink: 0;
+    border: 1.5px dashed var(--rule); border-radius: 10px; overflow: hidden;
+    cursor: pointer; background: var(--paper);
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color 150ms, background 150ms;
+  }
+  .dropzone .preview { width: 100%; height: 100%; border: none; border-radius: 0; }
+  .dropzone .dz-hint {
+    position: absolute; inset: 0; display: flex; flex-direction: column; gap: 4px;
+    align-items: center; justify-content: center; text-align: center; padding: 8px;
+    font-size: 11px; color: var(--ink-60); background: rgba(246,244,239,0.86);
+    opacity: 0; transition: opacity 150ms; pointer-events: none; line-height: 1.35;
+  }
+  .dropzone:hover .dz-hint, .dropzone.empty .dz-hint { opacity: 1; }
+  .dropzone.dragover { border-color: var(--ink); background: #eae7df; }
+  .dropzone.dragover .dz-hint { opacity: 1; }
+  .dropzone.busy { opacity: 0.7; }
+  .dz-status { font-size: 12px; margin-top: 6px; min-height: 16px; }
+  .dz-status.ok { color: var(--ok); }
+  .dz-status.err { color: var(--err); }
+  .dz-spinner { width: 20px; height: 20px; border: 2px solid var(--ink); border-top-color: transparent; border-radius: 50%; animation: dzspin 0.7s linear infinite; }
+  @keyframes dzspin { to { transform: rotate(360deg); } }
   .actions-bar { display: flex; gap: 10px; align-items: center; margin-top: 24px; }
   .tile-editor { border: 1px solid var(--rule); border-radius: 8px; padding: 14px; margin-bottom: 12px; }
   .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-  .dash-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .dash-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
   .dash-cards a { text-decoration: none; }
   .dash-num { font-size: 40px; font-weight: 700; letter-spacing: -0.02em; }
   .hr { height: 1px; background: var(--rule); border: none; margin: 28px 0; }
@@ -75,7 +99,8 @@
   <a href="{{ url_for('index') }}" class="brand">Emma Basic · CMS</a>
   <nav class="tabs">
     <a href="{{ url_for('index') }}" class="{{ 'active' if active=='home' }}">Dashboard</a>
-    <a href="{{ url_for('products') }}" class="{{ 'active' if active=='products' }}">Products</a>
+    <a href="{{ url_for('products') }}" class="{{ 'active' if active=='products' }}">Home Rail</a>
+    <a href="{{ url_for('catalog') }}" class="{{ 'active' if active=='catalog' }}">Catalog</a>
     <a href="{{ url_for('journal') }}" class="{{ 'active' if active=='journal' }}">Blog</a>
     <a href="{{ url_for('homepage') }}" class="{{ 'active' if active=='homepage' }}">Homepage</a>
     <a href="http://localhost:8080/Emma%20Basic%20Homepage.html" target="_blank">View site ↗</a>
@@ -90,13 +115,87 @@
   {% block content %}{% endblock %}
 </main>
 <script>
-  // Live image preview when choosing a file
-  document.addEventListener("change", function (e) {
-    if (e.target.matches('input[type=file]')) {
-      var prev = e.target.closest('.img-field')?.querySelector('.preview');
-      if (prev && e.target.files[0]) prev.src = URL.createObjectURL(e.target.files[0]);
+  // Upgrade every image field into a drag-and-drop uploader. Dropped/selected
+  // images are uploaded + optimized immediately, and the text path field is
+  // updated with the new (smaller) file's path.
+  function ebUploadFile(file, els) {
+    if (!file) return;
+    if (!/^image\//.test(file.type) && !/\.(png|jpe?g|gif|webp|avif|svg)$/i.test(file.name)) {
+      els.status.textContent = "That doesn't look like an image."; els.status.className = "dz-status err"; return;
     }
-  });
+    els.zone.classList.add("busy");
+    els.hint.innerHTML = '<div class="dz-spinner"></div>';
+    els.status.textContent = "Uploading & optimizing…"; els.status.className = "dz-status";
+    var fd = new FormData(); fd.append("file", file);
+    fetch("/api/upload", { method: "POST", body: fd })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        els.zone.classList.remove("busy");
+        if (!data.ok) { els.status.textContent = data.error || "Upload failed."; els.status.className = "dz-status err"; els.hint.innerHTML = ebHintHTML(); return; }
+        els.input.value = data.path;
+        els.preview.src = data.preview_url + "?t=" + Date.now();
+        els.zone.classList.remove("empty");
+        els.hint.innerHTML = ebHintHTML();
+        els.status.textContent = data.message; els.status.className = "dz-status ok";
+        if (els.field) {
+          var sizeEl = els.field.querySelector(".img-size");
+          if (sizeEl) sizeEl.textContent = "Size: " + data.new_kb;
+        }
+      })
+      .catch(function () {
+        els.zone.classList.remove("busy");
+        els.hint.innerHTML = ebHintHTML();
+        els.status.textContent = "Upload failed — is the CMS still running?"; els.status.className = "dz-status err";
+      });
+  }
+
+  function ebHintHTML() { return "Drag image here<br/>or click to browse"; }
+
+  window.ebInitImgField = function (field) {
+    if (!field || field.dataset.dzReady) return;
+    var preview = field.querySelector(".preview");
+    var input = field.querySelector('input[type=text]');
+    var oldFile = field.querySelector('input[type=file]');
+    if (!preview || !input) return;
+    field.dataset.dzReady = "1";
+    if (oldFile) oldFile.remove(); // AJAX handles uploads now
+
+    // Build dropzone around the preview
+    var zone = document.createElement("div");
+    zone.className = "dropzone" + (input.value ? "" : " empty");
+    preview.parentNode.insertBefore(zone, preview);
+    zone.appendChild(preview);
+    var hint = document.createElement("div");
+    hint.className = "dz-hint";
+    hint.innerHTML = ebHintHTML();
+    zone.appendChild(hint);
+
+    var picker = document.createElement("input");
+    picker.type = "file"; picker.accept = "image/*"; picker.style.display = "none";
+    zone.appendChild(picker);
+
+    var status = document.createElement("div");
+    status.className = "dz-status";
+    // place status under the text input's column
+    (input.closest(".grow") || input.parentNode).appendChild(status);
+
+    var els = { zone: zone, hint: hint, preview: preview, input: input, status: status, field: field };
+
+    zone.addEventListener("click", function () { picker.click(); });
+    picker.addEventListener("change", function () { ebUploadFile(picker.files[0], els); picker.value = ""; });
+    ["dragenter", "dragover"].forEach(function (ev) {
+      zone.addEventListener(ev, function (e) { e.preventDefault(); e.stopPropagation(); zone.classList.add("dragover"); });
+    });
+    ["dragleave", "dragend", "drop"].forEach(function (ev) {
+      zone.addEventListener(ev, function (e) { e.preventDefault(); e.stopPropagation(); zone.classList.remove("dragover"); });
+    });
+    zone.addEventListener("drop", function (e) {
+      var f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+      ebUploadFile(f, els);
+    });
+  };
+
+  document.querySelectorAll(".img-field").forEach(window.ebInitImgField);
 </script>
 {% block scripts %}{% endblock %}
 </body>

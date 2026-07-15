@@ -27,6 +27,7 @@ from datetime import datetime
 from flask import (
     Flask,
     flash,
+    jsonify,
     redirect,
     render_template,
     request,
@@ -34,6 +35,15 @@ from flask import (
     url_for,
 )
 from werkzeug.utils import secure_filename
+
+try:
+    from PIL import Image, ImageOps
+    # This is a local tool where the owner uploads their own photos, so lift
+    # Pillow's decompression-bomb guard to allow very large source images.
+    Image.MAX_IMAGE_PIXELS = None
+    HAVE_PIL = True
+except Exception:  # Pillow not installed
+    HAVE_PIL = False
 
 # ---------------------------------------------------------------------------
 # Paths
@@ -49,14 +59,23 @@ DATA_FILES = {
     "products": {"file": os.path.join(DATA_DIR, "products.js"), "var": "window.EB_PRODUCTS"},
     "journal": {"file": os.path.join(DATA_DIR, "journal.js"), "var": "window.EB_JOURNAL"},
     "homepage": {"file": os.path.join(DATA_DIR, "homepage.js"), "var": "window.EB_HOME"},
+    "catalog": {"file": os.path.join(DATA_DIR, "catalog.js"), "var": "window.EB_CATALOG"},
 }
 
 ALLOWED_EXT = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".avif", ".svg"}
+
+# Image optimization settings. Uploaded photos are scaled down to at most
+# MAX_DIM on the longest edge and re-encoded to shed file size — the main
+# cause of a slow site is oversized source images.
+MAX_DIM = 2000
+JPEG_QUALITY = 82
+WEBP_QUALITY = 82
 
 HEADERS = {
     "products": "/* Emma Basic — product data (CMS-managed). The payload below is strict JSON. */",
     "journal": "/* Emma Basic — journal / blog data (CMS-managed). The payload below is strict JSON. */",
     "homepage": "/* Emma Basic — homepage content (CMS-managed). The payload below is strict JSON. */",
+    "catalog": "/* Emma Basic — full product catalog (CMS-managed). The payload below is strict JSON. */",
 }
 
 app = Flask(__name__)
@@ -140,8 +159,111 @@ def text_to_body(text):
     return blocks
 
 
+def qa_to_text(qa):
+    """Render a list of {q, a} pairs as editable text: question on the first
+    line, answer on the following line(s), pairs separated by a blank line."""
+    blocks = []
+    for item in qa or []:
+        q = (item.get("q") or "").strip()
+        a = (item.get("a") or "").strip()
+        blocks.append((q + "\n" + a).strip())
+    return "\n\n".join(blocks)
+
+
+def text_to_qa(text):
+    qa = []
+    for chunk in text_to_paras(text):
+        lines = [ln for ln in chunk.split("\n")]
+        q = lines[0].strip()
+        a = " ".join(ln.strip() for ln in lines[1:]).strip()
+        if q:
+            qa.append({"q": q, "a": a})
+    return qa
+
+
+def parse_num(raw):
+    """Parse a numeric form field. Returns int when whole, float otherwise,
+    or None when blank/unparseable."""
+    raw = (raw or "").strip()
+    if raw == "":
+        return None
+    try:
+        val = float(raw)
+    except ValueError:
+        return None
+    return int(val) if val.is_integer() else val
+
+
+NUTRITION_KEYS = [
+    ("energy_kj", "Energy (kJ)"),
+    ("energy_kcal", "Energy (kcal)"),
+    ("fat", "Fat (g)"),
+    ("saturates", "Saturates (g)"),
+    ("carbohydrate", "Carbohydrate (g)"),
+    ("sugars", "Sugars (g)"),
+    ("fibre", "Fibre (g)"),
+    ("protein", "Protein (g)"),
+    ("salt", "Salt (g)"),
+]
+
+
+def _human_kb(num_bytes):
+    return "%.0f KB" % (num_bytes / 1024.0) if num_bytes < 1024 * 1024 \
+        else "%.1f MB" % (num_bytes / (1024.0 * 1024.0))
+
+
+def optimize_image(abs_path):
+    """Resize/recompress an image in place to reduce file size.
+
+    Returns a dict describing what changed (used for user feedback). Safely
+    no-ops for vector/unsupported formats (e.g. SVG, AVIF without a plugin).
+    """
+    info = {"optimized": False}
+    if not HAVE_PIL:
+        return info
+    ext = os.path.splitext(abs_path)[1].lower()
+    try:
+        img = Image.open(abs_path)
+        img.load()
+    except Exception:
+        return info  # not a raster image Pillow understands — leave untouched
+
+    info["dims_before"] = "%d×%d" % img.size
+    img = ImageOps.exif_transpose(img)  # honour phone orientation
+    resized = False
+    if max(img.size) > MAX_DIM:
+        img.thumbnail((MAX_DIM, MAX_DIM))
+        resized = True
+
+    try:
+        if ext in (".jpg", ".jpeg"):
+            img.convert("RGB").save(abs_path, quality=JPEG_QUALITY, optimize=True, progressive=True)
+        elif ext == ".png":
+            img.save(abs_path, optimize=True)
+        elif ext == ".webp":
+            img.save(abs_path, quality=WEBP_QUALITY, method=6)
+        else:
+            # gif or other — only rewrite if we resized
+            if resized:
+                img.save(abs_path)
+            else:
+                return info
+        info["optimized"] = True
+        info["dims_after"] = "%d×%d" % img.size
+    except Exception:
+        pass
+    return info
+
+
 def save_upload(file_storage):
-    """Save an uploaded image into assets/uploads and return its web path."""
+    """Save + optimize an uploaded image; return its web path (or None)."""
+    result = save_upload_detailed(file_storage)
+    return result["path"] if result else None
+
+
+def save_upload_detailed(file_storage):
+    """Save an uploaded image into assets/uploads, optimize it, and return
+    a dict with the web path and before/after size info."""
     if not file_storage or not file_storage.filename:
         return None
     ext = os.path.splitext(file_storage.filename)[1].lower()
@@ -151,8 +273,25 @@ def save_upload(file_storage):
     base = secure_filename(os.path.splitext(file_storage.filename)[0]) or "image"
     stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
     name = "{base}-{stamp}{ext}".format(base=base, stamp=stamp, ext=ext)
-    file_storage.save(os.path.join(UPLOAD_DIR, name))
-    return "assets/uploads/" + name
+    abs_path = os.path.join(UPLOAD_DIR, name)
+    file_storage.save(abs_path)
+
+    orig_bytes = os.path.getsize(abs_path)
+    opt = optimize_image(abs_path)
+    new_bytes = os.path.getsize(abs_path)
+
+    web_path = "assets/uploads/" + name
+    return {
+        "path": web_path,
+        "preview_url": url_for("site_assets", filename="uploads/" + name),
+        "orig_bytes": orig_bytes,
+        "new_bytes": new_bytes,
+        "orig_kb": _human_kb(orig_bytes),
+        "new_kb": _human_kb(new_bytes),
+        "optimized": opt.get("optimized", False),
+        "dims_before": opt.get("dims_before"),
+        "dims_after": opt.get("dims_after"),
+    }
 
 
 def resolve_image(form_key, existing=""):
@@ -163,6 +302,23 @@ def resolve_image(form_key, existing=""):
     return request.form.get(form_key, existing).strip()
 
 
+def image_file_size(web_path):
+    """Return a human-readable file size for a site image path (or None)."""
+    if not web_path:
+        return None
+    rel = web_path.strip().lstrip("/")
+    abs_path = os.path.join(PROJECT_DIR, *rel.split("/"))
+    if os.path.isfile(abs_path):
+        return _human_kb(os.path.getsize(abs_path))
+    return None
+
+
+def gallery_with_sizes(product):
+    """Build the gallery list [{path, size}] for a catalog product."""
+    return [{"path": img, "size": image_file_size(img)}
+            for img in (product.get("images") or [])]
+
+
 # ---------------------------------------------------------------------------
 # Routes — dashboard
 # ---------------------------------------------------------------------------
@@ -170,10 +326,13 @@ def resolve_image(form_key, existing=""):
 def index():
     products = load_data("products")
     journal = load_data("journal")
+    catalog_data = load_data("catalog")
     return render_template(
         "index.html",
         product_count=len(products),
         post_count=len(journal.get("posts", [])),
+        catalog_categories=len(catalog_data),
+        catalog_products=_catalog_counts(catalog_data),
         git=git_status_summary(),
     )
 
@@ -182,6 +341,34 @@ def index():
 @app.route("/site-assets/<path:filename>")
 def site_assets(filename):
     return send_from_directory(ASSETS_DIR, filename)
+
+
+# Drag-and-drop / AJAX image upload. Saves + optimizes and returns JSON so the
+# form field and preview can update instantly without a page reload.
+@app.route("/api/upload", methods=["POST"])
+def api_upload():
+    file_storage = request.files.get("file")
+    if not file_storage or not file_storage.filename:
+        return jsonify({"ok": False, "error": "No file received."}), 400
+    try:
+        result = save_upload_detailed(file_storage)
+    except ValueError as exc:
+        return jsonify({"ok": False, "error": str(exc)}), 400
+    except Exception as exc:  # pragma: no cover
+        return jsonify({"ok": False, "error": "Upload failed: %s" % exc}), 500
+
+    if result["optimized"] and result["new_bytes"] < result["orig_bytes"]:
+        saved = 100 - (result["new_bytes"] * 100 // max(1, result["orig_bytes"]))
+        dims = ""
+        if result.get("dims_before") and result.get("dims_after") and result["dims_before"] != result["dims_after"]:
+            dims = " · %s → %s" % (result["dims_before"], result["dims_after"])
+        result["message"] = "Optimized: %s → %s (%d%% smaller)%s" % (
+            result["orig_kb"], result["new_kb"], saved, dims,
+        )
+    else:
+        result["message"] = "Uploaded (%s)" % result["new_kb"]
+    result["ok"] = True
+    return jsonify(result)
 
 
 # ---------------------------------------------------------------------------
@@ -461,6 +648,219 @@ def homepage_save():
     save_data("homepage", h)
     flash("Homepage content saved.", "ok")
     return redirect(url_for("homepage"))
+
+
+# ---------------------------------------------------------------------------
+# Routes — product catalog (the full "Our Products" range)
+# ---------------------------------------------------------------------------
+def _catalog_counts(catalog):
+    return sum(len(c.get("products", [])) for c in catalog)
+
+
+@app.route("/catalog")
+def catalog():
+    return render_template("catalog.html", catalog=load_data("catalog"))
+
+
+@app.route("/catalog/category/new")
+def catalog_category_new():
+    blank = {"id": "", "number": "", "name": "", "japanese": "", "blurb": ""}
+    return render_template("catalog_category_edit.html", c=blank, index=-1, is_new=True)
+
+
+@app.route("/catalog/category/<int:ci>")
+def catalog_category_edit(ci):
+    cats = load_data("catalog")
+    if ci < 0 or ci >= len(cats):
+        flash("Category not found.", "error")
+        return redirect(url_for("catalog"))
+    return render_template("catalog_category_edit.html", c=cats[ci], index=ci, is_new=False)
+
+
+@app.route("/catalog/category/save", methods=["POST"])
+def catalog_category_save():
+    cats = load_data("catalog")
+    index = int(request.form.get("index", "-1"))
+    is_new = request.form.get("is_new") == "1"
+
+    existing = {} if is_new else (cats[index] if 0 <= index < len(cats) else {})
+    cat = dict(existing)  # preserve products, meta, and any extra fields
+    cat["id"] = request.form.get("id", "").strip()
+    cat["number"] = request.form.get("number", "").strip()
+    cat["name"] = request.form.get("name", "").strip()
+    cat["japanese"] = request.form.get("japanese", "").strip()
+    cat["blurb"] = request.form.get("blurb", "").strip()
+    cat.setdefault("products", [])
+
+    if not cat["id"] or not cat["name"]:
+        flash("A category needs at least an id and a name.", "error")
+        return redirect(request.referrer or url_for("catalog"))
+
+    if is_new:
+        cats.append(cat)
+    else:
+        cats[index] = cat
+    save_data("catalog", cats)
+    flash("Saved category: %s" % cat["name"], "ok")
+    return redirect(url_for("catalog"))
+
+
+@app.route("/catalog/category/<int:ci>/delete", methods=["POST"])
+def catalog_category_delete(ci):
+    cats = load_data("catalog")
+    if 0 <= ci < len(cats):
+        removed = cats.pop(ci)
+        save_data("catalog", cats)
+        flash("Deleted category: %s (and its %d products)"
+              % (removed.get("name", ""), len(removed.get("products", []))), "ok")
+    return redirect(url_for("catalog"))
+
+
+@app.route("/catalog/product/new")
+def catalog_product_new():
+    cats = load_data("catalog")
+    ci = int(request.args.get("cat", "0"))
+    blank = {
+        "id": "", "name": "", "japanese": "", "origin": "", "tone": "warm",
+        "tagline": "", "amazon": "", "image": "", "images": [],
+        "badges": [], "pairings": [], "sellingPoints": [],
+        "ingredients": "", "allergens": "",
+        "nutrition": {}, "education": {}, "qa": [],
+    }
+    return render_template(
+        "catalog_product_edit.html", p=blank, cats=cats, ci=ci, pi=-1,
+        is_new=True, nutrition_keys=NUTRITION_KEYS,
+        edu_body_text="", qa_text="", gallery=[], main_size=None,
+    )
+
+
+@app.route("/catalog/product/<int:ci>/<int:pi>")
+def catalog_product_edit(ci, pi):
+    cats = load_data("catalog")
+    if ci < 0 or ci >= len(cats) or pi < 0 or pi >= len(cats[ci].get("products", [])):
+        flash("Product not found.", "error")
+        return redirect(url_for("catalog"))
+    p = cats[ci]["products"][pi]
+    return render_template(
+        "catalog_product_edit.html", p=p, cats=cats, ci=ci, pi=pi,
+        is_new=False, nutrition_keys=NUTRITION_KEYS,
+        edu_body_text=paras_to_text((p.get("education") or {}).get("body", [])),
+        qa_text=qa_to_text(p.get("qa", [])),
+        gallery=gallery_with_sizes(p),
+        main_size=image_file_size(p.get("image", "")),
+    )
+
+
+@app.route("/catalog/product/save", methods=["POST"])
+def catalog_product_save():
+    cats = load_data("catalog")
+    ci = int(request.form.get("cat_index", "-1"))
+    pi = int(request.form.get("prod_index", "-1"))
+    is_new = request.form.get("is_new") == "1"
+    target_ci = int(request.form.get("target_cat_index", ci))
+
+    if ci < 0 or ci >= len(cats):
+        flash("Category not found.", "error")
+        return redirect(url_for("catalog"))
+    if target_ci < 0 or target_ci >= len(cats):
+        target_ci = ci
+
+    existing = {}
+    if not is_new and 0 <= pi < len(cats[ci].get("products", [])):
+        existing = cats[ci]["products"][pi]
+
+    # Start from the existing product so untouched fields (image offsets,
+    # scales, noWhiteBg, and anything else) are preserved verbatim.
+    prod = dict(existing)
+    prod["id"] = request.form.get("id", "").strip()
+    prod["name"] = request.form.get("name", "").strip()
+    prod["japanese"] = request.form.get("japanese", "").strip()
+    prod["origin"] = request.form.get("origin", "").strip()
+    prod["tone"] = request.form.get("tone", "warm").strip()
+    prod["tagline"] = request.form.get("tagline", "").strip()
+    prod["amazon"] = request.form.get("amazon", "").strip()
+    prod["image"] = resolve_image("image", existing.get("image", ""))
+    prod["badges"] = lines_to_list(request.form.get("badges", ""))
+    prod["pairings"] = lines_to_list(request.form.get("pairings", ""))
+    prod["sellingPoints"] = lines_to_list(request.form.get("sellingPoints", ""))
+    prod["ingredients"] = request.form.get("ingredients", "").strip()
+    prod["allergens"] = request.form.get("allergens", "").strip()
+
+    # Gallery images arrive as repeated `gallery_path` fields (in display order).
+    images = [pth.strip() for pth in request.form.getlist("gallery_path") if pth.strip()]
+    if images:
+        prod["images"] = images
+    else:
+        prod.pop("images", None)
+
+    # Nutrition — preserve any extra keys, update the standard ones.
+    nutr = dict(existing.get("nutrition") or {})
+    serving = request.form.get("nutr_serving", "").strip()
+    if serving:
+        nutr["serving"] = serving
+    else:
+        nutr.pop("serving", None)
+    for key, _label in NUTRITION_KEYS:
+        val = parse_num(request.form.get("nutr_" + key, ""))
+        if val is None:
+            nutr.pop(key, None)
+        else:
+            nutr[key] = val
+    if nutr:
+        prod["nutrition"] = nutr
+    else:
+        prod.pop("nutrition", None)
+
+    # Education block
+    edu = dict(existing.get("education") or {})
+    edu_title = request.form.get("edu_title", "").strip()
+    edu_body = text_to_paras(request.form.get("edu_body", ""))
+    if edu_title:
+        edu["title"] = edu_title
+    else:
+        edu.pop("title", None)
+    if edu_body:
+        edu["body"] = edu_body
+    else:
+        edu.pop("body", None)
+    if edu:
+        prod["education"] = edu
+    else:
+        prod.pop("education", None)
+
+    # Q&A
+    qa = text_to_qa(request.form.get("qa", ""))
+    if qa:
+        prod["qa"] = qa
+    else:
+        prod.pop("qa", None)
+
+    if not prod["id"] or not prod["name"]:
+        flash("A product needs at least an id and a name.", "error")
+        return redirect(request.referrer or url_for("catalog"))
+
+    if is_new:
+        cats[target_ci].setdefault("products", []).append(prod)
+    elif target_ci != ci:
+        # Moved to another category
+        cats[ci]["products"].pop(pi)
+        cats[target_ci].setdefault("products", []).append(prod)
+    else:
+        cats[ci]["products"][pi] = prod
+
+    save_data("catalog", cats)
+    flash("Saved product: %s" % prod["name"], "ok")
+    return redirect(url_for("catalog"))
+
+
+@app.route("/catalog/product/<int:ci>/<int:pi>/delete", methods=["POST"])
+def catalog_product_delete(ci, pi):
+    cats = load_data("catalog")
+    if 0 <= ci < len(cats) and 0 <= pi < len(cats[ci].get("products", [])):
+        removed = cats[ci]["products"].pop(pi)
+        save_data("catalog", cats)
+        flash("Deleted product: %s" % removed.get("name", ""), "ok")
+    return redirect(url_for("catalog"))
 
 
 # ---------------------------------------------------------------------------

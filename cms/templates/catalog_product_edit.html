@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+{% set active = "catalog" %}
+{% set nutr = p.nutrition or {} %}
+{% set edu = p.education or {} %}
+{% block content %}
+<h1>{{ 'New product' if is_new else 'Edit: ' + p.name }}</h1>
+<p class="sub">Everything here appears on the <em>Our Products</em> page and this product's detail page. Blank fields are hidden on the site.</p>
+
+<form method="post" action="{{ url_for('catalog_product_save') }}" enctype="multipart/form-data">
+  <input type="hidden" name="cat_index" value="{{ ci }}"/>
+  <input type="hidden" name="prod_index" value="{{ pi }}"/>
+  <input type="hidden" name="is_new" value="{{ '1' if is_new else '0' }}"/>
+
+  <style>
+    .gallery-item { padding: 14px 0; border-bottom: 1px solid var(--rule); }
+    .gallery-item:first-child { padding-top: 0; }
+    .gallery-item:last-child { border-bottom: none; }
+    .img-size { font-size: 12px; margin-top: 6px; }
+  </style>
+
+  <div class="card">
+    <label>Main image</label>
+    <div class="img-field">
+      <img class="preview" src="{{ url_for('site_assets', filename=p.image[7:]) if p.image and p.image.startswith('assets/') else (p.image or '') }}" alt="preview"/>
+      <div class="grow">
+        <input type="text" name="image" value="{{ p.image }}" placeholder="assets/..."/>
+        <div class="img-size muted">{% if main_size %}Size: {{ main_size }}{% endif %}</div>
+        <div class="field-help">Drag a new image onto the box (or click it) to replace it. Large images are shrunk automatically.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <label style="margin-top:0;">Gallery images</label>
+    <div class="field-help" style="margin-bottom:14px;">Shown in the image carousel on the product page. Drag a photo onto any box (or click to browse) to replace it — new images are optimized automatically. Add or remove as many as you like; the file size shows under each one.</div>
+    <div id="eb-gallery">
+      {% for g in gallery %}
+      <div class="img-field gallery-item">
+        <img class="preview" src="{{ url_for('site_assets', filename=g.path[7:]) if g.path.startswith('assets/') else g.path }}" alt="preview"/>
+        <div class="grow">
+          <input type="text" name="gallery_path" value="{{ g.path }}" placeholder="assets/..."/>
+          <div class="img-size muted">Size: {{ g.size if g.size else 'unknown (file not found)' }}</div>
+          <button type="button" class="btn danger small eb-remove-img" style="margin-top:10px;">Remove image</button>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div style="margin-top:14px;">
+      <button type="button" class="btn secondary small" id="eb-add-img">+ Add image</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <label>Category</label>
+    <select name="target_cat_index">
+      {% for c in cats %}
+      <option value="{{ loop.index0 }}" {{ 'selected' if loop.index0 == ci }}>{{ c.number }} — {{ c.name }}</option>
+      {% endfor %}
+    </select>
+    <div class="field-help">Change this to move the product into a different category.</div>
+
+    <div class="row">
+      <div>
+        <label>ID (used internally, no spaces)</label>
+        <input type="text" name="id" value="{{ p.id }}" placeholder="nori-furikake" required/>
+      </div>
+      <div>
+        <label>Name</label>
+        <input type="text" name="name" value="{{ p.name }}" required/>
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label>Origin line</label>
+        <input type="text" name="origin" value="{{ p.origin or '' }}" placeholder="Japanese style"/>
+      </div>
+      <div>
+        <label>Japanese (optional)</label>
+        <input type="text" name="japanese" value="{{ p.japanese or '' }}" placeholder="のりふりかけ"/>
+      </div>
+      <div>
+        <label>Tone</label>
+        <input type="text" name="tone" value="{{ p.tone or 'warm' }}" placeholder="warm"/>
+      </div>
+    </div>
+    <label>Tagline</label>
+    <input type="text" name="tagline" value="{{ p.tagline or '' }}"/>
+    <label>Amazon URL (optional)</label>
+    <input type="url" name="amazon" value="{{ p.amazon or '' }}" placeholder="https://www.amazon.co.uk/dp/..."/>
+  </div>
+
+  <div class="card">
+    <div class="row">
+      <div>
+        <label>Badges — one per line</label>
+        <textarea name="badges" rows="6" placeholder="Great Taste">{{ p.badges | join('\n') }}</textarea>
+        <div class="field-help">Also drive the filters (e.g. “Vegan”, “Gluten Free”, “High Fibre”).</div>
+      </div>
+      <div>
+        <label>Pairings — one per line</label>
+        <textarea name="pairings" rows="6" placeholder="Steamed rice">{{ p.pairings | join('\n') }}</textarea>
+      </div>
+    </div>
+    <label>Selling points — one per line</label>
+    <textarea name="sellingPoints" rows="6">{{ p.sellingPoints | join('\n') }}</textarea>
+  </div>
+
+  <div class="card">
+    <label>Ingredients</label>
+    <textarea name="ingredients" rows="3">{{ p.ingredients or '' }}</textarea>
+    <label>Allergens</label>
+    <textarea name="allergens" rows="2">{{ p.allergens or '' }}</textarea>
+  </div>
+
+  <div class="card">
+    <label style="margin-top:0;">Nutrition</label>
+    <div class="row">
+      <div>
+        <label>Serving basis</label>
+        <input type="text" name="nutr_serving" value="{{ nutr.get('serving', '') }}" placeholder="per 100g"/>
+      </div>
+    </div>
+    <div class="grid4">
+      {% for key, label in nutrition_keys %}
+      <div>
+        <label>{{ label }}</label>
+        <input type="text" name="nutr_{{ key }}" value="{{ nutr.get(key) if nutr.get(key) is not none else '' }}"/>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="field-help">Leave a field blank to omit it. Numbers only (e.g. 35.2).</div>
+  </div>
+
+  <div class="card">
+    <label style="margin-top:0;">Education block (on the product page)</label>
+    <label>Heading</label>
+    <input type="text" name="edu_title" value="{{ edu.get('title', '') }}"/>
+    <label>Body — separate paragraphs with a blank line</label>
+    <textarea name="edu_body" rows="6">{{ edu_body_text }}</textarea>
+  </div>
+
+  <div class="card">
+    <label style="margin-top:0;">Questions &amp; answers</label>
+    <textarea name="qa" rows="8" placeholder="How long do I soak it?&#10;15–20 minutes in warm water.">{{ qa_text }}</textarea>
+    <div class="field-help">One Q&amp;A per block. First line is the question, the following line(s) are the answer. Separate blocks with a blank line.</div>
+  </div>
+
+  <div class="actions-bar">
+    <button class="btn" type="submit">Save product</button>
+    <a class="btn secondary" href="{{ url_for('catalog') }}">Cancel</a>
+  </div>
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function () {
+  function galleryPreviewSrc(path) {
+    if (!path) return "";
+    return path.indexOf("assets/") === 0 ? "/site-assets/" + path.slice(7) : path;
+  }
+  function wireRemove(btn) {
+    if (!btn) return;
+    btn.addEventListener("click", function () {
+      var item = btn.closest(".gallery-item");
+      if (item) item.remove();
+    });
+  }
+  document.querySelectorAll("#eb-gallery .eb-remove-img").forEach(wireRemove);
+
+  var addBtn = document.getElementById("eb-add-img");
+  if (addBtn) {
+    addBtn.addEventListener("click", function () {
+      var list = document.getElementById("eb-gallery");
+      var row = document.createElement("div");
+      row.className = "img-field gallery-item";
+      row.innerHTML =
+        '<img class="preview" src="" alt="preview"/>' +
+        '<div class="grow">' +
+          '<input type="text" name="gallery_path" value="" placeholder="assets/..."/>' +
+          '<div class="img-size muted"></div>' +
+          '<button type="button" class="btn danger small eb-remove-img" style="margin-top:10px;">Remove image</button>' +
+        '</div>';
+      list.appendChild(row);
+      if (window.ebInitImgField) window.ebInitImgField(row);
+      wireRemove(row.querySelector(".eb-remove-img"));
+    });
+  }
+
+  // Typing/pasting a path updates that row's preview.
+  document.addEventListener("input", function (e) {
+    if (e.target && e.target.name === "gallery_path") {
+      var item = e.target.closest(".gallery-item");
+      var prev = item && item.querySelector(".preview");
+      if (prev) prev.src = galleryPreviewSrc(e.target.value.trim());
+    }
+  });
+})();
+</script>
+{% endblock %}
