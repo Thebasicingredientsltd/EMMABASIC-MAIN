@@ -35,7 +35,6 @@ window.EB_CATALOG = [
           "High Fibre",
           "Source of Protein",
           "Vegan",
-          "No Additives",
           "Gluten Free"
         ],
         "amazon": "https://www.amazon.co.uk/dp/B098D5RKP9",
@@ -75,10 +74,11 @@ window.EB_CATALOG = [
         "japanese": "キムチふりかけ",
         "image": "assets/products-nobg/Kimchi furikake.png",
         "images": [
-          "assets/products-nobg/Kimchi furikake.png",
-          "assets/back-of-pack/Kimchi Furikake (1).jpg",
-          "assets/back-of-pack/Kimchi Furikake (2).jpg",
-          "assets/Range-image.png"
+          "assets/uploads/2025_12_01_BasicIngredient-145-20260717-181704.jpg",
+          "assets/uploads/2025_12_01_BasicIngredient-158-20260717-181728.jpg",
+          "assets/uploads/Runway_Nano_Banana_2_Show_me_a_three-quarter_angle_040226_2-20260717-181821.png",
+          "assets/uploads/Runway_Nano_Banana_2_A_clean__minimal_infographic-style_image_040526-20260717-181832.png",
+          "assets/uploads/EmmaBasic-Dishes_SandyWood_119_W-20260717-181850.jpg"
         ],
         "tone": "warm",
         "origin": "Japanese style",
@@ -91,7 +91,6 @@ window.EB_CATALOG = [
         "badges": [
           "Great Taste",
           "Vegan",
-          "No Additives",
           "All-Purpose"
         ],
         "amazon": "https://www.amazon.co.uk/dp/B0DKDDN8K7",
@@ -146,7 +145,6 @@ window.EB_CATALOG = [
         "badges": [
           "High Fibre",
           "Source of Protein",
-          "No MSG",
           "Vegan",
           "Gluten Free"
         ],

@@ -1,0 +1,269 @@
+{% extends "base.html" %}
+{% set active = "people" %}
+{% macro imgsrc(path) %}{{ url_for('site_assets', filename=path[7:]) if path and path.startswith('assets/') else (path or '') }}{% endmacro %}
+{% block content %}
+<h1>People &amp; Places</h1>
+<p class="sub">Everything on the People &amp; Places page — the team, the "who we are" story, services, trade ordering, and contact details.</p>
+
+<form method="post" action="{{ url_for('people_save') }}" enctype="multipart/form-data">
+
+  <div class="card">
+    <h2 style="margin-top:0;">Hero</h2>
+    <label>Eyebrow</label>
+    <input type="text" name="hero_eyebrow" value="{{ d.hero.eyebrow }}"/>
+    <div class="row">
+      <div>
+        <label>Title</label>
+        <input type="text" name="hero_title" value="{{ d.hero.title }}"/>
+      </div>
+      <div>
+        <label>Title (italic)</label>
+        <input type="text" name="hero_titleItalic" value="{{ d.hero.titleItalic }}"/>
+      </div>
+    </div>
+    <label>Subtitle</label>
+    <textarea name="hero_subtitle" rows="2">{{ d.hero.subtitle }}</textarea>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;">Team</h2>
+    <div class="row">
+      <div><label>Heading line 1</label><input type="text" name="team_headingLine1" value="{{ d.team.headingLine1 }}"/></div>
+      <div><label>Heading line 2</label><input type="text" name="team_headingLine2" value="{{ d.team.headingLine2 }}"/></div>
+    </div>
+    <label>Intro</label>
+    <textarea name="team_intro" rows="2">{{ d.team.intro }}</textarea>
+
+    <label>Team members</label>
+    <div id="members">
+      {% for m in (d.team.members or []) %}
+      <div class="tile-editor" data-member>
+        <div class="row">
+          <div>
+            <label>Primary photo</label>
+            <div class="img-field">
+              <img class="preview" src="{{ imgsrc(m.image) }}" alt="preview"/>
+              <div class="grow">
+                <input type="text" name="member{{ loop.index0 }}_image" value="{{ m.image }}"/>
+                <input type="file" name="member{{ loop.index0 }}_image_file" accept="image/*" style="margin-top:8px;"/>
+              </div>
+            </div>
+          </div>
+          <div>
+            <label>Second photo (hover / optional)</label>
+            <div class="img-field">
+              <img class="preview" src="{{ imgsrc(m.image2) }}" alt="preview"/>
+              <div class="grow">
+                <input type="text" name="member{{ loop.index0 }}_image2" value="{{ m.image2 or '' }}"/>
+                <input type="file" name="member{{ loop.index0 }}_image2_file" accept="image/*" style="margin-top:8px;"/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div><label>Name</label><input type="text" name="member{{ loop.index0 }}_name" value="{{ m.name }}"/></div>
+          <div><label>Role</label><input type="text" name="member{{ loop.index0 }}_role" value="{{ m.role }}"/></div>
+        </div>
+        <label>Bio (separate paragraphs with a blank line)</label>
+        <textarea name="member{{ loop.index0 }}_bio" rows="5">{{ m.bio }}</textarea>
+        <div class="grid4">
+          <div><label>Tone</label>
+            <select name="member{{ loop.index0 }}_tone">
+              {% for v in ['warm','cool','ink'] %}<option value="{{ v }}" {{ 'selected' if m.tone==v }}>{{ v }}</option>{% endfor %}
+            </select>
+          </div>
+          <div><label>Phone</label><input type="text" name="member{{ loop.index0 }}_phone" value="{{ m.phone or '' }}"/></div>
+          <div><label>Image position</label><input type="text" name="member{{ loop.index0 }}_imagePosition" value="{{ m.imagePosition or '' }}"/></div>
+          <div><label>Image zoom</label><input type="text" name="member{{ loop.index0 }}_imageZoom" value="{{ m.imageZoom if m.imageZoom is not none else '' }}"/></div>
+        </div>
+        <label>Email</label>
+        <input type="text" name="member{{ loop.index0 }}_email" value="{{ m.email or '' }}"/>
+        <div style="margin-top:10px;"><button type="button" class="btn danger small" onclick="this.closest('[data-member]').remove()">Remove member</button></div>
+      </div>
+      {% endfor %}
+    </div>
+    <input type="hidden" name="member_count" id="member_count" value="{{ (d.team.members or [])|length }}"/>
+    <button type="button" class="btn secondary small" id="add-member">+ Add member</button>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;">"Who we are" intro</h2>
+    <div class="row">
+      <div><label>Heading</label><input type="text" name="intro_heading" value="{{ d.intro.heading }}"/></div>
+      <div><label>Heading accent</label><input type="text" name="intro_headingAccent" value="{{ d.intro.headingAccent }}"/></div>
+    </div>
+    <label>Paragraphs (separate each with a blank line)</label>
+    <textarea name="intro_paragraphs" rows="10">{{ (d.intro.paragraphs or []) | join('\n\n') }}</textarea>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;">Services</h2>
+    <div class="row">
+      <div><label>Eyebrow</label><input type="text" name="services_eyebrow" value="{{ d.services.eyebrow }}"/></div>
+      <div><label>Heading</label><input type="text" name="services_heading" value="{{ d.services.heading }}"/></div>
+    </div>
+
+    <label>Cards</label>
+    <div id="cards">
+      {% for c in (d.services.cards or []) %}
+      <div class="tile-editor" data-card>
+        <label>Title</label>
+        <input type="text" name="card{{ loop.index0 }}_title" value="{{ c.title }}"/>
+        <label>Body</label>
+        <textarea name="card{{ loop.index0 }}_body" rows="3">{{ c.body }}</textarea>
+        <div style="margin-top:10px;"><button type="button" class="btn danger small" onclick="this.closest('[data-card]').remove()">Remove card</button></div>
+      </div>
+      {% endfor %}
+    </div>
+    <input type="hidden" name="card_count" id="card_count" value="{{ (d.services.cards or [])|length }}"/>
+    <button type="button" class="btn secondary small" id="add-card">+ Add card</button>
+
+    <label style="margin-top:18px;">Closing</label>
+    <textarea name="services_closing" rows="3">{{ d.services.closing }}</textarea>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;">Trade — "How to order"</h2>
+    <div class="row">
+      <div><label>Eyebrow</label><input type="text" name="trade_eyebrow" value="{{ d.trade.eyebrow }}"/></div>
+      <div><label>Heading</label><input type="text" name="trade_heading" value="{{ d.trade.heading }}"/></div>
+    </div>
+    <label>Intro</label>
+    <textarea name="trade_intro" rows="2">{{ d.trade.intro }}</textarea>
+
+    <label>Items (question &amp; answer)</label>
+    <p class="field-help">Any attached PDF application forms are preserved automatically by position.</p>
+    <div id="trades">
+      {% for it in (d.trade['items'] or []) %}
+      <div class="tile-editor" data-trade>
+        <label>Question</label>
+        <input type="text" name="trade{{ loop.index0 }}_q" value="{{ it.q }}"/>
+        <label>Answer</label>
+        <textarea name="trade{{ loop.index0 }}_a" rows="3">{{ it.a }}</textarea>
+        {% if it.forms %}
+        <p class="field-help">Attached forms: {% for f in (it.forms or []) %}{{ f.label }}{{ ', ' if not loop.last }}{% endfor %}</p>
+        {% endif %}
+        <div style="margin-top:10px;"><button type="button" class="btn danger small" onclick="this.closest('[data-trade]').remove()">Remove item</button></div>
+      </div>
+      {% endfor %}
+    </div>
+    <input type="hidden" name="trade_count" id="trade_count" value="{{ (d.trade['items'] or [])|length }}"/>
+    <button type="button" class="btn secondary small" id="add-trade">+ Add item</button>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;">Contact</h2>
+    <div class="row">
+      <div><label>Heading line 1</label><input type="text" name="contact_headingLine1" value="{{ d.contact.headingLine1 }}"/></div>
+      <div><label>Heading line 2</label><input type="text" name="contact_headingLine2" value="{{ d.contact.headingLine2 }}"/></div>
+    </div>
+    <label>Body</label>
+    <textarea name="contact_body" rows="3">{{ d.contact.body }}</textarea>
+    <div class="row">
+      <div><label>Region label</label><input type="text" name="contact_regionLabel" value="{{ d.contact.regionLabel }}"/></div>
+      <div><label>Email</label><input type="text" name="contact_email" value="{{ d.contact.email }}"/></div>
+    </div>
+    <div class="row">
+      <div><label>Address line 1</label><input type="text" name="contact_addressLine1" value="{{ d.contact.addressLine1 }}"/></div>
+      <div><label>Address line 2</label><input type="text" name="contact_addressLine2" value="{{ d.contact.addressLine2 }}"/></div>
+    </div>
+    <label>Note</label>
+    <textarea name="contact_note" rows="2">{{ d.contact.note }}</textarea>
+  </div>
+
+  <div class="actions-bar">
+    <button class="btn" type="submit">Save People &amp; Places</button>
+    <a class="btn secondary" href="{{ url_for('index') }}">Cancel</a>
+  </div>
+</form>
+
+<template id="member-template">
+  <div class="tile-editor" data-member>
+    <div class="row">
+      <div>
+        <label>Primary photo</label>
+        <div class="img-field">
+          <img class="preview" src="" alt="preview"/>
+          <div class="grow">
+            <input type="text" name="memberIDX_image" value=""/>
+            <input type="file" name="memberIDX_image_file" accept="image/*" style="margin-top:8px;"/>
+          </div>
+        </div>
+      </div>
+      <div>
+        <label>Second photo (hover / optional)</label>
+        <div class="img-field">
+          <img class="preview" src="" alt="preview"/>
+          <div class="grow">
+            <input type="text" name="memberIDX_image2" value=""/>
+            <input type="file" name="memberIDX_image2_file" accept="image/*" style="margin-top:8px;"/>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div><label>Name</label><input type="text" name="memberIDX_name" value=""/></div>
+      <div><label>Role</label><input type="text" name="memberIDX_role" value=""/></div>
+    </div>
+    <label>Bio (separate paragraphs with a blank line)</label>
+    <textarea name="memberIDX_bio" rows="5"></textarea>
+    <div class="grid4">
+      <div><label>Tone</label><select name="memberIDX_tone"><option value="warm">warm</option><option value="cool">cool</option><option value="ink">ink</option></select></div>
+      <div><label>Phone</label><input type="text" name="memberIDX_phone" value=""/></div>
+      <div><label>Image position</label><input type="text" name="memberIDX_imagePosition" value=""/></div>
+      <div><label>Image zoom</label><input type="text" name="memberIDX_imageZoom" value=""/></div>
+    </div>
+    <label>Email</label>
+    <input type="text" name="memberIDX_email" value=""/>
+    <div style="margin-top:10px;"><button type="button" class="btn danger small" onclick="this.closest('[data-member]').remove()">Remove member</button></div>
+  </div>
+</template>
+
+<template id="card-template">
+  <div class="tile-editor" data-card>
+    <label>Title</label>
+    <input type="text" name="cardIDX_title" value=""/>
+    <label>Body</label>
+    <textarea name="cardIDX_body" rows="3"></textarea>
+    <div style="margin-top:10px;"><button type="button" class="btn danger small" onclick="this.closest('[data-card]').remove()">Remove card</button></div>
+  </div>
+</template>
+
+<template id="trade-template">
+  <div class="tile-editor" data-trade>
+    <label>Question</label>
+    <input type="text" name="tradeIDX_q" value=""/>
+    <label>Answer</label>
+    <textarea name="tradeIDX_a" rows="3"></textarea>
+    <div style="margin-top:10px;"><button type="button" class="btn danger small" onclick="this.closest('[data-trade]').remove()">Remove item</button></div>
+  </div>
+</template>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  // Append a fresh repeatable block (member / card / trade item) with the next
+  // index, mirroring the homepage "add tile" pattern.
+  function ebAddBlock(btnId, containerId, templateId, counterId) {
+    document.getElementById(btnId).addEventListener('click', function () {
+      var counter = document.getElementById(counterId);
+      var count = parseInt(counter.value, 10);
+      var tpl = document.getElementById(templateId).innerHTML.replace(/IDX/g, count);
+      var wrap = document.createElement('div');
+      wrap.innerHTML = tpl.trim();
+      var node = wrap.firstChild;
+      document.getElementById(containerId).appendChild(node);
+      counter.value = count + 1;
+      // Wire up drag-and-drop on any image fields inside the new block
+      if (window.ebInitImgField) {
+        node.querySelectorAll('.img-field').forEach(window.ebInitImgField);
+      }
+    });
+  }
+
+  ebAddBlock('add-member', 'members', 'member-template', 'member_count');
+  ebAddBlock('add-card', 'cards', 'card-template', 'card_count');
+  ebAddBlock('add-trade', 'trades', 'trade-template', 'trade_count');
+</script>
+{% endblock %}
+</output>

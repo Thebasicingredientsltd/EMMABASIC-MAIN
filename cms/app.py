@@ -101,7 +101,13 @@ def load_data(key):
 
 
 def save_data(key, data):
-    """Write the JSON payload back into the `window.EB_X = ...;` wrapper."""
+    """Write the JSON payload back into the `window.EB_X = ...;` wrapper.
+
+    After writing, refresh the ?v= cache-buster on this data file's <script>
+    tags across the site's HTML pages so a normal browser refresh of the
+    localhost site (and the Vercel deploy) fetches the new file immediately
+    instead of a stale cached copy. See bump_data_cache_bust for details.
+    """
     info = DATA_FILES[key]
     body = json.dumps(data, ensure_ascii=False, indent=2)
     text = "{header}\n{var} = {body};\n".format(
@@ -109,6 +115,7 @@ def save_data(key, data):
     )
     with open(info["file"], "w", encoding="utf-8") as fh:
         fh.write(text)
+    bump_data_cache_bust(key)
 
 
 def lines_to_list(text):
@@ -1001,19 +1008,37 @@ def git_status_summary():
 
 # Cache-busting for the content data files. The HTML pages load products/
 # catalog/homepage/journal JSON via <script src="data/xxx.js"> tags. Browsers
-# and the Vercel edge CDN can serve a stale copy of these files after a deploy,
-# which means the page renders old content (e.g. an old product image path)
-# even though the new file is live. Rewriting the ?v= query on every publish
-# gives each data file a brand-new URL, forcing a fresh fetch every time.
-DATA_SCRIPT_RE = re.compile(
-    r"(data/(?:products|catalog|homepage|journal|people)\.js)(\?v=[^\"'\s>]*)?"
-)
+# (on the local http.server serving localhost:8080) and the Vercel edge CDN can
+# serve a stale copy of these files, which means the page renders old content
+# (e.g. an old product image path) even though the new file is on disk / live.
+# Rewriting the ?v= query whenever a data file is saved gives it a brand-new
+# URL, forcing a fresh fetch on the very next refresh — no publish required.
+ALL_DATA_KEYS = tuple(DATA_FILES.keys())
 
 
-def bump_data_cache_bust():
-    """Stamp a fresh ?v=<timestamp> onto every data-file <script> tag across the
-    site's HTML pages. Returns the number of HTML files changed."""
-    stamp = datetime.now().strftime("%Y%m%d%H%M%S")
+def _data_script_re(keys):
+    """Regex matching <script src="data/<key>.js?v=..."> for the given keys."""
+    names = "|".join(re.escape(k) for k in keys)
+    return re.compile(r"(data/(?:" + names + r")\.js)(\?v=[^\"'\s>]*)?")
+
+
+def bump_data_cache_bust(keys=None):
+    """Stamp a fresh ?v=<timestamp> onto data-file <script> tags across the
+    site's HTML pages.
+
+    `keys` may be a single data-file key (e.g. "catalog"), an iterable of keys,
+    or None to re-stamp every data file. Only the tags for the given keys are
+    touched, which keeps a per-save git diff small. Returns the number of HTML
+    files changed.
+    """
+    if keys is None:
+        keys = ALL_DATA_KEYS
+    elif isinstance(keys, str):
+        keys = (keys,)
+    pattern = _data_script_re(keys)
+    # Include milliseconds so two saves within the same second still produce a
+    # different ?v=, guaranteeing the browser refetches after every save.
+    stamp = datetime.now().strftime("%Y%m%d%H%M%S%f")[:-3]
     changed = 0
     for name in os.listdir(PROJECT_DIR):
         if not name.lower().endswith(".html"):
@@ -1024,7 +1049,7 @@ def bump_data_cache_bust():
                 text = fh.read()
         except (OSError, UnicodeDecodeError):
             continue
-        new_text = DATA_SCRIPT_RE.sub(r"\g<1>?v=" + stamp, text)
+        new_text = pattern.sub(r"\g<1>?v=" + stamp, text)
         if new_text != text:
             with open(path, "w", encoding="utf-8") as fh:
                 fh.write(new_text)
