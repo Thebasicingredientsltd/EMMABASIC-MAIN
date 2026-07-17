@@ -19,6 +19,16 @@ const TEAM = [
 ];
 
 function TeamGrid() {
+  // CMS-managed content (data/people.js). Falls back to the built-in
+  // defaults above so the page still renders if the data file is missing.
+  const teamData = (window.EB_PEOPLE && window.EB_PEOPLE.team) || {};
+  const members = (teamData.members && teamData.members.length)
+    ? teamData.members
+    : [EMMA, ...TEAM];
+  const headingLine1 = teamData.headingLine1 || "The people";
+  const headingLine2 = teamData.headingLine2 || "behind the jar.";
+  const intro = teamData.intro || "A small team, united by one rule — no additives, ever.";
+
   return (
     <section style={{
       padding: "clamp(120px, 16vh, 180px) var(--pad-x) clamp(80px, 12vh, 140px)",
@@ -38,9 +48,9 @@ function TeamGrid() {
               letterSpacing: "-0.03em", lineHeight: 0.92, margin: 0,
               fontVariationSettings: '"opsz" 144, "SOFT" 30',
             }}>
-              The people<br/>
+              {headingLine1}<br/>
               <em style={{ fontStyle: "normal", fontFamily: "var(--f-body)", fontWeight: 400, letterSpacing: "-0.02em" }}>
-                behind the jar.
+                {headingLine2}
               </em>
             </h2>
           </Reveal>
@@ -49,8 +59,7 @@ function TeamGrid() {
               fontFamily: "var(--f-body)", fontSize: 18, lineHeight: 1.7,
               maxWidth: 460, margin: 0, color: "var(--ink-90)", paddingBottom: 12,
             }}>
-              A small team, united by one rule &mdash;
-              no additives, ever.
+              {intro}
             </p>
           </Reveal>
         </div>
@@ -62,9 +71,8 @@ function TeamGrid() {
           gap: "clamp(16px, 2vw, 32px) clamp(16px, 2vw, 32px)",
           alignItems: "start",
         }}>
-          <TeamMember m={EMMA} index={0} />
-          {TEAM.map((m, i) => (
-            <TeamMember key={i} m={m} index={i + 1} />
+          {members.map((m, i) => (
+            <TeamMember key={i} m={m} index={i} />
           ))}
         </div>
 

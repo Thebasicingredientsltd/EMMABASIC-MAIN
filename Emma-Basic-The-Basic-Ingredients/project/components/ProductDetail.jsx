@@ -38,6 +38,7 @@ function ProductHero({ product }) {
   const totalSlots = (images ? images.length : 1) + (hasVideo ? 1 : 0);
   const videoIndex = hasVideo ? totalSlots - 1 : -1;
 
+  const isPhoto = product.displayMode === "photo";
   const [activeImg, setActiveImg] = React.useState(0);
   const [loaded, setLoaded] = React.useState(false);
   const isVideoActive = hasVideo && activeImg === videoIndex;
@@ -56,9 +57,10 @@ function ProductHero({ product }) {
   const [zoomOrigin, setZoomOrigin] = React.useState({ x: 50, y: 50 }); // percent
 
   /* Image display params for first image */
-  const imgScale = isFirstImg ? (product.pdpImageScale ?? 3) : 1;
-  const imgOffX  = isFirstImg ? (product.imageOffset?.x ?? 0) : 0;
-  const imgOffY  = isFirstImg ? (product.imageOffset?.y ?? 0) : 0;
+  const isPhotoFirst = isPhoto && isFirstImg;
+  const imgScale = isFirstImg ? (isPhoto ? 1 : (product.pdpImageScale ?? 3)) : 1;
+  const imgOffX  = isFirstImg && !isPhoto ? (product.imageOffset?.x ?? 0) : 0;
+  const imgOffY  = isFirstImg && !isPhoto ? (product.imageOffset?.y ?? 0) : 0;
 
   /* Reset zoom when switching images */
   React.useEffect(() => { setZoomLevel(0); }, [activeImg]);
@@ -131,13 +133,13 @@ function ProductHero({ product }) {
             ref={pedestalRef}
             onClick={isVideoActive ? undefined : handlePedestalClick}
             style={{
-              aspectRatio: "4/5",
+              aspectRatio: isPhoto ? (product.pdpAspect || "1/1") : "4/5",
               background: "var(--paper-shade)",
               border: "1px solid var(--rule)",
               boxShadow: "0 8px 64px rgba(10,10,10,0.08), 0 2px 12px rgba(10,10,10,0.04)",
               overflow: "hidden",
               display: "flex", alignItems: "center", justifyContent: "center",
-              padding: isVideoActive ? 0 : (isFirstImg && product.pdpPadding !== undefined ? product.pdpPadding : "10%"),
+              padding: isVideoActive ? 0 : (isPhotoFirst ? 0 : (isFirstImg && product.pdpPadding !== undefined ? product.pdpPadding : "10%")),
               position: "relative",
               cursor: isVideoActive ? "default" : (isZoomed ? (zoomLevel === ZOOM_STEPS.length - 1 ? "zoom-out" : "zoom-in") : "zoom-in"),
               userSelect: "none",

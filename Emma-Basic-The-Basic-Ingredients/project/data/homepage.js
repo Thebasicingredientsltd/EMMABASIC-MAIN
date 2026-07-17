@@ -1,5 +1,4 @@
-/* Emma Basic — homepage content (CMS-managed).
-   The payload below is strict JSON. */
+/* Emma Basic — homepage content (CMS-managed). The payload below is strict JSON. */
 window.EB_HOME = {
   "hero": {
     "image": "assets/Hero-Home-Page-Running.png",
@@ -7,8 +6,16 @@ window.EB_HOME = {
     "headlineLine2": "uncompromised.",
     "body": "Pure ingredients for pure effort<br/>for the run, the kitchen, and everything between.",
     "buttons": [
-      { "label": "Browse the Collection", "href": "Our Products.html", "primary": true },
-      { "label": "Read Our Story", "href": "People%20%26%20Places.html", "primary": false }
+      {
+        "label": "FIND US",
+        "href": "Places.html",
+        "primary": true
+      },
+      {
+        "label": "FOR SHOPKEEPERS",
+        "href": "The%20Basic%20Ingredients.html",
+        "primary": false
+      }
     ]
   },
   "productRail": {
@@ -31,7 +38,7 @@ window.EB_HOME = {
   },
   "shelfTest": {
     "headingLine1": "Flip the pack.",
-    "headingLine2": "Read the jar.",
+    "headingLine2": "Read the Label.",
     "subtitle": "Two packs of crispy seaweed.<br/>Both in the \"healthy snacks\" aisle.",
     "theirs": [
       "Seaweed (70%)",
@@ -58,16 +65,86 @@ window.EB_HOME = {
     "handle": "@emmabasic",
     "followHref": "https://www.instagram.com/emmabasic.london/",
     "tiles": [
-      { "image": "assets/homepage/sesame-tennis.png", "label": "SESAME SEEDS — TENNIS", "tone": "warm", "kind": "purity", "span": "tall", "position": "center center" },
-      { "image": "assets/homepage/lifestyle-3.png", "label": "KITCHEN — FAMILY DINNER", "tone": "warm", "kind": "purity", "span": "", "position": "center center" },
-      { "image": "assets/homepage/lifestyle-4.png", "label": "THE GRIT", "tone": "cool", "kind": "grit", "span": "", "position": "center center" },
-      { "image": "assets/homepage/lifestyle-1.png", "label": "POST-RUN — HEATH, 06:14", "tone": "ink", "kind": "grit", "span": "tall", "position": "center center" },
-      { "image": "assets/homepage/sesame-family.png", "label": "SESAME OIL — FAMILY", "tone": "ink", "kind": "grit", "span": "wide", "position": "center center" },
-      { "image": "assets/homepage/lifestyle-2.png", "label": "MATCHA POUR — STUDIO", "tone": "warm", "kind": "purity", "span": "", "position": "center center" },
-      { "image": "assets/homepage/lifestyle-5.png", "label": "LONG RUN NOTES", "tone": "ink", "kind": "grit", "span": "", "position": "center center" },
-      { "image": "assets/homepage/sushi-vinegar.png", "label": "SUSHI VINEGAR — NATURAL", "tone": "warm", "kind": "purity", "span": "tall", "position": "center center" },
-      { "image": "assets/homepage/gallery-1.jpg", "label": "EMMA BASIC", "tone": "warm", "kind": "purity", "span": "", "position": "center center" },
-      { "image": "assets/homepage/gallery-2.jpg", "label": "EMMA BASIC", "tone": "warm", "kind": "purity", "span": "", "position": "center center" }
+      {
+        "image": "assets/homepage/sesame-tennis.png",
+        "label": "SESAME SEEDS — TENNIS",
+        "tone": "warm",
+        "kind": "purity",
+        "span": "tall",
+        "position": "center center"
+      },
+      {
+        "image": "assets/homepage/lifestyle-3.png",
+        "label": "KITCHEN — FAMILY DINNER",
+        "tone": "warm",
+        "kind": "purity",
+        "span": "",
+        "position": "center center"
+      },
+      {
+        "image": "assets/homepage/lifestyle-4.png",
+        "label": "THE GRIT",
+        "tone": "cool",
+        "kind": "grit",
+        "span": "",
+        "position": "center center"
+      },
+      {
+        "image": "assets/homepage/lifestyle-1.png",
+        "label": "POST-RUN — HEATH, 06:14",
+        "tone": "ink",
+        "kind": "grit",
+        "span": "tall",
+        "position": "center center"
+      },
+      {
+        "image": "assets/homepage/sesame-family.png",
+        "label": "SESAME OIL — FAMILY",
+        "tone": "ink",
+        "kind": "grit",
+        "span": "wide",
+        "position": "center center"
+      },
+      {
+        "image": "assets/homepage/lifestyle-2.png",
+        "label": "MATCHA POUR — STUDIO",
+        "tone": "warm",
+        "kind": "purity",
+        "span": "",
+        "position": "center center"
+      },
+      {
+        "image": "assets/homepage/lifestyle-5.png",
+        "label": "LONG RUN NOTES",
+        "tone": "ink",
+        "kind": "grit",
+        "span": "",
+        "position": "center center"
+      },
+      {
+        "image": "assets/homepage/sushi-vinegar.png",
+        "label": "SUSHI VINEGAR — NATURAL",
+        "tone": "warm",
+        "kind": "purity",
+        "span": "tall",
+        "position": "center center"
+      },
+      {
+        "image": "assets/homepage/gallery-1.jpg",
+        "label": "EMMA BASIC",
+        "tone": "warm",
+        "kind": "purity",
+        "span": "",
+        "position": "center center"
+      },
+      {
+        "image": "assets/homepage/gallery-2.jpg",
+        "label": "EMMA BASIC",
+        "tone": "warm",
+        "kind": "purity",
+        "span": "",
+        "position": "center center"
+      }
     ]
   }
 };

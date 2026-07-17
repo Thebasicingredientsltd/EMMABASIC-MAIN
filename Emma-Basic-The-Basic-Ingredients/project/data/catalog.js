@@ -9,7 +9,11 @@ window.EB_CATALOG = [
     "products": [
       {
         "id": "nori-furikake",
-        "pdpImageScale": 3.5,
+        "displayMode": "photo",
+        "imageScale": 1,
+        "pdpImageScale": 1,
+        "catalogAspect": "1/1",
+        "pdpAspect": "1/1",
         "name": "Nori Furikake Seasoning",
         "japanese": "のりふりかけ",
         "image": "assets/uploads/B098D5RKP9.MAIN-20260715-172250.jpg",

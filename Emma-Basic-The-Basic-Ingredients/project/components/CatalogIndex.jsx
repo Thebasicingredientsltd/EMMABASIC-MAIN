@@ -396,12 +396,17 @@ function ProductCard({ product, index }) {
   const [ref, visible] = useReveal(0.12);
   const [hover, setHover] = React.useState(false);
   const isMobile = window.innerWidth <= 768;
-  const activeOffset = isMobile
-    ? (product.mobileImageOffset ?? product.catalogImageOffset ?? product.imageOffset)
-    : (product.catalogImageOffset ?? product.imageOffset);
-  const activeScale = isMobile
-    ? (product.mobileImageScale ?? product.imageScale ?? 2)
-    : (product.imageScale ?? 2);
+  const isPhoto = product.displayMode === "photo";
+  const activeOffset = isPhoto
+    ? null
+    : (isMobile
+      ? (product.mobileImageOffset ?? product.catalogImageOffset ?? product.imageOffset)
+      : (product.catalogImageOffset ?? product.imageOffset));
+  const activeScale = isPhoto
+    ? 1
+    : (isMobile
+      ? (product.mobileImageScale ?? product.imageScale ?? 2)
+      : (product.imageScale ?? 2));
   return (
     <a
       ref={ref}
@@ -417,10 +422,10 @@ function ProductCard({ product, index }) {
         transition: `opacity 900ms var(--ease-out) ${index * 80}ms, transform 900ms var(--ease-out) ${index * 80}ms`,
       }}
     >
-      {/* Image pedestal */}
+      {/* Image pedestal — uniform 1:1 square across all cards */}
       <div style={{
         position: "relative",
-        aspectRatio: "3/4",
+        aspectRatio: "1 / 1",
         background: "var(--paper-shade)",
         overflow: "hidden",
         border: "1px solid var(--rule)",
@@ -428,7 +433,7 @@ function ProductCard({ product, index }) {
         display: "flex", alignItems: "center", justifyContent: "center",
       }}>
         {/* White rectangle behind the product image */}
-        {!product.noWhiteBg && (
+        {!product.noWhiteBg && !isPhoto && (
           <div style={{
             position: "absolute",
             inset: "6%",
@@ -445,7 +450,7 @@ function ProductCard({ product, index }) {
             position: "absolute", inset: 0,
             width: "100%", height: "100%",
             objectFit: "contain",
-            padding: product.noWhiteBg ? "clamp(12px, 4%, 28px)" : "4%",
+            padding: isPhoto ? 0 : (product.noWhiteBg ? "clamp(12px, 4%, 28px)" : "4%"),
             transform: `translate(${activeOffset?.x ?? 0}px, ${activeOffset?.y ?? 0}px) scale(${hover ? activeScale * 1.04 : activeScale})`,
             transition: "transform 800ms var(--ease-out)",
             zIndex: 1,

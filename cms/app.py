@@ -60,6 +60,7 @@ DATA_FILES = {
     "journal": {"file": os.path.join(DATA_DIR, "journal.js"), "var": "window.EB_JOURNAL"},
     "homepage": {"file": os.path.join(DATA_DIR, "homepage.js"), "var": "window.EB_HOME"},
     "catalog": {"file": os.path.join(DATA_DIR, "catalog.js"), "var": "window.EB_CATALOG"},
+    "people": {"file": os.path.join(DATA_DIR, "people.js"), "var": "window.EB_PEOPLE"},
 }
 
 ALLOWED_EXT = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".avif", ".svg"}
@@ -76,6 +77,7 @@ HEADERS = {
     "journal": "/* Emma Basic — journal / blog data (CMS-managed). The payload below is strict JSON. */",
     "homepage": "/* Emma Basic — homepage content (CMS-managed). The payload below is strict JSON. */",
     "catalog": "/* Emma Basic — full product catalog (CMS-managed). The payload below is strict JSON. */",
+    "people": "/* Emma Basic — People & Places page content (CMS-managed). The payload below is strict JSON. */",
 }
 
 app = Flask(__name__)
@@ -327,12 +329,14 @@ def index():
     products = load_data("products")
     journal = load_data("journal")
     catalog_data = load_data("catalog")
+    people_data = load_data("people")
     return render_template(
         "index.html",
         product_count=len(products),
         post_count=len(journal.get("posts", [])),
         catalog_categories=len(catalog_data),
         catalog_products=_catalog_counts(catalog_data),
+        people_count=len((people_data.get("team") or {}).get("members", [])),
         git=git_status_summary(),
     )
 
@@ -651,6 +655,121 @@ def homepage_save():
 
 
 # ---------------------------------------------------------------------------
+# Routes — People & Places page
+# ---------------------------------------------------------------------------
+@app.route("/people")
+def people():
+    return render_template("people.html", d=load_data("people"))
+
+
+@app.route("/people/save", methods=["POST"])
+def people_save():
+    d = load_data("people")
+
+    # Hero
+    hero = d.setdefault("hero", {})
+    hero["eyebrow"] = request.form.get("hero_eyebrow", "").strip()
+    hero["title"] = request.form.get("hero_title", "").strip()
+    hero["titleItalic"] = request.form.get("hero_titleItalic", "").strip()
+    hero["subtitle"] = request.form.get("hero_subtitle", "").strip()
+
+    # Team — heading/intro plus a repeatable list of members.
+    team = d.setdefault("team", {})
+    team["headingLine1"] = request.form.get("team_headingLine1", "").strip()
+    team["headingLine2"] = request.form.get("team_headingLine2", "").strip()
+    team["intro"] = request.form.get("team_intro", "").strip()
+    count = int(request.form.get("member_count", "0"))
+    members = []
+    for i in range(count):
+        if ("member%d_name" % i) not in request.form:
+            continue  # removed member — no fields submitted
+        name = request.form.get("member%d_name" % i, "").strip()
+        image = resolve_image("member%d_image" % i, "")
+        if not name and not image:
+            continue
+        member = {
+            "name": name,
+            "role": request.form.get("member%d_role" % i, "").strip(),
+            "bio": request.form.get("member%d_bio" % i, "").replace("\r\n", "\n").strip(),
+            "tone": request.form.get("member%d_tone" % i, "warm").strip(),
+            "image": image,
+            "image2": resolve_image("member%d_image2" % i, ""),
+            "phone": request.form.get("member%d_phone" % i, "").strip(),
+        }
+        email = request.form.get("member%d_email" % i, "").strip()
+        if email:
+            member["email"] = email
+        position = request.form.get("member%d_imagePosition" % i, "").strip()
+        if position:
+            member["imagePosition"] = position
+        zoom = parse_num(request.form.get("member%d_imageZoom" % i, ""))
+        if zoom is not None:
+            member["imageZoom"] = zoom
+        members.append(member)
+    team["members"] = members
+
+    # "Who we are" intro block
+    intro = d.setdefault("intro", {})
+    intro["heading"] = request.form.get("intro_heading", "").strip()
+    intro["headingAccent"] = request.form.get("intro_headingAccent", "").strip()
+    intro["paragraphs"] = text_to_paras(request.form.get("intro_paragraphs", ""))
+
+    # Services block — repeatable cards.
+    services = d.setdefault("services", {})
+    services["eyebrow"] = request.form.get("services_eyebrow", "").strip()
+    services["heading"] = request.form.get("services_heading", "").strip()
+    services["closing"] = request.form.get("services_closing", "").strip()
+    card_count = int(request.form.get("card_count", "0"))
+    cards = []
+    for i in range(card_count):
+        if ("card%d_title" % i) not in request.form:
+            continue
+        title = request.form.get("card%d_title" % i, "").strip()
+        body = request.form.get("card%d_body" % i, "").strip()
+        if not title and not body:
+            continue
+        cards.append({"title": title, "body": body})
+    services["cards"] = cards
+
+    # Trade / "How to order" — repeatable Q&A items. Existing PDF form links
+    # are preserved by position (they aren't editable in the CMS).
+    trade = d.setdefault("trade", {})
+    trade["eyebrow"] = request.form.get("trade_eyebrow", "").strip()
+    trade["heading"] = request.form.get("trade_heading", "").strip()
+    trade["intro"] = request.form.get("trade_intro", "").strip()
+    old_items = trade.get("items", [])
+    item_count = int(request.form.get("trade_count", "0"))
+    items = []
+    for i in range(item_count):
+        if ("trade%d_q" % i) not in request.form:
+            continue
+        q = request.form.get("trade%d_q" % i, "").strip()
+        a = request.form.get("trade%d_a" % i, "").strip()
+        if not q and not a:
+            continue
+        item = dict(old_items[i]) if i < len(old_items) else {}
+        item["q"] = q
+        item["a"] = a
+        items.append(item)
+    trade["items"] = items
+
+    # Contact block
+    contact = d.setdefault("contact", {})
+    contact["headingLine1"] = request.form.get("contact_headingLine1", "").strip()
+    contact["headingLine2"] = request.form.get("contact_headingLine2", "").strip()
+    contact["body"] = request.form.get("contact_body", "").strip()
+    contact["regionLabel"] = request.form.get("contact_regionLabel", "").strip()
+    contact["addressLine1"] = request.form.get("contact_addressLine1", "").strip()
+    contact["addressLine2"] = request.form.get("contact_addressLine2", "").strip()
+    contact["email"] = request.form.get("contact_email", "").strip()
+    contact["note"] = request.form.get("contact_note", "").strip()
+
+    save_data("people", d)
+    flash("People & Places content saved.", "ok")
+    return redirect(url_for("people"))
+
+
+# ---------------------------------------------------------------------------
 # Routes — product catalog (the full "Our Products" range)
 # ---------------------------------------------------------------------------
 def _catalog_counts(catalog):
@@ -887,7 +1006,7 @@ def git_status_summary():
 # even though the new file is live. Rewriting the ?v= query on every publish
 # gives each data file a brand-new URL, forcing a fresh fetch every time.
 DATA_SCRIPT_RE = re.compile(
-    r"(data/(?:products|catalog|homepage|journal)\.js)(\?v=[^\"'\s>]*)?"
+    r"(data/(?:products|catalog|homepage|journal|people)\.js)(\?v=[^\"'\s>]*)?"
 )
 
 

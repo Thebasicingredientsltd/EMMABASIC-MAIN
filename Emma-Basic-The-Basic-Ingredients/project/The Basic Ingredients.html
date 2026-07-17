@@ -21,7 +21,7 @@
 
 <script type="text/babel" src="components/Placeholder.jsx"></script>
 <script type="text/babel" src="components/motion.jsx"></script>
-<script type="text/babel" src="components/TopNav.jsx?v=14"></script>
+<script type="text/babel" src="components/TopNav.jsx?v=16"></script>
 <script type="text/babel" src="components/PageHero.jsx"></script>
 <script type="text/babel" src="components/StockistCarousel.jsx?v=8"></script>
 <script type="text/babel" src="components/Sections.jsx"></script>
@@ -170,13 +170,6 @@ function IntroAccordions() {
 /* â"€â"€ Intro / About â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
 function TBIIntroSection() {
   const certs = [
-    {
-      id: "brcgs",
-      imgSrc: "assets/logos/brcgs-agents-brokers.jpg",
-      alt: "BRCGS Agents & Brokers",
-      label: "BRCGS",
-      sublabel: "Agents & Brokers",
-    },
     {
       id: "sedex",
       imgSrc: "assets/logos/sedex-member.png",
@@ -710,7 +703,7 @@ function TBIHero() {
             display: "block", marginBottom: 16,
             opacity: lineVisible ? 1 : 0,
             transition: "opacity 600ms var(--ease-out) 100ms",
-          }}>The Basic Ingredients</span>
+          }}>The Basic Ingredients Ltd</span>
           <div style={{
             height: 1, background: "var(--rule)",
             transformOrigin: "left",
@@ -744,14 +737,6 @@ function TBIHero() {
               alignItems: "flex-start",
               paddingBottom: 8,
             }}>
-              <div style={{
-                background: "#fff", padding: "16px 24px",
-                display: "inline-flex", alignItems: "center",
-                border: "1px solid rgba(10,10,10,0.12)",
-              }}>
-                <img src="assets/logos/brcgs-agents-brokers.jpg" alt="BRCGS Agents & Brokers"
-                  style={{ height: "clamp(54px, 5.6vw, 81px)", width: "auto", display: "block" }} />
-              </div>
               <div style={{
                 background: "#fff", padding: "16px 24px",
                 display: "inline-flex", alignItems: "center",
@@ -806,7 +791,7 @@ function TBIAboutSection() {
                 fontFamily: "var(--f-body)", fontSize: "clamp(17px, 1.35vw, 19px)",
                 lineHeight: 1.72, margin: "0 0 clamp(28px, 3vh, 40px)", color: "var(--ink-90)",
               }}>
-                The Basic Ingredients Ltd is a BRCGS-certified Grade AA food company specialising in clean-label products &mdash; export, import, and OEM across the UK, Europe, and Asia.
+                The Basic Ingredients Ltd is a food company specialising in clean-label products &mdash; export, import, and OEM across the UK, Europe, and Asia.
               </p>
               <a
                 href="People%20%26%20Places.html#about"
@@ -823,7 +808,7 @@ function TBIAboutSection() {
                   transition: "color 200ms var(--ease-out), background 200ms var(--ease-out)",
                 }}
               >
-                About The Basic Ingredients →
+                About The Basic Ingredients Ltd →
               </a>
             </div>
           </Reveal>
