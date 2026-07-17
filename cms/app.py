@@ -203,6 +203,30 @@ def parse_num(raw):
     return int(val) if val.is_integer() else val
 
 
+# Scalar text fields exposed by the bulk table editor (catalog_table.html).
+# Kept here so the columns rendered by the template and the fields parsed by
+# catalog_table_save stay perfectly in sync. Complex/nested fields (images,
+# nutrition, education, qa, badges, pairings, displayMode, imageScale, …) are
+# intentionally left to the full per-product editor.
+CATALOG_TABLE_TEXT_FIELDS = [
+    ("name", "Name"),
+    ("japanese", "Japanese"),
+    ("origin", "Origin line"),
+    ("tagline", "Tagline"),
+    ("amazon", "Amazon URL"),
+    ("ingredients", "Ingredients"),
+    ("allergens", "Allergens"),
+]
+
+# List-of-strings fields exposed as one-item-per-line textareas in the bulk
+# table. Both round-trip via lines_to_list / '\n'.join exactly like the full
+# per-product editor, so plain-string lists stay plain-string lists.
+CATALOG_TABLE_LIST_FIELDS = [
+    ("sellingPoints", "Selling points"),
+    ("badges", "Badges"),
+]
+
+
 NUTRITION_KEYS = [
     ("energy_kj", "Energy (kJ)"),
     ("energy_kcal", "Energy (kcal)"),
@@ -786,6 +810,51 @@ def _catalog_counts(catalog):
 @app.route("/catalog")
 def catalog():
     return render_template("catalog.html", catalog=load_data("catalog"))
+
+
+@app.route("/catalog/table")
+def catalog_table():
+    """Spreadsheet-style editor: every product across every category on one
+    page, with a subset of safe scalar text fields editable inline."""
+    return render_template(
+        "catalog_table.html",
+        catalog=load_data("catalog"),
+        text_fields=CATALOG_TABLE_TEXT_FIELDS,
+        list_fields=CATALOG_TABLE_LIST_FIELDS,
+    )
+
+
+@app.route("/catalog/table/save", methods=["POST"])
+def catalog_table_save():
+    """Apply inline edits from the bulk table.
+
+    Rows are addressed by `p-<ci>-<pi>-<field>` form names. For each product we
+    mutate the existing dict in place, overwriting ONLY the exposed fields
+    (CATALOG_TABLE_TEXT_FIELDS + CATALOG_TABLE_LIST_FIELDS) and leaving every
+    other key (images, nutrition, education, qa, pairings, displayMode,
+    imageScale, …) untouched.
+    """
+    cats = load_data("catalog")
+    updated = 0
+    for ci, cat in enumerate(cats):
+        for pi, prod in enumerate(cat.get("products", [])):
+            prefix = "p-%d-%d-" % (ci, pi)
+            # A row is only present if it was actually rendered/submitted.
+            if (prefix + "name") not in request.form:
+                continue
+            for key, _label in CATALOG_TABLE_TEXT_FIELDS:
+                form_key = prefix + key
+                if form_key in request.form:
+                    prod[key] = request.form.get(form_key, prod.get(key, "")).strip()
+            for key, _label in CATALOG_TABLE_LIST_FIELDS:
+                form_key = prefix + key
+                if form_key in request.form:
+                    prod[key] = lines_to_list(request.form.get(form_key, ""))
+            updated += 1
+
+    save_data("catalog", cats)
+    flash("Saved %d product%s from the table." % (updated, "" if updated == 1 else "s"), "ok")
+    return redirect(url_for("catalog_table"))
 
 
 @app.route("/catalog/category/new")

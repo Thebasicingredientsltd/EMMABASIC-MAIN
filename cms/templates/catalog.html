@@ -6,7 +6,10 @@
     <h1>Product Catalog</h1>
     <p class="sub">The full range on the <em>Our Products</em> page and every product detail page.</p>
   </div>
-  <a class="btn secondary" href="{{ url_for('catalog_category_new') }}">+ New category</a>
+  <div style="display:flex; gap:8px; align-items:center;">
+    <a class="btn secondary" href="{{ url_for('catalog_table') }}">Bulk edit (table)</a>
+    <a class="btn secondary" href="{{ url_for('catalog_category_new') }}">+ New category</a>
+  </div>
 </div>
 
 {% for c in catalog %}

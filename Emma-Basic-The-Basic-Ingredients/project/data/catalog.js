@@ -431,7 +431,6 @@ window.EB_CATALOG = [
         ],
         "badges": [
           "Great Taste",
-          "No MSG",
           "No Colourings",
           "No Preservatives",
           "Gluten Free"
@@ -493,7 +492,7 @@ window.EB_CATALOG = [
           "No Preservatives",
           "Gluten Free"
         ],
-        "amazon": null,
+        "amazon": "",
         "sellingPoints": [
           "Addictively tasty: our curry with all additives removed is clean — but is it tasty? Yes, simply yummy!",
           "Quick & straightforward to make: easily made within 20 minutes. Simply stir fry vegetables, add curry and water, mix well and bring to a boil. A new taste each time with different leftovers. Commonly served with rice or udon noodles",
@@ -572,10 +571,9 @@ window.EB_CATALOG = [
           "Ready to Snack",
           "High Protein",
           "High Fibre",
-          "No Additives",
           "Gluten Free"
         ],
-        "amazon": null,
+        "amazon": "",
         "sellingPoints": [
           "Young & fresh — seaweed harvest season runs Nov–Apr. Made from raw material harvested at the beginning of the season to ensure the texture is not too chewy",
           "High protein + high fibre 45.4g protein per 100g (36% of energy) and 32.4g fibre per 100g, both exceeding EC 1924/2006 thresholds",
@@ -638,7 +636,6 @@ window.EB_CATALOG = [
           "Catering Size",
           "High Protein",
           "High Fibre",
-          "No Additives",
           "Gluten Free"
         ],
         "amazon": "https://www.amazon.co.uk/Emma-Basic-Seaweed-Crunchy-Protein/dp/B0D5NG42L8",
@@ -713,7 +710,6 @@ window.EB_CATALOG = [
           "Ready to Snack",
           "High Fibre",
           "Source of Protein",
-          "No Additives",
           "Gluten Free"
         ],
         "amazon": "https://www.amazon.co.uk/dp/B09T759K8B",
@@ -779,7 +775,6 @@ window.EB_CATALOG = [
         ],
         "badges": [
           "Great Taste",
-          "No Additives",
           "No Hydrogenated Oils",
           "Source of Fibre"
         ],
@@ -811,7 +806,8 @@ window.EB_CATALOG = [
             "Emma Basic Panko is made from oven-baked bread using high gluten Canadian wheat flour, then shredded into long needle-shaped flakes. That shape is the difference: it absorbs less oil than ordinary breadcrumbs, drains more after frying, and holds its crunch far longer. Clean label, additive-free, no hydrogenated oils, trans fatty acid free. Just wheat flour, salt, and yeast.",
             "It works beautifully for chicken katsu, pork cutlets, breaded prawns, and turkey meatballs &mdash; but it's just as good for family favourites like apple and fruit fritters, crumbles, and gratins. Sprinkle over a macaroni cheese and it gives the crunchiest, most satisfying topping. Resealable bag keeps it fresh between uses."
           ]
-        }
+        },
+        "tagline": ""
       },
       {
         "id": "panko-1kg",
@@ -907,12 +903,11 @@ window.EB_CATALOG = [
           "Gratin topping"
         ],
         "badges": [
-          "No Additives",
           "No Hydrogenated Oils",
           "Source of Fibre",
           "Catering Size"
         ],
-        "amazon": null,
+        "amazon": "",
         "sellingPoints": [
           "Long thin sliver: the long needle shape Emma Basic Panko absorbs less oil than ordinary breadcrumbs, and drains more oil, lighter, crispier, fluffier. Once you've tried Emma Basic Panko, you may never want to go back to ordinary breadcrumbs. A sophisticated crunch texture, melts in your mouth. Sprinkle over a macaroni cheese to give it the crunchiest of toppings.",
           "Aromatic: made from oven baked bread using time and skill. Not the short cut electrode quick cook method. Sensationally aromatic.",
@@ -970,8 +965,7 @@ window.EB_CATALOG = [
         ],
         "badges": [
           "Gluten Free",
-          "No Sulphites",
-          "Ready to Use"
+          "No Sulphites"
         ],
         "amazon": "https://www.amazon.co.uk/dp/B08NLKD11X",
         "sellingPoints": [
@@ -1025,12 +1019,10 @@ window.EB_CATALOG = [
         "badges": [
           "Unpasteurised",
           "High Protein",
-          "Non-GMO",
           "Vegan",
-          "Gluten Free",
-          "No Additives"
+          "Gluten Free"
         ],
-        "amazon": null,
+        "amazon": "",
         "sellingPoints": [
           "Fermented — fermented naturally over time, without any shortcuts",
           "Miso soup — simply add hydrated wakame seaweed or any vegetable you like",
@@ -1298,7 +1290,6 @@ window.EB_CATALOG = [
           "Gluten Free",
           "Vegan",
           "Zero Carb",
-          "No Additives",
           "Low Calorie"
         ],
         "amazon": "https://www.amazon.co.uk/Emma-Basic-Shirataki-Konjac-Noodles/dp/B08NFDD1BH",
@@ -1423,7 +1414,6 @@ window.EB_CATALOG = [
           "Gluten Free",
           "Vegan",
           "Zero Carb",
-          "No Additives",
           "Low Calorie"
         ],
         "sellingPoints": [
@@ -1551,7 +1541,6 @@ window.EB_CATALOG = [
           "Gluten Free",
           "Vegan",
           "Zero Carb",
-          "No Additives",
           "Low Calorie"
         ],
         "amazon": "https://www.amazon.co.uk/Emma-Basic-Fettuccine-12x200g-Ketones/dp/B09HL1N1R8",
@@ -1922,8 +1911,7 @@ window.EB_CATALOG = [
         ],
         "badges": [
           "Gluten Free",
-          "Reduced Salt",
-          "No Additives"
+          "Reduced Salt"
         ],
         "amazon": "https://www.amazon.co.uk/dp/B08NM63SWZ",
         "sellingPoints": [
@@ -2120,7 +2108,7 @@ window.EB_CATALOG = [
           "Superior Grade",
           "Catering Size"
         ],
-        "amazon": null,
+        "amazon": "",
         "sellingPoints": [
           "Superior grade — compared with Originario or Selenio varieties commonly available in the UK, Emma Basic Japonica variety from Vietnam offers a taste difference you can certainly notice",
           "Perfect texture — sticky yet firm, crucial because the rice must hold its shape when forming sushi but still be soft and pleasant to eat",
@@ -2186,7 +2174,6 @@ window.EB_CATALOG = [
           "Batch Tested",
           "Source of Protein",
           "High Fibre",
-          "No Additives",
           "Gluten Free"
         ],
         "amazon": "https://www.amazon.co.uk/dp/B0G8MW2WB7",
@@ -2339,7 +2326,7 @@ window.EB_CATALOG = [
           "Vegan",
           "Gluten Free"
         ],
-        "amazon": null,
+        "amazon": "",
         "sellingPoints": [
           "Ready in 3 mins — soak in warm water for 2–3 minutes. Add to miso soup, salad or stir-fries",
           "Addictive wakame salad — soak 3 minutes, drain. Mix with chopped cucumbers, top with soy sauce, vinegar, sugar and toasted sesame oil dressing. Sprinkle a pinch of toasted sesame seeds",
@@ -2401,7 +2388,7 @@ window.EB_CATALOG = [
           "High Protein",
           "No MSG"
         ],
-        "amazon": null,
+        "amazon": "",
         "sellingPoints": [
           "Thin skins — crispier base, faster cook, better texture than thick-skinned alternatives",
           "Pan-fry flat-side down until golden, add water, lid on — proper yaki-gyoza method",
@@ -2456,7 +2443,7 @@ window.EB_CATALOG = [
           "High Protein",
           "Vegan"
         ],
-        "amazon": null,
+        "amazon": "",
         "sellingPoints": [
           "Porous structure absorbs broth and sauce — flavour penetrates through",
           "No preservatives, no additives — water, soybean, palm oil, firming agent only",
@@ -2523,9 +2510,9 @@ window.EB_CATALOG = [
           "Pickled cucumber"
         ],
         "badges": [
-          "No Additives"
+          "Clean Label"
         ],
-        "amazon": null,
+        "amazon": "",
         "sellingPoints": [
           "Unfilled by design — fill with whatever you've cooked for fresher, better results",
           "Steam for five minutes — no defrosting required",
@@ -2575,10 +2562,9 @@ window.EB_CATALOG = [
         ],
         "badges": [
           "High Protein",
-          "No Additives",
           "Gluten Free"
         ],
-        "amazon": null,
+        "amazon": "",
         "sellingPoints": [
           "One ingredient: salmon — nothing else added",
           "High protein 20g per 100g",
@@ -2649,7 +2635,7 @@ window.EB_CATALOG = [
           "Reusable & compostable — each filter lasts up to 3 months, a big saving compared with plastic filters that last only 1 month. After 3 months, can be recycled into plant soil or used in shoe cabinets to remove odours"
         ],
         "nutrition": null,
-        "ingredients": null,
+        "ingredients": "",
         "qa": [
           {
             "q": "Do I need to boil it before use?",
@@ -2670,7 +2656,8 @@ window.EB_CATALOG = [
             "Binchotan is a form of white charcoal made from Crepe Myrtle (Lagerstroemia indica) wood, carbonised in a kiln at over 1000°C. The high-temperature process creates a dense, highly porous structure with an enormous surface area — enough to absorb chlorine and the compounds that make tap water taste flat.",
             "To use it: place in boiling water for at least 3 minutes, then remove to cool. Drop into a jug of water and leave for 3 to 6 hours. Boil in fresh water for ten minutes once a month to reactivate. Each stick lasts up to 3 months before it needs replacing — at that point, break it up and use as a soil additive."
           ]
-        }
+        },
+        "allergens": ""
       },
       {
         "id": "binchotan-filter-4pcs",
@@ -2694,7 +2681,7 @@ window.EB_CATALOG = [
           "Reusable",
           "Eco Friendly"
         ],
-        "amazon": null,
+        "amazon": "",
         "sellingPoints": [
           "100% natural — made of 100% natural Crepe Myrtle wood, not a plastic filter",
           "Purify — improves taste and removes odour by trapping contaminants like chlorine, which are often added to tap water for purification",
@@ -2703,7 +2690,7 @@ window.EB_CATALOG = [
           "Reusable & compostable — each filter lasts up to 3 months. After 3 months, can be recycled into plant soil or used in a shoe cabinet to remove odours"
         ],
         "nutrition": null,
-        "ingredients": null,
+        "ingredients": "",
         "qa": [
           {
             "q": "Do I need to boil it before use?",
@@ -2724,7 +2711,8 @@ window.EB_CATALOG = [
             "Binchotan is a form of white charcoal made from Crepe Myrtle (Lagerstroemia indica) wood, carbonised in a kiln at over 1000°C. The high-temperature process creates a dense, highly porous structure with an enormous surface area — enough to absorb chlorine and the compounds that make tap water taste flat.",
             "To use it: place in boiling water for at least 3 minutes, then remove to cool. Drop into a jug of water and leave for 3 to 6 hours. Boil in fresh water for ten minutes once a month to reactivate. Each stick lasts up to 3 months before it needs replacing — at that point, break it up and use as a soil additive."
           ]
-        }
+        },
+        "allergens": ""
       }
     ]
   },
@@ -2759,12 +2747,11 @@ window.EB_CATALOG = [
           "Stir fry"
         ],
         "badges": [
-          "No Additives",
           "Vegan",
           "Gluten Free",
           "High Protein"
         ],
-        "amazon": null,
+        "amazon": "",
         "sellingPoints": [
           "Umami — dried shiitake has an intense flavour compared with fresh. The drying process draws out umami flavour by breaking down proteins into amino acids (glutamate)",
           "Vegan — suitable for vegans and vegetarians",
@@ -2828,7 +2815,6 @@ window.EB_CATALOG = [
           "Slow-cooked stew"
         ],
         "badges": [
-          "No Additives",
           "Vegan",
           "Gluten Free",
           "Single Ingredient"
@@ -2900,7 +2886,6 @@ window.EB_CATALOG = [
           "Braised pork"
         ],
         "badges": [
-          "No Additives",
           "Vegan",
           "Gluten Free",
           "High Fibre"

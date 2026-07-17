@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% set active = "catalog" %}
+{% set col_count = text_fields|length + list_fields|length + 3 %}
+{% block content %}
+<div style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+  <div>
+    <h1>Bulk edit — table</h1>
+    <p class="sub">Edit the core text of every product across all categories at once. Images, nutrition, Q&amp;A, pairings and layout settings stay in the <em>full editor</em> (open a row with “Edit ↗”).</p>
+  </div>
+  <a class="btn secondary" href="{{ url_for('catalog') }}">← Back to catalog</a>
+</div>
+
+<style>
+  /* Full-width override — scoped to this page only (this <style> block is
+     rendered exclusively by catalog_table.html, so no other CMS page is
+     affected). Lets the wide bulk table use the whole viewport instead of the
+     centered 960px content column defined in base.html. */
+  main { max-width: none; padding-left: 20px; padding-right: 20px; }
+  .eb-table-wrap {
+    border: 1px solid var(--rule); border-radius: 10px; overflow: auto;
+    max-height: calc(100vh - 260px); background: var(--paper-bright);
+  }
+  table.eb-table { border-collapse: separate; border-spacing: 0; width: max-content; min-width: 100%; }
+  table.eb-table th, table.eb-table td {
+    border-bottom: 1px solid var(--rule); border-right: 1px solid var(--rule);
+    padding: 8px 10px; vertical-align: top; text-align: left;
+  }
+  table.eb-table th:last-child, table.eb-table td:last-child { border-right: none; }
+  table.eb-table thead th {
+    position: sticky; top: 0; z-index: 3; background: var(--paper);
+    font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-60);
+    white-space: nowrap;
+  }
+  table.eb-table tr.cat-row td {
+    position: sticky; left: 0; background: #eae7df; z-index: 2;
+    font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; font-size: 12px;
+  }
+  table.eb-table td.col-thumb { width: 56px; }
+  table.eb-table td.col-id { white-space: nowrap; }
+  table.eb-table input[type=text], table.eb-table input[type=url], table.eb-table textarea {
+    padding: 6px 8px; font-size: 13px; min-width: 160px;
+  }
+  table.eb-table td.f-tagline input, table.eb-table td.f-ingredients input, table.eb-table td.f-allergens input { min-width: 240px; }
+  table.eb-table td.f-amazon input { min-width: 220px; }
+  table.eb-table textarea { min-width: 220px; min-height: 54px; }
+  table.eb-table .thumb { width: 44px; height: 44px; }
+  .eb-save-bar { display: flex; gap: 10px; align-items: center; margin: 18px 0 8px; }
+</style>
+
+<form method="post" action="{{ url_for('catalog_table_save') }}">
+  <div class="eb-save-bar">
+    <button class="btn" type="submit">Save all changes</button>
+    <span class="muted">Edits below overwrite only these columns — every other product field is preserved.</span>
+  </div>
+
+  <div class="eb-table-wrap">
+    <table class="eb-table">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>ID</th>
+          {% for key, label in text_fields %}<th>{{ label }}</th>{% endfor %}
+          {% for key, label in list_fields %}<th>{{ label }}<br/><span style="text-transform:none; letter-spacing:0;">(one per line)</span></th>{% endfor %}
+          <th>Full editor</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in catalog %}
+        {% set ci = loop.index0 %}
+        {% set products = c.products or [] %}
+        <tr class="cat-row">
+          <td colspan="{{ col_count }}">{{ c.number }} — {{ c.name }} · {{ products|length }} product{{ '' if products|length == 1 else 's' }}</td>
+        </tr>
+        {% for p in products %}
+        {% set pi = loop.index0 %}
+        <tr>
+          <td class="col-thumb">
+            {% if p.image %}
+              <img class="thumb" src="{{ url_for('site_assets', filename=p.image[7:]) if p.image.startswith('assets/') else p.image }}" alt="" title="{{ p.image }}"/>
+            {% else %}
+              <div class="thumb"></div>
+            {% endif %}
+          </td>
+          <td class="col-id"><span class="muted">{{ p.id or '' }}</span></td>
+          {% for key, label in text_fields %}
+          <td class="f-{{ key }}">
+            <input type="text" name="p-{{ ci }}-{{ pi }}-{{ key }}" value="{{ p.get(key) or '' }}"/>
+          </td>
+          {% endfor %}
+          {% for key, label in list_fields %}
+          <td>
+            <textarea name="p-{{ ci }}-{{ pi }}-{{ key }}" rows="3">{{ (p.get(key) or []) | join('\n') }}</textarea>
+          </td>
+          {% endfor %}
+          <td>
+            <a class="btn secondary small" href="{{ url_for('catalog_product_edit', ci=ci, pi=pi) }}">Edit ↗</a>
+          </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="{{ col_count }}" class="muted">No products in this category yet.</td></tr>
+        {% endfor %}
+        {% else %}
+        <tr><td colspan="{{ col_count }}" class="muted">No catalog data found.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="eb-save-bar">
+    <button class="btn" type="submit">Save all changes</button>
+    <a class="btn secondary" href="{{ url_for('catalog') }}">Cancel</a>
+  </div>
+</form>
+{% endblock %}
