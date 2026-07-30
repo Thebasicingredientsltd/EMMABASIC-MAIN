@@ -68,13 +68,13 @@ window.EB_CATALOG = [
         }
       },
       {
-        "id": "kimchi-furikake",
+        "id": "G008",
         "pdpImageScale": 3.5,
         "name": "Kimchi Furikake",
         "japanese": "キムチふりかけ",
         "image": "assets/uploads/2025_12_01_BasicIngredient-145-20260730-091550.jpg",
         "images": [
-          "assets/uploads/2025_12_01_BasicIngredient-160-20260730-091606.jpg",
+          "assets/uploads/2025_12_01_BasicIngredient-145-20260730-092139.jpg",
           "assets/uploads/Runway_Nano_Banana_2_Show_me_a_medium_shot_040526-20260730-091717.png",
           "assets/uploads/Runway_Nano_Banana_2_Show_me_a_three-quarter_angle_040226_2-20260730-091709.png",
           "assets/uploads/Runway_Nano_Banana_2_A_clean__minimal_infographic-style_image_040526-20260730-091741.png",
