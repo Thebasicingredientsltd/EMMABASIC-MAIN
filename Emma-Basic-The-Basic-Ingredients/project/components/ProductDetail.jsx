@@ -2,15 +2,98 @@
    ProductDetail — individual product page component.
    ============================================================ */
 
+/* Turn any string into a comparable slug: lowercase, strip accents,
+   collapse anything non-alphanumeric into single hyphens. */
+function ebSlugify(s) {
+  return String(s == null ? "" : s)
+    .toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+/* Explicit aliases for product ids that were renamed in the CMS.
+   Maps an OLD id (as it may still appear in bookmarks, external links,
+   search-engine results, or shared URLs) -> the CURRENT catalog id.
+   Keep this list small and only add entries you are certain about. */
+const EB_ID_ALIASES = {
+  "shichimi": "G013",
+  "shichimi-togarashi": "G013",
+  "shichimi-seven-spices": "G013",
+  "kimchi": "G008",
+  "kimchi-furikake": "G008",
+};
+
+/* Resolve a product from a URL ?id= value, tolerating renamed / aliased /
+   loosely-matching ids so that old links don't render a broken page. */
+function ebResolveProduct(rawId) {
+  const flat = Array.isArray(window.CATALOG_FLAT) ? window.CATALOG_FLAT : [];
+  if (!rawId || flat.length === 0) return null;
+
+  // 1. Exact id match (the normal, fast path).
+  let match = flat.find(p => p.id === rawId);
+  if (match) return match;
+
+  const q = String(rawId).toLowerCase();
+
+  // 2. Case-insensitive id match (e.g. "g013" -> "G013").
+  match = flat.find(p => String(p.id).toLowerCase() === q);
+  if (match) return match;
+
+  // 3. Explicit alias table for known renames.
+  if (EB_ID_ALIASES[q]) {
+    match = flat.find(p => p.id === EB_ID_ALIASES[q]);
+    if (match) return match;
+  }
+
+  // 4. Optional per-product `slug` / `aliases` fields (future CMS support).
+  match = flat.find(p =>
+    (p.slug && String(p.slug).toLowerCase() === q) ||
+    (Array.isArray(p.aliases) && p.aliases.some(a => String(a).toLowerCase() === q))
+  );
+  if (match) return match;
+
+  // 5. Slugified-name exact match (e.g. "shichimi-seven-spices").
+  const qs = ebSlugify(rawId);
+  if (qs) {
+    match = flat.find(p => ebSlugify(p.name) === qs);
+    if (match) return match;
+
+    // 6. Loose slug containment — accept only when it is unambiguous
+    //    (exactly one product's slug contains, or is contained by, the query).
+    const loose = flat.filter(p => {
+      const ns = ebSlugify(p.name);
+      return ns && (ns.includes(qs) || qs.includes(ns));
+    });
+    if (loose.length === 1) return loose[0];
+  }
+
+  return null;
+}
+
 function ProductDetail() {
   const id = new URLSearchParams(window.location.search).get("id");
-  const product = window.CATALOG_FLAT ? window.CATALOG_FLAT.find(p => p.id === id) : null;
+  const product = ebResolveProduct(id);
 
   if (!product) {
     return (
-      <div style={{ padding: "200px var(--pad-x)", fontFamily: "var(--f-body)", fontSize: 12, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-60)" }}>
-        Product not found. <a href="Our Products.html" style={{ color: "var(--ink)", borderBottom: "1px solid var(--ink)", textDecoration: "none" }}>Back to products →</a>
-      </div>
+      <>
+        <TopNav hasHero={false} />
+        <div style={{ padding: "200px var(--pad-x)", maxWidth: "var(--maxw)", margin: "0 auto", fontFamily: "var(--f-body)" }}>
+          <div style={{ fontSize: 11, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-60)", marginBottom: 20 }}>
+            Product not found
+          </div>
+          <p style={{ fontFamily: "var(--f-display)", fontSize: "clamp(22px, 3vw, 40px)", fontWeight: 200, letterSpacing: "-0.02em", lineHeight: 1.15, margin: "0 0 28px", maxWidth: 640 }}>
+            {id ? <>We couldn't find a product for "{id}". It may have moved or been renamed.</> : <>No product was specified.</>}
+          </p>
+          <a href="Our Products.html" style={{
+            fontSize: 11, letterSpacing: "0.22em", textTransform: "uppercase",
+            color: "var(--ink)", borderBottom: "1px solid var(--ink)", textDecoration: "none",
+            paddingBottom: 2,
+          }}>Browse all products →</a>
+        </div>
+        <SiteFooter />
+      </>
     );
   }
 
@@ -21,7 +104,7 @@ function ProductDetail() {
         <ProductHero product={product} />
         {product.heroImage && <ProductHeroImage product={product} />}
         {product.ingredients && <ProductInfo product={product} />}
-        {product.sellingPoints && product.sellingPoints.length > 0 && <SellingPoints product={product} />}
+        {((product.extraSellingPoints && product.extraSellingPoints.length > 0) || (product.qa && product.qa.length > 0)) && <SellingPoints product={product} />}
         {product.education && <ProductEducation product={product} />}
         {product.extraImages && product.extraImages.length > 0 && <ProductExtraImages images={product.extraImages} gapBetween={!!product.extraImagesGap} />}
       </main>
@@ -288,6 +371,35 @@ function ProductHero({ product }) {
             </p>
           </Reveal>
 
+          {/* Key selling points — visible bullet list directly under the tagline */}
+          {product.sellingPoints && product.sellingPoints.length > 0 && (
+            <Reveal delay={300}>
+              <ul style={{
+                listStyle: "none", margin: "0 0 32px", padding: 0,
+                width: "100%",
+                display: "flex", flexDirection: "column", gap: 12,
+              }}>
+                {product.sellingPoints.map((point, i) => (
+                  <li key={i} style={{
+                    display: "flex", gap: 14, alignItems: "baseline",
+                  }}>
+                    <span aria-hidden="true" style={{
+                      flexShrink: 0, color: "var(--ink-40)",
+                      fontFamily: "var(--f-mono)", fontSize: 13, lineHeight: 1.6,
+                    }}>—</span>
+                    <span style={{
+                      fontFamily: "var(--f-body)",
+                      fontSize: "clamp(14px, 1.05vw, 15.5px)", lineHeight: 1.6,
+                      color: "var(--ink-90)",
+                    }}>
+                      {point}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+          )}
+
           {product.availableSizes && (
             <Reveal delay={220}>
               <p style={{
@@ -367,7 +479,6 @@ function ProductHeroImage({ product }) {
 /* ── Selling Points ───────────────────────────────────────── */
 function SellingPoints({ product }) {
   const extra = product.extraSellingPoints;
-  const [open, setOpen] = React.useState(false);
   const [extraOpen, setExtraOpen] = React.useState(false);
 
   function PointsGrid({ points, startIndex }) {
@@ -399,6 +510,11 @@ function SellingPoints({ product }) {
   }
 
   const qa = product.qa && product.qa.length > 0 ? product.qa : null;
+  const hasExtra = extra && extra.length > 0;
+
+  // Selling points now live in the hero info column; only render this
+  // section when there is supplementary content (extra points and/or Q&A).
+  if (!hasExtra && !qa) return null;
 
   return (
     <section style={{
@@ -409,46 +525,14 @@ function SellingPoints({ product }) {
         maxWidth: "var(--maxw)", margin: "0 auto",
         padding: "0 var(--pad-x)",
         display: "grid",
-        gridTemplateColumns: qa ? "1fr 1fr" : "1fr",
+        gridTemplateColumns: (hasExtra && qa) ? "1fr 1fr" : "1fr",
         gap: "0 clamp(40px, 6vw, 100px)",
         alignItems: "start",
       }} className="eb-selling-qa-grid">
 
         {/* Left column — accordions */}
+        {hasExtra && (
         <div>
-        {/* Why it's worth it — accordion */}
-        <div style={{ borderBottom: "1px solid var(--rule)" }}>
-          <button
-            onClick={() => setOpen(o => !o)}
-            style={{
-              width: "100%", display: "flex", justifyContent: "space-between",
-              alignItems: "center", gap: 24,
-              padding: "clamp(28px, 4vh, 44px) 0",
-              background: "none", border: "none", cursor: "pointer", textAlign: "left",
-            }}
-          >
-            <span style={{
-              fontFamily: "var(--f-body)", fontSize: 14, letterSpacing: "0.22em",
-              textTransform: "uppercase", color: "var(--ink)",
-            }}>Why it's worth it</span>
-            <span style={{
-              fontFamily: "var(--f-mono)", fontSize: 18, color: "var(--ink-60)",
-              flexShrink: 0, display: "inline-block",
-              transform: open ? "rotate(45deg)" : "rotate(0deg)",
-              transition: "transform 300ms var(--ease-out)",
-            }}>+</span>
-          </button>
-          <div style={{
-            overflow: "hidden",
-            maxHeight: open ? "2000px" : "0",
-            transition: "max-height 500ms var(--ease-out)",
-          }}>
-            <div style={{ paddingBottom: "clamp(40px, 6vh, 64px)" }}>
-              <PointsGrid points={product.sellingPoints} startIndex={0} />
-            </div>
-          </div>
-        </div>
-
         {/* Also worth knowing — accordion */}
         {extra && extra.length > 0 && (
           <div style={{ borderBottom: "1px solid var(--rule)" }}>
@@ -483,11 +567,15 @@ function SellingPoints({ product }) {
             </div>
           </div>
         )}
-        </div>{/* end left column */}
+        </div>
+        )}{/* end left column */}
 
         {/* Right column — Q&A */}
         {qa && (
-          <div style={{ borderLeft: "1px solid var(--rule)", paddingLeft: "clamp(32px, 5vw, 64px)" }} className="eb-qa-col">
+          <div style={{
+            borderLeft: hasExtra ? "1px solid var(--rule)" : "none",
+            paddingLeft: hasExtra ? "clamp(32px, 5vw, 64px)" : 0,
+          }} className="eb-qa-col">
             <InlineQA qa={qa} />
           </div>
         )}

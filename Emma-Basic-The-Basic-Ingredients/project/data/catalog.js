@@ -125,15 +125,15 @@ window.EB_CATALOG = [
         }
       },
       {
-        "id": "shichimi",
+        "id": "G013",
         "pdpImageScale": 3.5,
         "name": "Shichimi Seven Spices",
         "japanese": "七味唐からし",
-        "image": "assets/products-nobg/Schichimi seasoning.png",
+        "image": "assets/uploads/2025_12_01_BasicIngredient-146-20260730-100726.jpg",
         "images": [
-          "assets/products-nobg/Schichimi seasoning.png",
-          "assets/back-of-pack/2025_12_01_BasicIngredient-157.jpg",
-          "assets/Range-image.png"
+          "assets/uploads/2025_12_01_BasicIngredient-146-20260730-100729.jpg",
+          "assets/uploads/2025_12_01_BasicIngredient-156-20260730-100738.jpg",
+          "assets/uploads/2025_12_01_BasicIngredient-179-20260730-100838.jpg"
         ],
         "tone": "warm",
         "origin": "All-Purpose Seasoning",
@@ -187,11 +187,13 @@ window.EB_CATALOG = [
         },
         "name": "Black Toasted Sesame Seeds 150g",
         "japanese": "黒いりごま",
-        "image": "assets/products-nobg/black sesame seeds.png",
+        "image": "assets/uploads/2025_12_01_BasicIngredient-149-20260730-185540.jpg",
         "images": [
-          "assets/products-nobg/black sesame seeds.png",
-          "assets/back-of-pack/2023_07_13_Basic_Ingredient-023.jpg",
-          "assets/Range-image.png"
+          "assets/uploads/2025_12_01_BasicIngredient-149-20260730-185544.jpg",
+          "assets/uploads/2025_12_01_BasicIngredient-153-20260730-185550.jpg",
+          "assets/uploads/G003_-_Hero_4-20260730-185606.jpg",
+          "assets/uploads/G003_Serving_Suggestion_1-20260730-185636.jpg",
+          "assets/uploads/2025_12_01_BasicIngredient-179-20260730-185652.jpg"
         ],
         "tone": "warm",
         "origin": "Toasted",
@@ -239,11 +241,13 @@ window.EB_CATALOG = [
         "id": "white-sesame-seeds",
         "name": "White Toasted Sesame Seeds 150g",
         "japanese": "白いりごま",
-        "image": "assets/products-nobg/white sesame seeds.png",
+        "image": "assets/uploads/2025_12_01_BasicIngredient-152-20260730-185737.jpg",
         "images": [
-          "assets/products-nobg/white sesame seeds.png",
-          "assets/back-of-pack/2023_07_13_Basic_Ingredient-027.jpg",
-          "assets/Range-image.png"
+          "assets/uploads/2025_12_01_BasicIngredient-152-20260730-185740.jpg",
+          "assets/uploads/G005A_-_Hero_1_Back-20260730-185820.jpg",
+          "assets/uploads/G005A_-_Hero_4-20260730-185827.jpg",
+          "assets/uploads/G001_Serving_suggestion_4-20260730-190632.jpg",
+          "assets/uploads/2025_12_01_BasicIngredient-179-20260730-190640.jpg"
         ],
         "tone": "warm",
         "origin": "Toasted",
@@ -291,11 +295,13 @@ window.EB_CATALOG = [
         "id": "black-sesame-seeds-1kg-s",
         "name": "Black Toasted Sesame Seeds 1kg",
         "japanese": "黒いりごま 1kg",
-        "image": "assets/products-nobg/black sesame seeds 1kg.png",
+        "image": "assets/uploads/2024_08_07_BasicIngredient-204-20260730-191341.jpg",
         "images": [
-          "assets/products-nobg/black sesame seeds 1kg.png",
-          "assets/back-of-pack/Black sesame seeds 1kg.jpg",
-          "assets/Range-image.png"
+          "assets/uploads/2024_08_07_BasicIngredient-204-20260730-191344.jpg",
+          "assets/uploads/G011A_-_BACK-20260730-192002.jpg",
+          "assets/uploads/G011A_-_Hero_3-20260730-192006.jpg",
+          "assets/uploads/G011A_-_Hero_4-20260730-192010.jpg",
+          "assets/uploads/Mark_Generation-20260730-192050.png"
         ],
         "tone": "warm",
         "origin": "Toasted",
@@ -347,11 +353,13 @@ window.EB_CATALOG = [
         "id": "white-sesame-seeds-1kg-s",
         "name": "White Toasted Sesame Seeds 1kg",
         "japanese": "白いりごま 1kg",
-        "image": "assets/products-nobg/white toasted sesame 1kg.png",
+        "image": "assets/uploads/2024_08_07_BasicIngredient-200-20260730-192251.jpg",
         "images": [
-          "assets/products-nobg/white toasted sesame 1kg.png",
-          "assets/back-of-pack/White sesame seeds 1kg.jpg",
-          "assets/Range-image.png"
+          "assets/uploads/2024_08_07_BasicIngredient-200-20260730-192303.jpg",
+          "assets/uploads/2024_08_07_BasicIngredient-211-20260730-192305.jpg",
+          "assets/uploads/G012A_-_Hero_4-20260730-192323.jpg",
+          "assets/uploads/G012A_-_Hero_6-20260730-192337.jpg",
+          "assets/uploads/Emma_Basic_Cross-Sell_Lifestyle_Kitchen-20260730-192350.png"
         ],
         "tone": "warm",
         "origin": "Toasted",
@@ -678,6 +686,68 @@ window.EB_CATALOG = [
           {
             "q": "What's the difference between this and the 7-sheet pack?",
             "a": "Identical product — same nori, same producer. The 50-sheet pack is the bulk format for households that use nori regularly."
+          }
+        ]
+      },
+      {
+        "id": "wakame",
+        "name": "Wakame 50g",
+        "japanese": "わかめ",
+        "image": "assets/products-original-backup/wakame-homepage.png",
+        "images": [
+          "assets/products-original-backup/wakame-homepage.png",
+          "assets/Range-image.png"
+        ],
+        "tone": "cool",
+        "origin": "Wild-harvested · Japan",
+        "tagline": "Dried at source. Rehydrates in minutes.",
+        "pairings": [
+          "Miso soup",
+          "Udon",
+          "Cucumber salad"
+        ],
+        "badges": [
+          "Vegan",
+          "Gluten Free",
+          "High Fibre",
+          "High Protein"
+        ],
+        "amazon": "",
+        "sellingPoints": [
+          "Ready in 3 mins — soak in warm water for 2–3 minutes; add to miso soup, salads, or stir-fries",
+          "Cupboard staple — 50g pack keeps when fresh vegetables run out",
+          "Single ingredient — wakame seaweed only",
+          "Vegan & vegetarian — may contain a trace of fish, shrimp and molluscs as harvested from the sea; wash before use"
+        ],
+        "nutrition": {
+          "serving": "per 100g",
+          "energy_kj": null,
+          "energy_kcal": null,
+          "fat": null,
+          "saturates": null,
+          "carbohydrate": null,
+          "sugars": null,
+          "fibre": null,
+          "protein": null,
+          "salt": null
+        },
+        "ingredients": "Wakame seaweed.",
+        "allergens": "Vegan. May contain trace amounts of fish, shrimp, and molluscs due to ocean harvesting. Wash before use.",
+        "education": {
+          "title": "Dried wakame: cupboard seaweed, ready in minutes.",
+          "body": [
+            "Wakame is a brown seaweed harvested from cold coastal waters, then dried so it keeps in the cupboard. Soak in warm water for two to three minutes and it expands into silky fronds for miso soup, salads, or stir-fries.",
+            "Keep a 50g pack on the shelf for when fresh greens run out — one ingredient, no salt or preservatives added."
+          ]
+        },
+        "qa": [
+          {
+            "q": "How do I prepare it?",
+            "a": "Soak in warm water for 2–3 minutes, then drain. It expands a lot — start with a small handful."
+          },
+          {
+            "q": "What can I use it in?",
+            "a": "Miso soup, udon, cucumber salad, rice bowls, and stir-fries."
           }
         ]
       },

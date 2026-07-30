@@ -97,8 +97,8 @@ window.EB_PEOPLE = {
         "image": "assets/Employees-page/taiki.jpg",
         "image2": "",
         "phone": "",
-        "imageZoom": 2.4,
-        "imagePosition": "40% center"
+        "imagePosition": "40% center",
+        "imageZoom": 2.4
       },
       {
         "name": "Cotton",
@@ -115,7 +115,7 @@ window.EB_PEOPLE = {
     "heading": "Who we",
     "headingAccent": "are.",
     "paragraphs": [
-      "The Basic Ingredients Ltd is a BRCGS-certified Grade AA food company specialising in clean-label products. Often called Clean Dec among food technologists, clean label is a familiar phrase to consumers. What is clean label? It simply means products are made without additives.",
+      "The Basic Ingredients Ltd is a food company specialising in clean-label products. Often called Clean Dec among food technologists, clean label is a familiar phrase to consumers. What is clean label? It simply means products are made without additives.",
       "What are food additives? Food additives are substances added to enhance flavour, colour, shelf life, or texture. While thousands are legally permitted and regulated by authorities, are they good for your well-being? Probably not! Here are a few common examples: Emulsifier E471 in most ice-cream brands; Brilliant Blue E133 as colouring and Xanthan Gum E415 as thickener in wasabi paste; Aspartame E951 as sweetener in Diet Cola.",
       "Emma Basic is a clean-label brand and registered trademark, proudly owned by The Basic Ingredients Ltd. At Emma Basic, we go further than just removing additives — when developing a product we eliminate UPFs like refined oils, reduce plastic in packaging, and allow only a minimal number of ingredients that are nourishing and natural, to support real well-being."
     ]
@@ -124,9 +124,18 @@ window.EB_PEOPLE = {
     "eyebrow": "What we offer",
     "heading": "Export, import, and OEM.",
     "cards": [
-      { "title": "Export", "body": "We specialise in export to China, Taiwan, Japan and Europe." },
-      { "title": "Import", "body": "We import from the EU, Vietnam, Taiwan, China, Japan." },
-      { "title": "OEM", "body": "We are your NPD, technical and procurement team to create products under your brand." }
+      {
+        "title": "Export",
+        "body": "We specialise in export to China, Taiwan, Japan and Europe."
+      },
+      {
+        "title": "Import",
+        "body": "We import from the EU, Vietnam, Taiwan, China, Japan."
+      },
+      {
+        "title": "OEM",
+        "body": "We are your NPD, technical and procurement team to create products under your brand."
+      }
     ],
     "closing": "We provide advice on food safety, legality, authenticity and quality. If you are a food & drink brand looking for export opportunities, you can rely on us at all stages — from labelling assessment to customs clearance."
   },
@@ -139,15 +148,36 @@ window.EB_PEOPLE = {
         "q": "Open a trade account",
         "a": "Two payment terms depending on your CreditSafe rating: Cash in Advance or Net 30 Days Credit.",
         "forms": [
-          { "label": "Cash in Advance - Application Form", "href": "assets/forms/The Basic - Cash Advance Account updated.pdf" },
-          { "label": "Net 30 Days Credit - Application Form", "href": "assets/forms/The Basic - Account Application Form updated.pdf" }
+          {
+            "label": "Cash in Advance - Application Form",
+            "href": "assets/forms/The Basic - Cash Advance Account updated.pdf"
+          },
+          {
+            "label": "Net 30 Days Credit - Application Form",
+            "href": "assets/forms/The Basic - Account Application Form updated.pdf"
+          }
         ]
       },
-      { "q": "Order schedule", "a": "Place your order by 10:00 AM on Day 1 for Day 3 delivery. Email boris@thebasicingredients.com with the product code, product name, and quantity required." },
-      { "q": "Minimum order", "a": "Minimum order value is assessed case by case, based on your delivery distance and estimated volume. Get in touch with your address and an idea of what you need and we will come back to you with a figure." },
-      { "q": "Collection - Ambient", "a": "Kinaxia Logistics, DC115, Danes Way, Dirft, Crick, NN6 7GZ. Monday to Friday, 07:00-20:00." },
-      { "q": "Collection - Frozen", "a": "JS Davidson Ltd, Shrewsbury Avenue, Woodston Industrial Estate, Peterborough, PE2 7LB. Monday to Friday, 06:00-15:00." },
-      { "q": "Use your existing distributor", "a": "If you prefer to use your favourite distributor then please put us in touch, we will gladly make contact." }
+      {
+        "q": "Order schedule",
+        "a": "Place your order by 10:00 AM on Day 1 for Day 3 delivery. Email boris@thebasicingredients.com with the product code, product name, and quantity required."
+      },
+      {
+        "q": "Minimum order",
+        "a": "Minimum order value is assessed case by case, based on your delivery distance and estimated volume. Get in touch with your address and an idea of what you need and we will come back to you with a figure."
+      },
+      {
+        "q": "Collection - Ambient",
+        "a": "Kinaxia Logistics, DC115, Danes Way, Dirft, Crick, NN6 7GZ. Monday to Friday, 07:00-20:00."
+      },
+      {
+        "q": "Collection - Frozen",
+        "a": "JS Davidson Ltd, Shrewsbury Avenue, Woodston Industrial Estate, Peterborough, PE2 7LB. Monday to Friday, 06:00-15:00."
+      },
+      {
+        "q": "Use your existing distributor",
+        "a": "If you prefer to use your favourite distributor then please put us in touch, we will gladly make contact."
+      }
     ]
   },
   "contact": {
