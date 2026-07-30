@@ -133,13 +133,11 @@ function ProductHero({ product }) {
             ref={pedestalRef}
             onClick={isVideoActive ? undefined : handlePedestalClick}
             style={{
-              aspectRatio: isPhoto ? (product.pdpAspect || "1/1") : "4/5",
-              background: "var(--paper-shade)",
-              border: "1px solid var(--rule)",
-              boxShadow: "0 8px 64px rgba(10,10,10,0.08), 0 2px 12px rgba(10,10,10,0.04)",
+              aspectRatio: "1 / 1",
+              background: "#ffffff",
               overflow: "hidden",
               display: "flex", alignItems: "center", justifyContent: "center",
-              padding: isVideoActive ? 0 : (isPhotoFirst ? 0 : (isFirstImg && product.pdpPadding !== undefined ? product.pdpPadding : "10%")),
+              padding: 0,
               position: "relative",
               cursor: isVideoActive ? "default" : (isZoomed ? (zoomLevel === ZOOM_STEPS.length - 1 ? "zoom-out" : "zoom-in") : "zoom-in"),
               userSelect: "none",
@@ -162,12 +160,11 @@ function ProductHero({ product }) {
                   onLoad={() => { setLoaded(true); setPedestalRect(pedestalRef.current?.getBoundingClientRect()); }}
                   style={{
                     width: "100%", height: "100%",
-                    objectFit: "contain",
+                    objectFit: "cover",
+                    objectPosition: "center",
                     opacity: loaded ? 1 : 0,
                     transition: "opacity 500ms var(--ease-out), transform 400ms var(--ease-out)",
                     transform: [
-                      isFirstImg ? firstImgTransform : "",
-                      (bopScale !== 1 || bopOffX || bopOffY) ? `translate(${bopOffX}px, ${bopOffY}px) scale(${bopScale})` : "",
                       imgRotation ? `rotate(${imgRotation}deg)` : "",
                       isZoomed ? `scale(${activeZoom})` : "",
                     ].filter(Boolean).join(" "),
@@ -201,14 +198,14 @@ function ProductHero({ product }) {
                     flex: "0 0 auto",
                     width: 72, height: 72,
                     padding: 0, border: "none", cursor: "pointer",
-                    background: "var(--paper-shade)",
+                    background: "#ffffff",
                     outline: activeImg === i ? "2px solid var(--ink)" : "1px solid var(--rule)",
                     outlineOffset: activeImg === i ? 2 : 0,
                     overflow: "hidden",
                     transition: "outline 160ms var(--ease-out)",
                   }}
                 >
-                  <img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "contain", padding: 6, transform: [`scale(${product.imageScales?.[i] ?? (src.includes("back-of-pack") ? 2 : 1)})`, product.imageRotations?.[i] ? `rotate(${product.imageRotations[i]}deg)` : ""].filter(Boolean).join(" ") }} />
+                  <img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", transform: product.imageRotations?.[i] ? `rotate(${product.imageRotations[i]}deg)` : undefined }} />
                 </button>
               ))}
               {hasVideo && (

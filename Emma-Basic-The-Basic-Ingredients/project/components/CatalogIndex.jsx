@@ -395,18 +395,14 @@ function CategorySection({ category, index }) {
 function ProductCard({ product, index }) {
   const [ref, visible] = useReveal(0.12);
   const [hover, setHover] = React.useState(false);
-  const isMobile = window.innerWidth <= 768;
-  const isPhoto = product.displayMode === "photo";
-  const activeOffset = isPhoto
-    ? null
-    : (isMobile
-      ? (product.mobileImageOffset ?? product.catalogImageOffset ?? product.imageOffset)
-      : (product.catalogImageOffset ?? product.imageOffset));
-  const activeScale = isPhoto
-    ? 1
-    : (isMobile
-      ? (product.mobileImageScale ?? product.imageScale ?? 2)
-      : (product.imageScale ?? 2));
+  // Uniform 1:1 cover treatment for every product. Old per-product flags
+  // (imageScale / displayMode / imageOffset / catalogImageOffset / mobile*)
+  // are intentionally ignored so all cards look identical: the image fills
+  // the square (cover), cropping any overflow. Use the first image when an
+  // images array exists.
+  const cardImage = Array.isArray(product.images) && product.images.length > 0
+    ? product.images[0]
+    : product.image;
   return (
     <a
       ref={ref}
@@ -422,36 +418,23 @@ function ProductCard({ product, index }) {
         transition: `opacity 900ms var(--ease-out) ${index * 80}ms, transform 900ms var(--ease-out) ${index * 80}ms`,
       }}
     >
-      {/* Image pedestal — uniform 1:1 square across all cards */}
+      {/* Product image — uniform 1:1 square, image fills (cover), no frame */}
       <div style={{
         position: "relative",
         aspectRatio: "1 / 1",
-        background: "var(--paper-shade)",
+        background: "#ffffff",
         overflow: "hidden",
-        border: "1px solid var(--rule)",
-        boxShadow: "0 4px 32px rgba(10,10,10,0.06), 0 1px 4px rgba(10,10,10,0.03)",
-        display: "flex", alignItems: "center", justifyContent: "center",
       }}>
-        {/* White rectangle behind the product image */}
-        {!product.noWhiteBg && !isPhoto && (
-          <div style={{
-            position: "absolute",
-            inset: "6%",
-            background: "#ffffff",
-            borderRadius: 4,
-            boxShadow: "0 2px 12px rgba(10,10,10,0.06)",
-          }} />
-        )}
         <img
-          src={product.image}
+          src={cardImage}
           alt={product.name}
           loading="lazy"
           style={{
             position: "absolute", inset: 0,
             width: "100%", height: "100%",
-            objectFit: "contain",
-            padding: isPhoto ? 0 : (product.noWhiteBg ? "clamp(12px, 4%, 28px)" : "4%"),
-            transform: `translate(${activeOffset?.x ?? 0}px, ${activeOffset?.y ?? 0}px) scale(${hover ? activeScale * 1.04 : activeScale})`,
+            objectFit: "cover",
+            objectPosition: "center",
+            transform: `scale(${hover ? 1.05 : 1})`,
             transition: "transform 800ms var(--ease-out)",
             zIndex: 1,
           }}

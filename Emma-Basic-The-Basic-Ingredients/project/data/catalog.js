@@ -72,13 +72,14 @@ window.EB_CATALOG = [
         "pdpImageScale": 3.5,
         "name": "Kimchi Furikake",
         "japanese": "キムチふりかけ",
-        "image": "assets/products-nobg/Kimchi furikake.png",
+        "image": "assets/uploads/2025_12_01_BasicIngredient-145-20260730-091550.jpg",
         "images": [
-          "assets/uploads/2025_12_01_BasicIngredient-145-20260717-181704.jpg",
-          "assets/uploads/2025_12_01_BasicIngredient-158-20260717-181728.jpg",
-          "assets/uploads/Runway_Nano_Banana_2_Show_me_a_three-quarter_angle_040226_2-20260717-181821.png",
-          "assets/uploads/Runway_Nano_Banana_2_A_clean__minimal_infographic-style_image_040526-20260717-181832.png",
-          "assets/uploads/EmmaBasic-Dishes_SandyWood_119_W-20260717-181850.jpg"
+          "assets/uploads/2025_12_01_BasicIngredient-160-20260730-091606.jpg",
+          "assets/uploads/Runway_Nano_Banana_2_Show_me_a_medium_shot_040526-20260730-091717.png",
+          "assets/uploads/Runway_Nano_Banana_2_Show_me_a_three-quarter_angle_040226_2-20260730-091709.png",
+          "assets/uploads/Runway_Nano_Banana_2_A_clean__minimal_infographic-style_image_040526-20260730-091741.png",
+          "assets/uploads/EmmaBasic-Dishes_SandyWood_119_W-20260717-181850.jpg",
+          "assets/uploads/2025_12_01_BasicIngredient-179-20260730-091622.jpg"
         ],
         "tone": "warm",
         "origin": "Japanese style",
