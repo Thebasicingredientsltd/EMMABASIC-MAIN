@@ -1303,11 +1303,13 @@ window.EB_CATALOG = [
         "imageScale": 3,
         "name": "Soba Noodles",
         "japanese": "そば",
-        "image": "assets/products-nobg/soba noodles.png",
+        "image": "assets/uploads/2025_12_01_BasicIngredient-103-20260731-180612.jpg",
         "images": [
-          "assets/products-nobg/soba noodles.png",
-          "assets/back-of-pack/2025_12_01_BasicIngredient-118.jpg",
+          "assets/uploads/2025_12_01_BasicIngredient-103-20260731-180617.jpg",
+          "assets/uploads/2025_12_01_BasicIngredient-118-20260731-180620.jpg",
           "assets/products/soba-noodles-homepage.png",
+          "assets/uploads/EmmaBasic-January_SandyWood_106-tiktok-20260731-180808.jpg",
+          "assets/uploads/2025_12_01_BasicIngredient-062-20260731-180633.jpg",
           "assets/Range-image.png"
         ],
         "tone": "warm",
@@ -1351,17 +1353,21 @@ window.EB_CATALOG = [
             "Buckwheat is not wheat — it's a seed from a plant related to rhubarb. Soba gets its nutty, earthy flavour from the buckwheat content. The higher the percentage, the stronger the flavour and the more fragile the noodle. Ours uses a carefully balanced ratio of wheat and buckwheat flour — enough buckwheat to taste it clearly, with enough wheat to hold together properly in boiling water.",
             "Soba is traditionally served cold in summer with a dipping sauce (mentsuyu) and warm in winter in broth. The cold preparation is particularly good because the buckwheat flavour comes through more clearly when the noodle isn't steaming. Cook for four minutes, rinse thoroughly in cold water, drain. That's all there is to it."
           ]
-        }
+        },
+        "updatedAt": "2026-07-31T17:08:17+00:00"
       },
       {
         "id": "udon-noodles",
         "imageScale": 2.25,
         "name": "Udon Noodles",
         "japanese": "うどん",
-        "image": "assets/products-nobg/Udon.png",
+        "image": "assets/uploads/2025_12_01_BasicIngredient-109-20260731-180654.jpg",
         "images": [
-          "assets/products-nobg/Udon.png",
-          "assets/back-of-pack/2025_12_01_BasicIngredient-119.jpg",
+          "assets/uploads/2025_12_01_BasicIngredient-109-20260731-180656.jpg",
+          "assets/uploads/2025_12_01_BasicIngredient-119-20260731-180701.jpg",
+          "assets/uploads/2025_12_01_BasicIngredient-064-20260731-180710.jpg",
+          "assets/uploads/EmmaBasic-January_SandyWood_96-20260731-180735.jpg",
+          "assets/uploads/EmmaBasic-January_SandyWood_116-20260731-180743.jpg",
           "assets/Range-image.png"
         ],
         "tone": "warm",
@@ -1404,7 +1410,8 @@ window.EB_CATALOG = [
             "Udon is three ingredients: wheat flour, water, and salt. The dough is worked until the gluten develops enough to give the noodle its distinctive chew — that's the whole process. Nothing else goes in. The thick, pale strands are as close to neutral as a noodle gets, which means the broth does the talking.",
             "Our dried udon rehydrates to a proper thickness — closer to Sanuki-style than the thin versions you find in most supermarkets. Cook for eight to ten minutes, rinse, add to your broth. The noodle will continue softening in liquid, so serve immediately after the final rinse."
           ]
-        }
+        },
+        "updatedAt": "2026-07-31T17:07:48+00:00"
       },
       {
         "id": "shirataki-noodles",
@@ -1431,10 +1438,12 @@ window.EB_CATALOG = [
         ],
         "name": "Shirataki Konjac Noodles 200g",
         "japanese": "白滝こんにゃく麺",
-        "image": "assets/products-nobg/Shiritaki konjac noodle.png",
+        "image": "assets/uploads/N007_Front-20260731-180836.jpg",
         "images": [
-          "assets/products-nobg/Shiritaki konjac noodle.png",
-          "assets/back-of-pack/Shiritaki konjac noodles.jpg",
+          "assets/uploads/N007_Front-20260731-180839.jpg",
+          "assets/uploads/N007_Back-20260731-180844.jpg",
+          "assets/uploads/Lifestyle_No_2_Show_me_a_mediu_Nano_Banana_2_45083-20260731-180856.jpg",
+          "assets/uploads/Texture_Close-Up_Show_me_a_clo_Nano_Banana_2_54038-20260731-180903.jpg",
           "assets/Range-image.png"
         ],
         "tone": "warm",
@@ -1539,7 +1548,8 @@ window.EB_CATALOG = [
             "q": "Are they suitable for people with diabetes?",
             "a": "Yes. Konjac noodles have a very low glycemic index, making them a good choice for people with diabetes. However, it's essential to consult a healthcare professional for personalised dietary advice."
           }
-        ]
+        ],
+        "updatedAt": "2026-07-31T17:09:07+00:00"
       },
       {
         "id": "shirataki-noodles-v2",
@@ -1557,9 +1567,13 @@ window.EB_CATALOG = [
         },
         "name": "Shirataki Konjac Noodles 170g",
         "japanese": "白滝こんにゃく麺",
-        "image": "assets/products-nobg/N001.jpg",
+        "image": "assets/uploads/B08NFDD1BH.MAIN.jpg-20260731-180929.jpg",
         "images": [
-          "assets/products-nobg/N001.jpg"
+          "assets/uploads/B08NFDD1BH.MAIN.jpg-20260731-180926.jpg",
+          "assets/uploads/N001_-_PT01-20260731-180939.jpg",
+          "assets/uploads/N001_-_PT02-20260731-180958.jpg",
+          "assets/uploads/N001_-_PT03-20260731-181001.jpg",
+          "assets/uploads/CrossSell-20260731-181005.jpg"
         ],
         "tone": "warm",
         "origin": "Konjac · China",
@@ -1661,7 +1675,8 @@ window.EB_CATALOG = [
             "q": "Are they suitable for people with diabetes?",
             "a": "Yes. Konjac noodles have a very low glycemic index, making them a good choice for people with diabetes. However, it's essential to consult a healthcare professional for personalised dietary advice."
           }
-        ]
+        ],
+        "updatedAt": "2026-07-31T17:10:07+00:00"
       },
       {
         "id": "konjac-fettuccine",
@@ -1682,10 +1697,12 @@ window.EB_CATALOG = [
         ],
         "name": "Konjac Fettuccine 200g",
         "japanese": "こんにゃくフェットチーネ",
-        "image": "assets/products-nobg/konjac fettucine.png",
+        "image": "assets/uploads/N000_-_Hero_1b-20260731-181019.jpg",
         "images": [
-          "assets/products-nobg/konjac fettucine.png",
-          "assets/back-of-pack/2026_03_02_BasicIngredient-112.jpg",
+          "assets/uploads/N000_-_Hero_1b-20260731-181022.jpg",
+          "assets/uploads/2026_03_02_BasicIngredient-097-20260731-181410.jpg",
+          "assets/uploads/N000_-_Hero_5-20260731-181422.jpg",
+          "assets/uploads/N000_-_Hero_6-20260731-181425.jpg",
           "assets/Range-image.png"
         ],
         "tone": "warm",
@@ -1745,7 +1762,8 @@ window.EB_CATALOG = [
             "q": "Do they have any flavour?",
             "a": "Very mild — a neutral base that takes on whatever surrounds it. The wider flat shape helps sauce adhere compared to round shirataki."
           }
-        ]
+        ],
+        "updatedAt": "2026-07-31T17:14:30+00:00"
       },
       {
         "id": "rice-vermicelli",
@@ -1757,10 +1775,11 @@ window.EB_CATALOG = [
         ],
         "name": "Rice Vermicelli Noodles",
         "japanese": "ビーフン",
-        "image": "assets/products-nobg/rice vermecelli.png",
+        "image": "assets/uploads/N017-20260731-181451.png",
         "images": [
-          "assets/products-nobg/rice vermecelli.png",
-          "assets/back-of-pack/Rice vermecelli.jpg",
+          "assets/uploads/N017-20260731-181456.png",
+          "assets/uploads/N017_-_Back_side-20260731-181635.jpg",
+          "assets/uploads/EmmaBasic-January_SandyWood_102-20260731-181646.jpg",
           "assets/Range-image.png"
         ],
         "tone": "warm",
@@ -1801,7 +1820,8 @@ window.EB_CATALOG = [
             "Rice vermicelli is made from a single ingredient — rice. It's naturally gluten-free, lighter in texture than wheat noodles, and takes on flavour readily from whatever sauce or broth surrounds it. One ingredient, one job: absorb the flavours around it without getting in the way.",
             "Unlike wheat noodles, rice vermicelli doesn't need boiling. Soak in hot water for three to five minutes until pliable, then cook directly in your stir-fry or add to hot broth. Overcooking makes it mushy — pull it while it still has a little resistance. For cold noodle salads, rinse under cold water immediately after soaking."
           ]
-        }
+        },
+        "updatedAt": "2026-07-31T17:17:01+00:00"
       }
     ]
   },
@@ -1826,10 +1846,11 @@ window.EB_CATALOG = [
         "video": "assets/Product-videos/Toasted Sesame Oil.mp4",
         "name": "Pure Toasted Sesame Oil",
         "japanese": "純正ごま油",
-        "image": "assets/products-nobg/toasted sesaame oil.png",
+        "image": "assets/uploads/2026_03_02_BasicIngredient-083-20260731-181730.jpg",
         "images": [
-          "assets/products-nobg/toasted sesaame oil.png",
-          "assets/sesame-oil/G017H - Back.jpg",
+          "assets/uploads/2026_03_02_BasicIngredient-083-20260731-181732.jpg",
+          "assets/uploads/2026_03_02_BasicIngredient-093-20260731-181736.jpg",
+          "assets/uploads/2026_03_02_BasicIngredient-084-20260731-181749.jpg",
           "assets/sesame-oil/Untitled design (85).png",
           "assets/sesame-oil/Screenshot 2026-06-03 102417.png",
           "assets/sesame-oil/Screenshot 2026-06-22 104757.png",
@@ -1882,7 +1903,60 @@ window.EB_CATALOG = [
             "This is 100% pure sesame oil — one single ingredient: the finest roasted sesame seeds. Nothing else. Not a blend. Many supermarket sesame oils are diluted with cheaper vegetable oils or solvent-extracted with hexane and then deodorised. Ours is physically pressed only.",
             "Skillfully toasted seeds, gently pressed, produce the rich caramel colour, the deep nutty aroma, and the flavour that makes this oil worth seeking out. A finishing oil only — a few drops over noodles, steamed greens, or cold dishes is all you need."
           ]
-        }
+        },
+        "updatedAt": "2026-07-31T17:17:56+00:00"
+      },
+      {
+        "id": "C066H",
+        "name": "Pure Toasted Sesame Oil 1.9L",
+        "japanese": "純正ごま油",
+        "origin": "Physically pressed",
+        "tone": "warm",
+        "tagline": "Physically pressed — never chemically refined.",
+        "amazon": "https://www.amazon.co.uk/dp/B0883BQM56",
+        "image": "assets/uploads/C066H_-_Hero_01-20260731-181832.png",
+        "badges": [
+          "Physically Pressed",
+          "100% Pure",
+          "Single Ingredient",
+          "Gluten Free"
+        ],
+        "pairings": [
+          "Steamed greens",
+          "Cold noodles",
+          "Rice"
+        ],
+        "sellingPoints": [
+          "PHYSICALLY PRESSED: Physically pressed, not chemically refined. The oil from these tiny sesame seeds has many potential benefits to offer.",
+          "100% PURE: Made of one single ingredient: the finest roasted sesame seeds. Nothing else. This is not a blended sesame oil.",
+          "FLAVOUR & AROMA: Roasting and grounding sesame seeds is an art and science that takes years of training. Only properly roasted and gently pressed sesame can produce the rich flavour and desirable nutty aroma.",
+          "AUTHENTIC ORIENTAL: This dark caramel sesame oil is widely used in Asia cuisine. It is called fragrant oil in China, usually added to dishes at the end of cooking, used in dressings for cold dishes or for marinades & sauces.",
+          "A KITCHEN STAPLE: Every kitchen needs a bottle of sesame oil. Don't settle for a sesame oil that simply doesn’t give your food the flavour boost it deserves."
+        ],
+        "ingredients": "SESAME SEED OIL",
+        "allergens": "Contains sesame.",
+        "images": [
+          "assets/uploads/C066H_-_BACK-20260731-181842.jpg",
+          "assets/uploads/Extreme_close-up_macro_of_pure_Nano_Banana_2_56629-20260731-181851.png",
+          "assets/uploads/C066H_-_PT02-20260731-181909.jpg",
+          "assets/uploads/C066H_-_PT05-20260731-181858.jpg",
+          "assets/uploads/C066H_-_PT04-20260731-181900.jpg",
+          "assets/uploads/C066H_-_PT03-20260731-181854.jpg"
+        ],
+        "nutrition": {
+          "serving": "per 100g",
+          "energy_kj": 3404,
+          "energy_kcal": 828,
+          "fat": 92
+        },
+        "education": {
+          "title": "One ingredient. Skillfully toasted. Nothing added, nothing blended.",
+          "body": [
+            "This is 100% pure sesame oil — one single ingredient: the finest roasted sesame seeds. Nothing else. Not a blend. Many supermarket sesame oils are diluted with cheaper vegetable oils or solvent-extracted with hexane and then deodorised. Ours is physically pressed only.",
+            "Skillfully toasted seeds, gently pressed, produce the rich caramel colour, the deep nutty aroma, and the flavour that makes this oil worth seeking out. A finishing oil only — a few drops over noodles, steamed greens, or cold dishes is all you need."
+          ]
+        },
+        "updatedAt": "2026-07-31T17:24:34+00:00"
       }
     ]
   },
