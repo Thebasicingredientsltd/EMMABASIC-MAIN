@@ -124,7 +124,8 @@ function ProductRail({ onOpen }) {
           display: "flex", alignItems: "center", justifyContent: "center",
           minWidth: 280,
         }}>
-          <a href="#" style={{
+          <a href="#" className="eb-press" style={{
+            display: "inline-block",
             fontFamily: "var(--f-body)", fontSize: 11, letterSpacing: "0.22em",
             textTransform: "uppercase", color: "var(--ink)",
             textDecoration: "none", borderBottom: "1px solid var(--ink)",
@@ -198,7 +199,7 @@ function ShelfTile({ p, index, onOpen }) {
           color: "var(--paper)",
           transform: hover ? "translateY(0)" : "translateY(12px)",
           opacity: hover ? 1 : 0,
-          transition: "all 300ms var(--ease-out)",
+          transition: "transform 300ms var(--ease-out), opacity 300ms var(--ease-out)",
           display: "flex", justifyContent: "space-between", alignItems: "end",
         }}>
           <span style={{ fontFamily: "var(--f-body)", fontSize: 10.5, letterSpacing: "0.22em", textTransform: "uppercase" }}>
@@ -229,7 +230,7 @@ function ShelfTile({ p, index, onOpen }) {
 function ArrowButton({ disabled, onClick, dir }) {
   const [hover, setHover] = React.useState(false);
   return (
-    <button onClick={onClick} disabled={disabled}
+    <button onClick={onClick} disabled={disabled} className="eb-press"
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       style={{

@@ -224,7 +224,8 @@ function NavLink({ link, color, openDropdown, setOpenDropdown, overHero }) {
           paddingTop: 10, minWidth: 220,
           opacity: isOpen ? 1 : 0,
           pointerEvents: isOpen ? "auto" : "none",
-          transform: `translateY(${isOpen ? 0 : -6}px)`,
+          transform: `translateY(${isOpen ? 0 : -6}px) scale(${isOpen ? 1 : 0.98})`,
+          transformOrigin: "top left",
           transition: "opacity 220ms var(--ease-out), transform 220ms var(--ease-out)",
         }}>
           <div style={{

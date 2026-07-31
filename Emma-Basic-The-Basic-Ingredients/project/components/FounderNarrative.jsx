@@ -141,6 +141,7 @@ function FounderNarrative({ hideReadMore = false }) {
               <div style={{ marginTop: "clamp(32px, 5vh, 52px)", display: "flex", justifyContent: "flex-end" }}>
                 <a
                   href="Our Story.html"
+                  className="eb-press"
                   style={{
                     display: "inline-flex", alignItems: "center", gap: 10,
                     fontFamily: "var(--f-body)", fontSize: 12.5, letterSpacing: "0.14em",

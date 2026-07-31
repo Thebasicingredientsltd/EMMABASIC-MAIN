@@ -87,7 +87,7 @@
   --section-y: clamp(96px, 14vw, 180px);
 
   /* ---------- Motion ---------- */
-  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --dur-drawer: 420ms;
   --dur-hover:  200ms;
 }
@@ -117,3 +117,27 @@ body { font-feature-settings: "ss01", "ss02", "cv11"; }
 
 button, a { font-family: inherit; color: inherit; }
 img { display: block; max-width: 100%; }
+
+/* Press feedback — subtle, instant, for any pressable control.
+   Coexists with inline styles; only affects elements that don't set
+   their own inline transform. */
+.eb-press { transition: transform 140ms var(--ease-out); }
+.eb-press:active { transform: scale(0.97); }
+
+/* Keyboard focus — invisible to mouse users, clear to keyboard users. */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+/* Respect reduced-motion: neutralize scripted reveals, loops and long
+   transitions while leaving final (visible) states intact. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

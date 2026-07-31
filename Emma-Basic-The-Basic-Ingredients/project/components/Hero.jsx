@@ -125,7 +125,7 @@ function Hero() {
         <span style={{
           width: 1, height: 36,
           background: "var(--paper)",
-          animation: "ebDrop 2.2s var(--ease-out) infinite",
+          animation: "ebDrop 2.2s linear infinite",
           transformOrigin: "top",
         }}/>
       </div>
@@ -192,7 +192,7 @@ function Hero() {
 function HeroButton({ label, href = "#", primary }) {
   const [hover, setHover] = React.useState(false);
   return (
-    <a href={href} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} style={{
+    <a href={href} className="eb-press" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} style={{
       display: "inline-flex", alignItems: "center", gap: 10,
       padding: "14px 22px", whiteSpace: "nowrap",
       fontFamily: "var(--f-body)", fontSize: 12.5, letterSpacing: "0.14em",

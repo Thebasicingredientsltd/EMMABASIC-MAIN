@@ -42,7 +42,8 @@ function LifestyleGrid() {
             </h2>
             <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "end", gap: 20, paddingBottom: 12 }}>
               <span style={{ fontFamily: "var(--f-body)", fontSize: 11, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-60)" }}>{handle}</span>
-              <a href={followHref} target="_blank" rel="noopener noreferrer" style={{
+              <a href={followHref} target="_blank" rel="noopener noreferrer" className="eb-press" style={{
+                display: "inline-block",
                 fontFamily: "var(--f-body)", fontSize: 11, letterSpacing: "0.22em",
                 textTransform: "uppercase", color: "var(--ink)",
                 textDecoration: "none", borderBottom: "1px solid var(--ink)",
@@ -116,7 +117,7 @@ function LifestyleTile({ tile, index, span }) {
       <div style={{
         position: "absolute", inset: 0,
         transform: hover ? "scale(1.05)" : "scale(1)",
-        transition: "transform 900ms var(--ease-out)",
+        transition: "transform 500ms var(--ease-out)",
       }}>
         {tile.image ? (
           <img src={tile.image} alt={tile.label} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: tile.position || "center", display: "block" }} />
