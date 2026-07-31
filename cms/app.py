@@ -1058,6 +1058,51 @@ def catalog_product_delete(ci, pi):
     return redirect(url_for("catalog"))
 
 
+@app.route("/catalog/reorder", methods=["POST"])
+def catalog_reorder():
+    """Persist a drag-and-drop reorder from the catalog page.
+
+    Expects a JSON body of the form:
+      {"kind": "products", "ci": <int>, "order": [<origIndex>, ...]}
+      {"kind": "categories", "order": [<origIndex>, ...]}
+    `order` must be a permutation of the current index range so we can rebuild
+    the list without inventing or dropping items. On success a flash is queued
+    and the client reloads the page so every ci/pi link is re-indexed cleanly.
+    """
+    payload = request.get_json(silent=True) or {}
+    kind = payload.get("kind")
+    order = payload.get("order")
+    if not isinstance(order, list) or not all(isinstance(i, int) for i in order):
+        return {"ok": False, "error": "order must be a list of integers"}, 400
+
+    cats = load_data("catalog")
+
+    if kind == "products":
+        try:
+            ci = int(payload.get("ci"))
+        except (TypeError, ValueError):
+            return {"ok": False, "error": "ci is required"}, 400
+        if not (0 <= ci < len(cats)):
+            return {"ok": False, "error": "category out of range"}, 400
+        prods = cats[ci].get("products", [])
+        if sorted(order) != list(range(len(prods))):
+            return {"ok": False, "error": "order must be a permutation of the products"}, 400
+        cats[ci]["products"] = [prods[i] for i in order]
+        save_data("catalog", cats)
+        flash("Reordered products in %s." % cats[ci].get("name", "category"), "ok")
+        return {"ok": True}
+
+    if kind == "categories":
+        if sorted(order) != list(range(len(cats))):
+            return {"ok": False, "error": "order must be a permutation of the categories"}, 400
+        cats = [cats[i] for i in order]
+        save_data("catalog", cats)
+        flash("Reordered categories.", "ok")
+        return {"ok": True}
+
+    return {"ok": False, "error": "unknown kind"}, 400
+
+
 # ---------------------------------------------------------------------------
 # Routes — publish to GitHub
 # ---------------------------------------------------------------------------

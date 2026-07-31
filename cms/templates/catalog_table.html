@@ -14,8 +14,9 @@
   /* Full-width override — scoped to this page only (this <style> block is
      rendered exclusively by catalog_table.html, so no other CMS page is
      affected). Lets the wide bulk table use the whole viewport instead of the
-     centered 960px content column defined in base.html. */
-  main { max-width: none; padding-left: 20px; padding-right: 20px; }
+     centered content column defined in base.html. */
+  main { padding-left: 20px; padding-right: 20px; }
+  .content-inner { max-width: none; }
   .eb-table-wrap {
     border: 1px solid var(--rule); border-radius: 10px; overflow: auto;
     max-height: calc(100vh - 260px); background: var(--paper-bright);
@@ -45,10 +46,19 @@
   table.eb-table textarea { min-width: 220px; min-height: 54px; }
   table.eb-table .thumb { width: 44px; height: 44px; }
   .eb-save-bar { display: flex; gap: 10px; align-items: center; margin: 18px 0 8px; }
+  .eb-save-bar-top {
+    position: sticky; top: 0; z-index: 16;
+    margin: 0 0 14px; padding: 12px 14px;
+    background: color-mix(in srgb, var(--paper-bright) 82%, transparent);
+    backdrop-filter: saturate(160%) blur(16px);
+    -webkit-backdrop-filter: saturate(160%) blur(16px);
+    border: 1px solid var(--rule); border-radius: var(--r-md);
+    box-shadow: var(--shadow-md);
+  }
 </style>
 
 <form method="post" action="{{ url_for('catalog_table_save') }}">
-  <div class="eb-save-bar">
+  <div class="eb-save-bar eb-save-bar-top">
     <button class="btn" type="submit">Save all changes</button>
     <span class="muted">Edits below overwrite only these columns — every other product field is preserved.</span>
   </div>

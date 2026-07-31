@@ -1,10 +1,35 @@
 {% extends "base.html" %}
 {% set active = "catalog" %}
 {% block content %}
+<style>
+  .eb-drag-handle {
+    flex-shrink: 0; width: 28px; height: 36px; margin: 0 2px 0 -4px; padding: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    color: var(--ink-40); background: transparent; border: none; border-radius: var(--r-sm);
+    cursor: grab; touch-action: none; -webkit-user-select: none; user-select: none;
+    transition: color var(--dur) var(--ease-out), background var(--dur) var(--ease-out);
+  }
+  .eb-drag-handle:hover { color: var(--ink); background: var(--paper-shade); }
+  .eb-drag-handle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .eb-sorting .eb-drag-handle, .eb-sorting * { cursor: grabbing !important; }
+  .eb-sorting { -webkit-user-select: none; user-select: none; }
+  /* Lifted row while dragging */
+  .list-item.eb-dragging {
+    z-index: 40; background: var(--paper-bright);
+    border-radius: var(--r-md) !important; border-bottom-color: transparent !important;
+    box-shadow: var(--shadow-lg); cursor: grabbing;
+  }
+  /* Gap that opens where the row will drop */
+  .eb-ph {
+    box-sizing: border-box; margin: 0 -12px; border-radius: var(--r-md);
+    background: color-mix(in srgb, var(--accent) 7%, transparent);
+    border: 1px dashed var(--rule-strong);
+  }
+</style>
 <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;">
   <div>
     <h1>Product Catalog</h1>
-    <p class="sub">The full range on the <em>Our Products</em> page and every product detail page.</p>
+    <p class="sub">The full range on the <em>Our Products</em> page and every product detail page. Drag the <span aria-hidden="true">⠿</span> handle to reorder products within a category.</p>
   </div>
   <div style="display:flex; gap:8px; align-items:center;">
     <a class="btn secondary" href="{{ url_for('catalog_table') }}">Bulk edit (table)</a>
@@ -32,8 +57,12 @@
   <hr class="hr" style="margin:16px 0;"/>
 
   {% set ci = loop.index0 %}
+  <div class="eb-sortable" data-kind="products" data-ci="{{ ci }}" data-url="{{ url_for('catalog_reorder') }}">
   {% for p in c.products %}
-  <div class="list-item">
+  <div class="list-item eb-sortable-item" data-key="{{ loop.index0 }}">
+    <button type="button" class="eb-drag-handle" aria-label="Drag to reorder" title="Drag to reorder">
+      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><g fill="currentColor"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></g></svg>
+    </button>
     {% if p.image %}
       <img class="thumb" src="{{ url_for('site_assets', filename=p.image[7:]) if p.image.startswith('assets/') else p.image }}" alt=""/>
     {% else %}
@@ -49,10 +78,186 @@
     </form>
   </div>
   {% else %}
-  <p class="muted">No products in this category yet.</p>
+  <p class="muted" style="padding:6px 0 2px;">No products in this category yet. <a href="{{ url_for('catalog_product_new') }}?cat={{ ci }}" style="color:var(--ink); border-bottom:1px solid var(--rule-strong);">Add the first one →</a></p>
   {% endfor %}
+  </div>
 </div>
 {% else %}
-<div class="card"><p class="muted">No catalog data found.</p></div>
+<div class="card">
+  <div class="empty-state">
+    <div class="es-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7l8-4 8 4-8 4-8-4z"/><path d="M4 7v10l8 4 8-4V7"/><path d="M12 11v10"/></svg></div>
+    <h3>No catalog yet</h3>
+    <p>Create your first category to start building the range.</p>
+    <a class="btn" href="{{ url_for('catalog_category_new') }}">+ New category</a>
+  </div>
+</div>
 {% endfor %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function () {
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var DUR = reduce ? 0 : 220;
+
+  function rowsIn(container) {
+    return Array.prototype.filter.call(container.children, function (c) {
+      return c.classList.contains("eb-sortable-item");
+    });
+  }
+
+  document.querySelectorAll(".eb-sortable").forEach(function (container) {
+    container.querySelectorAll(":scope > .eb-sortable-item > .eb-drag-handle").forEach(function (handle) {
+      handle.addEventListener("pointerdown", function (e) {
+        if (e.button != null && e.button !== 0) return;
+        e.preventDefault();
+        startPointer(container, handle.closest(".eb-sortable-item"), e);
+      });
+    });
+  });
+
+  function startPointer(container, item, downEvent) {
+    var pointerId = downEvent.pointerId;
+    var startY = downEvent.clientY, startX = downEvent.clientX;
+    var began = false, grabOffsetY = 0, placeholder = null, floatRect = null, lastRef;
+
+    function onMove(e) {
+      if (e.pointerId !== pointerId) return;
+      if (!began) {
+        if (Math.abs(e.clientY - startY) < 4 && Math.abs(e.clientX - startX) < 4) return;
+        begin(e);
+      }
+      moveTo(e);
+    }
+    function onUp(e) {
+      if (e.pointerId !== pointerId) return;
+      document.removeEventListener("pointermove", onMove);
+      document.removeEventListener("pointerup", onUp);
+      document.removeEventListener("pointercancel", onUp);
+      if (began) finish();
+    }
+
+    document.addEventListener("pointermove", onMove);
+    document.addEventListener("pointerup", onUp);
+    document.addEventListener("pointercancel", onUp);
+
+    function begin(e) {
+      began = true;
+      var rect = item.getBoundingClientRect();
+      floatRect = rect;
+      grabOffsetY = e.clientY - rect.top;
+
+      placeholder = document.createElement("div");
+      placeholder.className = "eb-ph";
+      placeholder.style.height = rect.height + "px";
+      container.insertBefore(placeholder, item);
+
+      // Float the row out of flow (attached to <body> so the container math
+      // only ever sees the real rows + the placeholder gap).
+      item.classList.add("eb-dragging");
+      item.style.position = "fixed";
+      item.style.width = rect.width + "px";
+      item.style.left = rect.left + "px";
+      item.style.top = rect.top + "px";
+      item.style.margin = "0";
+      document.body.appendChild(item);
+      document.body.classList.add("eb-sorting");
+
+      // With the row removed, this is the real next sibling (a row or null).
+      lastRef = placeholder.nextElementSibling || null;
+    }
+
+    function firstRects() {
+      var m = new Map();
+      rowsIn(container).forEach(function (el) { m.set(el, el.getBoundingClientRect()); });
+      return m;
+    }
+    function flip(prev) {
+      if (reduce) return;
+      rowsIn(container).forEach(function (el) {
+        var a = prev.get(el); if (!a) return;
+        var dy = a.top - el.getBoundingClientRect().top;
+        if (!dy) return;
+        el.style.transition = "none";
+        el.style.transform = "translateY(" + dy + "px)";
+        requestAnimationFrame(function () {
+          el.style.transition = "transform " + DUR + "ms var(--ease-out)";
+          el.style.transform = "";
+        });
+      });
+    }
+
+    function moveTo(e) {
+      var top = e.clientY - grabOffsetY;
+      item.style.top = top + "px";
+
+      var center = top + floatRect.height / 2;
+      var rows = rowsIn(container), ref = null;
+      for (var i = 0; i < rows.length; i++) {
+        var r = rows[i].getBoundingClientRect();
+        if (center < r.top + r.height / 2) { ref = rows[i]; break; }
+      }
+      if (ref === lastRef) return;   // slot unchanged — nothing to reflow
+      lastRef = ref;
+      var prev = firstRects();
+      if (ref) container.insertBefore(placeholder, ref);
+      else container.appendChild(placeholder);
+      flip(prev);
+    }
+
+    function finish() {
+      container.insertBefore(item, placeholder);
+      placeholder.remove();
+
+      var fromTop = floatRect.top, fromLeft = floatRect.left;
+      item.classList.remove("eb-dragging");
+      item.style.position = "";
+      item.style.width = "";
+      item.style.left = "";
+      item.style.top = "";
+      item.style.margin = "";
+      document.body.classList.remove("eb-sorting");
+
+      if (!reduce) {
+        var now = item.getBoundingClientRect();
+        var dy = fromTop - now.top, dx = fromLeft - now.left;
+        item.style.transition = "none";
+        item.style.transform = "translate(" + dx + "px," + dy + "px)";
+        requestAnimationFrame(function () {
+          item.style.transition = "transform " + DUR + "ms var(--ease-out)";
+          item.style.transform = "";
+          setTimeout(function () { item.style.transition = ""; }, DUR + 40);
+        });
+      }
+
+      var order = rowsIn(container).map(function (el) {
+        return parseInt(el.getAttribute("data-key"), 10);
+      });
+      if (order.every(function (v, i) { return v === i; })) return;  // no change
+      persist(container, order);
+    }
+  }
+
+  function persist(container, order) {
+    var body = { kind: container.getAttribute("data-kind"), order: order };
+    if (container.hasAttribute("data-ci")) body.ci = parseInt(container.getAttribute("data-ci"), 10);
+    fetch(container.getAttribute("data-url"), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "same-origin",
+      body: JSON.stringify(body)
+    }).then(function (r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    }).then(function (data) {
+      if (!data || !data.ok) throw new Error((data && data.error) || "reorder failed");
+      window.location.reload();
+    }).catch(function (err) {
+      console.error("Reorder failed:", err);
+      alert("Couldn't save the new order — reloading to restore it.");
+      window.location.reload();
+    });
+  }
+})();
+</script>
 {% endblock %}
