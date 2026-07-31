@@ -6,56 +6,96 @@
 
 <div class="dash-cards">
   <a href="{{ url_for('catalog') }}"><div class="card">
+    <div class="dash-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M4 5v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V5M9 10h6"/></svg>
+    </div>
     <div class="dash-num">{{ catalog_products }}</div>
-    <div>Catalog products</div>
+    <div class="dash-title">Catalog products</div>
     <div class="muted">{{ catalog_categories }} categories · Our Products page</div>
   </div></a>
   <a href="{{ url_for('products') }}"><div class="card">
+    <div class="dash-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="4" height="12" rx="1"/><rect x="10" y="6" width="4" height="12" rx="1"/><rect x="17" y="6" width="4" height="12" rx="1"/></svg>
+    </div>
     <div class="dash-num">{{ product_count }}</div>
-    <div>Homepage rail</div>
+    <div class="dash-title">Homepage rail</div>
     <div class="muted">Featured products on the home page</div>
   </div></a>
   <a href="{{ url_for('journal') }}"><div class="card">
+    <div class="dash-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+    </div>
     <div class="dash-num">{{ post_count }}</div>
-    <div>Blog posts</div>
+    <div class="dash-title">Blog posts</div>
     <div class="muted">Field Notes / Journal</div>
   </div></a>
   <a href="{{ url_for('homepage') }}"><div class="card">
-    <div class="dash-num">★</div>
-    <div>Homepage</div>
+    <div class="dash-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11 12 4l8 7"/><path d="M6 10v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-9"/></svg>
+    </div>
+    <div class="dash-num" style="font-size:34px;">Hero</div>
+    <div class="dash-title">Homepage</div>
     <div class="muted">Hero, founder, lifestyle</div>
   </div></a>
   <a href="{{ url_for('people') }}"><div class="card">
+    <div class="dash-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0"/><path d="M16 5.2a3.2 3.2 0 0 1 0 6.1M17.5 14.4A5.5 5.5 0 0 1 20.5 20"/></svg>
+    </div>
     <div class="dash-num">{{ people_count }}</div>
-    <div>People &amp; Places</div>
+    <div class="dash-title">People &amp; Places</div>
     <div class="muted">Team, services, trade, contact</div>
   </div></a>
 </div>
 
 <hr class="hr"/>
 
-<div class="card">
-  <h2 style="margin-top:0;">Publish to GitHub</h2>
-  {% if git.ok %}
-    {% if git.changes %}
-      <p class="muted">{{ git.changes }} unpublished change(s) ready.</p>
-      <details style="margin-bottom:14px;">
-        <summary class="muted" style="cursor:pointer;">Show changed files</summary>
-        <ul class="muted">{% for f in git.files %}<li>{{ f }}</li>{% endfor %}</ul>
-      </details>
-    {% else %}
-      <p class="muted">Everything is published — no pending changes.</p>
-    {% endif %}
-  {% else %}
-    <p class="flash error">Git not available: {{ git.detail }}</p>
+<div class="card publish-card">
+  <div class="publish-head">
+    <div>
+      <h2 style="margin:0 0 4px;">Publish to GitHub</h2>
+      {% if git.ok %}
+        {% if git.changes %}
+          <p class="muted" style="margin:0;"><span class="change-dot"></span>{{ git.changes }} unpublished change{{ 's' if git.changes != 1 }} ready.</p>
+        {% else %}
+          <p class="muted" style="margin:0;">Everything is published — no pending changes.</p>
+        {% endif %}
+      {% else %}
+        <p class="flash error" style="margin:0; box-shadow:none;">Git not available: {{ git.detail }}</p>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if git.ok and git.changes %}
+    <details style="margin:14px 0 0;">
+      <summary class="muted" style="cursor:pointer;">Show changed files</summary>
+      <ul class="muted" style="margin-top:8px;">{% for f in git.files %}<li>{{ f }}</li>{% endfor %}</ul>
+    </details>
   {% endif %}
+
   <form method="post" action="{{ url_for('publish') }}">
     <label>Change note (optional)</label>
     <input type="text" name="message" placeholder="e.g. Updated matcha photo and blog post"/>
     <div class="actions-bar">
-      <button class="btn" type="submit" {{ 'disabled' if git.ok and not git.changes }}>Publish to GitHub</button>
+      <button class="btn" type="submit" {{ 'disabled' if git.ok and not git.changes }}>
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+        Publish to GitHub
+      </button>
       <span class="muted">Commits all changes and pushes to Thebasicingredientsltd/EMMABASIC-MAIN</span>
     </div>
   </form>
 </div>
+
+<style>
+  .dash-icon {
+    width: 40px; height: 40px; border-radius: 11px; margin-bottom: 16px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--paper-shade); color: var(--ink-80);
+    transition: background var(--dur) var(--ease-out), color var(--dur) var(--ease-out), transform var(--dur) var(--ease-out);
+  }
+  .dash-icon svg { width: 21px; height: 21px; }
+  .dash-cards a:hover .dash-icon { background: var(--accent); color: var(--paper-bright); transform: scale(1.06) rotate(-4deg); }
+  .dash-title { font-weight: 600; margin-top: 4px; }
+  .change-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); margin-right: 8px; vertical-align: middle; animation: eb-pulse 2s var(--ease-in-out) infinite; }
+  @keyframes eb-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+</style>
 {% endblock %}

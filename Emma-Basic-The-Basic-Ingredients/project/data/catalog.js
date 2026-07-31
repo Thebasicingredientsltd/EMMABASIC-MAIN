@@ -420,13 +420,13 @@ window.EB_CATALOG = [
         "id": "curry-cubes",
         "name": "Japanese Curry Cubes",
         "japanese": "カレー",
-        "image": "assets/products-nobg/curry cubes.png",
+        "image": "assets/uploads/2025_12_01_BasicIngredient-026-20260731-110857.jpg",
         "images": [
-          "assets/products-nobg/curry cubes.png",
-          "assets/back-of-pack/2025_12_01_BasicIngredient-027.jpg",
-          "assets/emmabasic-live-products/curry-cubes-200g/curry-03.jpg",
-          "assets/products/curry-cubes-homepage.png",
-          "assets/emmabasic-live-products/curry-cubes-200g/curry-02.jpg",
+          "assets/uploads/2025_12_01_BasicIngredient-026-20260731-110902.jpg",
+          "assets/uploads/2025_12_01_BasicIngredient-027-20260731-110904.jpg",
+          "assets/uploads/B09HL7X6DV.PT01.jpg-20260731-110927.jpg",
+          "assets/uploads/Runway_Nano_Banana_2_Show_me_a_close-up_macro_040126-20260731-110933.png",
+          "assets/uploads/B09HL7X6DV.PT02-20260731-110941.jpg",
           "assets/Range-image.png"
         ],
         "imageScale": 2.4,
@@ -478,10 +478,10 @@ window.EB_CATALOG = [
         "id": "katsu-curry-1kg",
         "name": "Katsu Curry 1kg",
         "japanese": "カツカレー",
-        "image": "assets/emmabasic-live-products/katsu-curry-1kg/katsu-01.jpg",
+        "image": "assets/uploads/2023_03_01_BasicIngredient-009-20260731-111315.jpg",
         "images": [
-          "assets/emmabasic-live-products/katsu-curry-1kg/katsu-01.jpg",
-          "assets/back-of-pack/Katsu curry.jpg",
+          "assets/uploads/2023_03_01_BasicIngredient-009-20260731-111318.jpg",
+          "assets/uploads/2023_03_01_BasicIngredient-011-20260731-111320.jpg",
           "assets/Range-image.png"
         ],
         "pdpImageScale": 1,
@@ -516,7 +516,6 @@ window.EB_CATALOG = [
           "saturates": 20,
           "carbohydrate": 40,
           "sugars": 10,
-          "fibre": null,
           "protein": 6.7,
           "salt": 11.2
         },
@@ -561,11 +560,14 @@ window.EB_CATALOG = [
         ],
         "name": "Sushi Nori 7 Sheets",
         "japanese": "寿司のり",
-        "image": "assets/products-nobg/sushi nori 5 sheets.png",
+        "image": "assets/uploads/B08B16M9ZF.MAIN-20260731-111409.jpg",
         "images": [
-          "assets/products-nobg/sushi nori 5 sheets.png",
-          "assets/back-of-pack/sushi nori 5 sheets.jpg",
-          "assets/Range-image.png"
+          "assets/uploads/B08B16M9ZF.MAIN-20260731-111411.jpg",
+          "assets/uploads/B08B16M9ZF.BACK-20260731-111413.jpg",
+          "assets/uploads/2025_12_01_BasicIngredient-010-20260731-111428.jpg",
+          "assets/uploads/B08B16M9ZF.PT02-20260731-111432.jpg",
+          "assets/uploads/B08B16M9ZF.PT01-20260731-111437.jpg",
+          "assets/uploads/Emma_Basic_Cross-Sell_Lifestyle_Kitchen-20260731-111500.png"
         ],
         "imageScale": 3,
         "tone": "warm",
@@ -623,14 +625,86 @@ window.EB_CATALOG = [
         ]
       },
       {
+        "id": "S006",
+        "name": "Sushi Nori 40 Sheets",
+        "japanese": "寿司のり 大判",
+        "origin": "Amazon Best Seller",
+        "tone": "warmwarm",
+        "tagline": "Young, crunchy, harvested at the start of the season. 40-full sheets.",
+        "amazon": "https://www.amazon.co.uk/dp/B089ZWKDJR",
+        "image": "assets/uploads/B089ZWKDJR.MAIN-20260731-111902.jpg",
+        "badges": [
+          "Ready to Snack",
+          "Catering Size",
+          "High Protein",
+          "High Fibre",
+          "Gluten Free"
+        ],
+        "pairings": [
+          "Sushi rice",
+          "Ramen",
+          "Rice balls"
+        ],
+        "sellingPoints": [
+          "YOUNG HARVEST /TUEXTURE  : CRISPY, NEVER CHEWY: Emma Basic Seaweed Sheets are made from the first, most tender nori of the season  for a delicate crunch and clean ocean flavour. Perfect for sushi rolls, maki, temaki, hand rolls and onigiri.",
+          "RESEALABLE ZIP -LOCK POUCH:Locks in freshness.  Airtight, moisture-proof packaging protects every sheet from humidity and oxidation, preserving the signature crunch, deep-green colour and natural umami from the first sheet to the fortieth.",
+          "HIGH PROTEIN + HIGH FIBRE: Independent lab-tested at 45g protein per 100g  and 32g fibre per 100g. Naturally vegan, plant-based.",
+          "130 YEARS OF NORI EXPERTISE: Emma Basic Nori is produced to the exacting standards of Kozen, a specialist nori company founded in 1894 and devoted to one craft — perfecting seaweed. Kozen owns and oversees the facility, bringing over a century of know-how to every sheet. Harvest and produced in China.",
+          "DEEP UMAMI : It is far more than just sushi . One of our favourite uses isn't sushi at all – tear a few pieces into miso, ramen, udon or any soup and watch the flavour transform. That savoury depth professional chefs chase, in seconds."
+        ],
+        "ingredients": "Dried Seaweed (Porphyra yezoensis)",
+        "allergens": "May contain traces of crustaceans, fish, and molluscs (ocean harvesting). No allergens in ingredients.",
+        "images": [
+          "assets/uploads/B089ZWKDJR.MAIN-20260731-111904.jpg",
+          "assets/uploads/B089ZWKDJR.BACK-20260731-111909.jpg",
+          "assets/uploads/S006_-_PT01-20260731-111911.jpg",
+          "assets/uploads/S006_-_PT02-20260731-111913.png",
+          "assets/uploads/S006_-_PT03-20260731-111915.jpg",
+          "assets/uploads/S006_-_PT04-20260731-111921.jpg",
+          "assets/uploads/S006_-_PT07-20260731-111924.png"
+        ],
+        "nutrition": {
+          "serving": "Per 100g",
+          "energy_kj": 1498,
+          "energy_kcal": 358,
+          "fat": 3.5,
+          "saturates": 0.9,
+          "carbohydrate": 3.8,
+          "sugars": 0,
+          "fibre": 32,
+          "protein": 45,
+          "salt": 1.3
+        },
+        "education": {
+          "title": "Why harvest timing changes the flavour of nori.",
+          "body": [
+            "Nori quality is directly tied to when in the season it's harvested. The first harvest (November to April) yields younger, more tender fronds — the chlorophyll content is higher, the texture more delicate, and the flavour cleaner and more complex. Later-season nori is cheaper to produce but chewier and more bitter."
+          ]
+        },
+        "qa": [
+          {
+            "q": "How do I store after opening?",
+            "a": "Reseal immediately and store away from moisture. Nori absorbs humidity quickly and will lose its crispness if left open."
+          },
+          {
+            "q": "What's the difference between this and the 7-sheet pack?",
+            "a": "Identical product — same nori, same producer. The 40-sheet pack is the bulk format for households that use nori regularly."
+          }
+        ]
+      },
+      {
         "id": "sushi-nori-50",
         "name": "Sushi Nori 50 Sheets",
         "japanese": "寿司のり 大判",
-        "image": "assets/products-nobg/sushi nori 40 sheets.png",
+        "image": "assets/uploads/2026_03_02_BasicIngredient-120-20260731-111600.jpg",
         "images": [
-          "assets/products-nobg/sushi nori 40 sheets.png",
-          "assets/back-of-pack/sushi nori 40 sheets.jpg",
-          "assets/Range-image.png"
+          "assets/uploads/2026_03_02_BasicIngredient-120-20260731-111602.jpg",
+          "assets/uploads/2026_03_02_BasicIngredient-122-20260731-111605.jpg",
+          "assets/uploads/S007KZ_-_PT01-20260731-111622.jpg",
+          "assets/uploads/S007KZ_-_PT02-20260731-111624.jpg",
+          "assets/uploads/S007KZ_-_PT03-20260731-111626.jpg",
+          "assets/uploads/S007KZ_-_PT04-20260731-111631.jpg",
+          "assets/uploads/Emma_Basic_Cross-Sell_Lifestyle_Kitchen-20260731-111659.png"
         ],
         "tone": "warm",
         "origin": "South Korea · BRC Grade A",
@@ -659,7 +733,6 @@ window.EB_CATALOG = [
         ],
         "nutrition": {
           "serving": "per 100g",
-          "energy_kj": null,
           "energy_kcal": 296,
           "fat": 5.13,
           "saturates": 1.22,
@@ -693,10 +766,15 @@ window.EB_CATALOG = [
         "id": "wakame",
         "name": "Wakame 50g",
         "japanese": "わかめ",
-        "image": "assets/products-original-backup/wakame-homepage.png",
+        "image": "assets/uploads/2025_12_01_BasicIngredient-045-20260731-112300.jpg",
         "images": [
-          "assets/products-original-backup/wakame-homepage.png",
-          "assets/Range-image.png"
+          "assets/uploads/2025_12_01_BasicIngredient-045-20260731-112303.jpg",
+          "assets/uploads/2025_12_01_BasicIngredient-048-20260731-112423.jpg",
+          "assets/uploads/2025_12_01_BasicIngredient-042-20260731-112429.jpg",
+          "assets/uploads/Runway_Nano_Banana_2_Show_me_a_medium_shot_040326-20260731-112711.jpg",
+          "assets/uploads/Runway_Nano_Banana_2_Show_me_a_clean__minimal_040326_1-20260731-112713.jpg",
+          "assets/uploads/Runway_Nano_Banana_2_Show_me_an_overhead_flat-lay_040326_1-20260731-112716.jpg",
+          "assets/uploads/Mark_Generation-20260731-112736.png"
         ],
         "tone": "cool",
         "origin": "Wild-harvested · Japan",
@@ -712,7 +790,7 @@ window.EB_CATALOG = [
           "High Fibre",
           "High Protein"
         ],
-        "amazon": "",
+        "amazon": "https://www.amazon.co.uk/dp/B0DQDVFWZP",
         "sellingPoints": [
           "Ready in 3 mins — soak in warm water for 2–3 minutes; add to miso soup, salads, or stir-fries",
           "Cupboard staple — 50g pack keeps when fresh vegetables run out",
@@ -721,15 +799,15 @@ window.EB_CATALOG = [
         ],
         "nutrition": {
           "serving": "per 100g",
-          "energy_kj": null,
-          "energy_kcal": null,
-          "fat": null,
-          "saturates": null,
-          "carbohydrate": null,
-          "sugars": null,
-          "fibre": null,
-          "protein": null,
-          "salt": null
+          "energy_kj": 941,
+          "energy_kcal": 227,
+          "fat": 3.8,
+          "saturates": 0.8,
+          "carbohydrate": 7.1,
+          "sugars": 0,
+          "fibre": 34.8,
+          "protein": 23.6,
+          "salt": 15.8
         },
         "ingredients": "Wakame seaweed.",
         "allergens": "Vegan. May contain trace amounts of fish, shrimp, and molluscs due to ocean harvesting. Wash before use.",
@@ -763,11 +841,14 @@ window.EB_CATALOG = [
         ],
         "name": "Crispy Seaweed",
         "japanese": "韓国味付海苔",
-        "image": "assets/products/crispy-seaweed.jpg",
+        "image": "assets/uploads/2026_03_02_BasicIngredient-036-20260731-113344.jpg",
         "images": [
-          "assets/products/crispy-seaweed.jpg",
-          "assets/back-of-pack/2026_03_02_BasicIngredient-052.jpg",
-          "assets/Range-image.png"
+          "assets/uploads/2026_03_02_BasicIngredient-036-20260731-113347.jpg",
+          "assets/uploads/2026_03_02_BasicIngredient-051-20260731-113400.jpg",
+          "assets/uploads/S000_-_Hero_6-20260731-113420.jpg",
+          "assets/uploads/Runway_Nano_Banana_2_Show_me_a_clean__minimal_040326-20260731-113431.png",
+          "assets/uploads/S000_-_PT_02-20260731-113452.jpg",
+          "assets/uploads/Emma_Basic_Cross-Sell_Lifestyle_Kitchen-20260731-113505.png"
         ],
         "tone": "warm",
         "origin": "Korean style",
@@ -823,15 +904,15 @@ window.EB_CATALOG = [
         "video": "assets/Product-videos/Panko 1.mp4",
         "name": "Panko Breadcrumbs 200g",
         "japanese": "パン粉",
-        "image": "assets/products-nobg/Panko.png",
+        "image": "assets/uploads/P003_-_Hero_b-20260731-113549.jpg",
         "images": [
-          "assets/products-nobg/Panko.png",
-          "assets/back-of-pack/panko 200g.png",
-          "assets/panko/Group 32.png",
-          "assets/panko/B0BWS6Q1T.png",
-          "assets/panko/Group 33.png",
-          "assets/panko/7.png",
-          "assets/panko/p003.jpg"
+          "assets/uploads/P003_-_Hero_b-20260731-113552.jpg",
+          "assets/uploads/B0BWS6Q1T2.BACK-20260731-113556.jpg",
+          "assets/uploads/Group_32-20260731-114328.jpg",
+          "assets/uploads/B0BWS6Q1T-20260731-114332.jpg",
+          "assets/uploads/00-20260731-114334.jpg",
+          "assets/uploads/7-20260731-114337.jpg",
+          "assets/uploads/P003_-_Hero_5-20260731-114353.jpg"
         ],
         "extraImages": [
           "assets/panko/Group 23.png"
@@ -884,11 +965,12 @@ window.EB_CATALOG = [
         "id": "panko-1kg",
         "name": "Panko Breadcrumbs 1kg",
         "japanese": "パン粉 1kg",
-        "image": "assets/products-nobg/panko 200g.png",
+        "image": "assets/uploads/P002_-_Hero_1_Basic-20260731-114433.jpg",
         "images": [
-          "assets/products-nobg/panko 200g.png",
-          "assets/back-of-pack/Panko 1kg Back of pack.jpg",
-          "assets/Range-image.png"
+          "assets/uploads/P002_-_New_Package_Hero_1-20260731-114435.jpg",
+          "assets/uploads/P002_-_Back-20260731-114438.jpg",
+          "assets/uploads/A_quiet_kitchen_scene_on_a_pal_Nano_Banana_2_68117-20260731-114503.jpg",
+          "assets/uploads/update_the_product_to_this_ima_Nano_Banana_2_82572-20260731-114537.jpg"
         ],
         "tone": "warm",
         "origin": "Japanese style · Light and Crispy",
@@ -959,11 +1041,12 @@ window.EB_CATALOG = [
         ],
         "name": "Panko Breadcrumbs 10kg",
         "japanese": "パン粉 10kg",
-        "image": "assets/products-nobg/10kg panko.png",
+        "image": "assets/uploads/P001_Panko_10kg_-_Hero_0_New_Real-20260731-114647.jpg",
         "images": [
-          "assets/products-nobg/10kg panko.png",
-          "assets/back-of-pack/2023_07_13_Basic_Ingredient-104.jpg",
-          "assets/Range-image.png"
+          "assets/uploads/P001_Panko_10kg_-_Hero_0_New_Real-20260731-114655.jpg",
+          "assets/uploads/2023_07_13_Basic_Ingredient-104-20260731-115019.jpg",
+          "assets/uploads/iStock-956461588_Tonkatsu-20260731-115116.jpg",
+          "assets/uploads/Emma_Basic_Cross-Sell_Lifestyle_Kitchen-20260731-115121.png"
         ],
         "tone": "warm",
         "origin": "Japanese style · Light and Crispy",
@@ -1020,11 +1103,13 @@ window.EB_CATALOG = [
         "imageScale": 2.5,
         "name": "Sushi Vinegar",
         "japanese": "グルテンフリーすし酢",
-        "image": "assets/products-nobg/sushi vinegar.png",
+        "image": "assets/uploads/B08NLKD11X_-_Front-20260731-115230.jpg",
         "images": [
-          "assets/products-nobg/sushi vinegar.png",
-          "assets/back-of-pack/2024_08_07_BasicIngredient-069.jpg",
-          "assets/Range-image.png"
+          "assets/uploads/B08NLKD11X_-_Front-20260731-115233.jpg",
+          "assets/uploads/B08NLKD11X_-_Back-20260731-115237.jpg",
+          "assets/uploads/Runway_Nano_Banana_2_Show_me_a_medium_shot_040326_1-20260731-115332.png",
+          "assets/uploads/Runway_Nano_Banana_2_A_clean__minimal_infographic-style_layout_040526-20260731-115340.png",
+          "assets/uploads/Emma_Basic_Cross-Sell_Lifestyle_Kitchen-20260731-115346.png"
         ],
         "tone": "warm",
         "origin": "Gluten-free · Japan",
@@ -1072,10 +1157,10 @@ window.EB_CATALOG = [
         "id": "white-miso-1kg",
         "name": "Miso 1kg",
         "japanese": "白味噌",
-        "image": "assets/products-nobg/miso 1kg.png",
+        "image": "assets/uploads/Miso_Hero-20260731-115821.jpg",
         "images": [
-          "assets/products-nobg/miso 1kg.png",
-          "assets/products/miso-homepage.png",
+          "assets/uploads/Miso_Hero-20260731-115823.jpg",
+          "assets/uploads/C075_-_PT03-20260731-115829.png",
           "assets/Range-image.png"
         ],
         "tone": "warm",
@@ -1147,10 +1232,13 @@ window.EB_CATALOG = [
         "imageScale": 1,
         "name": "Crispy Bean Curd Roll",
         "japanese": "揚げ豆腐巻き",
-        "image": "assets/products/crispy-bean-curd.jpg",
+        "image": "assets/uploads/V060_-_Hero_1-20260731-120023.jpg",
         "images": [
-          "assets/products/crispy-bean-curd.jpg",
-          "assets/Range-image.png"
+          "assets/uploads/V060_-_Hero_1-20260731-120026.jpg",
+          "assets/uploads/Runway_Nano_Banana_2_Show_me_a_close-up_macro_040726_1-20260731-120054.png",
+          "assets/uploads/Runway_Nano_Banana_2_A_clean__minimal_infographic-style_layout_040726-20260731-120112.png",
+          "assets/uploads/Runway_Nano_Banana_2_Show_me_an_in-use_action_040726_1-20260731-120119.png",
+          "assets/uploads/V060_-_Hero_6-20260731-120130.jpg"
         ],
         "tone": "warm",
         "origin": "Japanese style · 14 pieces · 180g",

@@ -29,7 +29,12 @@
     </form>
   </div>
   {% else %}
-  <p class="muted">No products yet.</p>
+  <div class="empty-state">
+    <div class="es-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="4" height="12" rx="1"/><rect x="10" y="6" width="4" height="12" rx="1"/><rect x="17" y="6" width="4" height="12" rx="1"/></svg></div>
+    <h3>No products on the rail yet</h3>
+    <p>Add the products you'd like featured on the homepage rail.</p>
+    <a class="btn" href="{{ url_for('product_new') }}">+ New product</a>
+  </div>
   {% endfor %}
 </div>
 {% endblock %}
