@@ -1303,11 +1303,13 @@ window.EB_CATALOG = [
         "imageScale": 3,
         "name": "Soba Noodles",
         "japanese": "そば",
-        "image": "assets/products-nobg/soba noodles.png",
+        "image": "assets/uploads/2025_12_01_BasicIngredient-103-20260731-180612.jpg",
         "images": [
-          "assets/products-nobg/soba noodles.png",
-          "assets/back-of-pack/2025_12_01_BasicIngredient-118.jpg",
+          "assets/uploads/2025_12_01_BasicIngredient-103-20260731-180617.jpg",
+          "assets/uploads/2025_12_01_BasicIngredient-118-20260731-180620.jpg",
           "assets/products/soba-noodles-homepage.png",
+          "assets/uploads/EmmaBasic-January_SandyWood_106-tiktok-20260731-180808.jpg",
+          "assets/uploads/2025_12_01_BasicIngredient-062-20260731-180633.jpg",
           "assets/Range-image.png"
         ],
         "tone": "warm",
@@ -1351,17 +1353,21 @@ window.EB_CATALOG = [
             "Buckwheat is not wheat — it's a seed from a plant related to rhubarb. Soba gets its nutty, earthy flavour from the buckwheat content. The higher the percentage, the stronger the flavour and the more fragile the noodle. Ours uses a carefully balanced ratio of wheat and buckwheat flour — enough buckwheat to taste it clearly, with enough wheat to hold together properly in boiling water.",
             "Soba is traditionally served cold in summer with a dipping sauce (mentsuyu) and warm in winter in broth. The cold preparation is particularly good because the buckwheat flavour comes through more clearly when the noodle isn't steaming. Cook for four minutes, rinse thoroughly in cold water, drain. That's all there is to it."
           ]
-        }
+        },
+        "updatedAt": "2026-07-31T17:08:17+00:00"
       },
       {
         "id": "udon-noodles",
         "imageScale": 2.25,
         "name": "Udon Noodles",
         "japanese": "うどん",
-        "image": "assets/products-nobg/Udon.png",
+        "image": "assets/uploads/2025_12_01_BasicIngredient-109-20260731-180654.jpg",
         "images": [
-          "assets/products-nobg/Udon.png",
-          "assets/back-of-pack/2025_12_01_BasicIngredient-119.jpg",
+          "assets/uploads/2025_12_01_BasicIngredient-109-20260731-180656.jpg",
+          "assets/uploads/2025_12_01_BasicIngredient-119-20260731-180701.jpg",
+          "assets/uploads/2025_12_01_BasicIngredient-064-20260731-180710.jpg",
+          "assets/uploads/EmmaBasic-January_SandyWood_96-20260731-180735.jpg",
+          "assets/uploads/EmmaBasic-January_SandyWood_116-20260731-180743.jpg",
           "assets/Range-image.png"
         ],
         "tone": "warm",
@@ -1404,7 +1410,8 @@ window.EB_CATALOG = [
             "Udon is three ingredients: wheat flour, water, and salt. The dough is worked until the gluten develops enough to give the noodle its distinctive chew — that's the whole process. Nothing else goes in. The thick, pale strands are as close to neutral as a noodle gets, which means the broth does the talking.",
             "Our dried udon rehydrates to a proper thickness — closer to Sanuki-style than the thin versions you find in most supermarkets. Cook for eight to ten minutes, rinse, add to your broth. The noodle will continue softening in liquid, so serve immediately after the final rinse."
           ]
-        }
+        },
+        "updatedAt": "2026-07-31T17:07:48+00:00"
       },
       {
         "id": "shirataki-noodles",
@@ -1431,10 +1438,12 @@ window.EB_CATALOG = [
         ],
         "name": "Shirataki Konjac Noodles 200g",
         "japanese": "白滝こんにゃく麺",
-        "image": "assets/products-nobg/Shiritaki konjac noodle.png",
+        "image": "assets/uploads/N007_Front-20260731-180836.jpg",
         "images": [
-          "assets/products-nobg/Shiritaki konjac noodle.png",
-          "assets/back-of-pack/Shiritaki konjac noodles.jpg",
+          "assets/uploads/N007_Front-20260731-180839.jpg",
+          "assets/uploads/N007_Back-20260731-180844.jpg",
+          "assets/uploads/Lifestyle_No_2_Show_me_a_mediu_Nano_Banana_2_45083-20260731-180856.jpg",
+          "assets/uploads/Texture_Close-Up_Show_me_a_clo_Nano_Banana_2_54038-20260731-180903.jpg",
           "assets/Range-image.png"
         ],
         "tone": "warm",
@@ -1539,7 +1548,8 @@ window.EB_CATALOG = [
             "q": "Are they suitable for people with diabetes?",
             "a": "Yes. Konjac noodles have a very low glycemic index, making them a good choice for people with diabetes. However, it's essential to consult a healthcare professional for personalised dietary advice."
           }
-        ]
+        ],
+        "updatedAt": "2026-07-31T17:09:07+00:00"
       },
       {
         "id": "shirataki-noodles-v2",
@@ -1557,9 +1567,13 @@ window.EB_CATALOG = [
         },
         "name": "Shirataki Konjac Noodles 170g",
         "japanese": "白滝こんにゃく麺",
-        "image": "assets/products-nobg/N001.jpg",
+        "image": "assets/uploads/B08NFDD1BH.MAIN.jpg-20260731-180929.jpg",
         "images": [
-          "assets/products-nobg/N001.jpg"
+          "assets/uploads/B08NFDD1BH.MAIN.jpg-20260731-180926.jpg",
+          "assets/uploads/N001_-_PT01-20260731-180939.jpg",
+          "assets/uploads/N001_-_PT02-20260731-180958.jpg",
+          "assets/uploads/N001_-_PT03-20260731-181001.jpg",
+          "assets/uploads/CrossSell-20260731-181005.jpg"
         ],
         "tone": "warm",
         "origin": "Konjac · China",
@@ -1661,7 +1675,8 @@ window.EB_CATALOG = [
             "q": "Are they suitable for people with diabetes?",
             "a": "Yes. Konjac noodles have a very low glycemic index, making them a good choice for people with diabetes. However, it's essential to consult a healthcare professional for personalised dietary advice."
           }
-        ]
+        ],
+        "updatedAt": "2026-07-31T17:10:07+00:00"
       },
       {
         "id": "konjac-fettuccine",
@@ -1682,10 +1697,12 @@ window.EB_CATALOG = [
         ],
         "name": "Konjac Fettuccine 200g",
         "japanese": "こんにゃくフェットチーネ",
-        "image": "assets/products-nobg/konjac fettucine.png",
+        "image": "assets/uploads/N000_-_Hero_1b-20260731-181019.jpg",
         "images": [
-          "assets/products-nobg/konjac fettucine.png",
-          "assets/back-of-pack/2026_03_02_BasicIngredient-112.jpg",
+          "assets/uploads/N000_-_Hero_1b-20260731-181022.jpg",
+          "assets/uploads/2026_03_02_BasicIngredient-097-20260731-181410.jpg",
+          "assets/uploads/N000_-_Hero_5-20260731-181422.jpg",
+          "assets/uploads/N000_-_Hero_6-20260731-181425.jpg",
           "assets/Range-image.png"
         ],
         "tone": "warm",
@@ -1745,7 +1762,8 @@ window.EB_CATALOG = [
             "q": "Do they have any flavour?",
             "a": "Very mild — a neutral base that takes on whatever surrounds it. The wider flat shape helps sauce adhere compared to round shirataki."
           }
-        ]
+        ],
+        "updatedAt": "2026-07-31T17:14:30+00:00"
       },
       {
         "id": "rice-vermicelli",
@@ -1757,10 +1775,11 @@ window.EB_CATALOG = [
         ],
         "name": "Rice Vermicelli Noodles",
         "japanese": "ビーフン",
-        "image": "assets/products-nobg/rice vermecelli.png",
+        "image": "assets/uploads/N017-20260731-181451.png",
         "images": [
-          "assets/products-nobg/rice vermecelli.png",
-          "assets/back-of-pack/Rice vermecelli.jpg",
+          "assets/uploads/N017-20260731-181456.png",
+          "assets/uploads/N017_-_Back_side-20260731-181635.jpg",
+          "assets/uploads/EmmaBasic-January_SandyWood_102-20260731-181646.jpg",
           "assets/Range-image.png"
         ],
         "tone": "warm",
@@ -1801,7 +1820,8 @@ window.EB_CATALOG = [
             "Rice vermicelli is made from a single ingredient — rice. It's naturally gluten-free, lighter in texture than wheat noodles, and takes on flavour readily from whatever sauce or broth surrounds it. One ingredient, one job: absorb the flavours around it without getting in the way.",
             "Unlike wheat noodles, rice vermicelli doesn't need boiling. Soak in hot water for three to five minutes until pliable, then cook directly in your stir-fry or add to hot broth. Overcooking makes it mushy — pull it while it still has a little resistance. For cold noodle salads, rinse under cold water immediately after soaking."
           ]
-        }
+        },
+        "updatedAt": "2026-07-31T17:41:02+00:00"
       }
     ]
   },
@@ -1826,10 +1846,11 @@ window.EB_CATALOG = [
         "video": "assets/Product-videos/Toasted Sesame Oil.mp4",
         "name": "Pure Toasted Sesame Oil",
         "japanese": "純正ごま油",
-        "image": "assets/products-nobg/toasted sesaame oil.png",
+        "image": "assets/uploads/2026_03_02_BasicIngredient-083-20260731-181730.jpg",
         "images": [
-          "assets/products-nobg/toasted sesaame oil.png",
-          "assets/sesame-oil/G017H - Back.jpg",
+          "assets/uploads/2026_03_02_BasicIngredient-083-20260731-181732.jpg",
+          "assets/uploads/2026_03_02_BasicIngredient-093-20260731-181736.jpg",
+          "assets/uploads/2026_03_02_BasicIngredient-084-20260731-181749.jpg",
           "assets/sesame-oil/Untitled design (85).png",
           "assets/sesame-oil/Screenshot 2026-06-03 102417.png",
           "assets/sesame-oil/Screenshot 2026-06-22 104757.png",
@@ -1882,7 +1903,61 @@ window.EB_CATALOG = [
             "This is 100% pure sesame oil — one single ingredient: the finest roasted sesame seeds. Nothing else. Not a blend. Many supermarket sesame oils are diluted with cheaper vegetable oils or solvent-extracted with hexane and then deodorised. Ours is physically pressed only.",
             "Skillfully toasted seeds, gently pressed, produce the rich caramel colour, the deep nutty aroma, and the flavour that makes this oil worth seeking out. A finishing oil only — a few drops over noodles, steamed greens, or cold dishes is all you need."
           ]
-        }
+        },
+        "updatedAt": "2026-07-31T17:17:56+00:00"
+      },
+      {
+        "id": "C066H",
+        "name": "Pure Toasted Sesame Oil 1.9L",
+        "japanese": "純正ごま油",
+        "origin": "Physically pressed",
+        "tone": "warm",
+        "tagline": "Physically pressed — never chemically refined.",
+        "amazon": "https://www.amazon.co.uk/dp/B0883BQM56",
+        "image": "assets/uploads/C066H_-_Hero_01-20260731-181832.png",
+        "badges": [
+          "Physically Pressed",
+          "100% Pure",
+          "Single Ingredient",
+          "Gluten Free"
+        ],
+        "pairings": [
+          "Steamed greens",
+          "Cold noodles",
+          "Rice"
+        ],
+        "sellingPoints": [
+          "PHYSICALLY PRESSED: Physically pressed, not chemically refined. The oil from these tiny sesame seeds has many potential benefits to offer.",
+          "100% PURE: Made of one single ingredient: the finest roasted sesame seeds. Nothing else. This is not a blended sesame oil.",
+          "FLAVOUR & AROMA: Roasting and grounding sesame seeds is an art and science that takes years of training. Only properly roasted and gently pressed sesame can produce the rich flavour and desirable nutty aroma.",
+          "AUTHENTIC ORIENTAL: This dark caramel sesame oil is widely used in Asia cuisine. It is called fragrant oil in China, usually added to dishes at the end of cooking, used in dressings for cold dishes or for marinades & sauces.",
+          "A KITCHEN STAPLE: Every kitchen needs a bottle of sesame oil. Don't settle for a sesame oil that simply doesn’t give your food the flavour boost it deserves."
+        ],
+        "ingredients": "SESAME SEED OIL",
+        "allergens": "Contains sesame.",
+        "images": [
+          "assets/uploads/C066H_-_Hero_01-20260731-184205.png",
+          "assets/uploads/C066H_-_BACK-20260731-181842.jpg",
+          "assets/uploads/Extreme_close-up_macro_of_pure_Nano_Banana_2_56629-20260731-181851.png",
+          "assets/uploads/C066H_-_PT02-20260731-181909.jpg",
+          "assets/uploads/C066H_-_PT05-20260731-181858.jpg",
+          "assets/uploads/C066H_-_PT04-20260731-181900.jpg",
+          "assets/uploads/C066H_-_PT03-20260731-181854.jpg"
+        ],
+        "nutrition": {
+          "serving": "per 100g",
+          "energy_kj": 3404,
+          "energy_kcal": 828,
+          "fat": 92
+        },
+        "education": {
+          "title": "One ingredient. Skillfully toasted. Nothing added, nothing blended.",
+          "body": [
+            "This is 100% pure sesame oil — one single ingredient: the finest roasted sesame seeds. Nothing else. Not a blend. Many supermarket sesame oils are diluted with cheaper vegetable oils or solvent-extracted with hexane and then deodorised. Ours is physically pressed only.",
+            "Skillfully toasted seeds, gently pressed, produce the rich caramel colour, the deep nutty aroma, and the flavour that makes this oil worth seeking out. A finishing oil only — a few drops over noodles, steamed greens, or cold dishes is all you need."
+          ]
+        },
+        "updatedAt": "2026-07-31T17:42:16+00:00"
       }
     ]
   },
@@ -1915,14 +1990,13 @@ window.EB_CATALOG = [
         },
         "name": "Dashi Soy Sauce",
         "japanese": "だし醤油",
-        "image": "assets/products-nobg/dashi soy sauce.png",
+        "image": "assets/uploads/C010_-_Hero_1-20260731-184938.jpg",
         "images": [
-          "assets/products-nobg/dashi soy sauce.png",
-          "assets/back-of-pack/Dashi soy sauce.jpg",
-          "assets/dashi-soy-sauce/4.png",
-          "assets/dashi-soy-sauce/41MeJPSQv1L.jpg",
-          "assets/dashi-soy-sauce/dashi-product-2.jpg",
-          "assets/dashi-soy-sauce/dashi-pour.jpg"
+          "assets/uploads/C010_-_Hero_1-20260731-184941.jpg",
+          "assets/uploads/C010_-_Back-20260731-184945.jpg",
+          "assets/uploads/41MeJPSQv1L-20260731-185031.jpg",
+          "assets/uploads/81fN0lobgOL._AC_SL1500-20260731-185033.jpg",
+          "assets/uploads/EmmaBasicSoySaucePour_SandyW1_52-20260731-185029.jpg"
         ],
         "extraImages": [],
         "tone": "warm",
@@ -1974,17 +2048,20 @@ window.EB_CATALOG = [
             "Emma Basic dashi soy sauce is built on a dashi that has been skillfully made by simmering natural kelp and shiitake mushrooms. The producer behind it has been dedicated to making dashi in Japan since 1789 &mdash; over two centuries of refinement in a single bottle.",
             "Dashi is the backbone of Japanese cooking: a clean, deeply savoury stock that amplifies everything it touches without ever announcing itself. Blended with soy, it softens the salt edge and adds the rounded umami that makes this sauce work as a dipping sauce, a soup base, or a quiet finishing drizzle. Nothing artificial. No MSG, no colourings, no shortcuts."
           ]
-        }
+        },
+        "updatedAt": "2026-07-31T17:50:37+00:00"
       },
       {
         "id": "light-soy-sauce",
         "imageScale": 3.5,
         "name": "Light Soy Sauce",
         "japanese": "生抽醤油",
-        "image": "assets/products-nobg/lightsoy sauce.png",
+        "image": "assets/uploads/C011_-_Hero_1-20260731-185051.jpg",
         "images": [
-          "assets/products-nobg/lightsoy sauce.png",
-          "assets/back-of-pack/Light soy sauce.jpg",
+          "assets/uploads/C011_-_Hero_1-20260731-185054.jpg",
+          "assets/uploads/C011_-_Back-20260731-185058.jpg",
+          "assets/uploads/C011_-_Serving_3-20260731-185103.jpg",
+          "assets/uploads/C011_-_Serving_1-20260731-185107.jpg",
           "assets/Range-image.png"
         ],
         "tone": "warm",
@@ -2029,7 +2106,8 @@ window.EB_CATALOG = [
             "Light soy sauce (生抽, sheng chou) is paler in colour but actually saltier than dark soy. It's used for seasoning dishes where you want flavour without adding colour — steamed fish, pale stir-fries, marinades where the colour of the sauce matters. It's not a 'healthier' or 'lighter' version. It's a different product.",
             "Dark soy is thicker, less salty, and used primarily for colour — braised pork belly, char siu, and sauces that need a deep mahogany tone. If a recipe calls for both, there's a reason. If you only stock one for cooking, light soy is more versatile. If you only stock one for dipping, use tamari or dashi soy."
           ]
-        }
+        },
+        "updatedAt": "2026-07-31T17:51:11+00:00"
       },
       {
         "id": "soy-sauce-tamari",
@@ -2054,10 +2132,12 @@ window.EB_CATALOG = [
         ],
         "name": "Soy Sauce Tamari 1L",
         "japanese": "グルテンフリー減塩醤油",
-        "image": "assets/products-nobg/Soy sauce 1l.png",
+        "image": "assets/uploads/C014_-_HERO_01-20260731-185144.jpg",
         "images": [
-          "assets/products-nobg/Soy sauce 1l.png",
-          "assets/back-of-pack/Soy sauce 1L.jpg",
+          "assets/uploads/C014_-_HERO_01-20260731-185147.jpg",
+          "assets/uploads/C014_-_HERO_02-20260731-185149.jpg",
+          "assets/uploads/Runway_Nano_Banana_2_Show_me_a_medium_shot_040126_2-20260731-185206.png",
+          "assets/uploads/Runway_Nano_Banana_2_Show_me_a_clean__minimal_040126_4-20260731-185208.png",
           "assets/Range-image.png"
         ],
         "tone": "warm",
@@ -2100,7 +2180,8 @@ window.EB_CATALOG = [
             "Tamari originated as a byproduct of miso production — the liquid that collected at the bottom of miso barrels as the paste fermented. It was traditionally made from soybeans only, with no wheat. That's still the definition: tamari is soy sauce brewed without wheat, making it naturally gluten-free.",
             "The absence of wheat gives tamari a deeper, more rounded flavour than standard soy sauce, which uses wheat as a fermentation substrate. The protein content is higher and the salt lower. This 1L bottle is the right choice if your household uses soy sauce daily, or if you're gluten-intolerant and want a reliable supply."
           ]
-        }
+        },
+        "updatedAt": "2026-07-31T17:52:10+00:00"
       }
     ]
   },
@@ -2133,11 +2214,11 @@ window.EB_CATALOG = [
         ],
         "name": "Short Grain Rice 500g",
         "japanese": "短粒米 500g",
-        "image": "assets/products/sushi-rice.jpg",
+        "image": "assets/uploads/2026_03_02_BasicIngredient-013-20260731-185308.jpg",
         "images": [
-          "assets/products/sushi-rice.jpg",
-          "assets/back-of-pack/sushi rice 500g.jpg",
-          "assets/products/sushi-rice-homepage.png",
+          "assets/uploads/2026_03_02_BasicIngredient-013-20260731-185315.jpg",
+          "assets/uploads/2026_03_02_BasicIngredient-017-20260731-185319.jpg",
+          "assets/uploads/Runway_Nano_Banana_2_Show_me_a_macro_detail_033126-20260731-185311.png",
           "assets/Range-image.png"
         ],
         "tone": "warm",
@@ -2183,7 +2264,8 @@ window.EB_CATALOG = [
             "Koshihikari is the benchmark short-grain Japonica variety — beloved in Japan for its translucent appearance, clean sweetness, and the way it holds together without going gummy. Our rice is a Japonica variety grown in Vietnam's Mekong Delta, selected by specialists with over 140 years in rice production. It shares the defining characteristics of Koshihikari: high amylopectin starch content, short round grains, and a texture that balances stickiness with bite.",
             "Most rice sold as 'sushi rice' in the UK is Originario or Selenio — Italian-grown varieties closer to risotto rice than to genuine short-grain Japonica. They behave differently in the pot and differently on the tongue. Single-variety Japonica behaves predictably every time. Rinse until clear, soak thirty minutes, then cook with a 1:1 ratio of water to rice — simmer on low, rest fifteen minutes with the lid on. Stir through our Sushi Vinegar at one tablespoon per 100g uncooked rice while still warm — fan as you fold, and the surface takes on a glossy, seasoned sheen."
           ]
-        }
+        },
+        "updatedAt": "2026-07-31T17:53:41+00:00"
       },
       {
         "id": "sushi-rice-5kg",
@@ -2193,10 +2275,12 @@ window.EB_CATALOG = [
         },
         "name": "Short Grain Rice 5kg",
         "japanese": "短粒米 5kg",
-        "image": "assets/products-nobg/Sushi rice 5kg.png",
+        "image": "assets/uploads/B0DG957VL2.MAIN-20260731-185414.jpg",
         "images": [
-          "assets/products-nobg/Sushi rice 5kg.png",
+          "assets/uploads/B0DG957VL2.MAIN-20260731-185417.jpg",
           "assets/back-of-pack/Sushi rice 5kg back of pack.jpg",
+          "assets/uploads/V102_-_GTAward2025-20260731-185431.jpg",
+          "assets/uploads/BasicIngredientsGreatTaste2025_SandyWood_3_W_-_approved-20260731-185449.jpg",
           "assets/Range-image.png"
         ],
         "tone": "warm",
@@ -2240,7 +2324,8 @@ window.EB_CATALOG = [
             "Koshihikari is the benchmark short-grain Japonica variety — beloved in Japan for its translucent appearance, clean sweetness, and the way it holds together without going gummy. Our rice is a Japonica variety grown in Vietnam's Mekong Delta, selected by specialists with over 140 years in rice production. It shares the defining characteristics of Koshihikari: high amylopectin starch content, short round grains, and a texture that balances stickiness with bite.",
             "Most rice sold as 'sushi rice' in the UK is Originario or Selenio — Italian-grown varieties closer to risotto rice than to genuine short-grain Japonica. They behave differently in the pot and differently on the tongue. Single-variety Japonica behaves predictably every time. Rinse until clear, soak thirty minutes, then cook with a 1:1 ratio of water to rice — simmer on low, rest fifteen minutes with the lid on. Stir through our Sushi Vinegar at one tablespoon per 100g uncooked rice while still warm — fan as you fold, and the surface takes on a glossy, seasoned sheen."
           ]
-        }
+        },
+        "updatedAt": "2026-07-31T17:54:53+00:00"
       },
       {
         "id": "short-grain-rice-10kg",
@@ -2249,9 +2334,11 @@ window.EB_CATALOG = [
         "pdpImageScale": 1,
         "name": "Short Grain Rice 10kg",
         "japanese": "短粒米 10kg",
-        "image": "assets/products-whitebg/10kg rice.png",
+        "image": "assets/uploads/10kg_rice-20260731-190707.png",
         "images": [
-          "assets/products-whitebg/10kg rice.png",
+          "assets/uploads/10kg_rice-20260731-190710.png",
+          "assets/uploads/V101_-_Hero_5-20260731-190721.jpg",
+          "assets/uploads/EmmaBasic-SandyW_41-20260731-190727.jpg",
           "assets/Range-image.png"
         ],
         "tone": "warm",
@@ -2295,7 +2382,8 @@ window.EB_CATALOG = [
             "Koshihikari is the benchmark short-grain Japonica variety — beloved in Japan for its translucent appearance, clean sweetness, and the way it holds together without going gummy. Our rice is a Japonica variety grown in Vietnam's Mekong Delta, selected by specialists with over 140 years in rice production. It shares the defining characteristics of Koshihikari: high amylopectin starch content, short round grains, and a texture that balances stickiness with bite.",
             "Most rice sold as 'sushi rice' in the UK is Originario or Selenio — Italian-grown varieties closer to risotto rice than to genuine short-grain Japonica. They behave differently in the pot and differently on the tongue. Single-variety Japonica behaves predictably every time. Rinse until clear, soak thirty minutes, then cook with a 1:1 ratio of water to rice — simmer on low, rest fifteen minutes with the lid on. Stir through our Sushi Vinegar at one tablespoon per 100g uncooked rice while still warm — fan as you fold, and the surface takes on a glossy, seasoned sheen."
           ]
-        }
+        },
+        "updatedAt": "2026-07-31T18:07:40+00:00"
       }
     ]
   },
@@ -2312,11 +2400,13 @@ window.EB_CATALOG = [
         "imageScale": 1,
         "name": "Premium Grade Matcha",
         "japanese": "抹茶",
-        "image": "assets/emmabasic-live-products/matcha/matcha-01.jpg",
+        "image": "assets/uploads/M002_-_MAIN-20260731-190808.jpg",
         "images": [
-          "assets/emmabasic-live-products/matcha/matcha-01.jpg",
-          "assets/emmabasic-live-products/matcha/matcha-02.jpg",
-          "assets/products/matcha-homepage.jpg",
+          "assets/uploads/M002_-_MAIN-20260731-190812.jpg",
+          "assets/uploads/M002_-_BACK-20260731-190815.jpg",
+          "assets/uploads/M002_-_PT02-20260731-190826.png",
+          "assets/uploads/M002_-_PT03-20260731-190829.png",
+          "assets/uploads/M002_-_PT04-20260731-190835.png",
           "assets/Range-image.png"
         ],
         "heroImage": "assets/Hero-Home-Page-Running.png",
@@ -2366,7 +2456,8 @@ window.EB_CATALOG = [
             "Culinary grade matcha is made from older leaves harvested later in the season, after the best leaves have already been picked. It oxidises faster and has a bitter, astringent flavour that works when mixed into a latte or baked into a cake — sweetness and other flavours balance it out.",
             "Premium grade matcha uses first-flush Tencha leaves — the youngest, most shaded growth of the season. Ours are covered for 25 days before hand-picking, which forces the plant to produce more chlorophyll (the deep green colour) and develop natural sweetness and umami depth. The flavour is clean and complex enough to drink whisked in plain hot water."
           ]
-        }
+        },
+        "updatedAt": "2026-07-31T18:08:41+00:00"
       }
     ],
     "meta": {
@@ -2387,9 +2478,12 @@ window.EB_CATALOG = [
         "id": "edamame",
         "name": "Edamame in Pods",
         "japanese": "枝豆",
-        "image": "assets/products-nobg/Edamame.png",
+        "image": "assets/uploads/F006_-_Hero_1-20260731-190919.jpg",
         "images": [
-          "assets/products-nobg/Edamame.png",
+          "assets/uploads/F006_-_Hero_1-20260731-190921.jpg",
+          "assets/uploads/Runway_Nano_Banana_2_Show_me_a_close-up_macro_040226_1-20260731-190936.png",
+          "assets/uploads/Runway_Nano_Banana_2_Show_me_a_medium_shot_040226-20260731-190948.png",
+          "assets/uploads/Runway_Nano_Banana_2_Show_me_a_clean__minimal_040226_1-20260731-190950.png",
           "assets/Range-image.png"
         ],
         "tone": "warm",
@@ -2451,7 +2545,8 @@ window.EB_CATALOG = [
             "q": "Are these suitable for a high-protein diet?",
             "a": "Yes 13g protein per 100g from a complete plant-based source. Suitable for vegan, vegetarian, and flexitarian diets."
           }
-        ]
+        ],
+        "updatedAt": "2026-07-31T18:09:54+00:00"
       },
       {
         "id": "wakame-salad",
@@ -2466,10 +2561,12 @@ window.EB_CATALOG = [
         },
         "name": "Seasoned Wakame Salad",
         "japanese": "ごまわかめ",
-        "image": "assets/products-nobg/seasoned wakame salad.png",
+        "image": "assets/uploads/2025_12_01_BasicIngredient-185-20260731-191006.jpg",
         "images": [
-          "assets/products-nobg/seasoned wakame salad.png",
-          "assets/back-of-pack/2025_12_01_BasicIngredient-187.jpg"
+          "assets/uploads/2025_12_01_BasicIngredient-185-20260731-191009.jpg",
+          "assets/uploads/2025_12_01_BasicIngredient-187-20260731-191011.jpg",
+          "assets/uploads/06-20260731-191050.jpg",
+          "assets/uploads/16541c88b531bef038942979fb07a6b-20260731-191106.jpg"
         ],
         "tone": "warm",
         "origin": "Japanese style",
@@ -2513,7 +2610,8 @@ window.EB_CATALOG = [
             "Wakame is a brown seaweed that grows in cold, deep coastal waters around Japan and Korea. It's harvested, salted, dried, and then rehydrated before use. The texture after rehydration is silky and slightly gelatinous — nothing like the crisp sheets of nori.",
             "It's one of the most nutrient-dense foods you can put in a bowl. High in iodine, calcium, and a compound called fucoidan that's associated with anti-inflammatory effects. Soak in warm water for two to three minutes — the seaweed will expand significantly. Reserve the soaking liquid to add depth to soups and broths."
           ]
-        }
+        },
+        "updatedAt": "2026-07-31T18:11:08+00:00"
       },
       {
         "id": "chicken-gyoza",
@@ -2528,10 +2626,10 @@ window.EB_CATALOG = [
         "availableSizes": "Available in 300g and 1kg",
         "name": "Chicken Gyoza",
         "japanese": "チキン餃子",
-        "image": "assets/products/chicken-gyoza.jpg",
+        "image": "assets/uploads/2025_12_01_BasicIngredient-211-20260731-191120.jpg",
         "images": [
-          "assets/products/chicken-gyoza.jpg",
-          "assets/back-of-pack/2025_12_01_BasicIngredient-213.jpg",
+          "assets/uploads/2025_12_01_BasicIngredient-211-20260731-191123.jpg",
+          "assets/uploads/2025_12_01_BasicIngredient-213-20260731-191131.jpg",
           "assets/Range-image.png"
         ],
         "tone": "warm",
@@ -2564,7 +2662,6 @@ window.EB_CATALOG = [
           "saturates": 2.5,
           "carbohydrate": 27,
           "sugars": 2.7,
-          "fibre": null,
           "protein": 10.3,
           "salt": 2.3
         },
@@ -2576,16 +2673,18 @@ window.EB_CATALOG = [
             "The difference between good gyoza and mediocre gyoza is the skin. Mass-produced gyoza use thick skins — easier to fill on a machine, harder to overcook, better for freezer durability. Thin skins are more delicate, cook faster, and go properly crisp on the base while steaming through. They're harder to make at scale without tearing. We do it anyway.",
             "The cooking method is non-negotiable: pan-fry flat-side down in a little oil until the base turns golden, add a splash of water, cover immediately, and let the steam finish the filling. The result is the yaki-gyoza texture — crisp base, tender wrapper, juicy filling. No MSG, no artificial flavour."
           ]
-        }
+        },
+        "updatedAt": "2026-07-31T18:12:23+00:00"
       },
       {
         "id": "tofu-puffs",
         "name": "Tofu Puffs",
         "japanese": "厚揚げ",
-        "image": "assets/products-nobg/Tofu puffs.png",
+        "image": "assets/uploads/Tofu_puffs-20260731-192038.jpg",
         "images": [
-          "assets/products-nobg/Tofu puffs.png",
-          "assets/back-of-pack/Tofiu.jpg",
+          "assets/uploads/Tofu_puffs-20260731-192042.jpg",
+          "assets/uploads/Tofiu-20260731-192053.jpg",
+          "assets/uploads/Fried_Tofu_2-20260731-192102.jpg",
           "assets/Range-image.png"
         ],
         "tone": "warm",
@@ -2641,7 +2740,8 @@ window.EB_CATALOG = [
             "q": "Do I need to cook them?",
             "a": "They're already cooked (deep-fried). You can add them directly to hot soups or braises — just simmer until heated through and the broth has been absorbed."
           }
-        ]
+        ],
+        "updatedAt": "2026-07-31T18:22:39+00:00"
       },
       {
         "id": "frozen-bao-bun",
@@ -2655,9 +2755,9 @@ window.EB_CATALOG = [
         },
         "name": "Bao Bun",
         "japanese": "蒸しパン",
-        "image": "assets/products-nobg/bao bun.png",
+        "image": "assets/uploads/2025_12_01_BasicIngredient-206-20260731-192257.jpg",
         "images": [
-          "assets/products-nobg/bao bun.png",
+          "assets/uploads/2025_12_01_BasicIngredient-206-20260731-192259.jpg",
           "assets/Range-image.png"
         ],
         "tone": "warm",
@@ -2700,15 +2800,20 @@ window.EB_CATALOG = [
             "Pre-filled bao buns are a convenience compromise. The filling is usually made to survive freezing and reheating, which means it's designed around durability rather than flavour. By the time you eat it, the texture of the filling has suffered and you have no control over what's inside.",
             "Blank bao change the proposition. The bun itself — a simple dough of flour, water, yeast, oil, salt, and a small amount of sugar — can be made very well. Steam for five minutes, fill with whatever you've cooked, and the result is both fresher and more flexible."
           ]
-        }
+        },
+        "updatedAt": "2026-07-31T18:23:19+00:00"
       },
       {
         "id": "smoked-salmon-100g",
         "name": "Smoked Salmon 100g",
         "japanese": "スモークサーモン",
-        "image": "assets/products-nobg/smolked salmon.png",
+        "image": "assets/uploads/F058_-_Hero_01-20260731-192345.jpg",
         "images": [
-          "assets/products-nobg/smolked salmon.png",
+          "assets/uploads/F058_-_Hero_01-20260731-192347.jpg",
+          "assets/uploads/EmmaBasicSmokedSalmon_SandyW9-20260731-192427.jpg",
+          "assets/uploads/EmmaBasicSmokedSalmon_SandyW25-20260731-192433.jpg",
+          "assets/uploads/EmmaBasicSmokedSalmon_SandyW4-20260731-192438.jpg",
+          "assets/uploads/EmmaBasicSmokedSalmon_SandyW46-20260731-192449.jpg",
           "assets/Range-image.png"
         ],
         "tone": "cool",
@@ -2752,7 +2857,8 @@ window.EB_CATALOG = [
             "Most smoked salmon contains more than just salmon. Dextrose, preservatives, smoke flavouring, polyphosphates to retain water weight — all common additions in commercial smoked fish. They extend shelf life and increase yield, at the cost of flavour and label transparency.",
             "Ours contains one ingredient: salmon. Cold smoked to preserve the natural texture of the fish without cooking it through. Nothing added to bulk it out or extend its shelf life beyond the cold chain. The label says salmon. The pack contains salmon."
           ]
-        }
+        },
+        "updatedAt": "2026-07-31T18:24:56+00:00"
       }
     ]
   },
@@ -2767,9 +2873,12 @@ window.EB_CATALOG = [
         "id": "binchotan-filter",
         "name": "Binchotan Charcoal Water Filter 2 pieces",
         "japanese": "備長炭",
-        "image": "assets/products-nobg/qater filter 2 pc.png",
+        "image": "assets/uploads/Z052_-_Hero_1_New-20260731-192540.jpg",
         "images": [
-          "assets/products-nobg/qater filter 2 pc.png",
+          "assets/uploads/Z052_-_Hero_1_New-20260731-192543.jpg",
+          "assets/uploads/2021_02_05_Basic_Ingredient-093-20260731-192659.jpg",
+          "assets/uploads/2021_02_05_Basic_Ingredient-103-20260731-192648.jpg",
+          "assets/uploads/Z052_Fits_in_most_Bottles-20260731-192711.jpg",
           "assets/Range-image.png"
         ],
         "tone": "warm",
@@ -2793,7 +2902,6 @@ window.EB_CATALOG = [
           "Eco friendly — place charcoal into your bottle or jug to purify drinking water instead of buying plastic bottled water",
           "Reusable & compostable — each filter lasts up to 3 months, a big saving compared with plastic filters that last only 1 month. After 3 months, can be recycled into plant soil or used in shoe cabinets to remove odours"
         ],
-        "nutrition": null,
         "ingredients": "",
         "qa": [
           {
@@ -2816,15 +2924,18 @@ window.EB_CATALOG = [
             "To use it: place in boiling water for at least 3 minutes, then remove to cool. Drop into a jug of water and leave for 3 to 6 hours. Boil in fresh water for ten minutes once a month to reactivate. Each stick lasts up to 3 months before it needs replacing — at that point, break it up and use as a soil additive."
           ]
         },
-        "allergens": ""
+        "allergens": "",
+        "updatedAt": "2026-07-31T18:29:40+00:00"
       },
       {
         "id": "binchotan-filter-4pcs",
         "name": "Binchotan Charcoal Water Filter 4 pieces",
         "japanese": "備長炭 4本",
-        "image": "assets/products-nobg/water filter 4pc.png",
+        "image": "assets/uploads/Z058_-_Hero_1_Emma_Basic_-_Copy-20260731-192730.jpg",
         "images": [
-          "assets/products-nobg/water filter 4pc.png",
+          "assets/uploads/Z058_-_Hero_1_Emma_Basic_-_Copy-20260731-192733.jpg",
+          "assets/uploads/2021_02_05_Basic_Ingredient-082-20260731-192744.jpg",
+          "assets/uploads/Z058_-_Hero_4_-_Copy-20260731-192747.jpg",
           "assets/Range-image.png"
         ],
         "tone": "warm",
@@ -2840,7 +2951,7 @@ window.EB_CATALOG = [
           "Reusable",
           "Eco Friendly"
         ],
-        "amazon": "",
+        "amazon": "https://www.amazon.co.uk/dp/B08MYZB72P",
         "sellingPoints": [
           "100% natural — made of 100% natural Crepe Myrtle wood, not a plastic filter",
           "Purify — improves taste and removes odour by trapping contaminants like chlorine, which are often added to tap water for purification",
@@ -2848,7 +2959,6 @@ window.EB_CATALOG = [
           "Eco friendly — place charcoal into your bottle or jug to purify drinking water instead of buying plastic bottled water",
           "Reusable & compostable — each filter lasts up to 3 months. After 3 months, can be recycled into plant soil or used in a shoe cabinet to remove odours"
         ],
-        "nutrition": null,
         "ingredients": "",
         "qa": [
           {
@@ -2871,7 +2981,8 @@ window.EB_CATALOG = [
             "To use it: place in boiling water for at least 3 minutes, then remove to cool. Drop into a jug of water and leave for 3 to 6 hours. Boil in fresh water for ten minutes once a month to reactivate. Each stick lasts up to 3 months before it needs replacing — at that point, break it up and use as a soil additive."
           ]
         },
-        "allergens": ""
+        "allergens": "",
+        "updatedAt": "2026-07-31T18:29:16+00:00"
       }
     ]
   },
@@ -2891,10 +3002,12 @@ window.EB_CATALOG = [
         ],
         "name": "Dried Shiitake Mushrooms 50g",
         "japanese": "干し椎茸",
-        "image": "assets/emmabasic-live-products/shiitake-50g/shiitake-01.jpg",
+        "image": "assets/uploads/V019R-20260731-193555.jpg",
         "images": [
-          "assets/emmabasic-live-products/shiitake-50g/shiitake-01.jpg",
-          "assets/emmabasic-live-products/shiitake-50g/shiitake-02.jpg",
+          "assets/uploads/V019R-20260731-193559.jpg",
+          "assets/uploads/V019_Content-20260731-193612.jpg",
+          "assets/uploads/V019_Serving_Suggestion_2-20260731-193614.jpg",
+          "assets/uploads/V019_Serving_Suggestion_4-20260731-193616.jpg",
           "assets/Range-image.png"
         ],
         "tone": "warm",
@@ -2948,7 +3061,8 @@ window.EB_CATALOG = [
             "q": "Can I use the soaking water?",
             "a": "Yes — and you should. It's a concentrated mushroom dashi. Strain through a fine mesh to remove any grit before using in soups, braises, or rice."
           }
-        ]
+        ],
+        "updatedAt": "2026-07-31T18:36:19+00:00"
       },
       {
         "id": "dried-porcini",
@@ -2959,10 +3073,12 @@ window.EB_CATALOG = [
         ],
         "name": "Dried Porcini Mushrooms 45g",
         "japanese": "ポルチーニ茸",
-        "image": "assets/emmabasic-live-products/porcini-45g/porcini-01.jpg",
+        "image": "assets/uploads/V020R-20260731-193811.jpg",
         "images": [
-          "assets/emmabasic-live-products/porcini-45g/porcini-01.jpg",
-          "assets/emmabasic-live-products/porcini-45g/porcini-02.jpg",
+          "assets/uploads/V020R-20260731-193814.jpg",
+          "assets/uploads/V020_-_Hero_2-20260731-193652.jpg",
+          "assets/uploads/V020_iStock-1187009484-20260731-193656.jpg",
+          "assets/uploads/V020_iStock-1277038148-20260731-193658.jpg",
           "assets/Range-image.png"
         ],
         "tone": "warm",
@@ -3019,7 +3135,8 @@ window.EB_CATALOG = [
             "q": "How much dry mushroom should I use?",
             "a": "A small amount goes a long way. 10–15g of dried porcini is enough to flavour a risotto for four people. The concentrated flavour means you rarely need more."
           }
-        ]
+        ],
+        "updatedAt": "2026-07-31T18:38:16+00:00"
       },
       {
         "id": "dried-black-fungus",
@@ -3030,10 +3147,11 @@ window.EB_CATALOG = [
         ],
         "name": "Dried Black Fungus 80g",
         "japanese": "黒木耳",
-        "image": "assets/emmabasic-live-products/black-fungus-80g/fungus-01.jpg",
+        "image": "assets/uploads/V021R-20260731-193717.jpg",
         "images": [
-          "assets/emmabasic-live-products/black-fungus-80g/fungus-01.jpg",
-          "assets/emmabasic-live-products/black-fungus-80g/fungus-02.jpg",
+          "assets/uploads/V021R-20260731-193721.jpg",
+          "assets/uploads/V021_-_Hero_4-20260731-193733.jpg",
+          "assets/uploads/V021_-_Hero_6-20260731-193736.jpg",
           "assets/Range-image.png"
         ],
         "tone": "warm",
@@ -3049,7 +3167,7 @@ window.EB_CATALOG = [
           "Gluten Free",
           "High Fibre"
         ],
-        "amazon": "https://www.amazon.co.uk/Emma-Basic-Dried-Black-Fungus/dp/B08JD37BBJ",
+        "amazon": "https://www.amazon.co.uk/dp/B08JD37BBJ",
         "sellingPoints": [
           "Single ingredient 100% black fungus (wood ear mushroom), no additives",
           "Distinctive silky-crunchy texture — unique in Chinese cooking",
@@ -3092,7 +3210,8 @@ window.EB_CATALOG = [
             "q": "What dishes is it used in?",
             "a": "Hot and sour soup, mapo tofu, braised pork belly, stir-fried vegetables, fried rice, and cold sesame noodle salads. Its crunchy texture works particularly well against soft or tender ingredients."
           }
-        ]
+        ],
+        "updatedAt": "2026-07-31T18:37:47+00:00"
       }
     ]
   }

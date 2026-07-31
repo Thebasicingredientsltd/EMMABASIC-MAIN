@@ -1,7 +1,7 @@
 /* Emma Basic — homepage content (CMS-managed). The payload below is strict JSON. */
 window.EB_HOME = {
   "hero": {
-    "image": "assets/Hero-Home-Page-Running.png",
+    "image": "assets/uploads/Hero-Home-Page-Running-20260731-121433.jpg",
     "headlineLine1": "Recovery,",
     "headlineLine2": "uncompromised.",
     "body": "Pure ingredients for pure effort<br/>for the run, the kitchen, and everything between.",
