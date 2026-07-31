@@ -18,23 +18,32 @@ Run:
 then open http://localhost:5000
 """
 
+import hmac
+import io
 import json
+import mimetypes
 import os
 import re
 import subprocess
-from datetime import datetime
+from datetime import datetime, timezone
 
 from flask import (
     Flask,
+    Response,
+    abort,
     flash,
+    g,
     jsonify,
     redirect,
     render_template,
     request,
     send_from_directory,
+    session,
     url_for,
 )
 from werkzeug.utils import secure_filename
+
+import storage
 
 try:
     from PIL import Image, ImageOps
@@ -81,7 +90,65 @@ HEADERS = {
 }
 
 app = Flask(__name__)
-app.secret_key = "emma-basic-cms-local"
+# In production (online) a stable secret must be provided so signed session
+# cookies survive across serverless instances. Locally it falls back to a
+# fixed dev value.
+app.secret_key = os.environ.get("CMS_SECRET") or "emma-basic-cms-local"
+
+# Project directory as a repo-relative path (forward slashes) — the storage
+# layer addresses everything relative to the repo root.
+PROJECT_REL = "Emma-Basic-The-Basic-Ingredients/project"
+
+
+def _rel(abs_path):
+    """Convert an absolute path under the repo into a repo-relative path."""
+    return os.path.relpath(abs_path, storage.REPO_ROOT).replace(os.sep, "/")
+
+
+# ---------------------------------------------------------------------------
+# Authentication
+# ---------------------------------------------------------------------------
+# A login is enforced whenever the CMS is online (GitHub backend) or whenever a
+# CMS_PASSWORD is configured. Local runs without a password stay frictionless.
+CMS_PASSWORD = os.environ.get("CMS_PASSWORD", "")
+
+
+def _auth_required():
+    return storage.is_github() or bool(CMS_PASSWORD)
+
+
+@app.before_request
+def _require_login():
+    if not _auth_required():
+        return
+    if request.endpoint in ("login", "static"):
+        return
+    if session.get("cms_auth"):
+        return
+    return redirect(url_for("login", next=request.path))
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if not _auth_required():
+        return redirect(url_for("index"))
+    error = None
+    if request.method == "POST":
+        supplied = request.form.get("password", "")
+        if CMS_PASSWORD and hmac.compare_digest(supplied, CMS_PASSWORD):
+            session["cms_auth"] = True
+            session.permanent = True
+            return redirect(request.form.get("next") or url_for("index"))
+        error = ("Incorrect password." if CMS_PASSWORD
+                 else "No CMS_PASSWORD is configured on the server.")
+    return render_template("login.html", error=error, next=request.args.get("next", ""))
+
+
+@app.route("/logout")
+def logout():
+    session.pop("cms_auth", None)
+    flash("Signed out.", "ok")
+    return redirect(url_for("login"))
 
 
 # ---------------------------------------------------------------------------
@@ -90,8 +157,7 @@ app.secret_key = "emma-basic-cms-local"
 def load_data(key):
     """Read a data file and return the parsed JSON payload."""
     info = DATA_FILES[key]
-    with open(info["file"], "r", encoding="utf-8") as fh:
-        text = fh.read()
+    text = storage.read_text(_rel(info["file"]))
     # Strip everything up to the first '=' then trailing ';'
     idx = text.index("=")
     payload = text[idx + 1:].strip()
@@ -103,19 +169,40 @@ def load_data(key):
 def save_data(key, data):
     """Write the JSON payload back into the `window.EB_X = ...;` wrapper.
 
-    After writing, refresh the ?v= cache-buster on this data file's <script>
-    tags across the site's HTML pages so a normal browser refresh of the
-    localhost site (and the Vercel deploy) fetches the new file immediately
-    instead of a stale cached copy. See bump_data_cache_bust for details.
+    Everything is persisted through the storage layer in a single batch:
+      - the data file itself,
+      - any images uploaded during this request (staged via `_stage_file`),
+      - the refreshed ?v= cache-buster on the site's HTML pages.
+
+    On the local backend that means writing the files to disk (you publish
+    later with the Publish button). On the GitHub backend it becomes one atomic
+    commit, which auto-deploys the live site.
     """
     info = DATA_FILES[key]
     body = json.dumps(data, ensure_ascii=False, indent=2)
     text = "{header}\n{var} = {body};\n".format(
         header=HEADERS[key], var=info["var"], body=body
     )
-    with open(info["file"], "w", encoding="utf-8") as fh:
-        fh.write(text)
-    bump_data_cache_bust(key)
+    changes = _drain_staged_files()
+    changes.append((_rel(info["file"]), text, False))
+    changes.extend(_cache_bust_changes(key))
+    storage.persist(changes, message="CMS: update %s" % key)
+
+
+def _stage_file(relpath, data_bytes):
+    """Buffer an uploaded file for the current request; it is written/committed
+    together with the next save_data (or flushed explicitly by /api/upload)."""
+    pending = getattr(g, "_pending_files", None)
+    if pending is None:
+        pending = []
+        g._pending_files = pending
+    pending.append((relpath, data_bytes, True))
+
+
+def _drain_staged_files():
+    pending = getattr(g, "_pending_files", None) or []
+    g._pending_files = []
+    return list(pending)
 
 
 def lines_to_list(text):
@@ -245,21 +332,20 @@ def _human_kb(num_bytes):
         else "%.1f MB" % (num_bytes / (1024.0 * 1024.0))
 
 
-def optimize_image(abs_path):
-    """Resize/recompress an image in place to reduce file size.
+def optimize_image_bytes(raw, ext):
+    """Resize/recompress image bytes to reduce file size.
 
-    Returns a dict describing what changed (used for user feedback). Safely
-    no-ops for vector/unsupported formats (e.g. SVG, AVIF without a plugin).
+    Returns (optimized_bytes, info). Safely returns the original bytes for
+    vector/unsupported formats (e.g. SVG) or on any error.
     """
     info = {"optimized": False}
     if not HAVE_PIL:
-        return info
-    ext = os.path.splitext(abs_path)[1].lower()
+        return raw, info
     try:
-        img = Image.open(abs_path)
+        img = Image.open(io.BytesIO(raw))
         img.load()
     except Exception:
-        return info  # not a raster image Pillow understands — leave untouched
+        return raw, info  # not a raster image Pillow understands — leave as-is
 
     info["dims_before"] = "%d×%d" % img.size
     img = ImageOps.exif_transpose(img)  # honour phone orientation
@@ -268,50 +354,52 @@ def optimize_image(abs_path):
         img.thumbnail((MAX_DIM, MAX_DIM))
         resized = True
 
+    out = io.BytesIO()
     try:
         if ext in (".jpg", ".jpeg"):
-            img.convert("RGB").save(abs_path, quality=JPEG_QUALITY, optimize=True, progressive=True)
+            img.convert("RGB").save(out, format="JPEG", quality=JPEG_QUALITY, optimize=True, progressive=True)
         elif ext == ".png":
-            img.save(abs_path, optimize=True)
+            img.save(out, format="PNG", optimize=True)
         elif ext == ".webp":
-            img.save(abs_path, quality=WEBP_QUALITY, method=6)
+            img.save(out, format="WEBP", quality=WEBP_QUALITY, method=6)
         else:
-            # gif or other — only rewrite if we resized
-            if resized:
-                img.save(abs_path)
-            else:
-                return info
+            # gif or other — only rewrite if we actually resized
+            if not resized:
+                return raw, info
+            img.save(out)
         info["optimized"] = True
         info["dims_after"] = "%d×%d" % img.size
+        return out.getvalue(), info
     except Exception:
-        pass
-    return info
+        return raw, info
 
 
 def save_upload(file_storage):
-    """Save + optimize an uploaded image; return its web path (or None)."""
+    """Stage + optimize an uploaded image; return its web path (or None)."""
     result = save_upload_detailed(file_storage)
     return result["path"] if result else None
 
 
 def save_upload_detailed(file_storage):
-    """Save an uploaded image into assets/uploads, optimize it, and return
-    a dict with the web path and before/after size info."""
+    """Optimize an uploaded image and stage it under assets/uploads for the
+    current request. Returns a dict with the web path and before/after sizes.
+
+    The bytes are committed/written by the next save_data (form saves) or
+    flushed immediately by /api/upload."""
     if not file_storage or not file_storage.filename:
         return None
     ext = os.path.splitext(file_storage.filename)[1].lower()
     if ext not in ALLOWED_EXT:
         raise ValueError("Unsupported image type: %s" % ext)
-    os.makedirs(UPLOAD_DIR, exist_ok=True)
+    raw = file_storage.read()
+    orig_bytes = len(raw)
+    data, opt = optimize_image_bytes(raw, ext)
+    new_bytes = len(data)
+
     base = secure_filename(os.path.splitext(file_storage.filename)[0]) or "image"
     stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
     name = "{base}-{stamp}{ext}".format(base=base, stamp=stamp, ext=ext)
-    abs_path = os.path.join(UPLOAD_DIR, name)
-    file_storage.save(abs_path)
-
-    orig_bytes = os.path.getsize(abs_path)
-    opt = optimize_image(abs_path)
-    new_bytes = os.path.getsize(abs_path)
+    _stage_file(PROJECT_REL + "/assets/uploads/" + name, data)
 
     web_path = "assets/uploads/" + name
     return {
@@ -339,11 +427,9 @@ def image_file_size(web_path):
     """Return a human-readable file size for a site image path (or None)."""
     if not web_path:
         return None
-    rel = web_path.strip().lstrip("/")
-    abs_path = os.path.join(PROJECT_DIR, *rel.split("/"))
-    if os.path.isfile(abs_path):
-        return _human_kb(os.path.getsize(abs_path))
-    return None
+    rel = PROJECT_REL + "/" + web_path.strip().lstrip("/")
+    size = storage.get_size(rel)
+    return _human_kb(size) if isinstance(size, int) else None
 
 
 def gallery_with_sizes(product):
@@ -372,9 +458,19 @@ def index():
     )
 
 
-# Serve the site's assets so image previews work inside the CMS
+# Serve the site's assets so image previews work inside the CMS. On the GitHub
+# backend there is no local assets folder, so we proxy the bytes from the repo
+# (works for private repos too, since the API call is authenticated).
 @app.route("/site-assets/<path:filename>")
 def site_assets(filename):
+    if storage.is_github():
+        data = storage.read_bytes(PROJECT_REL + "/assets/" + filename)
+        if data is None:
+            abort(404)
+        ctype = mimetypes.guess_type(filename)[0] or "application/octet-stream"
+        resp = Response(data, mimetype=ctype)
+        resp.headers["Cache-Control"] = "private, max-age=60"
+        return resp
     return send_from_directory(ASSETS_DIR, filename)
 
 
@@ -391,6 +487,13 @@ def api_upload():
         return jsonify({"ok": False, "error": str(exc)}), 400
     except Exception as exc:  # pragma: no cover
         return jsonify({"ok": False, "error": "Upload failed: %s" % exc}), 500
+
+    # A drag-and-drop upload isn't followed by a form save, so persist the
+    # staged image immediately (a single commit on the GitHub backend).
+    try:
+        storage.persist(_drain_staged_files(), message="CMS: upload %s" % result["path"])
+    except Exception as exc:  # pragma: no cover
+        return jsonify({"ok": False, "error": "Save failed: %s" % exc}), 500
 
     if result["optimized"] and result["new_bytes"] < result["orig_bytes"]:
         saved = 100 - (result["new_bytes"] * 100 // max(1, result["orig_bytes"]))
@@ -842,14 +945,23 @@ def catalog_table_save():
             # A row is only present if it was actually rendered/submitted.
             if (prefix + "name") not in request.form:
                 continue
+            changed = False
             for key, _label in CATALOG_TABLE_TEXT_FIELDS:
                 form_key = prefix + key
                 if form_key in request.form:
-                    prod[key] = request.form.get(form_key, prod.get(key, "")).strip()
+                    new_val = request.form.get(form_key, prod.get(key, "")).strip()
+                    if new_val != prod.get(key, ""):
+                        changed = True
+                    prod[key] = new_val
             for key, _label in CATALOG_TABLE_LIST_FIELDS:
                 form_key = prefix + key
                 if form_key in request.form:
-                    prod[key] = lines_to_list(request.form.get(form_key, ""))
+                    new_val = lines_to_list(request.form.get(form_key, ""))
+                    if new_val != prod.get(key):
+                        changed = True
+                    prod[key] = new_val
+            if changed:
+                prod["updatedAt"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
             updated += 1
 
     save_data("catalog", cats)
@@ -1034,6 +1146,8 @@ def catalog_product_save():
         flash("A product needs at least an id and a name.", "error")
         return redirect(request.referrer or url_for("catalog"))
 
+    prod["updatedAt"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
+
     if is_new:
         cats[target_ci].setdefault("products", []).append(prod)
     elif target_ci != ci:
@@ -1113,6 +1227,10 @@ def run_git(args):
 
 
 def git_status_summary():
+    # On the GitHub backend every save is already committed + deployed, so there
+    # is nothing pending to "publish".
+    if storage.is_github():
+        return {"ok": True, "changes": 0, "files": [], "auto": True}
     res = run_git(["status", "--porcelain"])
     if res.returncode != 0:
         return {"ok": False, "changes": 0, "detail": res.stderr.strip()}
@@ -1136,14 +1254,13 @@ def _data_script_re(keys):
     return re.compile(r"(data/(?:" + names + r")\.js)(\?v=[^\"'\s>]*)?")
 
 
-def bump_data_cache_bust(keys=None):
-    """Stamp a fresh ?v=<timestamp> onto data-file <script> tags across the
-    site's HTML pages.
+def _cache_bust_changes(keys=None):
+    """Compute (relpath, new_text, False) edits that stamp a fresh
+    ?v=<timestamp> onto the data-file <script> tags across the site's HTML
+    pages, so browsers/CDN refetch the new content immediately.
 
-    `keys` may be a single data-file key (e.g. "catalog"), an iterable of keys,
-    or None to re-stamp every data file. Only the tags for the given keys are
-    touched, which keeps a per-save git diff small. Returns the number of HTML
-    files changed.
+    `keys` may be a single data-file key, an iterable of keys, or None for all.
+    Only the tags for the given keys are touched, keeping each save's diff small.
     """
     if keys is None:
         keys = ALL_DATA_KEYS
@@ -1153,26 +1270,36 @@ def bump_data_cache_bust(keys=None):
     # Include milliseconds so two saves within the same second still produce a
     # different ?v=, guaranteeing the browser refetches after every save.
     stamp = datetime.now().strftime("%Y%m%d%H%M%S%f")[:-3]
-    changed = 0
-    for name in os.listdir(PROJECT_DIR):
+    changes = []
+    for name in storage.list_dir(PROJECT_REL):
         if not name.lower().endswith(".html"):
             continue
-        path = os.path.join(PROJECT_DIR, name)
+        rel = PROJECT_REL + "/" + name
         try:
-            with open(path, "r", encoding="utf-8") as fh:
-                text = fh.read()
-        except (OSError, UnicodeDecodeError):
+            text = storage.read_text(rel)
+        except Exception:
             continue
         new_text = pattern.sub(r"\g<1>?v=" + stamp, text)
         if new_text != text:
-            with open(path, "w", encoding="utf-8") as fh:
-                fh.write(new_text)
-            changed += 1
-    return changed
+            changes.append((rel, new_text, False))
+    return changes
+
+
+def bump_data_cache_bust(keys=None):
+    """Persist fresh cache-busters right now (used by the local Publish flow).
+    Normal saves already fold these edits into save_data's single batch."""
+    changes = _cache_bust_changes(keys)
+    if changes:
+        storage.persist(changes, message="CMS: refresh cache-busters")
+    return len(changes)
 
 
 @app.route("/publish", methods=["POST"])
 def publish():
+    # Online (GitHub) backend publishes automatically on every save.
+    if storage.is_github():
+        flash("Auto-publish is on — every change is committed and deployed automatically.", "ok")
+        return redirect(url_for("index"))
     message = request.form.get("message", "").strip() or (
         "CMS update — %s" % datetime.now().strftime("%Y-%m-%d %H:%M")
     )

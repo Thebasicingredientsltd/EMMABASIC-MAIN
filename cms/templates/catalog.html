@@ -25,6 +25,11 @@
     background: color-mix(in srgb, var(--accent) 7%, transparent);
     border: 1px dashed var(--rule-strong);
   }
+  /* Last-edited metadata — quiet, static, never animated (seen frequently). */
+  .eb-updated {
+    flex-shrink: 0; text-align: right; white-space: nowrap;
+    font-size: 12px; line-height: 1.3; color: var(--ink-60);
+  }
 </style>
 <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;">
   <div>
@@ -72,6 +77,9 @@
       <div style="font-weight:600;">{{ p.name }}</div>
       <div class="muted">{{ p.origin }}{% if p.badges %} · {{ p.badges|join(', ') }}{% endif %}</div>
     </div>
+    {% if p.updatedAt %}
+    <time class="eb-updated" datetime="{{ p.updatedAt }}" data-updated="{{ p.updatedAt }}"></time>
+    {% endif %}
     <a class="btn secondary small" href="{{ url_for('catalog_product_edit', ci=ci, pi=loop.index0) }}">Edit</a>
     <form method="post" action="{{ url_for('catalog_product_delete', ci=ci, pi=loop.index0) }}" onsubmit="return confirm('Delete {{ p.name }}?');">
       <button class="btn danger small" type="submit">Delete</button>
@@ -258,6 +266,35 @@
       window.location.reload();
     });
   }
+})();
+</script>
+<script>
+/* Progressive enhancement: render a quiet, friendly relative "Edited …" label
+   from each row's ISO-8601 `datetime`, with the full timestamp in the tooltip.
+   No animation — this metadata is seen constantly and should stay crisp. */
+(function () {
+  var MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+  function startOfDay(d) { return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+
+  function relative(then, now) {
+    var days = Math.round((startOfDay(now) - startOfDay(then)) / 86400000);
+    if (days <= 0) return "Edited today";
+    if (days === 1) return "Edited yesterday";
+    if (days <= 30) return "Edited " + days + " days ago";
+    return "Edited on " + then.getDate() + " " + MONTHS[then.getMonth()] + " " + then.getFullYear();
+  }
+
+  var now = new Date();
+  document.querySelectorAll("time.eb-updated[datetime]").forEach(function (el) {
+    var then = new Date(el.getAttribute("datetime"));
+    if (isNaN(then)) { el.textContent = "—"; return; }
+    el.textContent = relative(then, now);
+    el.title = then.toLocaleString(undefined, {
+      year: "numeric", month: "long", day: "numeric",
+      hour: "2-digit", minute: "2-digit"
+    });
+  });
 })();
 </script>
 {% endblock %}
