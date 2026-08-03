@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Emma Basic — Product page redesign examples</title>
+<link rel="stylesheet" href="../components/tokens.css"/>
+<style>
+  body { padding: 48px var(--pad-x) 96px; max-width: 1100px; margin: 0 auto; }
+  h1 { font-family: var(--f-display); font-weight: 300; font-size: clamp(32px, 5vw, 56px); letter-spacing: -0.03em; margin: 0 0 12px; }
+  .lede { color: var(--ink-60); max-width: 42rem; line-height: 1.55; margin-bottom: 48px; }
+  .grid { display: grid; gap: 28px; }
+  a.card {
+    display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 24px;
+    text-decoration: none; color: inherit; padding: 0; border: 0; background: transparent;
+    align-items: center;
+  }
+  a.card img { width: 100%; height: auto; display: block; background: #fff; }
+  a.card:active { transform: scale(0.99); }
+  .meta { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-60); margin-bottom: 10px; }
+  .title { font-family: var(--f-display); font-size: 28px; font-weight: 300; letter-spacing: -0.02em; margin: 0 0 10px; }
+  .desc { color: var(--ink-60); line-height: 1.5; margin: 0; font-size: 15px; }
+  hr { border: 0; border-top: 1px solid var(--rule); margin: 8px 0; }
+  @media (max-width: 800px) {
+    a.card { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+  <p class="meta">Draft examples · not live · pick one</p>
+  <h1>Product page directions</h1>
+  <p class="lede">Four redesign directions for the Emma Basic product detail page (sample: Premium Grade Matcha). Open each HTML prototype, or review the mockup boards. Nothing has been committed — tell me which letter to build for real.</p>
+
+  <div class="grid">
+    <a class="card" href="A-studio-bleed.html">
+      <img src="pdp-example-a-studio-bleed.png" alt="Direction A mockup"/>
+      <div>
+        <div class="meta">A · Studio bleed</div>
+        <h2 class="title">Brand-first full-bleed hero</h2>
+        <p class="desc">Product is an edge-to-edge visual plane. EMMA BASIC leads; one headline, one line, one CTA. Closest to a quiet Apple-style PDP with your existing grit.</p>
+      </div>
+    </a>
+    <hr/>
+    <a class="card" href="B-editorial-split.html">
+      <img src="pdp-example-b-editorial-split.png" alt="Direction B mockup"/>
+      <div>
+        <div class="meta">B · Editorial split</div>
+        <h2 class="title">Magazine asymmetry</h2>
+        <p class="desc">Type-led column + tall product column. Rules, lot meta, ingredients as a pull strip. Feels like a print catalog page.</p>
+      </div>
+    </a>
+    <hr/>
+    <a class="card" href="C-spec-lab.html">
+      <img src="pdp-example-c-spec-lab.png" alt="Direction C mockup"/>
+      <div>
+        <div class="meta">C · Spec lab · Product page</div>
+        <h2 class="title">In the jar / never in the jar</h2>
+        <p class="desc">Lab-sheet honesty. Pedestal product, mono specs, the additive-free argument as the page’s job. Maximum trust, minimum chrome.</p>
+      </div>
+    </a>
+    <hr/>
+    <a class="card" href="C-products-index.html">
+      <img src="products-page-c-spec-lab.png" alt="Products listing Spec lab mockup"/>
+      <div>
+        <div class="meta">C · Spec lab · Our Products</div>
+        <h2 class="title">Catalog as an index sheet</h2>
+        <p class="desc">Same system on the listing: white pedestals, mono SKUs, category numbers as the nav — no filter pill strip.</p>
+      </div>
+    </a>
+    <hr/>
+    <a class="card" href="D-pack-flip.html">
+      <img src="pdp-example-d-pack-flip.png" alt="Direction D mockup"/>
+      <div>
+        <div class="meta">D · Pack flip</div>
+        <h2 class="title">Scroll story: front → flip → buy</h2>
+        <p class="desc">Three sections, one purpose each. Hero promise, pack flip comparison, then buy. Motion-ready structure without clutter in the first viewport.</p>
+      </div>
+    </a>
+  </div>
+</body>
+</html>
