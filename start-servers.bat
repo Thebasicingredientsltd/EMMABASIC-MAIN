@@ -3,63 +3,85 @@ REM ============================================================
 REM  Emma Basic - one-click launcher
 REM  Starts the website (port 8080) and the CMS (port 5000),
 REM  then opens both in your browser. Just double-click this file.
-REM
-REM  Works from any PC — paths are relative to this repo folder.
 REM ============================================================
 setlocal
+cd /d "%~dp0"
 
-REM Repo root = folder containing this .bat
-set "ROOT=%~dp0"
-set "ROOT=%ROOT:~0,-1%"
-set "PROJECT=%ROOT%\Emma-Basic-The-Basic-Ingredients\project"
-set "CMS=%ROOT%\cms"
-
-if not exist "%PROJECT%" (
-  echo ERROR: Could not find the website folder:
-  echo   %PROJECT%
-  echo Make sure this file sits in the repo root ^(EMMABASIC-MAIN^).
+if not exist "%~dp0_start-website.bat" (
+  echo ERROR: _start-website.bat is missing from:
+  echo   %~dp0
+  echo Pull the latest branch / merge PR #3, then try again.
   pause
   exit /b 1
 )
-if not exist "%CMS%\app.py" (
-  echo ERROR: Could not find the CMS:
-  echo   %CMS%\app.py
-  echo Run setup-this-pc.bat first, or clone the full repo.
+if not exist "%~dp0Emma-Basic-The-Basic-Ingredients\project" (
+  echo ERROR: Website project folder not found.
+  echo Make sure you are in EMMABASIC-MAIN.
+  pause
+  exit /b 1
+)
+if not exist "%~dp0cms\app.py" (
+  echo ERROR: cms\app.py not found.
   pause
   exit /b 1
 )
 
-REM Find Python: PATH first, then common install locations
 set "PY="
-where python >nul 2>nul && for /f "delims=" %%I in ('where python') do if not defined PY set "PY=%%I"
-if not defined PY if exist "%LocalAppData%\Programs\Python\Python313\python.exe" set "PY=%LocalAppData%\Programs\Python\Python313\python.exe"
-if not defined PY if exist "%LocalAppData%\Programs\Python\Python312\python.exe" set "PY=%LocalAppData%\Programs\Python\Python312\python.exe"
-if not defined PY if exist "%LocalAppData%\Programs\Python\Python311\python.exe" set "PY=%LocalAppData%\Programs\Python\Python311\python.exe"
+call "%~dp0_find-python.bat"
 if not defined PY (
   echo ERROR: Python was not found on this PC.
-  echo Install Python 3 from https://www.python.org/downloads/
-  echo ^(tick "Add python.exe to PATH" during setup^), then run setup-this-pc.bat.
+  echo Run setup-this-pc.bat first, or install with:
+  echo   winget install -e --id Python.Python.3.13
+  echo Then close and reopen Command Prompt.
   pause
   exit /b 1
 )
+echo Using Python: %PY%
+"%PY%" --version
+echo.
 
-REM Free ports 8080 and 5000 first, in case old/stuck servers are still holding them
+REM Free ports 8080 and 5000 first
 echo Clearing any old servers on ports 8080 and 5000 ...
 powershell -NoProfile -Command "Get-NetTCPConnection -State Listen -LocalPort 8080,5000 -ErrorAction SilentlyContinue | Select-Object -ExpandProperty OwningProcess -Unique | ForEach-Object { Stop-Process -Id $_ -Force -ErrorAction SilentlyContinue }" >nul 2>nul
 timeout /t 1 >nul
 
-echo Starting Emma Basic website (http://localhost:8080) ...
-start "Emma Basic - Website (8080)" /D "%PROJECT%" cmd /k ""%PY%" -m http.server 8080"
+echo Starting website window...
+start "Emma Basic - Website (8080)" cmd /k call "%~dp0_start-website.bat"
 
-echo Starting Emma Basic CMS (http://localhost:5000) ...
-start "Emma Basic - CMS (5000)" /D "%CMS%" cmd /k ""%PY%" -m pip install --quiet --disable-pip-version-check -r requirements.txt && "%PY%" app.py"
+echo Starting CMS window...
+start "Emma Basic - CMS (5000)" cmd /k call "%~dp0_start-cms.bat"
 
-REM Give the servers a moment to boot, then open both in the browser
-timeout /t 3 >nul
+echo Waiting for servers to come up...
+set /a "TRIES=0"
+:waitloop
+set /a "TRIES+=1"
+powershell -NoProfile -Command "$ok=$true; foreach ($p in 8080,5000) { $c=Get-NetTCPConnection -State Listen -LocalPort $p -ErrorAction SilentlyContinue; if (-not $c) { $ok=$false } }; if ($ok) { exit 0 } else { exit 1 }" >nul 2>nul
+if not errorlevel 1 goto :ready
+if %TRIES% GEQ 30 goto :notready
+timeout /t 1 >nul
+goto :waitloop
+
+:ready
+echo Both ports are listening.
 start "" "http://localhost:8080/Emma%%20Basic%%20Homepage.html"
 start "" "http://localhost:5000"
-
 echo.
-echo Both servers are launching in their own windows.
+echo Look at the two black server windows if anything looks wrong.
 echo Close those windows (or press Ctrl+C in them) to stop the servers.
+goto :end
+
+:notready
+echo.
+echo WARNING: Ports 8080 and/or 5000 are still not listening.
+echo Look at the two black windows that opened — they show the error.
+echo Common fixes:
+echo   - Python not installed / not on PATH → run setup-this-pc.bat
+echo   - pip/Flask install failed → read the CMS window
+echo   - Wrong folder → must be inside EMMABASIC-MAIN
+echo.
+echo You can also double-click _start-website.bat and _start-cms.bat
+echo one at a time to see the full error text.
+pause
+
+:end
 endlocal
