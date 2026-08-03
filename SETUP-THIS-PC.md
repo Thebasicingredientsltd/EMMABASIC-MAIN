@@ -10,9 +10,15 @@ Open that folder in File Explorer for all steps below.
 
 ## One-time setup
 
-1. **Install Python 3** from [python.org/downloads](https://www.python.org/downloads/)  
-   Tick **Add python.exe to PATH** during install.  
-   (Skip if `python --version` already works in Command Prompt.)
+1. **Install Python 3** — open **Command Prompt** and run:
+
+   ```bat
+   winget install -e --id Python.Python.3.13
+   ```
+
+   Accept any prompts. Then **close and reopen** Command Prompt.  
+   Or double-click `setup-this-pc.bat` after pulling this branch — it will
+   install Python via winget if it is missing.
 
 2. **Git is already installed on this PC** — no action needed.
 

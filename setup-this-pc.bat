@@ -21,14 +21,32 @@ if not defined PY if exist "%LocalAppData%\Programs\Python\Python311\python.exe"
 
 if not defined PY (
   echo [ ] Python — NOT FOUND
+  where winget >nul 2>nul
+  if errorlevel 1 (
+    echo.
+    echo Install Python 3 from:
+    echo   https://www.python.org/downloads/
+    echo Important: tick "Add python.exe to PATH", then re-run this script.
+    echo.
+    start "" "https://www.python.org/downloads/"
+    pause
+    exit /b 1
+  )
+  echo Installing Python 3 with winget ^(this may take a few minutes^)...
+  echo Accept any Windows permission prompts if they appear.
+  winget install -e --id Python.Python.3.13 --accept-package-agreements --accept-source-agreements
+  if errorlevel 1 (
+    echo [ ] Python install failed. Try manually:
+    echo   winget install -e --id Python.Python.3.13
+    echo Or download from https://www.python.org/downloads/
+    pause
+    exit /b 1
+  )
   echo.
-  echo Install Python 3 from:
-  echo   https://www.python.org/downloads/
-  echo Important: tick "Add python.exe to PATH", then re-run this script.
-  echo.
-  start "" "https://www.python.org/downloads/"
+  echo Python was installed. Close this window, open a NEW Command Prompt,
+  echo go back to this folder, and run setup-this-pc.bat again so PATH updates.
   pause
-  exit /b 1
+  exit /b 0
 )
 echo [x] Python — OK  (%PY%)
 "%PY%" --version
