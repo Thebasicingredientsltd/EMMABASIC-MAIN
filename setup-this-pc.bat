@@ -52,9 +52,12 @@ git --version
 REM --- 3. Confirm we are inside the repo -----------------------------------
 if not exist "cms\app.py" (
   echo [ ] Repo — cms\app.py missing
-  echo This script must run from inside the EMMABASIC-MAIN folder.
+  echo This script must run from inside the EMMABASIC-MAIN folder, e.g.:
+  echo   C:\Cloud\OneDrive - The Basic Ingredients Ltd\Documents\GitHub\EMMABASIC-MAIN
+  echo.
   echo If you have not cloned it yet, open PowerShell and run:
   echo.
+  echo   cd "C:\Cloud\OneDrive - The Basic Ingredients Ltd\Documents\GitHub"
   echo   git clone https://github.com/Thebasicingredientsltd/EMMABASIC-MAIN.git
   echo   cd EMMABASIC-MAIN
   echo   setup-this-pc.bat
@@ -143,8 +146,11 @@ echo ========================================
 echo   Setup finished
 echo ========================================
 echo.
+echo Repo folder:
+echo   %CD%
+echo.
 echo To edit the website on this PC:
-echo   1. Double-click  start-servers.bat
+echo   1. Double-click  start-servers.bat  ^(in this folder^)
 echo   2. CMS opens at      http://localhost:5000
 echo   3. Preview site at   http://localhost:8080
 echo   4. When ready, use Publish to GitHub in the CMS dashboard
