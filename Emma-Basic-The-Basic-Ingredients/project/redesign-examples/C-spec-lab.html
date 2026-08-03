@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>C · Spec lab — Premium Grade Matcha</title>
+<link rel="stylesheet" href="../components/tokens.css"/>
+<style>
+  :root { --ease: cubic-bezier(0.23, 1, 0.32, 1); }
+  body { background: #fff; }
+  .page { max-width: 1080px; margin: 0 auto; padding: 64px var(--pad-x) 120px; }
+  .back { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; text-decoration: none; color: var(--ink-60); }
+  .hero { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 40px; align-items: center; }
+  .pedestal { background: var(--paper); aspect-ratio: 1; display: grid; place-items: center; overflow: hidden; }
+  .pedestal img { width: 78%; height: 78%; object-fit: contain; }
+  .specs { font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-60); line-height: 2; margin-bottom: 28px; }
+  h1 { font-family: var(--f-display); font-weight: 300; font-size: clamp(36px, 5vw, 56px); letter-spacing: -0.03em; line-height: 0.95; margin: 0 0 16px; }
+  .tag { color: var(--ink-60); margin: 0 0 32px; line-height: 1.5; max-width: 32ch; }
+  .cta {
+    display: inline-flex; background: var(--ink); color: #fff; text-decoration: none;
+    padding: 15px 26px; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;
+    transition: transform 160ms var(--ease);
+  }
+  .cta:active { transform: scale(0.97); }
+  .compare {
+    margin-top: 80px; display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    border-top: 2px solid var(--ink); border-bottom: 1px solid var(--rule);
+  }
+  .col { padding: 36px 28px 40px; }
+  .col + .col { border-left: 1px solid var(--rule); }
+  .col h2 { font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; margin: 0 0 20px; }
+  .col.never h2 { color: var(--ink-60); }
+  ul { list-style: none; padding: 0; margin: 0; }
+  li { font-family: var(--f-body); font-size: 16px; padding: 10px 0; border-bottom: 1px solid var(--rule); }
+  li:last-child { border-bottom: 0; }
+  .col.never li { color: var(--ink-60); text-decoration: line-through; text-decoration-thickness: 1px; }
+  @media (max-width: 800px) {
+    .hero, .compare { grid-template-columns: 1fr; }
+    .col + .col { border-left: 0; border-top: 1px solid var(--rule); }
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+    <a class="back" href="index.html">← Examples</a>
+    <div class="hero">
+      <div class="pedestal">
+        <img src="../assets/products-original-backup/matcha-homepage.jpg" alt="Premium Grade Matcha"/>
+      </div>
+      <div>
+        <div class="specs">
+          Lot HB-240418<br/>
+          Origin · Shaded 25 days · China<br/>
+          Category · Matcha
+        </div>
+        <h1>Premium Grade Matcha</h1>
+        <p class="tag">100% pure Tencha leaf. No additives. Batch tested.</p>
+        <a class="cta" href="https://www.amazon.co.uk/dp/B0G8MW2WB7">Buy on Amazon</a>
+      </div>
+    </div>
+
+    <div class="compare">
+      <div class="col">
+        <h2>In the jar</h2>
+        <ul>
+          <li>Tencha (green tea)</li>
+          <li>Shade-grown 25 days</li>
+          <li>Longjin 43 · Yabukita</li>
+        </ul>
+      </div>
+      <div class="col never">
+        <h2>Never in the jar</h2>
+        <ul>
+          <li>Additives</li>
+          <li>Fillers</li>
+          <li>Colourants</li>
+          <li>Sugar</li>
+          <li>Anti-caking agents</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
