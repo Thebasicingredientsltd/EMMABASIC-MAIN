@@ -31,7 +31,7 @@ if not defined PY (
   exit /b 1
 )
 echo [x] Python — OK  (%PY%)
-%PY% --version
+"%PY%" --version
 
 REM --- 2. Git --------------------------------------------------------------
 where git >nul 2>nul
@@ -72,7 +72,7 @@ echo [x] Repo folders — OK
 REM --- 4. CMS dependencies -------------------------------------------------
 echo.
 echo Installing CMS packages (Flask)...
-%PY% -m pip install --disable-pip-version-check -r cms\requirements.txt
+"%PY%" -m pip install --disable-pip-version-check -r cms\requirements.txt
 if errorlevel 1 (
   echo [ ] CMS packages — FAILED
   pause

@@ -14,11 +14,11 @@ if not defined PY (
 )
 
 echo Installing/updating dependencies...
-%PY% -m pip install --quiet --disable-pip-version-check -r requirements.txt
+"%PY%" -m pip install --quiet --disable-pip-version-check -r requirements.txt
 echo.
 echo Starting Emma Basic CMS at http://localhost:5000
 echo (Keep this window open. Press Ctrl+C to stop.)
 echo.
 start "" "http://localhost:5000"
-%PY% app.py
+"%PY%" app.py
 endlocal
