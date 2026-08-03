@@ -48,6 +48,14 @@ Edit in the CMS → refresh the site to preview → **Publish to GitHub** when r
 
 Tip: right-click `start-servers.bat` → **Send to → Desktop (create shortcut)**.
 
+### If the browser says “This site can’t be reached”
+
+1. Leave the two black **server windows** open — they show the real error.
+2. Or double-click **`check-servers.bat`** to see if ports 8080 / 5000 are listening.
+3. Or start them one at a time: **`_start-website.bat`**, then **`_start-cms.bat`**.
+4. Confirm Python works: `python --version` in a new Command Prompt.
+5. Re-run **`setup-this-pc.bat`**, then **`start-servers.bat`** again.
+
 ## Notes
 
 - Launchers use paths relative to this folder, including OneDrive paths with spaces.

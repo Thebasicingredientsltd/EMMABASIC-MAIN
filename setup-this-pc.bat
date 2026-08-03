@@ -14,10 +14,7 @@ echo.
 
 REM --- 1. Python -----------------------------------------------------------
 set "PY="
-where python >nul 2>nul && for /f "delims=" %%I in ('where python') do if not defined PY set "PY=%%I"
-if not defined PY if exist "%LocalAppData%\Programs\Python\Python313\python.exe" set "PY=%LocalAppData%\Programs\Python\Python313\python.exe"
-if not defined PY if exist "%LocalAppData%\Programs\Python\Python312\python.exe" set "PY=%LocalAppData%\Programs\Python\Python312\python.exe"
-if not defined PY if exist "%LocalAppData%\Programs\Python\Python311\python.exe" set "PY=%LocalAppData%\Programs\Python\Python311\python.exe"
+call "%~dp0_find-python.bat"
 
 if not defined PY (
   echo [ ] Python — NOT FOUND
