@@ -17,9 +17,17 @@ Emma-Basic-The-Basic-Ingredients/project/data/homepage.js   ← homepage
 The CMS edits those files for you through friendly forms. Uploaded images are saved
 into `Emma-Basic-The-Basic-Ingredients/project/assets/uploads/`.
 
+## New PC?
+
+On a computer that has never edited this site, follow **`SETUP-THIS-PC.md`**
+at the repo root (or double-click **`setup-this-pc.bat`** after cloning).
+
 ## Running it
 
-**Easiest:** double-click **`start-cms.bat`**. It installs the requirement (Flask),
+**Easiest (website + CMS together):** from the repo root, double-click
+**`start-servers.bat`**.
+
+**CMS only:** double-click **`start-cms.bat`**. It installs the requirement (Flask),
 opens your browser, and starts the CMS.
 
 **Manually:**
