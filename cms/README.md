@@ -20,7 +20,9 @@ into `Emma-Basic-The-Basic-Ingredients/project/assets/uploads/`.
 ## New PC?
 
 On a computer that has never edited this site, follow **`SETUP-THIS-PC.md`**
-at the repo root (or double-click **`setup-this-pc.bat`** after cloning).
+at the repo root (or double-click **`setup-this-pc.bat`** after opening the
+local clone, e.g.
+`C:\Cloud\OneDrive - The Basic Ingredients Ltd\Documents\GitHub\EMMABASIC-MAIN`).
 
 ## Running it
 
