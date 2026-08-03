@@ -11,10 +11,10 @@ Open that folder in File Explorer for all steps below.
 ## One-time setup
 
 1. **Install Python 3** from [python.org/downloads](https://www.python.org/downloads/)  
-   Tick **Add python.exe to PATH** during install.
+   Tick **Add python.exe to PATH** during install.  
+   (Skip if `python --version` already works in Command Prompt.)
 
-2. **Install Git** from [git-scm.com/download/win](https://git-scm.com/download/win)  
-   (Skip if GitHub Desktop / Git is already installed.)
+2. **Git is already installed on this PC** — no action needed.
 
 3. In the folder above, double-click **`setup-this-pc.bat`**.  
    It installs CMS packages and checks GitHub access.

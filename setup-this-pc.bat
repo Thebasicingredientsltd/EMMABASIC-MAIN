@@ -46,8 +46,12 @@ if errorlevel 1 (
   pause
   exit /b 1
 )
-echo [x] Git — OK
+echo [x] Git — OK ^(already installed^)
 git --version
+git -C "%~dp0." rev-parse --is-inside-work-tree >nul 2>nul
+if not errorlevel 1 (
+  for /f "delims=" %%B in ('git -C "%~dp0." branch --show-current 2^>nul') do echo     branch: %%B
+)
 
 REM --- 3. Confirm we are inside the repo -----------------------------------
 if not exist "cms\app.py" (
