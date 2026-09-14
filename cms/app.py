@@ -81,6 +81,15 @@ MAX_DIM = 2000
 JPEG_QUALITY = 82
 WEBP_QUALITY = 82
 
+# Portraits are often exported with a flat white margin baked into the frame.
+# The team cards crop to a square, so that margin would survive as bars along
+# the edges. These bounds decide when a margin is safe to strip: it has to be
+# near-white, present on all four edges, and no more than MAX_FRACTION deep.
+BORDER_TRIM_TOLERANCE = 12
+BORDER_TRIM_MIN_LIGHTNESS = 235
+BORDER_TRIM_MIN_FRACTION = 0.005
+BORDER_TRIM_MAX_FRACTION = 0.45
+
 HEADERS = {
     "products": "/* Emma Basic — product data (CMS-managed). The payload below is strict JSON. */",
     "journal": "/* Emma Basic — journal / blog data (CMS-managed). The payload below is strict JSON. */",
@@ -332,6 +341,62 @@ def _human_kb(num_bytes):
         else "%.1f MB" % (num_bytes / (1024.0 * 1024.0))
 
 
+def trim_uniform_border(img):
+    """Crop a flat near-white margin off all four edges of an image.
+
+    Requires every edge to carry the same margin so that a photograph which
+    merely opens onto a bright sky or wall is left untouched.
+    """
+    rgb = img.convert("RGB")
+    w, h = rgb.size
+    if w < 8 or h < 8:
+        return img
+
+    px = rgb.load()
+    corners = [px[0, 0], px[w - 1, 0], px[0, h - 1], px[w - 1, h - 1]]
+    if any(min(c) < BORDER_TRIM_MIN_LIGHTNESS for c in corners):
+        return img
+
+    ref = corners[0]
+
+    def matches(pixel):
+        return max(abs(a - b) for a, b in zip(pixel, ref)) <= BORDER_TRIM_TOLERANCE
+
+    if not all(matches(c) for c in corners[1:]):
+        return img
+
+    step_x = max(1, w // 256)
+    step_y = max(1, h // 256)
+    limit_x = int(w * BORDER_TRIM_MAX_FRACTION)
+    limit_y = int(h * BORDER_TRIM_MAX_FRACTION)
+
+    def row_is_margin(y):
+        return all(matches(px[x, y]) for x in range(0, w, step_x))
+
+    def col_is_margin(x):
+        return all(matches(px[x, y]) for y in range(0, h, step_y))
+
+    top = 0
+    while top < limit_y and row_is_margin(top):
+        top += 1
+    bottom = 0
+    while bottom < limit_y and row_is_margin(h - 1 - bottom):
+        bottom += 1
+    left = 0
+    while left < limit_x and col_is_margin(left):
+        left += 1
+    right = 0
+    while right < limit_x and col_is_margin(w - 1 - right):
+        right += 1
+
+    if min(top, bottom) < h * BORDER_TRIM_MIN_FRACTION:
+        return img
+    if min(left, right) < w * BORDER_TRIM_MIN_FRACTION:
+        return img
+
+    return img.crop((left, top, w - right, h - bottom))
+
+
 def optimize_image_bytes(raw, ext):
     """Resize/recompress image bytes to reduce file size.
 
@@ -349,6 +414,9 @@ def optimize_image_bytes(raw, ext):
 
     info["dims_before"] = "%d×%d" % img.size
     img = ImageOps.exif_transpose(img)  # honour phone orientation
+    size_before_trim = img.size
+    img = trim_uniform_border(img)
+    trimmed = img.size != size_before_trim
     resized = False
     if max(img.size) > MAX_DIM:
         img.thumbnail((MAX_DIM, MAX_DIM))
@@ -363,8 +431,8 @@ def optimize_image_bytes(raw, ext):
         elif ext == ".webp":
             img.save(out, format="WEBP", quality=WEBP_QUALITY, method=6)
         else:
-            # gif or other — only rewrite if we actually resized
-            if not resized:
+            # gif or other — only rewrite if we actually changed the pixels
+            if not resized and not trimmed:
                 return raw, info
             img.save(out)
         info["optimized"] = True
