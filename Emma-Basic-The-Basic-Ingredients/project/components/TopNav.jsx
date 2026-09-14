@@ -34,6 +34,7 @@ function TopNav({ hasHero = false }) {
   const rightLinks = [
     { label: "Field Notes", href: "Journal.html" },
     { label: "People",      href: "People%20%26%20Places.html" },
+    { label: "Become a Distributor", href: "Become%20a%20Distributor.html" },
   ];
 
   const allLinks = [...leftLinks, ...rightLinks];
