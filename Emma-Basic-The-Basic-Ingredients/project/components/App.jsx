@@ -57,7 +57,6 @@ function App() {
         <Hero />
         <ProductRail onOpen={setOpenId} />
         <AdditiveFreeBanner />
-        <FounderNarrative />
         <ShelfTest />
         <LifestyleGrid />
       </main>
