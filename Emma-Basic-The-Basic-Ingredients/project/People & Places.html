@@ -27,7 +27,7 @@
 <script type="text/babel" src="components/motion.jsx"></script>
 <script type="text/babel" src="components/TopNav.jsx?v=16"></script>
 <script type="text/babel" src="components/PageHero.jsx"></script>
-<script type="text/babel" src="components/FounderNarrative.jsx?v=4"></script>
+<script type="text/babel" src="components/FounderNarrative.jsx?v=5"></script>
 <script type="text/babel" src="components/TeamGrid.jsx?v=26"></script>
 <script type="text/babel" src="components/Sections.jsx"></script>
 
@@ -283,7 +283,11 @@ function PeopleApp() {
           titleItalic={hero.titleItalic || "by design."}
           subtitle={hero.subtitle || "Carefully sourced, carefully run — twelve of us behind every decision."}
         />
-        <FounderNarrative hideReadMore imageBesideText />
+        <FounderNarrative
+          hideReadMore
+          imageBesideText
+          image="assets/homepage/founder-mum-daughter.jpg"
+        />
         <div id="team"><TeamGrid /></div>
         <TBIIntroSection />
         <TBIServicesSection />

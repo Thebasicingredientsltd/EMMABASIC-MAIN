@@ -43,7 +43,8 @@ function useScrollBell(ref) {
   return t;
 }
 
-function FounderNarrative({ hideReadMore = false, imageBesideText = false }) {
+function FounderNarrative({ hideReadMore = false, imageBesideText = false, image }) {
+  const photo = image || FOUNDER_IMAGE;
   const sectionRef = React.useRef(null);
   const t = useScrollBell(sectionRef);
   const [revealRef, visible] = useReveal(0);
@@ -102,15 +103,13 @@ function FounderNarrative({ hideReadMore = false, imageBesideText = false }) {
           alignItems: "start",
         }}>
           <Reveal>
+            {/* Natural ratio, not a fixed crop — this slot holds a portrait,
+                so a forced aspect would cut faces off. */}
             <div style={{ overflow: "hidden", background: "var(--paper-bright)" }}>
               <img
-                src={FOUNDER_IMAGE}
+                src={photo}
                 alt="Emma Basic — founder"
-                style={{
-                  display: "block", width: "100%",
-                  aspectRatio: "3/2", objectFit: "cover",
-                  objectPosition: "center",
-                }}
+                style={{ display: "block", width: "100%", height: "auto" }}
               />
             </div>
           </Reveal>
@@ -177,7 +176,7 @@ function FounderNarrative({ hideReadMore = false, imageBesideText = false }) {
               willChange: "transform",
             }}>
               <img
-                src={FOUNDER_IMAGE}
+                src={photo}
                 alt="Emma Basic — founder"
                 style={{
                   display: "block",
