@@ -16,9 +16,6 @@ function JournalIndex() {
     ? JOURNAL_POSTS
     : JOURNAL_POSTS.filter(p => p.category === active);
 
-  const featured = filtered.find(p => p.featured) || filtered[0];
-  const rest = filtered.filter(p => p !== featured);
-
   return (
     <section style={{ background: "var(--paper)" }}>
 
@@ -67,26 +64,14 @@ function JournalIndex() {
 
       <div style={{ maxWidth: "var(--maxw)", margin: "0 auto", padding: "clamp(72px, 10vh, 120px) var(--pad-x) clamp(96px, 14vh, 160px)" }}>
 
-        {/* Featured post */}
-        {featured && (
-          <Reveal>
-            <a href={`journal-post.html?id=${featured.id}`} style={{ textDecoration: "none", color: "inherit", display: "block" }}>
-              <FeaturedCard post={featured} />
-            </a>
-          </Reveal>
-        )}
-
         {/* Post grid */}
-        {rest.length > 0 && (
+        {filtered.length > 0 && (
           <div className="eb-journal-grid" style={{
             display: "grid",
             gridTemplateColumns: "repeat(3, 1fr)",
             gap: "clamp(48px, 6vh, 80px) clamp(24px, 3vw, 48px)",
-            marginTop: "clamp(64px, 10vh, 120px)",
-            paddingTop: "clamp(64px, 10vh, 120px)",
-            borderTop: "1px solid var(--rule)",
           }}>
-            {rest.map((post, i) => (
+            {filtered.map((post, i) => (
               <Reveal key={post.id} delay={i * 60}>
                 <a href={`journal-post.html?id=${post.id}`} style={{ textDecoration: "none", color: "inherit", display: "block" }}>
                   <PostCard post={post} />
@@ -107,77 +92,6 @@ function JournalIndex() {
         )}
       </div>
     </section>
-  );
-}
-
-/* ── Featured Card ───────────────────────────────────────── */
-function FeaturedCard({ post }) {
-  const [hover, setHover] = React.useState(false);
-  return (
-    <div
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-      className="eb-journal-featured"
-      style={{
-        display: "grid",
-        gridTemplateColumns: "1fr 1fr",
-        gap: "clamp(48px, 8vw, 120px)",
-        alignItems: "center",
-      }}
-    >
-      {/* Image */}
-      <div style={{
-        aspectRatio: "4/3",
-        background: post.tone === "ink" ? "var(--ink)" : "var(--paper-shade)",
-        overflow: "hidden",
-        position: "relative",
-      }}>
-        {post.image
-          ? <img src={post.image} alt={post.title} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", display: "block", transform: hover ? "scale(1.04)" : "scale(1)", transition: "transform 700ms var(--ease-out)" }} />
-          : <Placeholder label={post.title.toUpperCase()} tone={post.tone} />
-        }
-      </div>
-
-      {/* Text */}
-      <div style={{ display: "grid", gap: 24 }}>
-        <div style={{
-          fontFamily: "var(--f-body)", fontSize: 10.5, letterSpacing: "0.22em",
-          textTransform: "uppercase", color: "var(--ink-60)",
-        }}>
-          Featured · {post.date}
-        </div>
-        <h2 style={{
-          fontFamily: "var(--f-display)", fontWeight: 400,
-          fontSize: "clamp(28px, 3.2vw, 48px)",
-          letterSpacing: "-0.02em", lineHeight: 1.1, margin: 0,
-          backgroundImage: "linear-gradient(var(--ink), var(--ink))",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: hover ? "100% 1px" : "0% 1px",
-          backgroundPosition: "0 100%",
-          paddingBottom: 2,
-          transition: "background-size 400ms var(--ease-out)",
-        }}>
-          {post.title}
-        </h2>
-        <p style={{
-          fontFamily: "var(--f-display)", fontStyle: "italic",
-          fontSize: "clamp(16px, 1.4vw, 19px)", lineHeight: 1.6,
-          color: "var(--ink-90)", margin: 0, maxWidth: 480,
-        }}>
-          {post.excerpt}
-        </p>
-        <span style={{
-          fontFamily: "var(--f-body)", fontSize: 11, letterSpacing: "0.22em",
-          textTransform: "uppercase", color: "var(--ink)",
-          borderBottom: "1px solid var(--ink)", paddingBottom: 2,
-          display: "inline-block", width: "fit-content",
-          opacity: hover ? 1 : 0.6,
-          transition: "opacity 200ms var(--ease-out)",
-        }}>
-          Read →
-        </span>
-      </div>
-    </div>
   );
 }
 
@@ -240,7 +154,6 @@ function PostCard({ post }) {
 const _journalStyle = document.createElement("style");
 _journalStyle.textContent = `
   @media (max-width: 768px) {
-    .eb-journal-featured { grid-template-columns: 1fr !important; gap: clamp(24px, 4vw, 48px) !important; }
     .eb-journal-grid { grid-template-columns: repeat(2, 1fr) !important; }
   }
   @media (max-width: 480px) {
