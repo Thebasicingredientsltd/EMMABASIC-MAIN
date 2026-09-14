@@ -83,12 +83,15 @@ WEBP_QUALITY = 82
 
 # Portraits are often exported with a flat white margin baked into the frame.
 # The team cards crop to a square, so that margin would survive as bars along
-# the edges. These bounds decide when a margin is safe to strip: it has to be
-# near-white, present on all four edges, and no more than MAX_FRACTION deep.
+# the edges. These bounds decide when a margin is deliberate padding rather
+# than part of the photograph: it has to be near-white, and it has to arrive
+# as an evenly matched pair of opposite edges, no deeper than MAX_FRACTION.
 BORDER_TRIM_TOLERANCE = 12
 BORDER_TRIM_MIN_LIGHTNESS = 235
 BORDER_TRIM_MIN_FRACTION = 0.005
 BORDER_TRIM_MAX_FRACTION = 0.45
+BORDER_TRIM_SYMMETRY = 0.25
+BORDER_TRIM_EDGE_CONTENT = 0.15
 
 HEADERS = {
     "products": "/* Emma Basic — product data (CMS-managed). The payload below is strict JSON. */",
@@ -389,10 +392,47 @@ def trim_uniform_border(img):
     while right < limit_x and col_is_margin(w - 1 - right):
         right += 1
 
-    if min(top, bottom) < h * BORDER_TRIM_MIN_FRACTION:
+    def line_has_content(samples):
+        off = sum(1 for p in samples if not matches(p))
+        return off >= max(1, int(len(samples) * BORDER_TRIM_EDGE_CONTENT))
+
+    def row_has_content(y):
+        return line_has_content([px[x, y] for x in range(0, w, step_x)])
+
+    def col_has_content(x):
+        return line_has_content([px[x, y] for y in range(0, h, step_y)])
+
+    def is_padding(near, far, extent):
+        if min(near, far) < extent * BORDER_TRIM_MIN_FRACTION:
+            return False
+        # Padding is applied evenly; an organic bright edge is not.
+        return abs(near - far) <= max(2, BORDER_TRIM_SYMMETRY * max(near, far))
+
+    # Deliberate padding arrives as a matched pair of opposite margins:
+    # letterboxed (top and bottom), pillarboxed (left and right), or a full
+    # frame. A single bright edge belongs to the photograph, so keep it.
+    #
+    # Padding also butts straight onto the photo, so the first line inside it
+    # carries real content. A portrait shot on a white studio backdrop fades
+    # in instead, leaving that line still almost blank — trimming there would
+    # eat the backdrop and crop into the subject, so both boundaries have to
+    # look like a hard edge before anything is removed.
+    vertical = (
+        is_padding(top, bottom, h)
+        and row_has_content(top)
+        and row_has_content(h - 1 - bottom)
+    )
+    horizontal = (
+        is_padding(left, right, w)
+        and col_has_content(left)
+        and col_has_content(w - 1 - right)
+    )
+    if not vertical and not horizontal:
         return img
-    if min(left, right) < w * BORDER_TRIM_MIN_FRACTION:
-        return img
+    if not vertical:
+        top = bottom = 0
+    if not horizontal:
+        left = right = 0
 
     return img.crop((left, top, w - right, h - bottom))
 
