@@ -16,8 +16,8 @@ window.EB_PEOPLE = {
         "role": "Founder",
         "bio": "Read the ingredients on the food label.\n\nDon't let the legal but harmful additives hurt you and your loved ones. Cook fresh ingredients in your kitchen are, of course, the finest. Processed foods are not all evil. Many responsible manufacturers are sharing the same belief as we do, in pursuit of removing additives.\n\nRemove additives, my quest, and my purpose.",
         "tone": "warm",
-        "image": "assets/Employees-page/emma 1.jpg",
-        "image2": "assets/Employees-page/emma 2.jpg",
+        "image": "assets/uploads/Emma_Main-20260914-174433.jpg",
+        "image2": "assets/uploads/Emma_Personal-20260914-174436.jpg",
         "phone": "+44 7894 512430",
         "email": "Emma@thebasicingredients.com"
       },
@@ -26,7 +26,7 @@ window.EB_PEOPLE = {
         "role": "Technical Account Manager",
         "bio": "",
         "tone": "cool",
-        "image": "assets/Employees-page/yoko.png",
+        "image": "assets/uploads/yoko_Work-20260914-174441.jpg",
         "image2": "",
         "phone": ""
       },
@@ -35,8 +35,8 @@ window.EB_PEOPLE = {
         "role": "Quality Manager",
         "bio": "Cutting additives and UPFs while boosting fiber to 30g daily has transformed my gut health — I feel younger than ever!",
         "tone": "cool",
-        "image": "assets/Employees-page/itsuro 1.jpg",
-        "image2": "",
+        "image": "assets/uploads/Itsuro_Work-20260914-174448.jpg",
+        "image2": "assets/uploads/Itsuro_Personal-20260914-174452.jpg",
         "phone": ""
       },
       {
@@ -44,8 +44,8 @@ window.EB_PEOPLE = {
         "role": "Wholesale Manager",
         "bio": "I love travelling and enjoy delicious food & wine. I'm always looking for safe, nutritious, and yummy food.\n\nUPF, ultra processed food, it harms your health. It gives your brain instant reward, making you addicted. How to identify these UPFs and keep away from it?\n\nAdditives are the signpost of UPFs. Such as emulsifiers in ice cream or MSG in curry blocks. In the EU, more than 2,000 additives are legally permitted to use. Yes, over 2000, a large number! It's even difficult for a professional working in the food industry with a lifetime of experience to identify so many.\n\nEmma Basic, promises NEVER ANY ADDITIVES. We've removed the additives and harmful ingredients (such as refined oils, maltodextrins, high fructose corn syrup) for you so you don't have to spend 10,000 hours to study it.",
         "tone": "warm",
-        "image": "assets/Employees-page/ran 1.jpg",
-        "image2": "assets/Employees-page/rann 2.jpg",
+        "image": "assets/uploads/Ran_Work-20260914-174455.jpg",
+        "image2": "assets/uploads/Ran_Personal-20260914-174459.jpg",
         "phone": "+44 7305 075030",
         "email": "Ran@thebasicingredients.com"
       },
@@ -54,8 +54,8 @@ window.EB_PEOPLE = {
         "role": "Technical Manager",
         "bio": "Are you looking for food products with no artificial ingredients for your business?\n\nMy team specialises in clean-label foods, recognised by the Food and Drink Federation in Emerging Business 2021 Awards.\n\nWe can source wholesome food ingredients for you, providing the technical expertise, taking the stress of global shipping off your shoulders.\n\nThe catalogue at the bottom of the website details our B2B products. I will be delighted to receive your call.",
         "tone": "cool",
-        "image": "assets/Employees-page/Nancy 1.jpg",
-        "image2": "assets/Employees-page/nancy 2.jpg",
+        "image": "assets/uploads/Nancy_Work-20260914-174507.jpg",
+        "image2": "assets/uploads/Nancy_Personal-20260914-174509.jpg",
         "phone": "+44 7521 279887",
         "email": "nancy@thebasicingredients.com"
       },
@@ -64,8 +64,8 @@ window.EB_PEOPLE = {
         "role": "Head of Technology & E-Commerce",
         "bio": "Working in a clean-label food company is NOT easy!\n\nDiet Coke and Schweppes had been my favourites for many years. Now I've learned artificial sweeteners E951 in Diet Coke and E955 in tonic water could dampen the immune response. Although I've made my decision to quit both, being blood type B-, I am forgetful. Whenever I accidentally buy a bottle of the above, I get a shout from one of the extremists in the team! Guess which one.",
         "tone": "cool",
-        "image": "assets/Employees-page/James 1.jpg",
-        "image2": "assets/Employees-page/james 2.jpg",
+        "image": "assets/uploads/James_Work-20260914-174513.jpg",
+        "image2": "assets/uploads/James_Personal-20260914-174517.jpg",
         "phone": "+44 07933 334055",
         "email": "james@thebasicingredients.com"
       },
@@ -74,18 +74,18 @@ window.EB_PEOPLE = {
         "role": "Inventory Buyer",
         "bio": "Human beings are drowning in plastic pollution.\n\nBirds and fish are dying because of plastic.\n\nAs a buyer, I DO NOT like to see plastic. Inspire me with your creative and sustainable packages.\n\nIf you have a sustainable product that matches our values, I would love to hear from you.",
         "tone": "warm",
-        "image": "assets/Employees-page/ling 1.jpg",
-        "image2": "assets/Employees-page/ling 2.jpg",
+        "image": "assets/uploads/Ling_Work-20260914-174521.jpg",
+        "image2": "assets/uploads/Ling_Personal-20260914-174523.jpg",
         "phone": "+44 7526 938210",
         "email": "ling@thebasicingredients.com"
       },
       {
-        "name": "Olivia",
-        "role": "Designer",
+        "name": "laurie",
+        "role": "Sales Executive",
         "bio": "Growing up in a farming family made food quality second nature — from eating out of the garden to moving to London.",
         "tone": "warm",
-        "image": "assets/Employees-page/olivia.jpg",
-        "image2": "",
+        "image": "assets/uploads/Laurie_Work-20260914-174529.jpg",
+        "image2": "assets/uploads/Laurie_Personal-20260914-174531.jpg",
         "phone": "",
         "imagePosition": "center 12%"
       },
@@ -94,8 +94,8 @@ window.EB_PEOPLE = {
         "role": "Sales & Operations Executive",
         "bio": "I love being outside — golfing, playing football, or heading out for a hike whenever I can. Clean, simple ingredients matter to me, which is why Emma Basic fits so naturally into my routine.",
         "tone": "cool",
-        "image": "assets/Employees-page/taiki.jpg",
-        "image2": "",
+        "image": "assets/uploads/Taiki_Work-20260914-174603.jpg",
+        "image2": "assets/uploads/Taiki_Personal-20260914-174606.jpg",
         "phone": "",
         "imagePosition": "40% center",
         "imageZoom": 2.4
@@ -107,6 +107,15 @@ window.EB_PEOPLE = {
         "tone": "warm",
         "image": "assets/Employees-page/cotton 1.jpg",
         "image2": "assets/Employees-page/cotton 2.jpg",
+        "phone": ""
+      },
+      {
+        "name": "Alex",
+        "role": "Finance Manager",
+        "bio": "",
+        "tone": "warm",
+        "image": "assets/uploads/Alex_Work-20260914-174616.jpg",
+        "image2": "assets/uploads/Alex_Personal-20260914-174619.jpg",
         "phone": ""
       }
     ]
