@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Become a Distributor &mdash; Emma Basic</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+
+<link rel="stylesheet" href="components/tokens.css"/>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+
+<body data-screen-label="Become a Distributor">
+<div id="root"></div>
+
+<!-- CMS-managed content -->
+<script src="data/homepage.js?v=20260731193830215"></script>
+<script src="data/people.js?v=20260731193830215"></script>
+
+<script type="text/babel" src="components/Placeholder.jsx"></script>
+<script type="text/babel" src="components/motion.jsx"></script>
+<script type="text/babel" src="components/TopNav.jsx?v=16"></script>
+<script type="text/babel" src="components/PageHero.jsx"></script>
+<script type="text/babel" src="components/OrderSection.jsx"></script>
+<script type="text/babel" src="components/Sections.jsx"></script>
+
+<script type="text/babel">
+
+const EB_PEOPLE = window.EB_PEOPLE || {};
+
+function DistributorContact() {
+  const d = EB_PEOPLE.contact || {};
+  const headingLine1 = d.headingLine1 || "Discuss your";
+  const headingLine2 = d.headingLine2 || "needs with us.";
+  const body = d.body || "We provide advice on food safety, legality, authenticity and quality. If you are a food & drink brand looking for export opportunities, you can rely on us at all stages — from labelling assessment to customs clearance.";
+  const regionLabel = d.regionLabel || "United Kingdom";
+  const addressLine1 = d.addressLine1 || "Unit 4, New Concordia Wharf";
+  const addressLine2 = d.addressLine2 || "London, SE1 2BB";
+  const email = d.email || "boris@thebasicingredients.com";
+  const note = d.note || "For trade enquiries, export opportunities, and OEM partnerships.";
+  return (
+    <section id="contact" style={{ background: "var(--ink)", color: "var(--paper)", padding: "clamp(80px, 12vw, 160px) var(--pad-x)" }}>
+      <div style={{ maxWidth: "var(--maxw)", margin: "0 auto" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "clamp(48px, 8vw, 120px)", alignItems: "start" }} className="tbi-contact-grid">
+          <div>
+            <Reveal delay={60}>
+              <h2 style={{ fontFamily: "var(--f-display)", fontWeight: 400, fontSize: "clamp(40px, 5vw, 80px)", lineHeight: 1.0, letterSpacing: "-0.035em", margin: "0 0 clamp(24px, 3vh, 36px)", fontVariationSettings: '"opsz" 144, "SOFT" 30', color: "var(--paper)" }}>
+                {headingLine1}<br/>
+                <em style={{ fontStyle: "normal", fontFamily: "var(--f-body)", fontWeight: 400, letterSpacing: "-0.02em" }}>{headingLine2}</em>
+              </h2>
+            </Reveal>
+            <Reveal delay={100}>
+              <p style={{ fontFamily: "var(--f-body)", fontSize: "clamp(17px, 1.3vw, 19px)", lineHeight: 1.72, color: "rgba(246,246,246,0.78)", margin: "0 0 clamp(40px, 6vh, 64px)" }}>
+                {body}
+              </p>
+            </Reveal>
+            <Reveal delay={120}>
+              <div>
+                <div style={{ fontFamily: "var(--f-mono)", fontSize: 9.5, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(246,246,246,0.4)", marginBottom: 14 }}>{regionLabel}</div>
+                <address style={{ fontStyle: "normal", fontFamily: "var(--f-display)", fontSize: "clamp(14px, 1.1vw, 16px)", lineHeight: 1.75, color: "rgba(246,246,246,0.78)", fontVariationSettings: '"opsz" 16, "SOFT" 20' }}>
+                  {addressLine1}<br/>{addressLine2}
+                </address>
+              </div>
+            </Reveal>
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: "clamp(28px, 4vh, 40px)" }}>
+            <Reveal delay={140}>
+              <div>
+                <div style={{ fontFamily: "var(--f-mono)", fontSize: 9.5, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(246,246,246,0.4)", marginBottom: 16 }}>Email</div>
+                <a href={"mailto:" + email} style={{ display: "inline-block", fontFamily: "var(--f-mono)", fontSize: "clamp(12px, 1vw, 14px)", letterSpacing: "0.08em", color: "var(--paper)", textDecoration: "none", border: "1px solid rgba(246,246,246,0.35)", padding: "14px 24px", transition: "border-color 200ms var(--ease-out), background 200ms var(--ease-out)" }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(246,246,246,0.7)"; e.currentTarget.style.background = "rgba(246,246,246,0.06)"; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(246,246,246,0.35)"; e.currentTarget.style.background = "transparent"; }}>
+                  {email}
+                </a>
+              </div>
+            </Reveal>
+            <Reveal delay={200}>
+              <p style={{ fontFamily: "var(--f-body)", fontSize: "clamp(13px, 1vw, 14px)", lineHeight: 1.6, margin: 0, color: "rgba(246,246,246,0.4)" }}>
+                {note}
+              </p>
+            </Reveal>
+          </div>
+        </div>
+      </div>
+      <style>{`@media (max-width: 768px) { .tbi-contact-grid { grid-template-columns: 1fr !important; } }`}</style>
+    </section>
+  );
+}
+
+function DistributorApp() {
+  return (
+    <>
+      <TopNav hasHero={false} />
+      <main>
+        <PageHero
+          eyebrow="For trade customers"
+          title="Become a"
+          titleItalic="distributor."
+          subtitle="Stock Emma Basic — the additive-free range trusted across UK retail. Here's how to open a trade account and start ordering."
+        />
+        <OrderSection />
+        <DistributorContact />
+      </main>
+      <SiteFooter />
+    </>
+  );
+}
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<DistributorApp />);
+</script>
+
+</body>
+</html>
