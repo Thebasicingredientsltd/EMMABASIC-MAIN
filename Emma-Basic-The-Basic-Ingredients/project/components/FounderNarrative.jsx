@@ -96,10 +96,10 @@ function FounderNarrative({ hideReadMore = false, imageBesideText = false, image
         background: "var(--paper)",
       }}>
         <div className="eb-founder-beside" style={{
-          maxWidth: 1131, margin: "0 auto",
+          maxWidth: "var(--maxw)", margin: "0 auto",
           display: "grid",
-          gridTemplateColumns: "minmax(0, 0.85fr) minmax(0, 1fr)",
-          gap: "clamp(28px, 4vw, 64px)",
+          gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)",
+          gap: "clamp(48px, 8vw, 120px)",
           alignItems: "start",
         }}>
           <Reveal>
