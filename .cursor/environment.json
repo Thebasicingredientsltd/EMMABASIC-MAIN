@@ -1,0 +1,15 @@
+{
+  "name": "Emma Basic",
+  "install": "sudo apt-get update -qq && sudo apt-get install -y -qq python3-venv && python3 -m venv .venv && .venv/bin/pip install --upgrade pip && .venv/bin/pip install -r cms/requirements.txt",
+  "terminals": [
+    {
+      "name": "website (8080)",
+      "command": "cd Emma-Basic-The-Basic-Ingredients/project && python3 -m http.server 8080"
+    },
+    {
+      "name": "cms (5000)",
+      "command": "cd cms && ../.venv/bin/python app.py"
+    }
+  ],
+  "ports": [8080, 5000]
+}
