@@ -1,0 +1,7 @@
+# Python virtual environment (created by the CMS install step)
+.venv/
+__pycache__/
+*.pyc
+
+# Local CMS environment file
+cms/.env
