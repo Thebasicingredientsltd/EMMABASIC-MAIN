@@ -20,8 +20,8 @@
 <div id="root"></div>
 
 <!-- CMS-managed content -->
-<script src="data/homepage.js?v=20260731193830215"></script>
-<script src="data/people.js?v=20260731193830215"></script>
+<script src="data/homepage.js?v=20260914174643898"></script>
+<script src="data/people.js?v=20260914174643898"></script>
 
 <script type="text/babel" src="components/Placeholder.jsx"></script>
 <script type="text/babel" src="components/motion.jsx"></script>
@@ -33,7 +33,7 @@
 
 <script type="text/babel">
 
-// CMS-managed content (data/people.js?v=20260731193830215 Each section falls back to its
+// CMS-managed content (data/people.js?v=20260914174643898 Each section falls back to its
 // built-in copy so the page still renders if the data file is missing.
 const EB_PEOPLE = window.EB_PEOPLE || {};
 
@@ -360,7 +360,7 @@ function PeopleApp() {
           subtitle={hero.subtitle || "Carefully sourced, carefully run — twelve of us behind every decision."}
         />
         <PeopleSubNav />
-        <FounderNarrative hideReadMore />
+        <FounderNarrative hideReadMore layout="side" image="assets/homepage/founder-family.jpg" />
         <div id="team"><TeamGrid /></div>
         <TBIIntroSection />
         <TBIServicesSection />

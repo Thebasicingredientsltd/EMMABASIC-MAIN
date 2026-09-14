@@ -43,12 +43,14 @@ function useScrollBell(ref) {
   return t;
 }
 
-function FounderNarrative({ hideReadMore = false }) {
+function FounderNarrative({ hideReadMore = false, layout = "full", image }) {
   const sectionRef = React.useRef(null);
   const t = useScrollBell(sectionRef);
   const [revealRef, visible] = useReveal(0);
   const [textRevealRef, textVisible] = useReveal(0.05);
   const [expanded, setExpanded] = React.useState(false);
+
+  const imageSrc = image || FOUNDER_IMAGE;
 
   // t goes 0→1→0 as section scrolls through viewport
   // container padding shrinks to near-zero at peak (full bleed)
@@ -61,6 +63,54 @@ function FounderNarrative({ hideReadMore = false }) {
   const visibleParas = hideReadMore || expanded
     ? FOUNDER_PARAGRAPHS
     : FOUNDER_PARAGRAPHS.slice(0, PREVIEW_COUNT);
+
+  // Compact layout: a smaller image sitting beside the prose (used on the
+  // People page). The default "full" layout keeps the full-bleed scroll-zoom.
+  if (layout === "side") {
+    return (
+      <section style={{ padding: "clamp(40px, 6vh, 96px) var(--pad-x)", background: "var(--paper)" }}>
+        <div className="eb-founder-side" style={{
+          maxWidth: "var(--maxw)", margin: "0 auto",
+          display: "grid", gridTemplateColumns: "minmax(0, 0.82fr) 1.18fr",
+          gap: "clamp(32px, 5vw, 72px)", alignItems: "start",
+        }}>
+          <Reveal>
+            <div style={{ overflow: "hidden", aspectRatio: "1 / 1", background: "var(--paper-shade)" }}>
+              <img
+                src={imageSrc}
+                alt="Emma Basic — founder"
+                style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", display: "block" }}
+              />
+            </div>
+          </Reveal>
+          <div>
+            <Reveal>
+              <p style={{
+                fontFamily: "var(--f-body)", fontWeight: 400,
+                fontSize: "clamp(20px, 1.9vw, 28px)",
+                lineHeight: 1.3, letterSpacing: "-0.01em",
+                color: "var(--ink)", margin: "0 0 clamp(24px, 3.5vh, 36px)",
+              }}>
+                {FOUNDER_INTRO}
+              </p>
+            </Reveal>
+            <div style={{
+              fontFamily: "var(--f-body)", fontSize: "clamp(16px, 1.15vw, 18px)",
+              lineHeight: 1.72, color: "var(--ink-90)",
+              display: "grid", gap: "1.3em",
+            }}>
+              {visibleParas.map((text, i) => (
+                <Reveal key={i} delay={i * 80}>
+                  <p style={{ margin: 0 }} dangerouslySetInnerHTML={{ __html: text }} />
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </div>
+        <style>{`@media (max-width: 768px) { .eb-founder-side { grid-template-columns: 1fr !important; gap: clamp(24px, 5vw, 40px) !important; } }`}</style>
+      </section>
+    );
+  }
 
   return (
     <>
@@ -90,7 +140,7 @@ function FounderNarrative({ hideReadMore = false }) {
               willChange: "transform",
             }}>
               <img
-                src={FOUNDER_IMAGE}
+                src={imageSrc}
                 alt="Emma Basic — founder"
                 style={{
                   display: "block",
