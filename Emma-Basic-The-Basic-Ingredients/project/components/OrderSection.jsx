@@ -6,6 +6,7 @@
 function OrderSection() {
   const [open, setOpen] = React.useState(null);
   const d = (typeof window !== "undefined" && window.EB_PEOPLE && window.EB_PEOPLE.trade) || {};
+  if (d.visible === false) return null;
   const eyebrow = d.eyebrow || "For trade customers";
   const heading = d.heading || "How to order.";
   const intro = d.intro || "All orders are subject to account approval. Get in touch to open a trade account and start ordering.";

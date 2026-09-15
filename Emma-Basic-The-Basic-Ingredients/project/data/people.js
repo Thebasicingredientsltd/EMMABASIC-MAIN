@@ -130,6 +130,7 @@ window.EB_PEOPLE = {
     ]
   },
   "services": {
+    "visible": false,
     "eyebrow": "What we offer",
     "heading": "Export, import, and OEM.",
     "cards": [
