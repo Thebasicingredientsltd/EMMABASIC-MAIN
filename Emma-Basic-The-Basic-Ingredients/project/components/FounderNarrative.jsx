@@ -43,7 +43,8 @@ function useScrollBell(ref) {
   return t;
 }
 
-function FounderNarrative({ hideReadMore = false }) {
+function FounderNarrative({ hideReadMore = false, imageBesideText = false, image }) {
+  const photo = image || FOUNDER_IMAGE;
   const sectionRef = React.useRef(null);
   const t = useScrollBell(sectionRef);
   const [revealRef, visible] = useReveal(0);
@@ -61,6 +62,91 @@ function FounderNarrative({ hideReadMore = false }) {
   const visibleParas = hideReadMore || expanded
     ? FOUNDER_PARAGRAPHS
     : FOUNDER_PARAGRAPHS.slice(0, PREVIEW_COUNT);
+
+  const readMoreLink = (
+    <Reveal delay={120}>
+      <div style={{ marginTop: "clamp(32px, 5vh, 52px)", display: "flex", justifyContent: "flex-end" }}>
+        <a
+          href="Our Story.html"
+          style={{
+            display: "inline-flex", alignItems: "center", gap: 10,
+            fontFamily: "var(--f-body)", fontSize: 12.5, letterSpacing: "0.14em",
+            textTransform: "uppercase", textDecoration: "none",
+            border: "1px solid var(--ink)",
+            padding: "14px 22px",
+            color: "var(--ink)", background: "transparent",
+            transition: "background 180ms var(--ease-out), color 180ms var(--ease-out)",
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = "var(--ink)"; e.currentTarget.style.color = "var(--paper)"; }}
+          onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "var(--ink)"; }}
+        >
+          <span>Read more</span>
+          <span style={{ fontFamily: "var(--f-mono)", fontSize: 11 }}>→</span>
+        </a>
+      </div>
+    </Reveal>
+  );
+
+  // Interior pages run the photo alongside the letter rather than full-bleed,
+  // so the opening line and the picture read as one unit.
+  if (imageBesideText) {
+    return (
+      <section style={{
+        padding: "clamp(40px, 6vh, 88px) var(--pad-x) clamp(48px, 8vh, 96px)",
+        background: "var(--paper)",
+      }}>
+        <div className="eb-founder-beside" style={{
+          maxWidth: "var(--maxw)", margin: "0 auto",
+          display: "grid",
+          gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)",
+          gap: "clamp(48px, 8vw, 120px)",
+          alignItems: "start",
+        }}>
+          <Reveal>
+            {/* Natural ratio, not a fixed crop — this slot holds a portrait,
+                so a forced aspect would cut faces off. */}
+            <div style={{ overflow: "hidden", background: "var(--paper-bright)" }}>
+              <img
+                src={photo}
+                alt="Emma Basic — founder"
+                style={{ display: "block", width: "100%", height: "auto" }}
+              />
+            </div>
+          </Reveal>
+
+          <div>
+            <Reveal>
+              <p style={{
+                fontFamily: "var(--f-body)", fontWeight: 400,
+                fontSize: "clamp(20px, 1.9vw, 28px)",
+                lineHeight: 1.3, letterSpacing: "-0.01em",
+                color: "var(--ink)", margin: "0 0 clamp(24px, 3.5vh, 36px)",
+              }}>
+                {FOUNDER_INTRO}
+              </p>
+            </Reveal>
+            <div style={{
+              fontFamily: "var(--f-body)", fontSize: "clamp(16px, 1.1vw, 18px)",
+              lineHeight: 1.75, color: "var(--ink-90)",
+              display: "grid", gap: "1.4em",
+            }}>
+              {visibleParas.map((text, i) => (
+                <Reveal key={i} delay={i * 80}>
+                  <p style={{ margin: 0 }} dangerouslySetInnerHTML={{ __html: text }} />
+                </Reveal>
+              ))}
+            </div>
+            {!hideReadMore && readMoreLink}
+          </div>
+        </div>
+        <style>{`
+          @media (max-width: 900px) {
+            .eb-founder-beside { grid-template-columns: 1fr !important; }
+          }
+        `}</style>
+      </section>
+    );
+  }
 
   return (
     <>
@@ -90,7 +176,7 @@ function FounderNarrative({ hideReadMore = false }) {
               willChange: "transform",
             }}>
               <img
-                src={FOUNDER_IMAGE}
+                src={photo}
                 alt="Emma Basic — founder"
                 style={{
                   display: "block",
@@ -136,29 +222,7 @@ function FounderNarrative({ hideReadMore = false }) {
             ))}
           </div>
 
-          {!hideReadMore && (
-            <Reveal delay={120}>
-              <div style={{ marginTop: "clamp(32px, 5vh, 52px)", display: "flex", justifyContent: "flex-end" }}>
-                <a
-                  href="Our Story.html"
-                  style={{
-                    display: "inline-flex", alignItems: "center", gap: 10,
-                    fontFamily: "var(--f-body)", fontSize: 12.5, letterSpacing: "0.14em",
-                    textTransform: "uppercase", textDecoration: "none",
-                    border: "1px solid var(--ink)",
-                    padding: "14px 22px",
-                    color: "var(--ink)", background: "transparent",
-                    transition: "background 180ms var(--ease-out), color 180ms var(--ease-out)",
-                  }}
-                  onMouseEnter={e => { e.currentTarget.style.background = "var(--ink)"; e.currentTarget.style.color = "var(--paper)"; }}
-                  onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "var(--ink)"; }}
-                >
-                  <span>Read more</span>
-                  <span style={{ fontFamily: "var(--f-mono)", fontSize: 11 }}>→</span>
-                </a>
-              </div>
-            </Reveal>
-          )}
+          {!hideReadMore && readMoreLink}
         </div>
       </section>
     </>

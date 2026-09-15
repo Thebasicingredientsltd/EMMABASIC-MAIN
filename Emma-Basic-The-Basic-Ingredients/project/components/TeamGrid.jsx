@@ -2,9 +2,11 @@
    TeamGrid — portrait grid.
    Warm intro, then factual: photo, name, role, one-line bio.
    Click a card to flip between professional and informal photo.
+   Cards crop square (1:1) — portrait sources are cropped from the top so
+   faces stay in frame, square sources fill the card exactly.
    ============================================================ */
 
-const EMMA = { name: "Emma", role: "Founder", bio: "Read the ingredients on the food label.\n\nDon't let the legal but harmful additives hurt you and your loved ones. Cook fresh ingredients in your kitchen are, of course, the finest. Processed foods are not all evil. Many responsible manufacturers are sharing the same belief as we do, in pursuit of removing additives.\n\nRemove additives, my quest, and my purpose.", tone: "warm", image: "assets/Employees-page/emma 1.jpg", image2: "assets/Employees-page/emma 2.jpg", phone: "+44 7894 512430", email: "Emma@thebasicingredients.com" };
+const EMMA = { name: "Emma", role: "Founder", bio: "Read the ingredients on the food label.\n\nDon't let the legal but harmful additives hurt you and your loved ones. Cook fresh ingredients in your kitchen are, of course, the finest. Processed foods are not all evil. Many responsible manufacturers are sharing the same belief as we do, in pursuit of removing additives.\n\nRemove additives, my quest, and my purpose.", tone: "warm", image: "assets/Employees-page/emma-1-square.jpg", image2: "assets/Employees-page/emma 2.jpg", phone: "+44 7894 512430", email: "Emma@thebasicingredients.com" };
 
 const TEAM = [
   { name: "Yoko",     role: "Technical Account Manager",       bio: "",                                                                                                                                                                                                      tone: "cool", image: "assets/Employees-page/yoko.png",         image2: "", phone: "" },
@@ -103,7 +105,7 @@ function TeamMember({ m, index }) {
         }}>
         <div style={{
           position: "relative",
-          aspectRatio: "3/4",
+          aspectRatio: "1/1",
           overflow: "hidden",
           background: "var(--paper-bright)",
         }}>
