@@ -302,6 +302,26 @@ def parse_num(raw):
     return int(val) if val.is_integer() else val
 
 
+def form_checkbox(name):
+    """True when an HTML checkbox named `name` was checked.
+
+    Unchecked boxes are omitted from the POST body, matching the journal
+    `featured` field. Use this for per-section `visible` flags so a page
+    block can be hidden on the live site without deleting its content.
+    """
+    return request.form.get(name) == "on"
+
+
+def is_section_visible(section):
+    """Live-site default: a section is shown unless `visible` is explicitly false."""
+    if not isinstance(section, dict):
+        return True
+    return section.get("visible", True) is not False
+
+
+app.jinja_env.globals["is_section_visible"] = is_section_visible
+
+
 # Scalar text fields exposed by the bulk table editor (catalog_table.html).
 # Kept here so the columns rendered by the template and the fields parsed by
 # catalog_table_save stay perfectly in sync. Complex/nested fields (images,
@@ -920,6 +940,7 @@ def people_save():
     team["headingLine1"] = request.form.get("team_headingLine1", "").strip()
     team["headingLine2"] = request.form.get("team_headingLine2", "").strip()
     team["intro"] = request.form.get("team_intro", "").strip()
+    team["visible"] = form_checkbox("team_visible")
     count = int(request.form.get("member_count", "0"))
     members = []
     for i in range(count):
@@ -955,12 +976,14 @@ def people_save():
     intro["heading"] = request.form.get("intro_heading", "").strip()
     intro["headingAccent"] = request.form.get("intro_headingAccent", "").strip()
     intro["paragraphs"] = text_to_paras(request.form.get("intro_paragraphs", ""))
+    intro["visible"] = form_checkbox("intro_visible")
 
     # Services block — repeatable cards.
     services = d.setdefault("services", {})
     services["eyebrow"] = request.form.get("services_eyebrow", "").strip()
     services["heading"] = request.form.get("services_heading", "").strip()
     services["closing"] = request.form.get("services_closing", "").strip()
+    services["visible"] = form_checkbox("services_visible")
     card_count = int(request.form.get("card_count", "0"))
     cards = []
     for i in range(card_count):
@@ -979,6 +1002,7 @@ def people_save():
     trade["eyebrow"] = request.form.get("trade_eyebrow", "").strip()
     trade["heading"] = request.form.get("trade_heading", "").strip()
     trade["intro"] = request.form.get("trade_intro", "").strip()
+    trade["visible"] = form_checkbox("trade_visible")
     old_items = trade.get("items", [])
     item_count = int(request.form.get("trade_count", "0"))
     items = []
@@ -1000,6 +1024,7 @@ def people_save():
     contact["headingLine1"] = request.form.get("contact_headingLine1", "").strip()
     contact["headingLine2"] = request.form.get("contact_headingLine2", "").strip()
     contact["body"] = request.form.get("contact_body", "").strip()
+    contact["visible"] = form_checkbox("contact_visible")
     contact["regionLabel"] = request.form.get("contact_regionLabel", "").strip()
     contact["addressLine1"] = request.form.get("contact_addressLine1", "").strip()
     contact["addressLine2"] = request.form.get("contact_addressLine2", "").strip()
@@ -1357,9 +1382,17 @@ ALL_DATA_KEYS = tuple(DATA_FILES.keys())
 
 
 def _data_script_re(keys):
-    """Regex matching <script src="data/<key>.js?v=..."> for the given keys."""
+    """Regex matching <script src="data/<key>.js?v=..."> for the given keys.
+
+    Anchored to the script `src` attribute so comments that mention
+    `data/people.js` are not rewritten (the old pattern ate the `).` after
+    those comments on every People save).
+    """
     names = "|".join(re.escape(k) for k in keys)
-    return re.compile(r"(data/(?:" + names + r")\.js)(\?v=[^\"'\s>]*)?")
+    return re.compile(
+        r'(<script\b[^>]*\bsrc=["\'])(data/(?:' + names + r')\.js)(\?v=[^"\']*)?(["\'])',
+        re.IGNORECASE,
+    )
 
 
 def _cache_bust_changes(keys=None):
@@ -1387,7 +1420,7 @@ def _cache_bust_changes(keys=None):
             text = storage.read_text(rel)
         except Exception:
             continue
-        new_text = pattern.sub(r"\g<1>?v=" + stamp, text)
+        new_text = pattern.sub(r"\g<1>\g<2>?v=" + stamp + r"\g<4>", text)
         if new_text != text:
             changes.append((rel, new_text, False))
     return changes

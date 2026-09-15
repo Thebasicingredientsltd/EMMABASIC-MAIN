@@ -20,8 +20,8 @@
 <div id="root"></div>
 
 <!-- CMS-managed content -->
-<script src="data/homepage.js?v=20260731193830215"></script>
-<script src="data/people.js?v=20260914184252015"></script>
+<script src="data/homepage.js?v=20260915090903665"></script>
+<script src="data/people.js?v=20260915090903665"></script>
 
 <script type="text/babel" src="components/Placeholder.jsx"></script>
 <script type="text/babel" src="components/motion.jsx"></script>
@@ -33,9 +33,15 @@
 
 <script type="text/babel">
 
-// CMS-managed content (data/people.js?v=20260914184252015 Each section falls back to its
+// CMS-managed content (data/people.js). Each section falls back to its
 // built-in copy so the page still renders if the data file is missing.
 const EB_PEOPLE = window.EB_PEOPLE || {};
+
+// Reusable CMS visibility helper: omit `visible` or set it true to show;
+// `visible: false` hides the block on the live site without deleting copy.
+function isSectionVisible(section) {
+  return !section || section.visible !== false;
+}
 
 function TBIIntroSection() {
   const d = EB_PEOPLE.intro || {};
@@ -220,10 +226,10 @@ function PeopleApp() {
           imageBesideText
           image="assets/homepage/founder-mum-daughter.jpg"
         />
-        <div id="team"><TeamGrid /></div>
-        <TBIIntroSection />
-        <TBIServicesSection />
-        <TBIContactSection />
+        {isSectionVisible(EB_PEOPLE.team) && <div id="team"><TeamGrid /></div>}
+        {isSectionVisible(EB_PEOPLE.intro) && <TBIIntroSection />}
+        {isSectionVisible(EB_PEOPLE.services) && <TBIServicesSection />}
+        {isSectionVisible(EB_PEOPLE.contact) && <TBIContactSection />}
       </main>
       <SiteFooter />
     </>
