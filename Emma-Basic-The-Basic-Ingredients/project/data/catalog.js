@@ -2332,7 +2332,7 @@ window.EB_CATALOG = [
         "noWhiteBg": true,
         "imageScale": 1,
         "pdpImageScale": 1,
-        "name": "Short Grain Rice 10kg",
+        "name": "Short Grain Rice 10kg - Pre washed",
         "japanese": "短粒米 10kg",
         "image": "assets/uploads/10kg_rice-20260731-190707.png",
         "images": [
@@ -2354,7 +2354,7 @@ window.EB_CATALOG = [
           "Superior Grade",
           "Catering Size"
         ],
-        "amazon": "",
+        "amazon": "https://www.amazon.co.uk/dp/B0BNNX29PZ",
         "sellingPoints": [
           "Superior grade — compared with Originario or Selenio varieties commonly available in the UK, Emma Basic Japonica variety from Vietnam offers a taste difference you can certainly notice",
           "Perfect texture — sticky yet firm, crucial because the rice must hold its shape when forming sushi but still be soft and pleasant to eat",
@@ -2383,7 +2383,7 @@ window.EB_CATALOG = [
             "Most rice sold as 'sushi rice' in the UK is Originario or Selenio — Italian-grown varieties closer to risotto rice than to genuine short-grain Japonica. They behave differently in the pot and differently on the tongue. Single-variety Japonica behaves predictably every time. Rinse until clear, soak thirty minutes, then cook with a 1:1 ratio of water to rice — simmer on low, rest fifteen minutes with the lid on. Stir through our Sushi Vinegar at one tablespoon per 100g uncooked rice while still warm — fan as you fold, and the surface takes on a glossy, seasoned sheen."
           ]
         },
-        "updatedAt": "2026-07-31T18:07:40+00:00"
+        "updatedAt": "2026-09-11T12:31:57+00:00"
       }
     ]
   },

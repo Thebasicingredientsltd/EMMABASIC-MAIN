@@ -16,6 +16,8 @@ window.EB_PEOPLE = {
         "role": "Founder",
         "bio": "Read the ingredients on the food label.\n\nDon't let the legal but harmful additives hurt you and your loved ones. Cook fresh ingredients in your kitchen are, of course, the finest. Processed foods are not all evil. Many responsible manufacturers are sharing the same belief as we do, in pursuit of removing additives.\n\nRemove additives, my quest, and my purpose.",
         "tone": "warm",
+        "image": "assets/uploads/Emma_Main-20260915-080441.jpg",
+        "image2": "assets/uploads/Emma_Personal-20260915-080445.jpg",
         "image": "assets/Employees-page/emma-1-square.jpg",
         "image2": "assets/Employees-page/emma 2.jpg",
         "phone": "+44 7894 512430",
@@ -26,7 +28,7 @@ window.EB_PEOPLE = {
         "role": "Technical Account Manager",
         "bio": "",
         "tone": "cool",
-        "image": "assets/Employees-page/yoko.png",
+        "image": "assets/uploads/yoko_Work-20260915-080454.jpg",
         "image2": "",
         "phone": ""
       },
