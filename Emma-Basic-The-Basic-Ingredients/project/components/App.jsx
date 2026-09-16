@@ -59,6 +59,7 @@ function App() {
         <AdditiveFreeBanner />
         <ShelfTest />
         <LifestyleGrid />
+        <ExtraSections source={typeof window !== "undefined" ? window.EB_HOME : {}} />
       </main>
       <SiteFooter />
       <SlideOutPanel product={open} open={!!openId} onClose={() => setOpenId(null)} />

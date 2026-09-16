@@ -28,10 +28,11 @@ function TopNav({ hasHero = false }) {
     ? "linear-gradient(180deg, rgba(10,10,10,0.35) 0%, rgba(10,10,10,0) 100%)"
     : "rgba(246,246,246,0.92)";
 
-  const leftLinks = [
+  const nav = (typeof window !== "undefined" && window.EB_NAV) || {};
+  const leftLinks = (Array.isArray(nav.left) && nav.left.length) ? nav.left : [
     { label: "Products Without E-Numbers", href: "Our Products.html" },
   ];
-  const rightLinks = [
+  const rightLinks = (Array.isArray(nav.right) && nav.right.length) ? nav.right : [
     { label: "Field Notes", href: "Journal.html" },
     { label: "People",      href: "People%20%26%20Places.html" },
     { label: "Become a Distributor", href: "Become%20a%20Distributor.html" },

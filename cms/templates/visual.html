@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% set active = "visual" %}
+{% block title %}Visual editor — Emma Basic CMS{% endblock %}
+{% block content %}
+<div class="visual-shell">
+  <div class="visual-toolbar">
+    <div class="visual-toolbar-row">
+      <label class="visual-label">Page
+        <select id="visualPage">
+          {% for p in pages %}
+          <option value="{{ p.id }}" {{ 'selected' if p.id == page_id }}>{{ p.label }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <button type="button" class="btn secondary" id="visualReload">Refresh</button>
+      <span class="muted" id="visualStatus">Click gold-outlined text to edit. Click a photo to replace it. Changes save automatically.</span>
+    </div>
+    <div class="visual-toolbar-row">
+      <form id="visualSectionForm" class="visual-inline">
+        <input type="text" name="heading" placeholder="New section heading" required/>
+        <input type="text" name="body" placeholder="A short paragraph"/>
+        <button type="submit" class="btn">Add section</button>
+      </form>
+      <form id="visualPageForm" class="visual-inline">
+        <input type="text" name="title" placeholder="New page title" required/>
+        <input type="text" name="body" placeholder="Opening paragraph"/>
+        <button type="submit" class="btn secondary">Add page</button>
+      </form>
+    </div>
+    {% if sections %}
+    <div class="visual-toolbar-row visual-sections" id="visualSections">
+      {% for s in sections %}
+      <label class="visual-chip">
+        <input type="checkbox" data-path="{{ s.path }}" {{ 'checked' if s.visible }}/>
+        {{ s.label }}
+      </label>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+  <iframe id="visualFrame" class="visual-frame" src="{{ url_for('visual_preview', page_id=page_id) }}" title="Website preview"></iframe>
+</div>
+<style>
+  .content-inner { max-width: none; }
+  .visual-shell {
+    display: flex; flex-direction: column; gap: 12px;
+    min-height: calc(100vh - 48px);
+  }
+  .visual-toolbar {
+    background: var(--paper-bright); border: 1px solid var(--rule);
+    border-radius: var(--r-md); padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 10px;
+    box-shadow: var(--shadow-sm);
+  }
+  .visual-toolbar-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .visual-label { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; }
+  .visual-label select { font: inherit; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--rule); }
+  .visual-inline { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .visual-inline input { min-width: 160px; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--rule); font: inherit; }
+  .visual-chip { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; text-transform: none; letter-spacing: 0; }
+  .visual-frame {
+    flex: 1; width: 100%; min-height: 70vh; border: 1px solid var(--rule);
+    border-radius: var(--r-md); background: #fff;
+  }
+</style>
+<script>
+(function () {
+  var pageSel = document.getElementById("visualPage");
+  var frame = document.getElementById("visualFrame");
+  var status = document.getElementById("visualStatus");
+  var dataKey = {{ data_key|tojson }};
+
+  pageSel.addEventListener("change", function () {
+    window.location = "{{ url_for('visual_editor') }}?page=" + encodeURIComponent(pageSel.value);
+  });
+  document.getElementById("visualReload").addEventListener("click", function () {
+    frame.src = frame.src;
+  });
+
+  window.addEventListener("message", function (e) {
+    if (!e.data || typeof e.data !== "object") return;
+    if (e.data.type === "__cms_visual_saved") {
+      status.textContent = e.data.ok ? "Saved." : ("Could not save: " + (e.data.error || "unknown error"));
+    }
+  });
+
+  document.getElementById("visualSectionForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var fd = new FormData(e.target);
+    fetch("{{ url_for('visual_section') }}", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        key: dataKey,
+        action: "add",
+        heading: fd.get("heading"),
+        body: fd.get("body")
+      })
+    }).then(function (r) { return r.json(); }).then(function (j) {
+      if (!j.ok) { status.textContent = j.error || "Could not add section"; return; }
+      status.textContent = "Section added — refreshing.";
+      frame.src = frame.src;
+      e.target.reset();
+    });
+  });
+
+  document.getElementById("visualPageForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var fd = new FormData(e.target);
+    fetch("{{ url_for('visual_add_page') }}", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        title: fd.get("title"),
+        heading: fd.get("title"),
+        body: fd.get("body")
+      })
+    }).then(function (r) { return r.json(); }).then(function (j) {
+      if (!j.ok) { status.textContent = j.error || "Could not add page"; return; }
+      status.textContent = "Page created. It is in the site menu — publish when you are ready.";
+      e.target.reset();
+    });
+  });
+
+  var sectionBox = document.getElementById("visualSections");
+  if (sectionBox) {
+    sectionBox.addEventListener("change", function (e) {
+      var input = e.target;
+      if (!input.getAttribute("data-path")) return;
+      fetch("{{ url_for('visual_section') }}", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          key: dataKey,
+          action: "visibility",
+          path: input.getAttribute("data-path"),
+          visible: input.checked
+        })
+      }).then(function (r) { return r.json(); }).then(function (j) {
+        if (!j.ok) { status.textContent = j.error || "Could not update section"; return; }
+        status.textContent = input.checked ? "Section shown." : "Section hidden.";
+        frame.src = frame.src;
+      });
+    });
+  }
+})();
+</script>
+{% endblock %}
