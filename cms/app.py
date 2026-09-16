@@ -1353,22 +1353,154 @@ def catalog_reorder():
 # ---------------------------------------------------------------------------
 # Routes — publish to GitHub
 # ---------------------------------------------------------------------------
-def run_git(args):
+def run_git(args, cwd=None):
     return subprocess.run(
-        ["git"] + args, cwd=REPO_ROOT, capture_output=True, text=True
+        ["git"] + args, cwd=cwd or REPO_ROOT, capture_output=True, text=True
     )
 
 
-def git_status_summary():
+def _git_ahead_behind(cwd=None):
+    """Return (unpushed, behind) vs the upstream branch.
+
+    Unpushed commits are already saved locally but not on GitHub, so the
+    dashboard must count them as unpublished. `behind` means GitHub has
+    commits we need to combine before a push can succeed.
+    """
+    res = run_git(["rev-list", "--left-right", "--count", "@{u}...HEAD"], cwd)
+    if res.returncode != 0:
+        return 0, 0
+    parts = res.stdout.strip().split()
+    if len(parts) != 2:
+        return 0, 0
+    try:
+        return int(parts[1]), int(parts[0])
+    except ValueError:
+        return 0, 0
+
+
+def git_status_summary(cwd=None):
     # On the GitHub backend every save is already committed + deployed, so there
     # is nothing pending to "publish".
-    if storage.is_github():
-        return {"ok": True, "changes": 0, "files": [], "auto": True}
-    res = run_git(["status", "--porcelain"])
+    if cwd is None and storage.is_github():
+        return {
+            "ok": True, "changes": 0, "files": [], "auto": True,
+            "unpushed": 0, "behind": 0, "dirty": 0,
+        }
+    res = run_git(["status", "--porcelain"], cwd)
     if res.returncode != 0:
-        return {"ok": False, "changes": 0, "detail": res.stderr.strip()}
+        return {
+            "ok": False, "changes": 0, "files": [],
+            "detail": res.stderr.strip(), "unpushed": 0, "behind": 0, "dirty": 0,
+        }
     changed = [ln for ln in res.stdout.splitlines() if ln.strip()]
-    return {"ok": True, "changes": len(changed), "files": changed[:50]}
+    unpushed, behind = _git_ahead_behind(cwd)
+    return {
+        "ok": True,
+        "changes": len(changed) + unpushed,
+        "files": changed[:50],
+        "unpushed": unpushed,
+        "behind": behind,
+        "dirty": len(changed),
+    }
+
+
+def _cms_data_relpaths():
+    return [PROJECT_REL + "/data/" + key + ".js" for key in DATA_FILES]
+
+
+def _restore_cms_data(from_ref, cwd=None):
+    """Put CMS data files back to `from_ref`.
+
+    Combining with GitHub is a line-level merge. If the remote copy already
+    has duplicate JSON keys (from an earlier merge) and our commit didn't
+    touch those lines, the duplicates survive — and the live site would show
+    the last key, which is often the old photo. The CMS file we just saved
+    is the source of truth.
+    """
+    restored = False
+    for rel in _cms_data_relpaths():
+        exists = run_git(["cat-file", "-e", "%s:%s" % (from_ref, rel)], cwd)
+        if exists.returncode != 0:
+            continue
+        chk = run_git(["checkout", from_ref, "--", rel], cwd)
+        if chk.returncode == 0:
+            restored = True
+    return restored
+
+
+def sync_and_push(message, cwd=None):
+    """Commit any local CMS edits, rebase onto origin if it moved, then push.
+
+    A previous version committed then pushed with no fetch. When GitHub already
+    had commits we lacked, the push was rejected — and a clean working tree
+    made the dashboard claim everything was published.
+
+    Returns {"ok": True} or {"ok": False, "error": "..."}. {"empty": True}
+    means there was nothing new to send.
+    """
+    add = run_git(["add", "-A"], cwd)
+    if add.returncode != 0:
+        return {"ok": False, "error": "git add failed: %s" % add.stderr.strip()}
+
+    commit = run_git(["commit", "-m", message], cwd)
+    if commit.returncode != 0:
+        out = (commit.stdout + commit.stderr).lower()
+        if "nothing to commit" not in out:
+            return {
+                "ok": False,
+                "error": "git commit failed: %s" % (commit.stderr or commit.stdout).strip(),
+            }
+
+    pre_head = run_git(["rev-parse", "HEAD"], cwd)
+    pre_ref = (pre_head.stdout or "").strip()
+
+    fetch = run_git(["fetch", "origin"], cwd)
+    if fetch.returncode != 0:
+        return {"ok": False, "error": "git fetch failed: %s" % fetch.stderr.strip()}
+
+    branch = run_git(["rev-parse", "--abbrev-ref", "HEAD"], cwd)
+    branch_name = (branch.stdout or "").strip()
+    if branch.returncode != 0 or not branch_name or branch_name == "HEAD":
+        return {"ok": False, "error": "Could not determine git branch."}
+
+    _, behind = _git_ahead_behind(cwd)
+    if behind:
+        # During rebase, "theirs" is the CMS commit being replayed. Prefer
+        # that so a just-saved photo or cache-buster stamp isn't reverted.
+        rebase = run_git(
+            ["pull", "--rebase", "--autostash", "-X", "theirs", "origin", branch_name],
+            cwd,
+        )
+        if rebase.returncode != 0:
+            run_git(["rebase", "--abort"], cwd)
+            return {
+                "ok": False,
+                "error": "Could not combine with newer GitHub changes: %s"
+                % (rebase.stderr or rebase.stdout).strip(),
+            }
+        if pre_ref and _restore_cms_data(pre_ref, cwd):
+            status = run_git(["status", "--porcelain"], cwd)
+            if status.stdout.strip():
+                run_git(["add", "-A"], cwd)
+                keep = run_git(
+                    ["commit", "-m", "%s — keep saved CMS content" % message],
+                    cwd,
+                )
+                if keep.returncode != 0:
+                    return {
+                        "ok": False,
+                        "error": "git commit failed: %s"
+                        % (keep.stderr or keep.stdout).strip(),
+                    }
+
+    unpushed, _ = _git_ahead_behind(cwd)
+    if unpushed == 0:
+        return {"ok": True, "empty": True}
+
+    push = run_git(["push", "origin", "HEAD"], cwd)
+    if push.returncode != 0:
+        return {"ok": False, "error": "git push failed: %s" % push.stderr.strip()}
+    return {"ok": True}
 
 
 # Cache-busting for the content data files. The HTML pages load products/
@@ -1447,26 +1579,13 @@ def publish():
     # Refresh the cache-busting query on the data-file script tags so the new
     # content is fetched immediately after this deploy goes live.
     bump_data_cache_bust()
-    add = run_git(["add", "-A"])
-    if add.returncode != 0:
-        flash("git add failed: %s" % add.stderr.strip(), "error")
-        return redirect(url_for("index"))
-
-    commit = run_git(["commit", "-m", message])
-    if commit.returncode != 0:
-        out = (commit.stdout + commit.stderr).lower()
-        if "nothing to commit" in out:
-            flash("Nothing to publish — no changes since last publish.", "ok")
-            return redirect(url_for("index"))
-        flash("git commit failed: %s" % (commit.stderr or commit.stdout).strip(), "error")
-        return redirect(url_for("index"))
-
-    push = run_git(["push", "origin", "HEAD"])
-    if push.returncode != 0:
-        flash("Committed locally, but push failed: %s" % push.stderr.strip(), "error")
-        return redirect(url_for("index"))
-
-    flash("Published to GitHub: %s" % message, "ok")
+    result = sync_and_push(message)
+    if not result.get("ok"):
+        flash(result.get("error") or "Publish failed.", "error")
+    elif result.get("empty"):
+        flash("Nothing to publish — no changes since last publish.", "ok")
+    else:
+        flash("Published to GitHub: %s" % message, "ok")
     return redirect(url_for("index"))
 
 

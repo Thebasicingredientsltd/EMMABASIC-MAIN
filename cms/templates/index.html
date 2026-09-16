@@ -55,7 +55,16 @@
       <h2 style="margin:0 0 4px;">Publish to GitHub</h2>
       {% if git.ok %}
         {% if git.changes %}
-          <p class="muted" style="margin:0;"><span class="change-dot"></span>{{ git.changes }} unpublished change{{ 's' if git.changes != 1 }} ready.</p>
+          <p class="muted" style="margin:0;"><span class="change-dot"></span>
+            {% if git.unpushed and not git.dirty %}
+              {{ git.unpushed }} committed change{{ 's' if git.unpushed != 1 }} waiting to reach GitHub.
+            {% else %}
+              {{ git.changes }} unpublished change{{ 's' if git.changes != 1 }} ready.
+            {% endif %}
+          </p>
+          {% if git.behind %}
+            <p class="muted" style="margin:8px 0 0;">GitHub has newer changes — Publish will combine them, then push.</p>
+          {% endif %}
         {% else %}
           <p class="muted" style="margin:0;">Everything is published — no pending changes.</p>
         {% endif %}

@@ -420,7 +420,11 @@
         el.addEventListener("animationend", function () { el.remove(); }, { once: true });
       }
       el.addEventListener("click", dismiss);
-      setTimeout(dismiss, 4200 + i * 350);
+      // Errors stay until clicked — publish failures are too easy to miss
+      // if the toast vanishes after a few seconds.
+      if (!el.classList.contains("error")) {
+        setTimeout(dismiss, 4200 + i * 350);
+      }
     });
   })();
 
