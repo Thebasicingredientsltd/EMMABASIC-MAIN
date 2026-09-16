@@ -71,6 +71,10 @@ DATA_FILES = {
     "catalog": {"file": os.path.join(DATA_DIR, "catalog.js"), "var": "window.EB_CATALOG"},
     "people": {"file": os.path.join(DATA_DIR, "people.js"), "var": "window.EB_PEOPLE"},
     "nav": {"file": os.path.join(DATA_DIR, "nav.js"), "var": "window.EB_NAV"},
+    "places": {"file": os.path.join(DATA_DIR, "places.js"), "var": "window.EB_PLACES"},
+    "story": {"file": os.path.join(DATA_DIR, "story.js"), "var": "window.EB_STORY"},
+    "company": {"file": os.path.join(DATA_DIR, "company.js"), "var": "window.EB_COMPANY"},
+    "matcha": {"file": os.path.join(DATA_DIR, "matcha.js"), "var": "window.EB_MATCHA"},
 }
 
 ALLOWED_EXT = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".avif", ".svg"}
@@ -101,6 +105,10 @@ HEADERS = {
     "catalog": "/* Emma Basic — full product catalog (CMS-managed). The payload below is strict JSON. */",
     "people": "/* Emma Basic — People & Places page content (CMS-managed). The payload below is strict JSON. */",
     "nav": "/* Emma Basic — site navigation (CMS-managed). The payload below is strict JSON. */",
+    "places": "/* Emma Basic — Where to find our products (CMS-managed). The payload below is strict JSON. */",
+    "story": "/* Emma Basic — Our Story page content (CMS-managed). The payload below is strict JSON. */",
+    "company": "/* Emma Basic — The Basic Ingredients page content (CMS-managed). The payload below is strict JSON. */",
+    "matcha": "/* Emma Basic — Matcha Lab page content (CMS-managed). The payload below is strict JSON. */",
 }
 
 app = Flask(__name__)
@@ -322,6 +330,21 @@ def is_section_visible(section):
 
 
 app.jinja_env.globals["is_section_visible"] = is_section_visible
+
+# Public website pages shown in the CRM sidebar. Tools (dashboard, home rail,
+# visual editor) stay outside this list.
+CMS_SITE_PAGES = [
+    {"endpoint": "homepage", "label": "Homepage", "active": "homepage"},
+    {"endpoint": "catalog", "label": "Our Products", "active": "catalog"},
+    {"endpoint": "journal", "label": "Field Notes", "active": "journal"},
+    {"endpoint": "story", "label": "Our Story", "active": "story"},
+    {"endpoint": "people", "label": "People & Places", "active": "people"},
+    {"endpoint": "places", "label": "Where to find our products", "active": "places"},
+    {"endpoint": "distributor", "label": "Become a Distributor", "active": "distributor"},
+    {"endpoint": "company", "label": "The Basic Ingredients", "active": "company"},
+    {"endpoint": "matcha", "label": "Matcha Lab", "active": "matcha"},
+]
+app.jinja_env.globals["cms_site_pages"] = CMS_SITE_PAGES
 
 
 # Scalar text fields exposed by the bulk table editor (catalog_table.html).
@@ -998,40 +1021,7 @@ def people_save():
         cards.append({"title": title, "body": body})
     services["cards"] = cards
 
-    # Trade / "How to order" — repeatable Q&A items. Existing PDF form links
-    # are preserved by position (they aren't editable in the CMS).
-    trade = d.setdefault("trade", {})
-    trade["eyebrow"] = request.form.get("trade_eyebrow", "").strip()
-    trade["heading"] = request.form.get("trade_heading", "").strip()
-    trade["intro"] = request.form.get("trade_intro", "").strip()
-    trade["visible"] = form_checkbox("trade_visible")
-    old_items = trade.get("items", [])
-    item_count = int(request.form.get("trade_count", "0"))
-    items = []
-    for i in range(item_count):
-        if ("trade%d_q" % i) not in request.form:
-            continue
-        q = request.form.get("trade%d_q" % i, "").strip()
-        a = request.form.get("trade%d_a" % i, "").strip()
-        if not q and not a:
-            continue
-        item = dict(old_items[i]) if i < len(old_items) else {}
-        item["q"] = q
-        item["a"] = a
-        items.append(item)
-    trade["items"] = items
-
-    # Contact block
-    contact = d.setdefault("contact", {})
-    contact["headingLine1"] = request.form.get("contact_headingLine1", "").strip()
-    contact["headingLine2"] = request.form.get("contact_headingLine2", "").strip()
-    contact["body"] = request.form.get("contact_body", "").strip()
-    contact["visible"] = form_checkbox("contact_visible")
-    contact["regionLabel"] = request.form.get("contact_regionLabel", "").strip()
-    contact["addressLine1"] = request.form.get("contact_addressLine1", "").strip()
-    contact["addressLine2"] = request.form.get("contact_addressLine2", "").strip()
-    contact["email"] = request.form.get("contact_email", "").strip()
-    contact["note"] = request.form.get("contact_note", "").strip()
+    _apply_contact_form(d.setdefault("contact", {}))
 
     save_data("people", d)
     flash("People & Places content saved.", "ok")
@@ -1053,6 +1043,212 @@ def people_reorder():
     save_data("people", data)
     flash("Reordered the team.", "ok")
     return {"ok": True}
+
+
+def _apply_trade_form(trade):
+    """Write How-to-order fields from the current request onto `trade`.
+
+    Existing PDF form links are preserved by position (they aren't editable
+    in the CMS).
+    """
+    trade["eyebrow"] = request.form.get("trade_eyebrow", "").strip()
+    trade["heading"] = request.form.get("trade_heading", "").strip()
+    trade["intro"] = request.form.get("trade_intro", "").strip()
+    trade["visible"] = form_checkbox("trade_visible")
+    old_items = trade.get("items", [])
+    item_count = int(request.form.get("trade_count", "0"))
+    items = []
+    for i in range(item_count):
+        if ("trade%d_q" % i) not in request.form:
+            continue
+        q = request.form.get("trade%d_q" % i, "").strip()
+        a = request.form.get("trade%d_a" % i, "").strip()
+        if not q and not a:
+            continue
+        item = dict(old_items[i]) if i < len(old_items) else {}
+        item["q"] = q
+        item["a"] = a
+        items.append(item)
+    trade["items"] = items
+
+
+def _apply_contact_form(contact):
+    """Write shared contact-block fields from the current request."""
+    contact["headingLine1"] = request.form.get("contact_headingLine1", "").strip()
+    contact["headingLine2"] = request.form.get("contact_headingLine2", "").strip()
+    contact["body"] = request.form.get("contact_body", "").strip()
+    contact["visible"] = form_checkbox("contact_visible")
+    contact["regionLabel"] = request.form.get("contact_regionLabel", "").strip()
+    contact["addressLine1"] = request.form.get("contact_addressLine1", "").strip()
+    contact["addressLine2"] = request.form.get("contact_addressLine2", "").strip()
+    contact["email"] = request.form.get("contact_email", "").strip()
+    contact["note"] = request.form.get("contact_note", "").strip()
+
+
+@app.route("/distributor")
+def distributor():
+    return render_template("distributor.html", d=load_data("people"))
+
+
+@app.route("/distributor/save", methods=["POST"])
+def distributor_save():
+    """Save Become a Distributor copy (hero, how to order, contact)."""
+    d = load_data("people")
+    hero = d.setdefault("distributor", {})
+    hero["eyebrow"] = request.form.get("hero_eyebrow", "").strip()
+    hero["title"] = request.form.get("hero_title", "").strip()
+    hero["titleItalic"] = request.form.get("hero_titleItalic", "").strip()
+    hero["subtitle"] = request.form.get("hero_subtitle", "").strip()
+    _apply_trade_form(d.setdefault("trade", {}))
+    _apply_contact_form(d.setdefault("contact", {}))
+    save_data("people", d)
+    flash("Become a Distributor content saved.", "ok")
+    return redirect(url_for("distributor"))
+
+
+def _apply_hero_form(hero):
+    hero["eyebrow"] = request.form.get("hero_eyebrow", "").strip()
+    hero["title"] = request.form.get("hero_title", "").strip()
+    hero["titleItalic"] = request.form.get("hero_titleItalic", "").strip()
+    hero["subtitle"] = request.form.get("hero_subtitle", "").strip()
+
+
+def _simple_page_save(key, flash_msg, redirect_endpoint):
+    data = load_data(key)
+    _apply_hero_form(data.setdefault("hero", {}))
+    save_data(key, data)
+    flash(flash_msg, "ok")
+    return redirect(url_for(redirect_endpoint))
+
+
+@app.route("/places")
+def places():
+    return render_template("places.html", d=load_data("places"))
+
+
+@app.route("/places/save", methods=["POST"])
+def places_save():
+    d = load_data("places")
+    _apply_hero_form(d.setdefault("hero", {}))
+    featured = d.setdefault("featured", {})
+    featured["eyebrow"] = request.form.get("featured_eyebrow", "").strip()
+    featured["heading"] = request.form.get("featured_heading", "").strip()
+    featured["headingItalic"] = request.form.get("featured_headingItalic", "").strip()
+    old_retailers = featured.get("retailers") or []
+    retailers = []
+    count = int(request.form.get("retailer_count", "0"))
+    for i in range(count):
+        if ("retailer%d_name" % i) not in request.form:
+            continue
+        name = request.form.get("retailer%d_name" % i, "").strip()
+        city = request.form.get("retailer%d_city" % i, "").strip()
+        url = request.form.get("retailer%d_url" % i, "").strip()
+        style = request.form.get("retailer%d_style" % i, "").strip()
+        if not name and not city:
+            continue
+        prev = dict(old_retailers[i]) if i < len(old_retailers) else {}
+        prev.update({"name": name, "city": city, "url": url})
+        if style:
+            prev["style"] = style
+        retailers.append(prev)
+    featured["retailers"] = retailers
+
+    shops = []
+    shop_count = int(request.form.get("shop_count", "0"))
+    old_shops = d.get("shops") or []
+    for i in range(shop_count):
+        if ("shop%d_name" % i) not in request.form:
+            continue
+        name = request.form.get("shop%d_name" % i, "").strip()
+        city = request.form.get("shop%d_city" % i, "").strip()
+        address = request.form.get("shop%d_address" % i, "").strip()
+        if not name and not address:
+            continue
+        prev = dict(old_shops[i]) if i < len(old_shops) else {}
+        prev.update({"name": name, "city": city, "address": address})
+        lat = parse_num(request.form.get("shop%d_lat" % i, ""))
+        lng = parse_num(request.form.get("shop%d_lng" % i, ""))
+        if lat is not None:
+            prev["lat"] = lat
+        else:
+            prev.pop("lat", None)
+        if lng is not None:
+            prev["lng"] = lng
+        else:
+            prev.pop("lng", None)
+        shops.append(prev)
+    d["shops"] = shops
+
+    hq = d.setdefault("hq", {})
+    hq["label"] = request.form.get("hq_label", "").strip()
+    hq["addressLine1"] = request.form.get("hq_addressLine1", "").strip()
+    hq["addressLine2"] = request.form.get("hq_addressLine2", "").strip()
+    lat = parse_num(request.form.get("hq_lat", ""))
+    lng = parse_num(request.form.get("hq_lng", ""))
+    if lat is not None:
+        hq["lat"] = lat
+    if lng is not None:
+        hq["lng"] = lng
+    save_data("places", d)
+    flash("Where to find our products content saved.", "ok")
+    return redirect(url_for("places"))
+
+
+@app.route("/story")
+def story():
+    return render_template(
+        "simple_page.html",
+        page_title="Our Story",
+        save_endpoint="story_save",
+        visual_page="story",
+        active="story",
+        d=load_data("story"),
+        extra="The founder story below the headline is edited on the Homepage.",
+    )
+
+
+@app.route("/story/save", methods=["POST"])
+def story_save():
+    return _simple_page_save("story", "Our Story content saved.", "story")
+
+
+@app.route("/company")
+def company():
+    return render_template("company.html", d=load_data("company"))
+
+
+@app.route("/company/save", methods=["POST"])
+def company_save():
+    d = load_data("company")
+    _apply_hero_form(d.setdefault("hero", {}))
+    about = d.setdefault("about", {})
+    about["heading"] = request.form.get("about_heading", "").strip()
+    about["headingItalic"] = request.form.get("about_headingItalic", "").strip()
+    about["body"] = request.form.get("about_body", "").strip()
+    about["buttonLabel"] = request.form.get("about_buttonLabel", "").strip()
+    about["buttonHref"] = request.form.get("about_buttonHref", "").strip()
+    _apply_contact_form(d.setdefault("contact", {}))
+    save_data("company", d)
+    flash("The Basic Ingredients content saved.", "ok")
+    return redirect(url_for("company"))
+
+
+@app.route("/matcha")
+def matcha():
+    return render_template(
+        "simple_page.html",
+        page_title="Matcha Lab",
+        save_endpoint="matcha_save",
+        visual_page="matcha",
+        active="matcha",
+        d=load_data("matcha"),
+        extra="This is the Matcha Lab landing page (M002). Product details also live in the Catalog.",
+    )
+
+
+@app.route("/matcha/save", methods=["POST"])
+def matcha_save():
+    return _simple_page_save("matcha", "Matcha Lab content saved.", "matcha")
 
 
 # ---------------------------------------------------------------------------

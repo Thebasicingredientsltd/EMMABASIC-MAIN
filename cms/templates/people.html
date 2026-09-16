@@ -10,7 +10,7 @@
 {% macro hidden_pill(section) %}{% if not is_section_visible(section) %} <span class="pill">Hidden on site</span>{% endif %}{% endmacro %}
 {% block content %}
 <h1>People &amp; Places</h1>
-<p class="sub">Everything on the People &amp; Places page — the team, the "who we are" story, services, trade ordering, and contact details. Uncheck <em>Show this section</em> on a block to hide it on the live site without deleting the copy.</p>
+<p class="sub">Everything on the People &amp; Places page — the team, the "who we are" story, services, and contact details. Uncheck <em>Show this section</em> on a block to hide it on the live site without deleting the copy.</p>
 
 <form method="post" action="{{ url_for('people_save') }}" enctype="multipart/form-data">
 
@@ -153,34 +153,9 @@
   </div>
 
   <div class="card">
-    <h2 style="margin-top:0;">Trade — "How to order"{{ hidden_pill(d.trade) }}</h2>
-    {{ show_on_site('trade', d.trade) }}
-    <p class="field-help">This section appears on the <strong>Become a Distributor</strong> page, not on People &amp; Places.</p>
-    <div class="row">
-      <div><label>Eyebrow</label><input type="text" name="trade_eyebrow" value="{{ d.trade.eyebrow }}"/></div>
-      <div><label>Heading</label><input type="text" name="trade_heading" value="{{ d.trade.heading }}"/></div>
-    </div>
-    <label>Intro</label>
-    <textarea name="trade_intro" rows="2">{{ d.trade.intro }}</textarea>
-
-    <label>Items (question &amp; answer)</label>
-    <p class="field-help">Any attached PDF application forms are preserved automatically by position.</p>
-    <div id="trades">
-      {% for it in (d.trade['items'] or []) %}
-      <div class="tile-editor" data-trade>
-        <label>Question</label>
-        <input type="text" name="trade{{ loop.index0 }}_q" value="{{ it.q }}"/>
-        <label>Answer</label>
-        <textarea name="trade{{ loop.index0 }}_a" rows="3">{{ it.a }}</textarea>
-        {% if it.forms %}
-        <p class="field-help">Attached forms: {% for f in (it.forms or []) %}{{ f.label }}{{ ', ' if not loop.last }}{% endfor %}</p>
-        {% endif %}
-        <div style="margin-top:10px;"><button type="button" class="btn danger small" onclick="this.closest('[data-trade]').remove()">Remove item</button></div>
-      </div>
-      {% endfor %}
-    </div>
-    <input type="hidden" name="trade_count" id="trade_count" value="{{ (d.trade['items'] or [])|length }}"/>
-    <button type="button" class="btn secondary small" id="add-trade">+ Add item</button>
+    <h2 style="margin-top:0;">Trade — "How to order"</h2>
+    <p class="field-help">This section lives on the <strong>Become a Distributor</strong> page. Edit it there so all the trade copy stays in one place.</p>
+    <a class="btn secondary small" href="{{ url_for('distributor') }}">Edit Become a Distributor</a>
   </div>
 
   <div class="card">
@@ -478,7 +453,6 @@
 
   ebAddBlock('add-member', 'members', 'member-template', 'member_count');
   ebAddBlock('add-card', 'cards', 'card-template', 'card_count');
-  ebAddBlock('add-trade', 'trades', 'trade-template', 'trade_count');
 </script>
 {% endblock %}
 </output>

@@ -18,10 +18,11 @@ const TBI_RETAILERS = [
 ];
 
 function StockistCarousel({ retailers, eyebrow, heading, headingItalic }) {
-  const list = retailers || CAROUSEL_RETAILERS;
-  const _eyebrow = eyebrow || "Where to find us";
-  const _heading = heading || "Listed at a";
-  const _headingItalic = headingItalic || "few good places.";
+  const cms = (typeof window !== "undefined" && window.EB_PLACES && window.EB_PLACES.featured) || {};
+  const list = retailers || (cms.retailers && cms.retailers.length ? cms.retailers.map((r, i) => ({ id: r.name || i, ...r })) : CAROUSEL_RETAILERS);
+  const _eyebrow = eyebrow || cms.eyebrow || "Where to find us";
+  const _heading = heading || cms.heading || "Listed at a";
+  const _headingItalic = headingItalic || cms.headingItalic || "few good places.";
   const railRef = React.useRef(null);
   const [canL, setCanL] = React.useState(false);
   const [canR, setCanR] = React.useState(true);
@@ -173,7 +174,7 @@ function StockistTile({ s, index, total }) {
         scrollSnapAlign: "start",
         padding: "48px 40px",
         borderLeft: "1px solid rgba(246,246,246,0.14)",
-        borderRight: index === CAROUSEL_RETAILERS.length - 1 ? "1px solid rgba(246,246,246,0.14)" : "none",
+        borderRight: index === total - 1 ? "1px solid rgba(246,246,246,0.14)" : "none",
         minHeight: 280,
         display: "flex", flexDirection: "column", justifyContent: "space-between",
         background: hover ? "rgba(246,246,246,0.04)" : "transparent",

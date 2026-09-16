@@ -47,16 +47,38 @@ SITE_PAGES = [
         "data_key": "journal",
     },
     {
-        "id": "story",
-        "file": "Our Story.html",
-        "label": "Our Story",
-        "data_key": "homepage",
-    },
-    {
         "id": "distributor",
         "file": "Become a Distributor.html",
         "label": "Become a Distributor",
         "data_key": "people",
+        "sections": [
+            {"id": "trade", "path": "trade.visible", "label": "How to order"},
+            {"id": "contact", "path": "contact.visible", "label": "Contact"},
+        ],
+    },
+    {
+        "id": "places",
+        "file": "Places.html",
+        "label": "Where to find our products",
+        "data_key": "places",
+    },
+    {
+        "id": "story",
+        "file": "Our Story.html",
+        "label": "Our Story",
+        "data_key": "story",
+    },
+    {
+        "id": "company",
+        "file": "The Basic Ingredients.html",
+        "label": "The Basic Ingredients",
+        "data_key": "company",
+    },
+    {
+        "id": "matcha",
+        "file": "Matcha Lab.html",
+        "label": "Matcha Lab",
+        "data_key": "matcha",
     },
 ]
 

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% set active = "company" %}
+{% set hero = d.hero or {} %}
+{% set about = d.about or {} %}
+{% set contact = d.contact or {} %}
+{% block content %}
+<h1>The Basic Ingredients</h1>
+<p class="sub">Company page for The Basic Ingredients Ltd — headline, about copy, and contact details.</p>
+
+<form method="post" action="{{ url_for('company_save') }}">
+  <div class="card">
+    <h2 style="margin-top:0;">Opening headline</h2>
+    <label>Eyebrow</label>
+    <input type="text" name="hero_eyebrow" value="{{ hero.eyebrow or '' }}"/>
+    <div class="row">
+      <div>
+        <label>Title</label>
+        <input type="text" name="hero_title" value="{{ hero.title or '' }}"/>
+      </div>
+      <div>
+        <label>Title (italic)</label>
+        <input type="text" name="hero_titleItalic" value="{{ hero.titleItalic or '' }}"/>
+      </div>
+    </div>
+    <label>Subtitle</label>
+    <textarea name="hero_subtitle" rows="2">{{ hero.subtitle or '' }}</textarea>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;">About</h2>
+    <div class="row">
+      <div><label>Heading</label><input type="text" name="about_heading" value="{{ about.heading or '' }}"/></div>
+      <div><label>Heading (italic)</label><input type="text" name="about_headingItalic" value="{{ about.headingItalic or '' }}"/></div>
+    </div>
+    <label>Body</label>
+    <textarea name="about_body" rows="4">{{ about.body or '' }}</textarea>
+    <div class="row">
+      <div><label>Button label</label><input type="text" name="about_buttonLabel" value="{{ about.buttonLabel or '' }}"/></div>
+      <div><label>Button link</label><input type="text" name="about_buttonHref" value="{{ about.buttonHref or '' }}"/></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;">Contact</h2>
+    <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
+      <input type="checkbox" name="contact_visible" style="width:auto;" {{ 'checked' if is_section_visible(contact) }}/> Show this section on the live site
+    </label>
+    <div class="row">
+      <div><label>Heading line 1</label><input type="text" name="contact_headingLine1" value="{{ contact.headingLine1 or '' }}"/></div>
+      <div><label>Heading line 2</label><input type="text" name="contact_headingLine2" value="{{ contact.headingLine2 or '' }}"/></div>
+    </div>
+    <label>Body</label>
+    <textarea name="contact_body" rows="3">{{ contact.body or '' }}</textarea>
+    <div class="row">
+      <div><label>Region label</label><input type="text" name="contact_regionLabel" value="{{ contact.regionLabel or '' }}"/></div>
+      <div><label>Email</label><input type="text" name="contact_email" value="{{ contact.email or '' }}"/></div>
+    </div>
+    <div class="row">
+      <div><label>Address line 1</label><input type="text" name="contact_addressLine1" value="{{ contact.addressLine1 or '' }}"/></div>
+      <div><label>Address line 2</label><input type="text" name="contact_addressLine2" value="{{ contact.addressLine2 or '' }}"/></div>
+    </div>
+    <label>Note</label>
+    <textarea name="contact_note" rows="2">{{ contact.note or '' }}</textarea>
+  </div>
+
+  <div class="actions-bar save-bar">
+    <button class="btn" type="submit">Save The Basic Ingredients</button>
+    <a class="btn secondary" href="{{ url_for('index') }}">Cancel</a>
+    <a class="btn secondary" href="{{ url_for('visual_editor', page='company') }}">Open visual editor</a>
+  </div>
+</form>
+{% endblock %}

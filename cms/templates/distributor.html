@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% set active = "distributor" %}
+{% macro show_on_site(name, section) %}
+<label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
+  <input type="checkbox" name="{{ name }}_visible" style="width:auto;" {{ 'checked' if is_section_visible(section) }}/> Show this section on the live site
+</label>
+<p class="field-help" style="margin:0 0 14px;">Uncheck to hide this block on the website without deleting the content. You can turn it back on later.</p>
+{% endmacro %}
+{% macro hidden_pill(section) %}{% if not is_section_visible(section) %} <span class="pill">Hidden on site</span>{% endif %}{% endmacro %}
+{% set hero = d.distributor or {} %}
+{% block content %}
+<h1>Become a Distributor</h1>
+<p class="sub">Everything on the Become a Distributor page — the opening headline, how to order, and the contact block. Changes show on the website after you save (publish when you want them live).</p>
+
+<form method="post" action="{{ url_for('distributor_save') }}">
+
+  <div class="card">
+    <h2 style="margin-top:0;">Opening headline</h2>
+    <label>Eyebrow</label>
+    <input type="text" name="hero_eyebrow" value="{{ hero.eyebrow or '' }}"/>
+    <div class="row">
+      <div>
+        <label>Title</label>
+        <input type="text" name="hero_title" value="{{ hero.title or '' }}"/>
+      </div>
+      <div>
+        <label>Title (italic)</label>
+        <input type="text" name="hero_titleItalic" value="{{ hero.titleItalic or '' }}"/>
+      </div>
+    </div>
+    <label>Subtitle</label>
+    <textarea name="hero_subtitle" rows="3">{{ hero.subtitle or '' }}</textarea>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;">How to order{{ hidden_pill(d.trade) }}</h2>
+    {{ show_on_site('trade', d.trade) }}
+    <div class="row">
+      <div><label>Eyebrow</label><input type="text" name="trade_eyebrow" value="{{ d.trade.eyebrow }}"/></div>
+      <div><label>Heading</label><input type="text" name="trade_heading" value="{{ d.trade.heading }}"/></div>
+    </div>
+    <label>Intro</label>
+    <textarea name="trade_intro" rows="2">{{ d.trade.intro }}</textarea>
+
+    <label>Items (question &amp; answer)</label>
+    <p class="field-help">Any attached PDF application forms are kept automatically.</p>
+    <div id="trades">
+      {% for it in (d.trade['items'] or []) %}
+      <div class="tile-editor" data-trade>
+        <label>Question</label>
+        <input type="text" name="trade{{ loop.index0 }}_q" value="{{ it.q }}"/>
+        <label>Answer</label>
+        <textarea name="trade{{ loop.index0 }}_a" rows="3">{{ it.a }}</textarea>
+        {% if it.forms %}
+        <p class="field-help">Attached forms: {% for f in (it.forms or []) %}{{ f.label }}{{ ', ' if not loop.last }}{% endfor %}</p>
+        {% endif %}
+        <div style="margin-top:10px;"><button type="button" class="btn danger small" onclick="this.closest('[data-trade]').remove()">Remove item</button></div>
+      </div>
+      {% endfor %}
+    </div>
+    <input type="hidden" name="trade_count" id="trade_count" value="{{ (d.trade['items'] or [])|length }}"/>
+    <button type="button" class="btn secondary small" id="add-trade">+ Add item</button>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;">Contact{{ hidden_pill(d.contact) }}</h2>
+    {{ show_on_site('contact', d.contact) }}
+    <p class="field-help">This contact block is shared with the People &amp; Places page.</p>
+    <div class="row">
+      <div><label>Heading line 1</label><input type="text" name="contact_headingLine1" value="{{ d.contact.headingLine1 }}"/></div>
+      <div><label>Heading line 2</label><input type="text" name="contact_headingLine2" value="{{ d.contact.headingLine2 }}"/></div>
+    </div>
+    <label>Body</label>
+    <textarea name="contact_body" rows="3">{{ d.contact.body }}</textarea>
+    <div class="row">
+      <div><label>Region label</label><input type="text" name="contact_regionLabel" value="{{ d.contact.regionLabel }}"/></div>
+      <div><label>Email</label><input type="text" name="contact_email" value="{{ d.contact.email }}"/></div>
+    </div>
+    <div class="row">
+      <div><label>Address line 1</label><input type="text" name="contact_addressLine1" value="{{ d.contact.addressLine1 }}"/></div>
+      <div><label>Address line 2</label><input type="text" name="contact_addressLine2" value="{{ d.contact.addressLine2 }}"/></div>
+    </div>
+    <label>Note</label>
+    <textarea name="contact_note" rows="2">{{ d.contact.note }}</textarea>
+  </div>
+
+  <div class="actions-bar save-bar">
+    <button class="btn" type="submit">Save Become a Distributor</button>
+    <a class="btn secondary" href="{{ url_for('index') }}">Cancel</a>
+    <a class="btn secondary" href="{{ url_for('visual_editor', page='distributor') }}">Open visual editor</a>
+  </div>
+</form>
+
+<template id="trade-template">
+  <div class="tile-editor" data-trade>
+    <label>Question</label>
+    <input type="text" name="tradeIDX_q" value=""/>
+    <label>Answer</label>
+    <textarea name="tradeIDX_a" rows="3"></textarea>
+    <div style="margin-top:10px;"><button type="button" class="btn danger small" onclick="this.closest('[data-trade]').remove()">Remove item</button></div>
+  </div>
+</template>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.getElementById('add-trade').addEventListener('click', function () {
+    var counter = document.getElementById('trade_count');
+    var count = parseInt(counter.value, 10);
+    var tpl = document.getElementById('trade-template').innerHTML.replace(/IDX/g, count);
+    var wrap = document.createElement('div');
+    wrap.innerHTML = tpl.trim();
+    document.getElementById('trades').appendChild(wrap.firstChild);
+    counter.value = count + 1;
+  });
+</script>
+{% endblock %}

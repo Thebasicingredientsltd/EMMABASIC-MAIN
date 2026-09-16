@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% set hero = d.hero or {} %}
+{% block content %}
+<h1>{{ page_title }}</h1>
+<p class="sub">Opening headline for this page. Save to update the website (publish when you want it live).{% if extra %} {{ extra }}{% endif %}</p>
+
+<form method="post" action="{{ url_for(save_endpoint) }}">
+  <div class="card">
+    <h2 style="margin-top:0;">Opening headline</h2>
+    <label>Eyebrow</label>
+    <input type="text" name="hero_eyebrow" value="{{ hero.eyebrow or '' }}"/>
+    <div class="row">
+      <div>
+        <label>Title</label>
+        <input type="text" name="hero_title" value="{{ hero.title or '' }}"/>
+      </div>
+      <div>
+        <label>Title (italic)</label>
+        <input type="text" name="hero_titleItalic" value="{{ hero.titleItalic or '' }}"/>
+      </div>
+    </div>
+    <label>Subtitle</label>
+    <textarea name="hero_subtitle" rows="3">{{ hero.subtitle or '' }}</textarea>
+  </div>
+  <div class="actions-bar save-bar">
+    <button class="btn" type="submit">Save {{ page_title }}</button>
+    <a class="btn secondary" href="{{ url_for('index') }}">Cancel</a>
+    {% if visual_page %}
+    <a class="btn secondary" href="{{ url_for('visual_editor', page=visual_page) }}">Open visual editor</a>
+    {% endif %}
+  </div>
+</form>
+{% endblock %}

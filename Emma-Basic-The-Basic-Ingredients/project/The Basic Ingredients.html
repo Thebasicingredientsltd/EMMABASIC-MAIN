@@ -19,6 +19,9 @@
 <body style="overflow-x: clip;">
 <div id="root"></div>
 
+<!-- CMS-managed content -->
+<script src="data/company.js?v=20260916150846588"></script>
+
 <script type="text/babel" src="components/Placeholder.jsx"></script>
 <script type="text/babel" src="components/motion.jsx"></script>
 <script type="text/babel" src="components/TopNav.jsx?v=17"></script>
@@ -535,6 +538,8 @@ function TBIOrderSection() {
 
 /* â"€â"€ Contact â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
 function TBIContactSection() {
+  const d = (window.EB_COMPANY && window.EB_COMPANY.contact) || {};
+  if (d.visible === false) return null;
   return (
     <section id="contact" style={{
       background: "var(--ink)",
@@ -564,8 +569,8 @@ function TBIContactSection() {
                 fontVariationSettings: '"opsz" 144, "SOFT" 30',
                 color: "var(--paper)",
               }}>
-                Discuss your<br/>
-                <em style={{ fontStyle: "normal", fontFamily: "var(--f-body)", fontWeight: 400, letterSpacing: "-0.02em" }}>needs with us.</em>
+                {d.headingLine1 || "Discuss your"}<br/>
+                <em style={{ fontStyle: "normal", fontFamily: "var(--f-body)", fontWeight: 400, letterSpacing: "-0.02em" }}>{d.headingLine2 || "needs with us."}</em>
               </h2>
             </Reveal>
             <Reveal delay={100}>
@@ -574,7 +579,7 @@ function TBIContactSection() {
                 lineHeight: 1.72, color: "rgba(246,246,246,0.78)",
                 margin: "0 0 clamp(40px, 6vh, 64px)",
               }}>
-                We provide advice on food safety, legality, authenticity and quality. If you are a food &amp; drink brand looking for export opportunities, you can rely on us at all stages &mdash; from labelling assessment to customs clearance.
+                {d.body || "We provide advice on food safety, legality, authenticity and quality. If you are a food & drink brand looking for export opportunities, you can rely on us at all stages — from labelling assessment to customs clearance."}
               </p>
             </Reveal>
 
@@ -586,7 +591,7 @@ function TBIContactSection() {
                     textTransform: "uppercase", color: "rgba(246,246,246,0.4)",
                     marginBottom: 14,
                   }}>
-                    United Kingdom
+                    {d.regionLabel || "United Kingdom"}
                   </div>
                   <address style={{
                     fontStyle: "normal",
@@ -594,8 +599,8 @@ function TBIContactSection() {
                     lineHeight: 1.75, color: "rgba(246,246,246,0.78)",
                     fontVariationSettings: '"opsz" 16, "SOFT" 20',
                   }}>
-                    Unit 4, New Concordia Wharf<br/>
-                    London, SE1 2BB
+                    {d.addressLine1 || "Unit 4, New Concordia Wharf"}<br/>
+                    {d.addressLine2 || "London, SE1 2BB"}
                   </address>
                 </div>
               </Reveal>
@@ -613,7 +618,7 @@ function TBIContactSection() {
                   Email
                 </div>
                 <a
-                  href="mailto:boris@thebasicingredients.com"
+                  href={"mailto:" + (d.email || "boris@thebasicingredients.com")}
                   style={{
                     display: "inline-block",
                     fontFamily: "var(--f-mono)", fontSize: "clamp(12px, 1vw, 14px)",
@@ -632,7 +637,7 @@ function TBIContactSection() {
                     e.currentTarget.style.background = "transparent";
                   }}
                 >
-                  boris@thebasicingredients.com →
+                  {(d.email || "boris@thebasicingredients.com")} →
                 </a>
               </div>
             </Reveal>
@@ -643,7 +648,7 @@ function TBIContactSection() {
                 lineHeight: 1.6, margin: "0 0 clamp(32px, 4vh, 48px)",
                 color: "rgba(246,246,246,0.4)",
               }}>
-                For trade enquiries, export opportunities, and OEM partnerships.
+                {d.note || "For trade enquiries, export opportunities, and OEM partnerships."}
               </p>
             </Reveal>
             <Reveal delay={240}>
@@ -688,6 +693,7 @@ function MeetTeamButton() {
 /* â"€â"€ Logo Strip â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€â"€ */
 function TBIHero() {
   const [lineRef, lineVisible] = useReveal(0.1);
+  const hero = (window.EB_COMPANY && window.EB_COMPANY.hero) || {};
   return (
     <section style={{
       padding: "180px var(--pad-x) clamp(80px, 12vh, 140px)",
@@ -703,7 +709,7 @@ function TBIHero() {
             display: "block", marginBottom: 16,
             opacity: lineVisible ? 1 : 0,
             transition: "opacity 600ms var(--ease-out) 100ms",
-          }}>The Basic Ingredients Ltd</span>
+          }}>{(hero.eyebrow || "The Basic Ingredients Ltd")}</span>
           <div style={{
             height: 1, background: "var(--rule)",
             transformOrigin: "left",
@@ -724,9 +730,9 @@ function TBIHero() {
             overflow: "visible", paddingBottom: "0.08em",
             fontVariationSettings: '"opsz" 144, "SOFT" 30',
           }}>
-            <TypeReveal text="Clean label," delay={300} stagger={50} style={{ display: "block" }} />
+            <TypeReveal text={hero.title || "Clean label,"} delay={300} stagger={50} style={{ display: "block" }} />
             <em style={{ display: "block", fontStyle: "normal", fontFamily: "var(--f-body)", fontWeight: 400, letterSpacing: "-0.02em" }}>
-              <TypeReveal text="by design." delay={500} stagger={50} />
+              <TypeReveal text={hero.titleItalic || "by design."} delay={500} stagger={50} />
             </em>
           </h1>
           <Reveal delay={700}>
@@ -764,6 +770,7 @@ function TBIDistributorsSection() {
 
 function TBIAboutSection() {
   const [hover, setHover] = React.useState(false);
+  const about = (window.EB_COMPANY && window.EB_COMPANY.about) || {};
   return (
     <section id="about" style={{
       background: "var(--paper)",
@@ -782,7 +789,7 @@ function TBIAboutSection() {
               lineHeight: 1.0, letterSpacing: "-0.035em", margin: 0,
               fontVariationSettings: '"opsz" 144, "SOFT" 20',
             }}>
-              Who we <em style={{ fontStyle: "normal", fontFamily: "var(--f-body)", fontWeight: 400, letterSpacing: "-0.02em" }}>are.</em>
+              {about.heading || "Who we"} <em style={{ fontStyle: "normal", fontFamily: "var(--f-body)", fontWeight: 400, letterSpacing: "-0.02em" }}>{about.headingItalic || "are."}</em>
             </h2>
           </Reveal>
           <Reveal delay={80}>
@@ -791,10 +798,10 @@ function TBIAboutSection() {
                 fontFamily: "var(--f-body)", fontSize: "clamp(17px, 1.35vw, 19px)",
                 lineHeight: 1.72, margin: "0 0 clamp(28px, 3vh, 40px)", color: "var(--ink-90)",
               }}>
-                The Basic Ingredients Ltd is a food company specialising in clean-label products &mdash; export, import, and OEM across the UK, Europe, and Asia.
+                {about.body || "The Basic Ingredients Ltd is a food company specialising in clean-label products — export, import, and OEM across the UK, Europe, and Asia."}
               </p>
               <a
-                href="People%20%26%20Places.html#about"
+                href={about.buttonHref || "People%20%26%20Places.html#about"}
                 onMouseEnter={() => setHover(true)}
                 onMouseLeave={() => setHover(false)}
                 style={{
@@ -808,7 +815,7 @@ function TBIAboutSection() {
                   transition: "color 200ms var(--ease-out), background 200ms var(--ease-out)",
                 }}
               >
-                About The Basic Ingredients Ltd →
+                {about.buttonLabel || "About The Basic Ingredients Ltd →"}
               </a>
             </div>
           </Reveal>

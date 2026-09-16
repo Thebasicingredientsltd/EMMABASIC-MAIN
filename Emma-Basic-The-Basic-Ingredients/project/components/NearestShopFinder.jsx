@@ -39,8 +39,16 @@ function haversineKm(lat1, lng1, lat2, lng2) {
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
 
+function getFinderStores() {
+  const shops = (typeof window !== "undefined" && window.EB_PLACES && window.EB_PLACES.shops) || [];
+  if (shops.length) {
+    return shops.filter(s => typeof s.lat === "number" && typeof s.lng === "number");
+  }
+  return FINDER_STORES;
+}
+
 function sortByPos(lat, lng) {
-  return FINDER_STORES
+  return getFinderStores()
     .map(s => ({ ...s, km: haversineKm(lat, lng, s.lat, s.lng) }))
     .sort((a, b) => a.km - b.km);
 }

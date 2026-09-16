@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% set active = "places" %}
+{% set hero = d.hero or {} %}
+{% set featured = d.featured or {} %}
+{% set hq = d.hq or {} %}
+{% block content %}
+<h1>Where to find our products</h1>
+<p class="sub">Everything on the Places page — the opening headline, featured shops, the full stockist list, and the London HQ details.</p>
+
+<form method="post" action="{{ url_for('places_save') }}">
+
+  <div class="card">
+    <h2 style="margin-top:0;">Opening headline</h2>
+    <label>Eyebrow</label>
+    <input type="text" name="hero_eyebrow" value="{{ hero.eyebrow or '' }}"/>
+    <div class="row">
+      <div>
+        <label>Title</label>
+        <input type="text" name="hero_title" value="{{ hero.title or '' }}"/>
+      </div>
+      <div>
+        <label>Title (italic)</label>
+        <input type="text" name="hero_titleItalic" value="{{ hero.titleItalic or '' }}"/>
+      </div>
+    </div>
+    <label>Subtitle</label>
+    <textarea name="hero_subtitle" rows="3">{{ hero.subtitle or '' }}</textarea>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;">Featured shops (carousel)</h2>
+    <div class="row">
+      <div><label>Eyebrow</label><input type="text" name="featured_eyebrow" value="{{ featured.eyebrow or '' }}"/></div>
+      <div><label>Heading</label><input type="text" name="featured_heading" value="{{ featured.heading or '' }}"/></div>
+    </div>
+    <label>Heading (italic)</label>
+    <input type="text" name="featured_headingItalic" value="{{ featured.headingItalic or '' }}"/>
+    <label>Shops</label>
+    <p class="field-help">Name, area, and an optional website or map link. These appear in the dark carousel near the top of the page.</p>
+    <div id="retailers">
+      {% for r in (featured.retailers or []) %}
+      <div class="tile-editor" data-retailer>
+        <div class="row">
+          <div><label>Name</label><input type="text" name="retailer{{ loop.index0 }}_name" value="{{ r.name }}"/></div>
+          <div><label>Area / city</label><input type="text" name="retailer{{ loop.index0 }}_city" value="{{ r.city }}"/></div>
+        </div>
+        <label>Link</label>
+        <input type="text" name="retailer{{ loop.index0 }}_url" value="{{ r.url or '' }}"/>
+        <input type="hidden" name="retailer{{ loop.index0 }}_style" value="{{ r.style or '' }}"/>
+        <div style="margin-top:10px;"><button type="button" class="btn danger small" onclick="this.closest('[data-retailer]').remove()">Remove shop</button></div>
+      </div>
+      {% endfor %}
+    </div>
+    <input type="hidden" name="retailer_count" id="retailer_count" value="{{ (featured.retailers or [])|length }}"/>
+    <button type="button" class="btn secondary small" id="add-retailer">+ Add featured shop</button>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;">All stockists</h2>
+    <p class="field-help">These shops appear in the regional list and the “find your nearest shop” tool. Latitude and longitude are optional — leave them blank if you don’t have them.</p>
+    <div id="shops">
+      {% for s in (d.shops or []) %}
+      <div class="tile-editor" data-shop>
+        <div class="row">
+          <div><label>Name</label><input type="text" name="shop{{ loop.index0 }}_name" value="{{ s.name }}"/></div>
+          <div><label>City / region</label><input type="text" name="shop{{ loop.index0 }}_city" value="{{ s.city }}"/></div>
+        </div>
+        <label>Address</label>
+        <input type="text" name="shop{{ loop.index0 }}_address" value="{{ s.address }}"/>
+        <div class="row">
+          <div><label>Latitude (optional)</label><input type="text" name="shop{{ loop.index0 }}_lat" value="{{ s.lat if s.lat is not none else '' }}"/></div>
+          <div><label>Longitude (optional)</label><input type="text" name="shop{{ loop.index0 }}_lng" value="{{ s.lng if s.lng is not none else '' }}"/></div>
+        </div>
+        <div style="margin-top:10px;"><button type="button" class="btn danger small" onclick="this.closest('[data-shop]').remove()">Remove stockist</button></div>
+      </div>
+      {% endfor %}
+    </div>
+    <input type="hidden" name="shop_count" id="shop_count" value="{{ (d.shops or [])|length }}"/>
+    <button type="button" class="btn secondary small" id="add-shop">+ Add stockist</button>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;">London HQ</h2>
+    <label>Label</label>
+    <input type="text" name="hq_label" value="{{ hq.label or '' }}"/>
+    <div class="row">
+      <div><label>Address line 1</label><input type="text" name="hq_addressLine1" value="{{ hq.addressLine1 or '' }}"/></div>
+      <div><label>Address line 2</label><input type="text" name="hq_addressLine2" value="{{ hq.addressLine2 or '' }}"/></div>
+    </div>
+    <div class="row">
+      <div><label>Latitude</label><input type="text" name="hq_lat" value="{{ hq.lat if hq.lat is not none else '' }}"/></div>
+      <div><label>Longitude</label><input type="text" name="hq_lng" value="{{ hq.lng if hq.lng is not none else '' }}"/></div>
+    </div>
+  </div>
+
+  <div class="actions-bar save-bar">
+    <button class="btn" type="submit">Save Where to find our products</button>
+    <a class="btn secondary" href="{{ url_for('index') }}">Cancel</a>
+    <a class="btn secondary" href="{{ url_for('visual_editor', page='places') }}">Open visual editor</a>
+  </div>
+</form>
+
+<template id="retailer-template">
+  <div class="tile-editor" data-retailer>
+    <div class="row">
+      <div><label>Name</label><input type="text" name="retailerIDX_name" value=""/></div>
+      <div><label>Area / city</label><input type="text" name="retailerIDX_city" value=""/></div>
+    </div>
+    <label>Link</label>
+    <input type="text" name="retailerIDX_url" value=""/>
+    <input type="hidden" name="retailerIDX_style" value="sans-light"/>
+    <div style="margin-top:10px;"><button type="button" class="btn danger small" onclick="this.closest('[data-retailer]').remove()">Remove shop</button></div>
+  </div>
+</template>
+<template id="shop-template">
+  <div class="tile-editor" data-shop>
+    <div class="row">
+      <div><label>Name</label><input type="text" name="shopIDX_name" value=""/></div>
+      <div><label>City / region</label><input type="text" name="shopIDX_city" value=""/></div>
+    </div>
+    <label>Address</label>
+    <input type="text" name="shopIDX_address" value=""/>
+    <div class="row">
+      <div><label>Latitude (optional)</label><input type="text" name="shopIDX_lat" value=""/></div>
+      <div><label>Longitude (optional)</label><input type="text" name="shopIDX_lng" value=""/></div>
+    </div>
+    <div style="margin-top:10px;"><button type="button" class="btn danger small" onclick="this.closest('[data-shop]').remove()">Remove stockist</button></div>
+  </div>
+</template>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  function ebAddIndexed(btnId, containerId, templateId, counterId) {
+    document.getElementById(btnId).addEventListener('click', function () {
+      var counter = document.getElementById(counterId);
+      var count = parseInt(counter.value, 10);
+      var tpl = document.getElementById(templateId).innerHTML.replace(/IDX/g, count);
+      var wrap = document.createElement('div');
+      wrap.innerHTML = tpl.trim();
+      document.getElementById(containerId).appendChild(wrap.firstChild);
+      counter.value = count + 1;
+    });
+  }
+  ebAddIndexed('add-retailer', 'retailers', 'retailer-template', 'retailer_count');
+  ebAddIndexed('add-shop', 'shops', 'shop-template', 'shop_count');
+</script>
+{% endblock %}

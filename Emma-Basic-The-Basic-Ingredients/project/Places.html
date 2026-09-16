@@ -36,6 +36,9 @@
 <body data-screen-label="Places">
 <div id="root"></div>
 
+<!-- CMS-managed content -->
+<script src="data/places.js?v=20260916150513546"></script>
+
 <script type="text/babel" src="components/Placeholder.jsx"></script>
 <script type="text/babel" src="components/motion.jsx"></script>
 <script type="text/babel" src="components/TopNav.jsx?v=17"></script>
@@ -49,11 +52,15 @@
 function LocationMap() {
   const mapRef = React.useRef(null);
   const instanceRef = React.useRef(null);
+  const hq = (window.EB_PLACES && window.EB_PLACES.hq) || {};
+  const LAT = hq.lat || 51.5016;
+  const LNG = hq.lng || -0.0710;
+  const hqLabel = hq.label || "London HQ";
+  const line1 = hq.addressLine1 || "4 New Concordia Wharf";
+  const line2 = hq.addressLine2 || "Mill Street, London SE1 2BB";
 
   React.useEffect(() => {
     if (!mapRef.current || instanceRef.current) return;
-    const LAT = 51.5016;
-    const LNG = -0.0710;
     const isMobile = window.matchMedia("(max-width: 768px)").matches;
     const map = L.map(mapRef.current, {
       center: [LAT, LNG], zoom: 17, zoomControl: true,
@@ -71,7 +78,7 @@ function LocationMap() {
     const icon = L.divIcon({ html: pinSvg, iconSize: [52, 64], iconAnchor: [26, 62], className: "" });
     L.marker([LAT, LNG], { icon }).addTo(map);
     return () => { map.remove(); instanceRef.current = null; };
-  }, []);
+  }, [LAT, LNG]);
 
   return (
     <section style={{ background: "var(--paper)", padding: "clamp(64px, 10vh, 120px) 0 clamp(80px, 12vh, 160px)" }}>
@@ -83,17 +90,17 @@ function LocationMap() {
           borderBottom: "1px solid var(--rule)",
           marginBottom: "clamp(24px, 3vh, 36px)",
         }}>
-          <span style={{ fontFamily: "var(--f-mono)", fontSize: 10.5, letterSpacing: "0.24em", textTransform: "uppercase", color: "var(--ink-60)" }}>London HQ</span>
+          <span style={{ fontFamily: "var(--f-mono)", fontSize: 10.5, letterSpacing: "0.24em", textTransform: "uppercase", color: "var(--ink-60)" }}>{hqLabel}</span>
           <address style={{ fontStyle: "normal", fontFamily: "var(--f-mono)", fontSize: 10.5, letterSpacing: "0.14em", color: "var(--ink-60)", textAlign: "right" }}>
-            4 New Concordia Wharf &middot; Mill Street &middot; London SE1 2BB
+            {line1} &middot; {line2}
           </address>
         </div>
         <div className="eb-map-wrap" style={{ width: "100%", height: "clamp(360px, 50vw, 580px)", border: "1px solid var(--rule)", position: "relative" }}>
           <div ref={mapRef} style={{ width: "100%", height: "100%" }} />
           <div style={{ position: "absolute", bottom: 20, left: 20, zIndex: 1000, background: "white", border: "1px solid rgba(10,10,10,0.12)", padding: "14px 18px", boxShadow: "0 2px 16px rgba(0,0,0,0.14)", pointerEvents: "none", minWidth: 220 }}>
-            <div style={{ fontFamily: "var(--f-mono)", fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(10,10,10,0.45)", marginBottom: 8 }}>London HQ</div>
+            <div style={{ fontFamily: "var(--f-mono)", fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(10,10,10,0.45)", marginBottom: 8 }}>{hqLabel}</div>
             <div style={{ fontFamily: "var(--f-mono)", fontSize: 10.5, letterSpacing: "0.1em", color: "#0A0A0A", lineHeight: 1.6, marginBottom: 14 }}>
-              4 New Concordia Wharf<br/>Mill Street, SE1 2BB
+              {line1}<br/>{line2}
             </div>
             <div style={{ borderTop: "1px solid rgba(10,10,10,0.1)", paddingTop: 10, display: "grid", gap: 6 }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 16 }}>
@@ -201,15 +208,16 @@ function OseyoSection() {
 }
 
 function PlacesApp() {
+  const hero = (window.EB_PLACES && window.EB_PLACES.hero) || {};
   return (
     <>
       <TopNav hasHero={false} />
       <main>
         <PageHero
-          eyebrow="Places"
-          title="Where to find"
-          titleItalic="our products."
-          subtitle="Good shops, independent grocers, and department stores &mdash; stocking Emma Basic near you."
+          eyebrow={hero.eyebrow || "Places"}
+          title={hero.title || "Where to find"}
+          titleItalic={hero.titleItalic || "our products."}
+          subtitle={hero.subtitle || "Good shops, independent grocers, and department stores — stocking Emma Basic near you."}
         />
         <StockistCarousel />
         <SupplierMap />

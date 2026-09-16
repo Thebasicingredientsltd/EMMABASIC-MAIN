@@ -21,7 +21,7 @@
 
 <!-- CMS-managed content -->
 <script src="data/homepage.js?v=20260916144850261"></script>
-<script src="data/people.js?v=20260916144850261"></script>
+<script src="data/people.js?v=20260916150514027"></script>
 
 <script type="text/babel" src="components/Placeholder.jsx"></script>
 <script type="text/babel" src="components/motion.jsx"></script>
@@ -33,6 +33,11 @@
 <script type="text/babel">
 
 const EB_PEOPLE = window.EB_PEOPLE || {};
+
+function isSectionVisible(section) {
+  if (!section || typeof section !== "object") return true;
+  return section.visible !== false;
+}
 
 function DistributorContact() {
   const d = EB_PEOPLE.contact || {};
@@ -94,18 +99,19 @@ function DistributorContact() {
 }
 
 function DistributorApp() {
+  const hero = EB_PEOPLE.distributor || {};
   return (
     <>
       <TopNav hasHero={false} />
       <main>
         <PageHero
-          eyebrow="For trade customers"
-          title="Become a"
-          titleItalic="distributor."
-          subtitle="Stock Emma Basic — the additive-free range trusted across UK retail. Here's how to open a trade account and start ordering."
+          eyebrow={hero.eyebrow || "For trade customers"}
+          title={hero.title || "Become a"}
+          titleItalic={hero.titleItalic || "distributor."}
+          subtitle={hero.subtitle || "Stock Emma Basic — the additive-free range trusted across UK retail. Here's how to open a trade account and start ordering."}
         />
         <OrderSection />
-        <DistributorContact />
+        {isSectionVisible(EB_PEOPLE.contact) && <DistributorContact />}
       </main>
       <SiteFooter />
     </>

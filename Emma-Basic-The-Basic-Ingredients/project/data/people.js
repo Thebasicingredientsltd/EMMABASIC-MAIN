@@ -148,6 +148,12 @@ window.EB_PEOPLE = {
     ],
     "closing": "We provide advice on food safety, legality, authenticity and quality. If you are a food & drink brand looking for export opportunities, you can rely on us at all stages — from labelling assessment to customs clearance."
   },
+  "distributor": {
+    "eyebrow": "For trade customers",
+    "title": "Become a",
+    "titleItalic": "distributor.",
+    "subtitle": "Stock Emma Basic — the additive-free range trusted across UK retail. Here's how to open a trade account and start ordering."
+  },
   "trade": {
     "eyebrow": "For trade customers",
     "heading": "How to order.",

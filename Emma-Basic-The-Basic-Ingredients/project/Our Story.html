@@ -38,6 +38,7 @@
 
 <!-- CMS-managed content -->
 <script src="data/homepage.js?v=20260916144850261"></script>
+<script src="data/story.js?v=20260916150922108"></script>
 
 <script type="text/babel" src="components/Placeholder.jsx"></script>
 <script type="text/babel" src="components/motion.jsx"></script>
@@ -271,15 +272,16 @@ function GalleryThumb({ src, index }) {
 }
 
 function OurStoryApp() {
+  const hero = (window.EB_STORY && window.EB_STORY.hero) || {};
   return (
     <>
       <TopNav hasHero={false} />
       <main>
         <PageHero
-          eyebrow="Our Story"
-          title="Made for the shelf"
-          titleItalic="we couldn't find."
-          subtitle="Emma Basic is an additive-free food brand for home cooking. It's still run the same way — real ingredients, nothing hidden."
+          eyebrow={hero.eyebrow || "Our Story"}
+          title={hero.title || "Made for the shelf"}
+          titleItalic={hero.titleItalic || "we couldn't find."}
+          subtitle={hero.subtitle || "Emma Basic is an additive-free food brand for home cooking. It's still run the same way — real ingredients, nothing hidden."}
         />
         <FounderNarrative hideReadMore />
         <LocationMap />
