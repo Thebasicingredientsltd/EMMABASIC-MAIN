@@ -70,6 +70,7 @@ DATA_FILES = {
     "homepage": {"file": os.path.join(DATA_DIR, "homepage.js"), "var": "window.EB_HOME"},
     "catalog": {"file": os.path.join(DATA_DIR, "catalog.js"), "var": "window.EB_CATALOG"},
     "people": {"file": os.path.join(DATA_DIR, "people.js"), "var": "window.EB_PEOPLE"},
+    "nav": {"file": os.path.join(DATA_DIR, "nav.js"), "var": "window.EB_NAV"},
 }
 
 ALLOWED_EXT = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".avif", ".svg"}
@@ -99,6 +100,7 @@ HEADERS = {
     "homepage": "/* Emma Basic — homepage content (CMS-managed). The payload below is strict JSON. */",
     "catalog": "/* Emma Basic — full product catalog (CMS-managed). The payload below is strict JSON. */",
     "people": "/* Emma Basic — People & Places page content (CMS-managed). The payload below is strict JSON. */",
+    "nav": "/* Emma Basic — site navigation (CMS-managed). The payload below is strict JSON. */",
 }
 
 app = Flask(__name__)
@@ -1587,6 +1589,144 @@ def publish():
     else:
         flash("Published to GitHub: %s" % message, "ok")
     return redirect(url_for("index"))
+
+
+def _visual_sections(page, data):
+    from visual import get_path
+    out = []
+    for spec in page.get("sections") or []:
+        try:
+            visible = get_path(data, spec["path"])
+        except Exception:
+            visible = True
+        item = dict(spec)
+        item["visible"] = False if visible is False else True
+        out.append(item)
+    return out
+
+
+@app.route("/visual")
+def visual_editor():
+    from visual import SITE_PAGES, page_by_id
+    page_id = request.args.get("page") or "home"
+    page = page_by_id(page_id) or SITE_PAGES[0]
+    data = {}
+    try:
+        data = load_data(page["data_key"])
+    except Exception:
+        data = {}
+    return render_template(
+        "visual.html",
+        pages=SITE_PAGES,
+        page_id=page["id"],
+        data_key=page["data_key"],
+        sections=_visual_sections(page, data),
+    )
+
+
+@app.route("/preview/<page_id>")
+def visual_preview(page_id):
+    from visual import page_by_id, rewrite_preview_html, SITE_PAGES
+    page = page_by_id(page_id)
+    if page is None:
+        custom = os.path.join(PROJECT_DIR, page_id if page_id.endswith(".html") else page_id + ".html")
+        if not os.path.isfile(custom):
+            abort(404)
+        with open(custom, encoding="utf-8") as fh:
+            html = fh.read()
+        return Response(rewrite_preview_html(html, os.path.basename(custom)), mimetype="text/html")
+    path = os.path.join(PROJECT_DIR, page["file"])
+    with open(path, encoding="utf-8") as fh:
+        html = fh.read()
+    return Response(rewrite_preview_html(html, page["file"]), mimetype="text/html")
+
+
+@app.route("/preview-static/<path:filename>")
+def preview_static(filename):
+    return send_from_directory(PROJECT_DIR, filename)
+
+
+@app.route("/api/visual/patch", methods=["POST"])
+def visual_patch():
+    from visual import set_path
+    body = request.get_json(force=True, silent=True) or {}
+    key = body.get("key")
+    path = body.get("path")
+    if key not in DATA_FILES or not path:
+        return jsonify(ok=False, error="Missing field"), 400
+    try:
+        data = load_data(key)
+        set_path(data, path, body.get("value", ""))
+        save_data(key, data)
+    except Exception as exc:
+        return jsonify(ok=False, error=str(exc)), 400
+    return jsonify(ok=True)
+
+
+@app.route("/api/visual/image", methods=["POST"])
+def visual_image():
+    from visual import set_path
+    key = request.form.get("key")
+    path = request.form.get("path")
+    if key not in DATA_FILES or not path:
+        return jsonify(ok=False, error="Missing field"), 400
+    try:
+        uploaded = save_upload_detailed(request.files.get("file"))
+        if not uploaded:
+            return jsonify(ok=False, error="No image"), 400
+        data = load_data(key)
+        set_path(data, path, uploaded["path"])
+        save_data(key, data)
+    except Exception as exc:
+        return jsonify(ok=False, error=str(exc)), 400
+    return jsonify(ok=True, url=uploaded["preview_url"], path=uploaded["path"])
+
+
+@app.route("/api/visual/section", methods=["POST"])
+def visual_section():
+    from visual import add_custom_section, set_path
+    body = request.get_json(force=True, silent=True) or {}
+    key = body.get("key")
+    if key not in DATA_FILES:
+        return jsonify(ok=False, error="Unknown page data"), 400
+    try:
+        data = load_data(key)
+        action = body.get("action")
+        if action == "add":
+            add_custom_section(data, body.get("heading") or "New section", body.get("body") or "")
+        elif action == "visibility":
+            set_path(data, body.get("path"), bool(body.get("visible")))
+        else:
+            return jsonify(ok=False, error="Unknown action"), 400
+        save_data(key, data)
+    except Exception as exc:
+        return jsonify(ok=False, error=str(exc)), 400
+    return jsonify(ok=True)
+
+
+@app.route("/api/visual/page", methods=["POST"])
+def visual_add_page():
+    from visual import add_site_page
+    body = request.get_json(force=True, silent=True) or {}
+    title = (body.get("title") or "").strip()
+    if not title:
+        return jsonify(ok=False, error="A page needs a title"), 400
+    try:
+        nav = load_data("nav")
+    except Exception:
+        nav = {"left": [], "right": []}
+    try:
+        result = add_site_page(
+            PROJECT_DIR,
+            title,
+            body.get("heading") or title,
+            body.get("body") or "",
+            nav,
+        )
+        save_data("nav", result["nav"])
+    except Exception as exc:
+        return jsonify(ok=False, error=str(exc)), 400
+    return jsonify(ok=True, filename=result["filename"])
 
 
 if __name__ == "__main__":
