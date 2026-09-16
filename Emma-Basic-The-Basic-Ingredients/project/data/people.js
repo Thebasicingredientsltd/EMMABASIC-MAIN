@@ -28,7 +28,7 @@ window.EB_PEOPLE = {
         "role": "Technical Account Manager",
         "bio": "",
         "tone": "cool",
-        "image": "assets/uploads/yoko_Work-20260916-090543.jpg",
+        "image": "assets/uploads/yoko_Work-20260916-090754.jpg",
         "image2": "",
         "phone": ""
       },
@@ -96,7 +96,7 @@ window.EB_PEOPLE = {
         "role": "Sales & Operations Executive",
         "bio": "I love being outside — golfing, playing football, or heading out for a hike whenever I can. Clean, simple ingredients matter to me, which is why Emma Basic fits so naturally into my routine.",
         "tone": "cool",
-        "image": "assets/uploads/Taiki_Work-20260916-090615.jpg",
+        "image": "assets/uploads/Taiki_Work-20260916-090809.jpg",
         "image2": "assets/uploads/Taiki_Personal-20260916-090623.jpg",
         "phone": "",
         "imagePosition": "40% center",
