@@ -92,6 +92,49 @@ class PublishTests(unittest.TestCase):
         self.assertEqual(status["changes"], 0)
         self.assertEqual(status["unpushed"], 0)
 
+    def test_publish_keeps_local_cms_data_instead_of_merged_duplicate_keys(self):
+        """Git can combine two JSON edits into duplicate keys. CMS content wins."""
+        rel = os.path.join(
+            "Emma-Basic-The-Basic-Ingredients", "project", "data", "people.js"
+        )
+        write(
+            os.path.join(self.local, rel),
+            "{\n  \"emma\": \"new.jpg\",\n  \"pad\": \"%s\",\n  \"yoko\": \"old-yoko\"\n}\n"
+            % ("x" * 80),
+        )
+        git(["add", "."], self.local)
+        git(["commit", "-m", "add people data"], self.local)
+        git(["push"], self.local)
+
+        self.clone_other()
+        write(
+            os.path.join(self.other, rel),
+            "{\n  \"emma\": \"new.jpg\",\n  \"emma\": \"old.jpg\",\n  \"pad\": \"%s\",\n  \"yoko\": \"old-yoko\"\n}\n"
+            % ("x" * 80),
+        )
+        git(["add", "."], self.other)
+        git(["commit", "-m", "remote merge duplicated keys"], self.other)
+        git(["push"], self.other)
+
+        # Local only edits Yoko, so a line-level rebase keeps GitHub's duplicate
+        # Emma keys. The whole CMS data file must win.
+        write(
+            os.path.join(self.local, rel),
+            "{\n  \"emma\": \"new.jpg\",\n  \"pad\": \"%s\",\n  \"yoko\": \"new-yoko\"\n}\n"
+            % ("x" * 80),
+        )
+        result = sync_and_push("CRM photo", cwd=self.local)
+        self.assertTrue(result["ok"], result.get("error"))
+
+        cloned = os.path.join(self.tmp, "verify")
+        git(["clone", self.remote, cloned], self.tmp)
+        with open(os.path.join(cloned, rel), encoding="utf-8") as fh:
+            body = fh.read()
+        self.assertIn("new.jpg", body)
+        self.assertIn("new-yoko", body)
+        self.assertNotIn("old.jpg", body)
+        self.assertEqual(body.count('"emma"'), 1)
+
     def test_publish_retries_unpushed_commits_after_a_failed_push(self):
         """Working tree is clean, but commits never made it to GitHub."""
         self.clone_other()

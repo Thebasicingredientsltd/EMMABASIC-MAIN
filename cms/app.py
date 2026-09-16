@@ -1404,6 +1404,30 @@ def git_status_summary(cwd=None):
     }
 
 
+def _cms_data_relpaths():
+    return [PROJECT_REL + "/data/" + key + ".js" for key in DATA_FILES]
+
+
+def _restore_cms_data(from_ref, cwd=None):
+    """Put CMS data files back to `from_ref`.
+
+    Combining with GitHub is a line-level merge. If the remote copy already
+    has duplicate JSON keys (from an earlier merge) and our commit didn't
+    touch those lines, the duplicates survive — and the live site would show
+    the last key, which is often the old photo. The CMS file we just saved
+    is the source of truth.
+    """
+    restored = False
+    for rel in _cms_data_relpaths():
+        exists = run_git(["cat-file", "-e", "%s:%s" % (from_ref, rel)], cwd)
+        if exists.returncode != 0:
+            continue
+        chk = run_git(["checkout", from_ref, "--", rel], cwd)
+        if chk.returncode == 0:
+            restored = True
+    return restored
+
+
 def sync_and_push(message, cwd=None):
     """Commit any local CMS edits, rebase onto origin if it moved, then push.
 
@@ -1426,6 +1450,9 @@ def sync_and_push(message, cwd=None):
                 "ok": False,
                 "error": "git commit failed: %s" % (commit.stderr or commit.stdout).strip(),
             }
+
+    pre_head = run_git(["rev-parse", "HEAD"], cwd)
+    pre_ref = (pre_head.stdout or "").strip()
 
     fetch = run_git(["fetch", "origin"], cwd)
     if fetch.returncode != 0:
@@ -1451,6 +1478,20 @@ def sync_and_push(message, cwd=None):
                 "error": "Could not combine with newer GitHub changes: %s"
                 % (rebase.stderr or rebase.stdout).strip(),
             }
+        if pre_ref and _restore_cms_data(pre_ref, cwd):
+            status = run_git(["status", "--porcelain"], cwd)
+            if status.stdout.strip():
+                run_git(["add", "-A"], cwd)
+                keep = run_git(
+                    ["commit", "-m", "%s — keep saved CMS content" % message],
+                    cwd,
+                )
+                if keep.returncode != 0:
+                    return {
+                        "ok": False,
+                        "error": "git commit failed: %s"
+                        % (keep.stderr or keep.stdout).strip(),
+                    }
 
     unpushed, _ = _git_ahead_behind(cwd)
     if unpushed == 0:

@@ -18,8 +18,6 @@ window.EB_PEOPLE = {
         "tone": "warm",
         "image": "assets/uploads/Emma_Main-20260915-080441.jpg",
         "image2": "assets/uploads/Emma_Personal-20260915-080445.jpg",
-        "image": "assets/Employees-page/emma-1-square.jpg",
-        "image2": "assets/Employees-page/emma 2.jpg",
         "phone": "+44 7894 512430",
         "email": "Emma@thebasicingredients.com"
       },
