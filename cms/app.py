@@ -1038,6 +1038,23 @@ def people_save():
     return redirect(url_for("people"))
 
 
+@app.route("/people/reorder", methods=["POST"])
+def people_reorder():
+    """Persist a drag-and-drop reorder of team members on the People page."""
+    payload = request.get_json(silent=True) or {}
+    order = payload.get("order")
+    data = load_data("people")
+    team = data.setdefault("team", {})
+    members = team.get("members") or []
+    try:
+        team["members"] = reorder_by_index(members, order)
+    except ValueError as exc:
+        return {"ok": False, "error": str(exc)}, 400
+    save_data("people", data)
+    flash("Reordered the team.", "ok")
+    return {"ok": True}
+
+
 # ---------------------------------------------------------------------------
 # Routes — product catalog (the full "Our Products" range)
 # ---------------------------------------------------------------------------
@@ -1307,6 +1324,15 @@ def catalog_product_delete(ci, pi):
     return redirect(url_for("catalog"))
 
 
+def reorder_by_index(items, order):
+    """Return `items` in the order given by a permutation of 0..len(items)-1."""
+    if not isinstance(order, list) or not all(isinstance(i, int) for i in order):
+        raise ValueError("order must be a list of integers")
+    if sorted(order) != list(range(len(items))):
+        raise ValueError("order must be a permutation of the current items")
+    return [items[i] for i in order]
+
+
 @app.route("/catalog/reorder", methods=["POST"])
 def catalog_reorder():
     """Persist a drag-and-drop reorder from the catalog page.
@@ -1334,17 +1360,19 @@ def catalog_reorder():
         if not (0 <= ci < len(cats)):
             return {"ok": False, "error": "category out of range"}, 400
         prods = cats[ci].get("products", [])
-        if sorted(order) != list(range(len(prods))):
-            return {"ok": False, "error": "order must be a permutation of the products"}, 400
-        cats[ci]["products"] = [prods[i] for i in order]
+        try:
+            cats[ci]["products"] = reorder_by_index(prods, order)
+        except ValueError as exc:
+            return {"ok": False, "error": str(exc)}, 400
         save_data("catalog", cats)
         flash("Reordered products in %s." % cats[ci].get("name", "category"), "ok")
         return {"ok": True}
 
     if kind == "categories":
-        if sorted(order) != list(range(len(cats))):
-            return {"ok": False, "error": "order must be a permutation of the categories"}, 400
-        cats = [cats[i] for i in order]
+        try:
+            cats = reorder_by_index(cats, order)
+        except ValueError as exc:
+            return {"ok": False, "error": str(exc)}, 400
         save_data("catalog", cats)
         flash("Reordered categories.", "ok")
         return {"ok": True}

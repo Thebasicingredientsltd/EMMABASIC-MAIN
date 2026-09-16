@@ -43,7 +43,27 @@
     <textarea name="team_intro" rows="2">{{ d.team.intro }}</textarea>
 
     <label>Team members</label>
-    <div id="members">
+    <p class="field-help" style="margin:0 0 10px;">Drag the <span aria-hidden="true">⠿</span> handle to change who appears first on the People page. The page updates as soon as you drop.</p>
+    <div class="eb-sortable" data-kind="members" data-url="{{ url_for('people_reorder') }}">
+      {% for m in (d.team.members or []) %}
+      <div class="list-item eb-sortable-item" data-key="{{ loop.index0 }}">
+        <button type="button" class="eb-drag-handle" aria-label="Drag {{ m.name }} to a new position" title="Drag to reorder">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><g fill="currentColor"><circle cx="9" cy="6" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="18" r="1.5"/></g></svg>
+        </button>
+        {% if m.image %}
+          <img class="thumb" src="{{ imgsrc(m.image) }}" alt=""/>
+        {% else %}
+          <div class="thumb"></div>
+        {% endif %}
+        <div class="grow">
+          <div style="font-weight:600;">{{ m.name }}</div>
+          <div class="muted">{{ m.role }}</div>
+        </div>
+        <span class="muted">{{ loop.index }}</span>
+      </div>
+      {% endfor %}
+    </div>
+    <div id="members" style="margin-top:18px;">
       {% for m in (d.team.members or []) %}
       <div class="tile-editor" data-member>
         <div class="row">
@@ -254,6 +274,188 @@
 {% endblock %}
 
 {% block scripts %}
+<style>
+  .eb-drag-handle {
+    flex-shrink: 0; width: 28px; height: 36px; margin: 0 2px 0 -4px; padding: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    color: var(--ink-40); background: transparent; border: none; border-radius: var(--r-sm);
+    cursor: grab; touch-action: none; -webkit-user-select: none; user-select: none;
+    transition: color var(--dur) var(--ease-out), background var(--dur) var(--ease-out);
+  }
+  .eb-drag-handle:hover { color: var(--ink); background: var(--paper-shade); }
+  .eb-drag-handle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .eb-sorting .eb-drag-handle, .eb-sorting * { cursor: grabbing !important; }
+  .eb-sorting { -webkit-user-select: none; user-select: none; }
+  .list-item.eb-dragging {
+    z-index: 40; background: var(--paper-bright);
+    border-radius: var(--r-md) !important; border-bottom-color: transparent !important;
+    box-shadow: var(--shadow-lg); cursor: grabbing;
+  }
+  .eb-ph {
+    box-sizing: border-box; margin: 0 -12px; border-radius: var(--r-md);
+    background: color-mix(in srgb, var(--accent) 7%, transparent);
+    border: 1px dashed var(--rule-strong);
+  }
+</style>
+<script>
+(function () {
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var DUR = reduce ? 0 : 220;
+
+  function rowsIn(container) {
+    return Array.prototype.filter.call(container.children, function (c) {
+      return c.classList.contains("eb-sortable-item");
+    });
+  }
+
+  document.querySelectorAll(".eb-sortable").forEach(function (container) {
+    container.querySelectorAll(":scope > .eb-sortable-item > .eb-drag-handle").forEach(function (handle) {
+      handle.addEventListener("pointerdown", function (e) {
+        if (e.button != null && e.button !== 0) return;
+        e.preventDefault();
+        startPointer(container, handle.closest(".eb-sortable-item"), e);
+      });
+    });
+  });
+
+  function startPointer(container, item, downEvent) {
+    var pointerId = downEvent.pointerId;
+    var startY = downEvent.clientY, startX = downEvent.clientX;
+    var began = false, grabOffsetY = 0, placeholder = null, floatRect = null, lastRef;
+
+    function onMove(e) {
+      if (e.pointerId !== pointerId) return;
+      if (!began) {
+        if (Math.abs(e.clientY - startY) < 4 && Math.abs(e.clientX - startX) < 4) return;
+        begin(e);
+      }
+      moveTo(e);
+    }
+    function onUp(e) {
+      if (e.pointerId !== pointerId) return;
+      document.removeEventListener("pointermove", onMove);
+      document.removeEventListener("pointerup", onUp);
+      document.removeEventListener("pointercancel", onUp);
+      if (began) finish();
+    }
+
+    document.addEventListener("pointermove", onMove);
+    document.addEventListener("pointerup", onUp);
+    document.addEventListener("pointercancel", onUp);
+
+    function begin(e) {
+      began = true;
+      var rect = item.getBoundingClientRect();
+      floatRect = rect;
+      grabOffsetY = e.clientY - rect.top;
+
+      placeholder = document.createElement("div");
+      placeholder.className = "eb-ph";
+      placeholder.style.height = rect.height + "px";
+      container.insertBefore(placeholder, item);
+
+      item.classList.add("eb-dragging");
+      item.style.position = "fixed";
+      item.style.width = rect.width + "px";
+      item.style.left = rect.left + "px";
+      item.style.top = rect.top + "px";
+      item.style.margin = "0";
+      document.body.appendChild(item);
+      document.body.classList.add("eb-sorting");
+      lastRef = placeholder.nextElementSibling || null;
+    }
+
+    function firstRects() {
+      var m = new Map();
+      rowsIn(container).forEach(function (el) { m.set(el, el.getBoundingClientRect()); });
+      return m;
+    }
+    function flip(prev) {
+      if (reduce) return;
+      rowsIn(container).forEach(function (el) {
+        var a = prev.get(el); if (!a) return;
+        var dy = a.top - el.getBoundingClientRect().top;
+        if (!dy) return;
+        el.style.transition = "none";
+        el.style.transform = "translateY(" + dy + "px)";
+        requestAnimationFrame(function () {
+          el.style.transition = "transform " + DUR + "ms var(--ease-out)";
+          el.style.transform = "";
+        });
+      });
+    }
+
+    function moveTo(e) {
+      var top = e.clientY - grabOffsetY;
+      item.style.top = top + "px";
+
+      var center = top + floatRect.height / 2;
+      var rows = rowsIn(container), ref = null;
+      for (var i = 0; i < rows.length; i++) {
+        var r = rows[i].getBoundingClientRect();
+        if (center < r.top + r.height / 2) { ref = rows[i]; break; }
+      }
+      if (ref === lastRef) return;
+      lastRef = ref;
+      var prev = firstRects();
+      if (ref) container.insertBefore(placeholder, ref);
+      else container.appendChild(placeholder);
+      flip(prev);
+    }
+
+    function finish() {
+      container.insertBefore(item, placeholder);
+      placeholder.remove();
+
+      var fromTop = floatRect.top, fromLeft = floatRect.left;
+      item.classList.remove("eb-dragging");
+      item.style.position = "";
+      item.style.width = "";
+      item.style.left = "";
+      item.style.top = "";
+      item.style.margin = "";
+      document.body.classList.remove("eb-sorting");
+
+      if (!reduce) {
+        var now = item.getBoundingClientRect();
+        var dy = fromTop - now.top, dx = fromLeft - now.left;
+        item.style.transition = "none";
+        item.style.transform = "translate(" + dx + "px," + dy + "px)";
+        requestAnimationFrame(function () {
+          item.style.transition = "transform " + DUR + "ms var(--ease-out)";
+          item.style.transform = "";
+          setTimeout(function () { item.style.transition = ""; }, DUR + 40);
+        });
+      }
+
+      var order = rowsIn(container).map(function (el) {
+        return parseInt(el.getAttribute("data-key"), 10);
+      });
+      if (order.every(function (v, i) { return v === i; })) return;
+      persist(container, order);
+    }
+  }
+
+  function persist(container, order) {
+    fetch(container.getAttribute("data-url"), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "same-origin",
+      body: JSON.stringify({ kind: container.getAttribute("data-kind"), order: order })
+    }).then(function (r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    }).then(function (data) {
+      if (!data || !data.ok) throw new Error((data && data.error) || "reorder failed");
+      window.location.reload();
+    }).catch(function (err) {
+      console.error("Reorder failed:", err);
+      alert("Couldn't save the new order — reloading to restore it.");
+      window.location.reload();
+    });
+  }
+})();
+</script>
 <script>
   // Append a fresh repeatable block (member / card / trade item) with the next
   // index, mirroring the homepage "add tile" pattern.
