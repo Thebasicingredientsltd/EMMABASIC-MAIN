@@ -28,7 +28,7 @@ window.EB_PEOPLE = {
         "role": "Technical Account Manager",
         "bio": "",
         "tone": "cool",
-        "image": "assets/uploads/yoko_Work-20260915-080454.jpg",
+        "image": "assets/uploads/yoko_Work-20260916-090543.jpg",
         "image2": "",
         "phone": ""
       },
@@ -96,8 +96,8 @@ window.EB_PEOPLE = {
         "role": "Sales & Operations Executive",
         "bio": "I love being outside — golfing, playing football, or heading out for a hike whenever I can. Clean, simple ingredients matter to me, which is why Emma Basic fits so naturally into my routine.",
         "tone": "cool",
-        "image": "assets/uploads/Taiki_Work-20260915-083848.jpg",
-        "image2": "assets/uploads/Taiki_Personal-20260915-083851.jpg",
+        "image": "assets/uploads/Taiki_Work-20260916-090615.jpg",
+        "image2": "assets/uploads/Taiki_Personal-20260916-090623.jpg",
         "phone": "",
         "imagePosition": "40% center",
         "imageZoom": 2.4
@@ -113,14 +113,15 @@ window.EB_PEOPLE = {
       },
       {
         "name": "Alex",
-        "role": "",
+        "role": "Finance Manager",
         "bio": "",
         "tone": "warm",
         "image": "assets/uploads/Alex_Work-20260915-083902.jpg",
         "image2": "assets/uploads/Alex_Personal-20260915-083905.jpg",
         "phone": ""
       }
-    ]
+    ],
+    "visible": true
   },
   "intro": {
     "heading": "Who we",
@@ -129,7 +130,8 @@ window.EB_PEOPLE = {
       "The Basic Ingredients Ltd is a food company specialising in clean-label products. Often called Clean Dec among food technologists, clean label is a familiar phrase to consumers. What is clean label? It simply means products are made without additives.",
       "What are food additives? Food additives are substances added to enhance flavour, colour, shelf life, or texture. While thousands are legally permitted and regulated by authorities, are they good for your well-being? Probably not! Here are a few common examples: Emulsifier E471 in most ice-cream brands; Brilliant Blue E133 as colouring and Xanthan Gum E415 as thickener in wasabi paste; Aspartame E951 as sweetener in Diet Cola.",
       "Emma Basic is a clean-label brand and registered trademark, proudly owned by The Basic Ingredients Ltd. At Emma Basic, we go further than just removing additives — when developing a product we eliminate UPFs like refined oils, reduce plastic in packaging, and allow only a minimal number of ingredients that are nourishing and natural, to support real well-being."
-    ]
+    ],
+    "visible": true
   },
   "services": {
     "visible": false,
@@ -190,7 +192,8 @@ window.EB_PEOPLE = {
         "q": "Use your existing distributor",
         "a": "If you prefer to use your favourite distributor then please put us in touch, we will gladly make contact."
       }
-    ]
+    ],
+    "visible": false
   },
   "contact": {
     "headingLine1": "Discuss your",
@@ -200,6 +203,7 @@ window.EB_PEOPLE = {
     "addressLine1": "Unit 4, New Concordia Wharf",
     "addressLine2": "London, SE1 2BB",
     "email": "boris@thebasicingredients.com",
-    "note": "For trade enquiries, export opportunities, and OEM partnerships."
+    "note": "For trade enquiries, export opportunities, and OEM partnerships.",
+    "visible": true
   }
 };
