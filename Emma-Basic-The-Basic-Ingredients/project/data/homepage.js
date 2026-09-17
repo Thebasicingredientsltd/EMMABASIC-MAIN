@@ -154,14 +154,18 @@ window.EB_HOME = {
     "headingLine2": "online.",
     "intro": "Kitchen notes, training days, and company news from Emma Basic.",
     "instagram": {
-      "enabled": true,
+      "enabled": false,
       "handle": "@emmabasic.london",
       "href": "https://www.instagram.com/emmabasic.london/"
     },
     "linkedin": {
       "enabled": true,
       "href": "https://www.linkedin.com/company/the-basic-ingredients-ltd",
-      "posts": []
+      "posts": [
+        "https://www.linkedin.com/posts/the-basic-ingredients-ltd_what-is-the-simplest-way-to-indulge-in-matcha-activity-7506043898297769985-uPir?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAOpruIBVGZ3ZLTUAOsuLVOQDp5TC0Ewx24",
+        "https://www.linkedin.com/posts/the-basic-ingredients-ltd_foodservice-foodinnovation-activity-7505698731426643970-OzSo?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAOpruIBVGZ3ZLTUAOsuLVOQDp5TC0Ewx24",
+        "https://www.linkedin.com/posts/the-basic-ingredients-ltd_emmabasic-lunch2026-excellondon-activity-7504203252654309376-njcY?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAOpruIBVGZ3ZLTUAOsuLVOQDp5TC0Ewx24"
+      ]
     },
     "facebook": {
       "enabled": false,
