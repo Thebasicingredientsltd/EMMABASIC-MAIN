@@ -7,7 +7,7 @@ function PageHero({ eyebrow, title, titleItalic, subtitle }) {
 
   return (
     <section className="eb-page-hero" style={{
-      padding: "180px var(--pad-x) clamp(32px, 5vh, 56px)",
+      padding: "clamp(112px, 13vh, 140px) var(--pad-x) clamp(24px, 4vh, 40px)",
       background: "#F6F6F6",
       color: "var(--ink)",
     }}>

@@ -65,7 +65,7 @@ function JournalIndex() {
         </div>
       </div>
 
-      <div style={{ maxWidth: "var(--maxw)", margin: "0 auto", padding: "clamp(72px, 10vh, 120px) var(--pad-x) clamp(96px, 14vh, 160px)" }}>
+      <div style={{ maxWidth: "var(--maxw)", margin: "0 auto", padding: "clamp(40px, 6vh, 72px) var(--pad-x) clamp(64px, 9vh, 104px)" }}>
 
         {/* Featured post */}
         {featured && (
@@ -82,8 +82,8 @@ function JournalIndex() {
             display: "grid",
             gridTemplateColumns: "repeat(3, 1fr)",
             gap: "clamp(48px, 6vh, 80px) clamp(24px, 3vw, 48px)",
-            marginTop: featured ? "clamp(64px, 10vh, 120px)" : 0,
-            paddingTop: featured ? "clamp(64px, 10vh, 120px)" : 0,
+            marginTop: featured ? "clamp(40px, 6vh, 72px)" : 0,
+            paddingTop: featured ? "clamp(40px, 6vh, 72px)" : 0,
             borderTop: featured ? "1px solid var(--rule)" : "none",
           }}>
             {rest.map((post, i) => (

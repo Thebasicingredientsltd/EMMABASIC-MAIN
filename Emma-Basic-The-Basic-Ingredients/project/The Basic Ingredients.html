@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 
-<link rel="stylesheet" href="components/tokens.css"/>
+<link rel="stylesheet" href="components/tokens.css?v=2"/>
 
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
@@ -25,7 +25,7 @@
 <script type="text/babel" src="components/Placeholder.jsx"></script>
 <script type="text/babel" src="components/motion.jsx"></script>
 <script type="text/babel" src="components/TopNav.jsx?v=17"></script>
-<script type="text/babel" src="components/PageHero.jsx"></script>
+<script type="text/babel" src="components/PageHero.jsx?v=3"></script>
 <script type="text/babel" src="components/StockistCarousel.jsx?v=8"></script>
 <script type="text/babel" src="components/Sections.jsx"></script>
 
@@ -186,7 +186,7 @@ function TBIIntroSection() {
     <section id="about" style={{
       background: "var(--paper)",
       color: "var(--ink)",
-      padding: "clamp(80px, 12vw, 160px) var(--pad-x)",
+      padding: "var(--section-y) var(--pad-x)",
       borderBottom: "1px solid var(--rule)",
     }}>
       <div style={{ maxWidth: "var(--maxw)", margin: "0 auto" }}>
@@ -271,7 +271,7 @@ function TBIServicesSection() {
   return (
     <section id="services" style={{
       background: "var(--paper)",
-      padding: "clamp(80px, 12vw, 160px) var(--pad-x)",
+      padding: "var(--section-y) var(--pad-x)",
       borderTop: "1px solid var(--rule)",
     }}>
       <div style={{ maxWidth: "var(--maxw)", margin: "0 auto" }}>
@@ -412,7 +412,7 @@ function TBIOrderSection() {
     <section id="trade" style={{
       background: "var(--paper-shade)",
       borderTop: "1px solid var(--rule)",
-      padding: "clamp(80px, 12vw, 160px) var(--pad-x)",
+      padding: "var(--section-y) var(--pad-x)",
     }}>
       <div style={{ maxWidth: "var(--maxw)", margin: "0 auto" }}>
 
@@ -544,7 +544,7 @@ function TBIContactSection() {
     <section id="contact" style={{
       background: "var(--ink)",
       color: "var(--paper)",
-      padding: "clamp(80px, 12vw, 160px) var(--pad-x)",
+      padding: "var(--section-y) var(--pad-x)",
     }}>
       <div style={{ maxWidth: "var(--maxw)", margin: "0 auto" }}>
 
@@ -696,7 +696,7 @@ function TBIHero() {
   const hero = (window.EB_COMPANY && window.EB_COMPANY.hero) || {};
   return (
     <section style={{
-      padding: "180px var(--pad-x) clamp(80px, 12vh, 140px)",
+      padding: "clamp(112px, 13vh, 140px) var(--pad-x) clamp(32px, 5vh, 56px)",
       background: "#F6F6F6",
       color: "var(--ink)",
       borderBottom: "1px solid var(--rule)",
@@ -774,7 +774,7 @@ function TBIAboutSection() {
   return (
     <section id="about" style={{
       background: "var(--paper)",
-      padding: "clamp(72px, 10vw, 120px) var(--pad-x)",
+      padding: "var(--section-y) var(--pad-x)",
       borderBottom: "1px solid var(--rule)",
     }}>
       <div style={{ maxWidth: "var(--maxw)", margin: "0 auto" }}>

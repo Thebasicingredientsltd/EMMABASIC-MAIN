@@ -127,7 +127,7 @@ function SupplierMap() {
 
   return (
     <section style={{
-      padding: "clamp(80px, 12vh, 160px) var(--pad-x)",
+      padding: "var(--section-y) var(--pad-x)",
       background: "var(--paper)",
       color: "var(--ink)",
     }}>

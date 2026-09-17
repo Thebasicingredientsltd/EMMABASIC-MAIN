@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 
-<link rel="stylesheet" href="components/tokens.css"/>
+<link rel="stylesheet" href="components/tokens.css?v=2"/>
 
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
@@ -26,8 +26,8 @@
 <script type="text/babel" src="components/Placeholder.jsx"></script>
 <script type="text/babel" src="components/motion.jsx"></script>
 <script type="text/babel" src="components/TopNav.jsx?v=17"></script>
-<script type="text/babel" src="components/PageHero.jsx"></script>
-<script type="text/babel" src="components/OrderSection.jsx"></script>
+<script type="text/babel" src="components/PageHero.jsx?v=3"></script>
+<script type="text/babel" src="components/OrderSection.jsx?v=2"></script>
 <script type="text/babel" src="components/Sections.jsx"></script>
 
 <script type="text/babel">
@@ -50,7 +50,7 @@ function DistributorContact() {
   const email = d.email || "boris@thebasicingredients.com";
   const note = d.note || "For trade enquiries, export opportunities, and OEM partnerships.";
   return (
-    <section id="contact" style={{ background: "var(--ink)", color: "var(--paper)", padding: "clamp(80px, 12vw, 160px) var(--pad-x)" }}>
+    <section id="contact" style={{ background: "var(--ink)", color: "var(--paper)", padding: "var(--section-y) var(--pad-x)" }}>
       <div style={{ maxWidth: "var(--maxw)", margin: "0 auto" }}>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "clamp(48px, 8vw, 120px)", alignItems: "start" }} className="tbi-contact-grid">
           <div>

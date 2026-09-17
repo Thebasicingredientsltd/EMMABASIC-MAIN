@@ -33,7 +33,7 @@ function TeamGrid() {
 
   return (
     <section style={{
-      padding: "clamp(120px, 16vh, 180px) var(--pad-x) clamp(80px, 12vh, 140px)",
+      padding: "clamp(40px, 6vh, 72px) var(--pad-x) clamp(48px, 7vh, 88px)",
       background: "var(--paper)",
       color: "var(--ink)",
     }}>
@@ -41,7 +41,7 @@ function TeamGrid() {
         <div style={{
           display: "grid", gridTemplateColumns: "1fr 1fr",
           gap: "clamp(32px, 6vw, 96px)", alignItems: "end",
-          marginBottom: "clamp(56px, 8vh, 96px)",
+          marginBottom: "clamp(32px, 5vh, 56px)",
         }}>
           <Reveal>
             <h2 style={{

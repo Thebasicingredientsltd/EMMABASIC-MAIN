@@ -307,7 +307,7 @@ function CatalogIndex() {
 function CategorySection({ category, index }) {
   return (
     <section id={`cat-${category.id}`} style={{
-      padding: "clamp(90px, 12vh, 140px) var(--pad-x) clamp(80px, 10vh, 120px)",
+      padding: "clamp(48px, 7vh, 80px) var(--pad-x) clamp(40px, 6vh, 72px)",
       borderTop: index === 0 ? "none" : "1px solid var(--rule)",
     }}>
       <div style={{ maxWidth: "var(--maxw)", margin: "0 auto" }}>
@@ -318,7 +318,7 @@ function CategorySection({ category, index }) {
             gridTemplateColumns: "auto 1fr 1fr",
             alignItems: "end",
             gap: "clamp(24px, 4vw, 56px)",
-            marginBottom: "clamp(56px, 8vh, 96px)",
+            marginBottom: "clamp(32px, 5vh, 56px)",
           }}>
             <span style={{
               fontFamily: "var(--f-body)", fontSize: 11, letterSpacing: "0.22em",

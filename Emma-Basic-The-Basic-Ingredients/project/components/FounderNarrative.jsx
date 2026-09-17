@@ -92,7 +92,7 @@ function FounderNarrative({ hideReadMore = false, imageBesideText = false, image
   if (imageBesideText) {
     return (
       <section style={{
-        padding: "clamp(40px, 6vh, 88px) var(--pad-x) clamp(48px, 8vh, 96px)",
+        padding: "clamp(24px, 4vh, 48px) var(--pad-x) clamp(32px, 5vh, 64px)",
         background: "var(--paper)",
       }}>
         <div className="eb-founder-beside" style={{

@@ -22,9 +22,9 @@ function OrderSection() {
     { q: "Use your existing distributor", a: "If you prefer to use your favourite distributor then please put us in touch, we will gladly make contact." },
   ];
   return (
-    <section id="trade" style={{ background: "var(--paper-shade)", borderTop: "1px solid var(--rule)", padding: "clamp(80px, 12vw, 160px) var(--pad-x)" }}>
+    <section id="trade" style={{ background: "var(--paper-shade)", borderTop: "1px solid var(--rule)", padding: "var(--section-y) var(--pad-x)" }}>
       <div style={{ maxWidth: "var(--maxw)", margin: "0 auto" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "clamp(32px, 6vw, 96px)", marginBottom: "clamp(48px, 7vh, 80px)", alignItems: "end" }} className="tbi-order-header">
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "clamp(32px, 6vw, 96px)", marginBottom: "clamp(28px, 4vh, 48px)", alignItems: "end" }} className="tbi-order-header">
           <Reveal>
             <div>
               <span style={{ fontFamily: "var(--f-mono)", fontSize: 10.5, letterSpacing: "0.24em", textTransform: "uppercase", color: "var(--ink-60)", display: "block", marginBottom: 20 }}>{eyebrow}</span>

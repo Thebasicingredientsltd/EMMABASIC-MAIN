@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 
-<link rel="stylesheet" href="components/tokens.css"/>
+<link rel="stylesheet" href="components/tokens.css?v=2"/>
 
 <!-- Leaflet -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
@@ -42,8 +42,8 @@
 <script type="text/babel" src="components/Placeholder.jsx"></script>
 <script type="text/babel" src="components/motion.jsx"></script>
 <script type="text/babel" src="components/TopNav.jsx?v=17"></script>
-<script type="text/babel" src="components/PageHero.jsx"></script>
-<script type="text/babel" src="components/SupplierMap.jsx?v=3"></script>
+<script type="text/babel" src="components/PageHero.jsx?v=3"></script>
+<script type="text/babel" src="components/SupplierMap.jsx?v=4"></script>
 <script type="text/babel" src="components/StockistCarousel.jsx?v=8"></script>
 <script type="text/babel" src="components/NearestShopFinder.jsx?v=4"></script>
 <script type="text/babel" src="components/Sections.jsx"></script>
@@ -81,7 +81,7 @@ function LocationMap() {
   }, [LAT, LNG]);
 
   return (
-    <section style={{ background: "var(--paper)", padding: "clamp(64px, 10vh, 120px) 0 clamp(80px, 12vh, 160px)" }}>
+    <section style={{ background: "var(--paper)", padding: "clamp(40px, 6vh, 72px) 0 clamp(48px, 7vh, 88px)" }}>
       <div style={{ maxWidth: "var(--maxw)", margin: "0 auto", padding: "0 var(--pad-x)" }}>
         <div style={{
           display: "flex", justifyContent: "space-between", alignItems: "baseline",
@@ -131,7 +131,7 @@ function OseyoSection() {
   return (
     <section style={{
       background: "var(--paper)",
-      padding: "clamp(72px, 10vh, 120px) var(--pad-x)",
+      padding: "var(--section-y) var(--pad-x)",
       borderTop: "1px solid var(--rule)",
     }}>
       <div style={{ maxWidth: "var(--maxw)", margin: "0 auto" }}>

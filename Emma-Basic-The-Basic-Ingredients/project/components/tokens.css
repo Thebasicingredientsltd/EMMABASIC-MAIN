@@ -84,7 +84,7 @@
   /* ---------- Rhythm ---------- */
   --maxw: 1440px;
   --pad-x: clamp(24px, 5vw, 96px);
-  --section-y: clamp(96px, 14vw, 180px);
+  --section-y: clamp(48px, 7vh, 88px);
 
   /* ---------- Motion ---------- */
   --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);

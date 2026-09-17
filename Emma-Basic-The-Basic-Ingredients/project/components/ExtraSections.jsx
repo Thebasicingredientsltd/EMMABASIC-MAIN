@@ -12,7 +12,7 @@ function ExtraSections({ source }) {
         return (
           <section key={s.id} id={s.id} style={{
             background: "var(--paper)",
-            padding: "clamp(64px, 10vh, 120px) var(--pad-x)",
+            padding: "var(--section-y) var(--pad-x)",
           }}>
             <div style={{ maxWidth: "var(--maxw)", margin: "0 auto" }}>
               <h2 style={{
