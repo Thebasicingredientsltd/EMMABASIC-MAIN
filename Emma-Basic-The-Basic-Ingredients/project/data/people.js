@@ -26,9 +26,10 @@ window.EB_PEOPLE = {
         "role": "Finance Manager",
         "bio": "",
         "tone": "cool",
-        "image": "assets/uploads/Alex_Work-20260915-083902.jpg",
+        "image": "assets/uploads/Alex_Work-20260917-112329.jpg",
         "image2": "assets/uploads/Alex_Personal-20260915-083905.jpg",
-        "phone": ""
+        "phone": "",
+        "email": "alex@thebasicingredients.com"
       },
       {
         "name": "Ling",
@@ -203,7 +204,7 @@ window.EB_PEOPLE = {
         "a": "If you prefer to use your favourite distributor then please put us in touch, we will gladly make contact."
       }
     ],
-    "visible": false
+    "visible": true
   },
   "contact": {
     "headingLine1": "Discuss your",

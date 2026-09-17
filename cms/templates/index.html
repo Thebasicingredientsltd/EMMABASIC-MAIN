@@ -9,15 +9,13 @@
     <div class="dash-icon">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M4 5v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V5M9 10h6"/></svg>
     </div>
-    <div class="dash-num">{{ catalog_products }}</div>
-    <div class="dash-title">Catalog products</div>
-    <div class="muted">{{ catalog_categories }} categories · Our Products page</div>
+    <div class="dash-title">Our Products</div>
+    <div class="muted">The full product catalog</div>
   </div></a>
   <a href="{{ url_for('products') }}"><div class="card">
     <div class="dash-icon">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="4" height="12" rx="1"/><rect x="10" y="6" width="4" height="12" rx="1"/><rect x="17" y="6" width="4" height="12" rx="1"/></svg>
     </div>
-    <div class="dash-num">{{ product_count }}</div>
     <div class="dash-title">Homepage rail</div>
     <div class="muted">Featured products on the home page</div>
   </div></a>
@@ -25,15 +23,13 @@
     <div class="dash-icon">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
     </div>
-    <div class="dash-num">{{ post_count }}</div>
-    <div class="dash-title">Blog posts</div>
+    <div class="dash-title">Field Notes</div>
     <div class="muted">Field Notes / Journal</div>
   </div></a>
   <a href="{{ url_for('homepage') }}"><div class="card">
     <div class="dash-icon">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11 12 4l8 7"/><path d="M6 10v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-9"/></svg>
     </div>
-    <div class="dash-num" style="font-size:34px;">Hero</div>
     <div class="dash-title">Homepage</div>
     <div class="muted">Hero, founder, lifestyle</div>
   </div></a>
@@ -41,7 +37,6 @@
     <div class="dash-icon">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0"/><path d="M16 5.2a3.2 3.2 0 0 1 0 6.1M17.5 14.4A5.5 5.5 0 0 1 20.5 20"/></svg>
     </div>
-    <div class="dash-num">{{ people_count }}</div>
     <div class="dash-title">People &amp; Places</div>
     <div class="muted">Team, services, contact</div>
   </div></a>
@@ -49,7 +44,6 @@
     <div class="dash-icon">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h11l5 5-5 5H4V7z"/><path d="M9 12h6"/></svg>
     </div>
-    <div class="dash-num" style="font-size:34px;">Trade</div>
     <div class="dash-title">Become a Distributor</div>
     <div class="muted">Headline, how to order, contact</div>
   </div></a>
@@ -57,7 +51,6 @@
     <div class="dash-icon">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.2"/></svg>
     </div>
-    <div class="dash-num" style="font-size:34px;">Map</div>
     <div class="dash-title">Where to find our products</div>
     <div class="muted">Stockists, shops, London HQ</div>
   </div></a>
@@ -65,7 +58,6 @@
     <div class="dash-icon">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a1 1 0 0 1 1-1h10l5 5v10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M15 4v5h5"/></svg>
     </div>
-    <div class="dash-num" style="font-size:34px;">Story</div>
     <div class="dash-title">Our Story</div>
     <div class="muted">Headline for the story page</div>
   </div></a>
@@ -73,7 +65,6 @@
     <div class="dash-icon">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M6 21V8l6-4 6 4v13"/><path d="M10 21v-6h4v6"/></svg>
     </div>
-    <div class="dash-num" style="font-size:34px;">Co.</div>
     <div class="dash-title">The Basic Ingredients</div>
     <div class="muted">Company about and contact</div>
   </div></a>
@@ -81,7 +72,6 @@
     <div class="dash-icon">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 10c0 4 4 8 4 8s4-4 4-8a4 4 0 1 0-8 0z"/><path d="M12 3v3"/></svg>
     </div>
-    <div class="dash-num" style="font-size:34px;">M002</div>
     <div class="dash-title">Matcha Lab</div>
     <div class="muted">Matcha Lab landing page</div>
   </div></a>

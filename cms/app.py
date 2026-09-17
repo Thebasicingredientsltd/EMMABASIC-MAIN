@@ -596,19 +596,7 @@ def gallery_with_sizes(product):
 # ---------------------------------------------------------------------------
 @app.route("/")
 def index():
-    products = load_data("products")
-    journal = load_data("journal")
-    catalog_data = load_data("catalog")
-    people_data = load_data("people")
-    return render_template(
-        "index.html",
-        product_count=len(products),
-        post_count=len(journal.get("posts", [])),
-        catalog_categories=len(catalog_data),
-        catalog_products=_catalog_counts(catalog_data),
-        people_count=len((people_data.get("team") or {}).get("members", [])),
-        git=git_status_summary(),
-    )
+    return render_template("index.html", git=git_status_summary())
 
 
 # Serve the site's assets so image previews work inside the CMS. On the GitHub
