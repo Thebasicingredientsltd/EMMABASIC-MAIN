@@ -88,6 +88,15 @@ window.EB_PEOPLE = {
         "phone": ""
       },
       {
+        "name": "Bhakti",
+        "role": "Packaging and Content Designer",
+        "bio": "",
+        "tone": "cool",
+        "image": "assets/uploads/Bhakti_Work-20260917-111428.jpg",
+        "image2": "assets/uploads/Bhakti_Personal-20260917-111434.jpg",
+        "phone": ""
+      },
+      {
         "name": "Taiki",
         "role": "Sales & Operations Executive",
         "bio": "I love being outside — golfing, playing football, or heading out for a hike whenever I can. Clean, simple ingredients matter to me, which is why Emma Basic fits so naturally into my routine.",
