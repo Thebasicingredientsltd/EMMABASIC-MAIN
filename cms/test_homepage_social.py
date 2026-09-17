@@ -79,6 +79,7 @@ class HomepageSocialTests(unittest.TestCase):
         self.assertIn("instagram.com", social_src)
         self.assertIn("linkedin.com/embed", social_src)
         self.assertIn("eb-social-carousel", social_src)
+        self.assertIn("is-pair", social_src)
         self.assertIn("prefers-reduced-motion", social_src)
         self.assertNotIn("scrap", social_src.lower())
 

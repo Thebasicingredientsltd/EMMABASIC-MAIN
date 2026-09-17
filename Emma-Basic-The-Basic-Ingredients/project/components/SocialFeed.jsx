@@ -97,13 +97,16 @@ function SocialFeed() {
   }
 
   const [index, setIndex] = React.useState(0);
-  const safeIndex = slides.length ? ((index % slides.length) + slides.length) % slides.length : 0;
+  const pairOk = useMinWidth(640);
+  const visible = slides.length ? Math.min(pairOk ? 2 : 1, slides.length) : 1;
+  const maxIndex = Math.max(0, slides.length - visible);
+  const safeIndex = Math.max(0, Math.min(index, maxIndex));
   const current = slides[safeIndex] || null;
   const reduced = usePrefersReducedMotion();
 
   React.useEffect(function () {
-    if (slides.length && index >= slides.length) setIndex(0);
-  }, [slides.length, index]);
+    if (index > maxIndex) setIndex(maxIndex);
+  }, [index, maxIndex]);
 
   React.useEffect(function () {
     if (!current || current.kind !== "x") return;
@@ -125,17 +128,20 @@ function SocialFeed() {
   }, [current && current.kind]);
 
   const go = React.useCallback(function (dir) {
-    if (slides.length < 2) return;
+    if (slides.length <= visible) return;
     setIndex(function (i) {
-      return (i + dir + slides.length) % slides.length;
+      const next = i + dir;
+      if (next < 0) return maxIndex;
+      if (next > maxIndex) return 0;
+      return next;
     });
-  }, [slides.length]);
+  }, [slides.length, visible, maxIndex]);
 
   const onKeyDown = function (e) {
     if (e.key === "ArrowLeft") { e.preventDefault(); go(-1); }
     if (e.key === "ArrowRight") { e.preventDefault(); go(1); }
     if (e.key === "Home") { e.preventDefault(); setIndex(0); }
-    if (e.key === "End" && slides.length) { e.preventDefault(); setIndex(slides.length - 1); }
+    if (e.key === "End" && slides.length) { e.preventDefault(); setIndex(maxIndex); }
   };
 
   const drag = React.useRef({ x: 0, active: false });
@@ -210,11 +216,11 @@ function SocialFeed() {
         </Reveal>
 
         <div
-          className="eb-social-carousel"
+          className={"eb-social-carousel" + (visible === 2 ? " is-pair" : "")}
           role="region"
           aria-roledescription="carousel"
           aria-label="Emma Basic on social media"
-          tabIndex={slides.length > 1 ? 0 : undefined}
+          tabIndex={slides.length > visible ? 0 : undefined}
           onKeyDown={onKeyDown}
         >
           {!slides.length && (
@@ -236,19 +242,20 @@ function SocialFeed() {
                 <div
                   className="eb-social-track"
                   style={{
-                    transform: "translate3d(" + (-safeIndex * 100) + "%,0,0)",
+                    transform: "translate3d(" + (-safeIndex * (100 / visible)) + "%,0,0)",
                     transition: reduced ? "none" : "transform 420ms var(--ease-out)",
                   }}
                 >
-                  {slides.map(function (slide) {
+                  {slides.map(function (slide, i) {
+                    const inView = i >= safeIndex && i < safeIndex + visible;
                     return (
-                      <div className="eb-social-slide" key={slide.id} aria-hidden={slide.id !== (current && current.id)}>
+                      <div className="eb-social-slide" key={slide.id} aria-hidden={!inView}>
                         {slide.kind === "iframe" && (
                           <iframe
                             title={slide.title}
                             src={slide.src}
                             loading="lazy"
-                            tabIndex={slide.id === (current && current.id) ? 0 : -1}
+                            tabIndex={inView ? 0 : -1}
                           />
                         )}
                         {slide.kind === "x" && (
@@ -266,12 +273,12 @@ function SocialFeed() {
                 </div>
               </div>
 
-              {slides.length > 1 && (
+              {slides.length > visible && (
                 <div className="eb-social-controls">
                   <button type="button" className="eb-social-nav" aria-label="Previous" onClick={function () { go(-1); }}>←</button>
                   <div className="eb-social-dots" role="tablist" aria-label="Social slides">
                     {slides.map(function (slide, i) {
-                      const on = i === safeIndex;
+                      const on = i >= safeIndex && i < safeIndex + visible;
                       return (
                         <button
                           key={slide.id}
@@ -280,14 +287,14 @@ function SocialFeed() {
                           aria-selected={on}
                           aria-label={slide.label + ", " + (i + 1) + " of " + slides.length}
                           className={"eb-social-dot" + (on ? " is-on" : "")}
-                          onClick={function () { setIndex(i); }}
+                          onClick={function () { setIndex(Math.min(i, maxIndex)); }}
                         />
                       );
                     })}
                   </div>
                   <button type="button" className="eb-social-nav" aria-label="Next" onClick={function () { go(1); }}>→</button>
                   <span className="eb-social-status" aria-live="polite">
-                    {current.label} · {safeIndex + 1} / {slides.length}
+                    {safeIndex + 1}–{Math.min(safeIndex + visible, slides.length)} / {slides.length}
                   </span>
                 </div>
               )}
@@ -303,7 +310,7 @@ function SocialFeed() {
           gap: 24px;
           margin-bottom: 28px;
         }
-        .eb-social-carousel { max-width: 520px; outline: none; }
+        .eb-social-carousel { outline: none; }
         .eb-social-carousel:focus-visible { box-shadow: 0 0 0 1px var(--ink); }
         .eb-social-stage {
           height: 360px;
@@ -315,6 +322,7 @@ function SocialFeed() {
         .eb-social-track {
           display: flex;
           height: 100%;
+          width: 100%;
           will-change: transform;
         }
         .eb-social-slide {
@@ -322,6 +330,11 @@ function SocialFeed() {
           width: 100%;
           height: 100%;
           overflow: hidden;
+          box-sizing: border-box;
+        }
+        .eb-social-carousel.is-pair .eb-social-slide { flex-basis: 50%; width: 50%; }
+        .eb-social-carousel.is-pair .eb-social-slide + .eb-social-slide {
+          border-left: 1px solid var(--rule);
         }
         .eb-social-slide iframe,
         .eb-social-slide .twitter-timeline {
@@ -372,7 +385,6 @@ function SocialFeed() {
         @media (max-width: 800px) {
           .eb-social-head { flex-direction: column; align-items: start; margin-bottom: 20px; }
           .eb-social-stage { height: 300px; }
-          .eb-social-carousel { max-width: none; }
         }
         @media (prefers-reduced-motion: reduce) {
           .eb-social-track { transition: none !important; }
@@ -412,6 +424,23 @@ function SocialEmpty({ title, body, href, cta }) {
       )}
     </div>
   );
+}
+
+function useMinWidth(px) {
+  const [matches, setMatches] = React.useState(true);
+  React.useEffect(function () {
+    if (typeof window === "undefined" || !window.matchMedia) return;
+    const mq = window.matchMedia("(min-width: " + px + "px)");
+    const apply = function () { setMatches(!!mq.matches); };
+    apply();
+    if (mq.addEventListener) mq.addEventListener("change", apply);
+    else if (mq.addListener) mq.addListener(apply);
+    return function () {
+      if (mq.removeEventListener) mq.removeEventListener("change", apply);
+      else if (mq.removeListener) mq.removeListener(apply);
+    };
+  }, [px]);
+  return matches;
 }
 
 function usePrefersReducedMotion() {
