@@ -1,6 +1,4 @@
-/* Emma Basic — journal / blog data (CMS-managed).
-   `posts` powers the index grid; `articles` powers each full post page
-   (keyed by post id). The payload below is strict JSON. */
+/* Emma Basic — journal / blog data (CMS-managed). The payload below is strict JSON. */
 window.EB_JOURNAL = {
   "posts": [
     {
@@ -11,7 +9,7 @@ window.EB_JOURNAL = {
       "excerpt": "The temperature of the water, the direction of the whisk, the age of the powder. Small things with large consequences.",
       "image": "assets/journal/Matcha-journal-image.png",
       "tone": "warm",
-      "featured": true
+      "featured": false
     },
     {
       "id": "sushi-rice-ratio",

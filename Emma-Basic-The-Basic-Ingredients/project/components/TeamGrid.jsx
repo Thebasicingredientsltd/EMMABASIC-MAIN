@@ -1,7 +1,7 @@
 /* ============================================================
    TeamGrid — portrait grid.
-   Warm intro, then factual: photo, name, role, one-line bio.
-   Click a card to flip between professional and informal photo.
+   Warm intro, then factual: photo, name, role.
+   Click a card to open the bio (and informal photo).
    Cards crop square (1:1) — portrait sources are cropped from the top so
    faces stay in frame, square sources fill the card exactly.
    ============================================================ */
@@ -149,15 +149,6 @@ function TeamMember({ m, index }) {
             fontFamily: "var(--f-body)", fontWeight: 400, fontSize: 11, letterSpacing: "0.18em",
             textTransform: "uppercase", color: "var(--ink-60)",
           }}>{m.role}</span>
-          {m.bio && (
-            <p style={{
-              fontFamily: "var(--f-body)", fontSize: 14, lineHeight: 1.55,
-              color: "var(--ink-70)", margin: "8px 0 0",
-            }}>
-              {m.bio.match(/[^.!?]+[.!?]+/g)?.slice(0, 2).join(" ") || m.bio.slice(0, 120)}
-              {canFlip && <span style={{ color: "var(--ink-40)", marginLeft: 4 }}>...</span>}
-            </p>
-          )}
         </div>
       </div>
 
