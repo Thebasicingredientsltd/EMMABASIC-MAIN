@@ -924,6 +924,31 @@ def homepage_save():
     if new_tiles:
         lifestyle["tiles"] = new_tiles
 
+    social = h.setdefault("social", {})
+    social["visible"] = form_checkbox("social_visible")
+    social["eyebrow"] = request.form.get("social_eyebrow", "").strip()
+    social["headingLine1"] = request.form.get("social_headingLine1", "").strip()
+    social["headingLine2"] = request.form.get("social_headingLine2", "").strip()
+    social["intro"] = request.form.get("social_intro", "").strip()
+    social["instagram"] = {
+        "enabled": form_checkbox("social_instagram_enabled"),
+        "handle": request.form.get("social_instagram_handle", "").strip(),
+        "href": request.form.get("social_instagram_href", "").strip(),
+    }
+    social["linkedin"] = {
+        "enabled": form_checkbox("social_linkedin_enabled"),
+        "href": request.form.get("social_linkedin_href", "").strip(),
+        "posts": lines_to_list(request.form.get("social_linkedin_posts", "")),
+    }
+    social["facebook"] = {
+        "enabled": form_checkbox("social_facebook_enabled"),
+        "href": request.form.get("social_facebook_href", "").strip(),
+    }
+    social["x"] = {
+        "enabled": form_checkbox("social_x_enabled"),
+        "href": request.form.get("social_x_href", "").strip(),
+    }
+
     save_data("homepage", h)
     flash("Homepage content saved.", "ok")
     return redirect(url_for("homepage"))

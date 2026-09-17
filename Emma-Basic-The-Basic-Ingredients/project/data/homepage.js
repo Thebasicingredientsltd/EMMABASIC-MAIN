@@ -146,5 +146,30 @@ window.EB_HOME = {
         "position": "center center"
       }
     ]
+  },
+  "social": {
+    "visible": true,
+    "eyebrow": "On social",
+    "headingLine1": "The Grit,",
+    "headingLine2": "online.",
+    "intro": "Kitchen notes, training days, and company news from Emma Basic.",
+    "instagram": {
+      "enabled": true,
+      "handle": "@emmabasic.london",
+      "href": "https://www.instagram.com/emmabasic.london/"
+    },
+    "linkedin": {
+      "enabled": true,
+      "href": "https://www.linkedin.com/company/the-basic-ingredients-ltd",
+      "posts": []
+    },
+    "facebook": {
+      "enabled": false,
+      "href": ""
+    },
+    "x": {
+      "enabled": false,
+      "href": ""
+    }
   }
 };

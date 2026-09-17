@@ -59,6 +59,7 @@ function App() {
         <AdditiveFreeBanner />
         <ShelfTest />
         <LifestyleGrid />
+        <SocialFeed />
         <ExtraSections source={typeof window !== "undefined" ? window.EB_HOME : {}} />
       </main>
       <SiteFooter />

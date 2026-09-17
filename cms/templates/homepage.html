@@ -143,6 +143,61 @@
     <button type="button" class="btn secondary small" id="add-tile">+ Add tile</button>
   </div>
 
+  {% set s = h.social or {} %}
+  {% set ig = s.instagram or {} %}
+  {% set li = s.linkedin or {} %}
+  {% set fb = s.facebook or {} %}
+  {% set x = s.x or {} %}
+  <div class="card">
+    <h2 style="margin-top:0;">Social media</h2>
+    <p class="sub" style="margin-top:0;">This sits under The Grit on the homepage. Instagram, Facebook, and X can show a live public feed. LinkedIn does not allow a full company feed on other websites — paste individual post links instead.</p>
+    <label style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
+      <input type="checkbox" name="social_visible" style="width:auto;" {{ 'checked' if is_section_visible(s) }}/> Show this section on the live site
+    </label>
+    <div class="row">
+      <div><label>Small label</label><input type="text" name="social_eyebrow" value="{{ s.eyebrow or '' }}"/></div>
+      <div><label>Heading line 1</label><input type="text" name="social_headingLine1" value="{{ s.headingLine1 or '' }}"/></div>
+    </div>
+    <div class="row">
+      <div><label>Heading line 2</label><input type="text" name="social_headingLine2" value="{{ s.headingLine2 or '' }}"/></div>
+    </div>
+    <label>Intro</label>
+    <textarea name="social_intro" rows="2">{{ s.intro or '' }}</textarea>
+
+    <h3>Instagram</h3>
+    <label style="display:flex;align-items:center;gap:8px;">
+      <input type="checkbox" name="social_instagram_enabled" style="width:auto;" {{ 'checked' if ig.get('enabled', True) is not false }}/> Show Instagram
+    </label>
+    <div class="row">
+      <div><label>Handle</label><input type="text" name="social_instagram_handle" value="{{ ig.handle or '' }}" placeholder="@emmabasic.london"/></div>
+      <div><label>Profile link</label><input type="text" name="social_instagram_href" value="{{ ig.href or '' }}" placeholder="https://www.instagram.com/emmabasic.london/"/></div>
+    </div>
+
+    <h3>LinkedIn</h3>
+    <label style="display:flex;align-items:center;gap:8px;">
+      <input type="checkbox" name="social_linkedin_enabled" style="width:auto;" {{ 'checked' if li.get('enabled', True) is not false }}/> Show LinkedIn
+    </label>
+    <label>Company page link</label>
+    <input type="text" name="social_linkedin_href" value="{{ li.href or '' }}" placeholder="https://www.linkedin.com/company/the-basic-ingredients-ltd"/>
+    <label>Post links (one per line)</label>
+    <textarea name="social_linkedin_posts" rows="4" placeholder="Paste a LinkedIn post address here, one per line">{{ '\n'.join(li.posts or []) }}</textarea>
+    <p class="sub">Open a post on LinkedIn, copy the address from the browser, and paste it above. No LinkedIn password is stored here.</p>
+
+    <h3>Facebook</h3>
+    <label style="display:flex;align-items:center;gap:8px;">
+      <input type="checkbox" name="social_facebook_enabled" style="width:auto;" {{ 'checked' if fb.get('enabled') }}/> Show Facebook
+    </label>
+    <label>Page link</label>
+    <input type="text" name="social_facebook_href" value="{{ fb.href or '' }}" placeholder="https://www.facebook.com/your-page"/>
+
+    <h3>X (Twitter)</h3>
+    <label style="display:flex;align-items:center;gap:8px;">
+      <input type="checkbox" name="social_x_enabled" style="width:auto;" {{ 'checked' if x.get('enabled') }}/> Show X
+    </label>
+    <label>Profile link</label>
+    <input type="text" name="social_x_href" value="{{ x.href or '' }}" placeholder="https://x.com/your-handle"/>
+  </div>
+
   <div class="actions-bar save-bar">
     <button class="btn" type="submit">Save homepage</button>
     <a class="btn secondary" href="{{ url_for('index') }}">Cancel</a>
