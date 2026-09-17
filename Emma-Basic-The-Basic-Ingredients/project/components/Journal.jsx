@@ -16,7 +16,7 @@ function JournalIndex() {
     ? JOURNAL_POSTS
     : JOURNAL_POSTS.filter(p => p.category === active);
 
-  const featured = filtered.find(p => p.featured) || filtered[0];
+  const featured = filtered.find(p => p.featured);
   const rest = filtered.filter(p => p !== featured);
 
   return (
@@ -82,9 +82,9 @@ function JournalIndex() {
             display: "grid",
             gridTemplateColumns: "repeat(3, 1fr)",
             gap: "clamp(48px, 6vh, 80px) clamp(24px, 3vw, 48px)",
-            marginTop: "clamp(64px, 10vh, 120px)",
-            paddingTop: "clamp(64px, 10vh, 120px)",
-            borderTop: "1px solid var(--rule)",
+            marginTop: featured ? "clamp(64px, 10vh, 120px)" : 0,
+            paddingTop: featured ? "clamp(64px, 10vh, 120px)" : 0,
+            borderTop: featured ? "1px solid var(--rule)" : "none",
           }}>
             {rest.map((post, i) => (
               <Reveal key={post.id} delay={i * 60}>
