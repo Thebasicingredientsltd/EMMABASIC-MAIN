@@ -2,9 +2,9 @@
 window.EB_PEOPLE = {
   "hero": {
     "eyebrow": "People",
-    "title": "A small operation,",
-    "titleItalic": "by design.",
-    "subtitle": "Carefully sourced, carefully run — twelve of us behind every decision."
+    "title": "",
+    "titleItalic": "",
+    "subtitle": ""
   },
   "team": {
     "headingLine1": "The people",
@@ -16,7 +16,7 @@ window.EB_PEOPLE = {
         "role": "Founder",
         "bio": "Read the ingredients on the food label.\n\nDon't let the legal but harmful additives hurt you and your loved ones. Cook fresh ingredients in your kitchen are, of course, the finest. Processed foods are not all evil. Many responsible manufacturers are sharing the same belief as we do, in pursuit of removing additives.\n\nRemove additives, my quest, and my purpose.",
         "tone": "cool",
-        "image": "assets/uploads/Emma_Main-20260916-144805.jpg",
+        "image": "assets/uploads/Emma_Main-20260918-191609.jpg",
         "image2": "assets/uploads/Emma_Personal-20260915-080445.jpg",
         "phone": "+44 7894 512430",
         "email": "Emma@thebasicingredients.com"
