@@ -49,7 +49,7 @@ window.EB_PEOPLE = {
         "role": "Inventory Buyer",
         "bio": "Human beings are drowning in plastic pollution.\n\nBirds and fish are dying because of plastic.\n\nAs a buyer, I DO NOT like to see plastic. Inspire me with your creative and sustainable packages.\n\nIf you have a sustainable product that matches our values, I would love to hear from you.",
         "tone": "cool",
-        "image": "assets/uploads/DSC02247-20260921-103621.jpg",
+        "image": "assets/uploads/Ling_Work-20260921-124807.jpg",
         "image2": "assets/uploads/Ling_Personal-20260915-083801.jpg",
         "phone": "+44 7526 938210",
         "email": "ling@thebasicingredients.com"
@@ -70,7 +70,7 @@ window.EB_PEOPLE = {
         "bio": "I love travelling and enjoy delicious food & wine. I'm always looking for safe, nutritious, and yummy food.\n\nUPF, ultra processed food, it harms your health. It gives your brain instant reward, making you addicted. How to identify these UPFs and keep away from it?\n\nAdditives are the signpost of UPFs. Such as emulsifiers in ice cream or MSG in curry blocks. In the EU, more than 2,000 additives are legally permitted to use. Yes, over 2000, a large number! It's even difficult for a professional working in the food industry with a lifetime of experience to identify so many.\n\nEmma Basic, promises NEVER ANY ADDITIVES. We've removed the additives and harmful ingredients (such as refined oils, maltodextrins, high fructose corn syrup) for you so you don't have to spend 10,000 hours to study it.",
         "tone": "cool",
         "image": "assets/uploads/Ran_Work-20260915-083734.jpg",
-        "image2": "assets/uploads/Ran_Personal-20260915-083737.jpg",
+        "image2": "assets/uploads/Ran_Personal-20260921-124815.jpg",
         "phone": "+44 7305 075030",
         "email": "Ran@thebasicingredients.com"
       },
@@ -240,7 +240,7 @@ window.EB_PEOPLE = {
     },
     "sheetFooter": {
       "text": "thebasicingredients.com  |  New customer guide  |  May 2026",
-      "visible": true
+      "visible": false
     }
   },
   "trade": {

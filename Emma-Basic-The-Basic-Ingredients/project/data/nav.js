@@ -18,6 +18,10 @@ window.EB_NAV = {
     {
       "label": "Become a Distributor",
       "href": "Become%20a%20Distributor.html"
+    },
+    {
+      "label": "The Basic Ingredients Ltd",
+      "href": "The%20Basic%20Ingredients.html"
     }
   ]
 };

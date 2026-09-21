@@ -20,7 +20,7 @@ EXPECTED = [
     ("/people", "People & Places"),
     ("/places", "Where to find our products"),
     ("/distributor", "Become a Distributor"),
-    ("/company", "The Basic Ingredients"),
+    ("/company", "The Basic Ingredients Ltd"),
     ("/matcha", "Matcha Lab"),
 ]
 

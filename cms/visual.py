@@ -96,7 +96,7 @@ SITE_PAGES = [
     {
         "id": "company",
         "file": "The Basic Ingredients.html",
-        "label": "The Basic Ingredients",
+        "label": "The Basic Ingredients Ltd",
         "data_key": "company",
         "sections": [
             {"id": "hero", "path": "hero.visible", "label": "Page header"},

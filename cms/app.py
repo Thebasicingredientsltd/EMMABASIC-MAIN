@@ -366,7 +366,7 @@ CMS_SITE_PAGES = [
     {"endpoint": "people", "label": "People & Places", "active": "people"},
     {"endpoint": "places", "label": "Where to find our products", "active": "places"},
     {"endpoint": "distributor", "label": "Become a Distributor", "active": "distributor"},
-    {"endpoint": "company", "label": "The Basic Ingredients", "active": "company"},
+    {"endpoint": "company", "label": "The Basic Ingredients Ltd", "active": "company"},
     {"endpoint": "matcha", "label": "Matcha Lab", "active": "matcha"},
 ]
 app.jinja_env.globals["cms_site_pages"] = CMS_SITE_PAGES
