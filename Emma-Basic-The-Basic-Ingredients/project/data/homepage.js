@@ -149,7 +149,7 @@ window.EB_HOME = {
     ]
   },
   "social": {
-    "visible": true,
+    "visible": false,
     "eyebrow": "On social",
     "headingLine1": "The Grit,",
     "headingLine2": "online.",
