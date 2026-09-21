@@ -28,6 +28,7 @@ SITE_PAGES = [
         "label": "People & Places",
         "data_key": "people",
         "sections": [
+            {"id": "founder", "path": "founder.visible", "label": "Founder photo & story"},
             {"id": "team", "path": "team.visible", "label": "Team"},
             {"id": "intro", "path": "intro.visible", "label": "Who we are"},
             {"id": "services", "path": "services.visible", "label": "What we offer"},

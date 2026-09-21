@@ -43,8 +43,10 @@ function useScrollBell(ref) {
   return t;
 }
 
-function FounderNarrative({ hideReadMore = false, imageBesideText = false, image }) {
+function FounderNarrative({ hideReadMore = false, imageBesideText = false, image, introLine, paragraphs }) {
   const photo = image || FOUNDER_IMAGE;
+  const intro = (introLine && String(introLine).trim()) ? introLine : FOUNDER_INTRO;
+  const paras = (Array.isArray(paragraphs) && paragraphs.length) ? paragraphs : FOUNDER_PARAGRAPHS;
   const sectionRef = React.useRef(null);
   const t = useScrollBell(sectionRef);
   const [revealRef, visible] = useReveal(0);
@@ -60,8 +62,8 @@ function FounderNarrative({ hideReadMore = false, imageBesideText = false, image
   const imgAspect = isMobile ? "3/4" : "auto";
 
   const visibleParas = hideReadMore || expanded
-    ? FOUNDER_PARAGRAPHS
-    : FOUNDER_PARAGRAPHS.slice(0, PREVIEW_COUNT);
+    ? paras
+    : paras.slice(0, PREVIEW_COUNT);
 
   const readMoreLink = (
     <Reveal delay={120}>
@@ -122,7 +124,7 @@ function FounderNarrative({ hideReadMore = false, imageBesideText = false, image
                 lineHeight: 1.3, letterSpacing: "-0.01em",
                 color: "var(--ink)", margin: "0 0 clamp(24px, 3.5vh, 36px)",
               }}>
-                {FOUNDER_INTRO}
+                {intro}
               </p>
             </Reveal>
             <div style={{
@@ -207,7 +209,7 @@ function FounderNarrative({ hideReadMore = false, imageBesideText = false, image
               lineHeight: 1.25, letterSpacing: "-0.01em",
               color: "var(--ink)", margin: "0 0 clamp(32px, 5vh, 52px)",
             }}>
-              {FOUNDER_INTRO}
+              {intro}
             </p>
           </Reveal>
           <div style={{

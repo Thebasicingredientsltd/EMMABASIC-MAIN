@@ -20,15 +20,14 @@
 <div id="root"></div>
 
 <!-- CMS-managed content -->
-<script src="data/homepage.js?v=20260921090222766"></script>
-<script src="data/people.js?v=20260921090222766"></script>
-<script src="data/nav.js?v=20260921090222766"></script>
+<script src="data/people.js?v=20260921093835178"></script>
+<script src="data/nav.js?v=20260921093835178"></script>
 
 <script type="text/babel" src="components/Placeholder.jsx"></script>
 <script type="text/babel" src="components/motion.jsx"></script>
 <script type="text/babel" src="components/TopNav.jsx?v=18"></script>
-<script type="text/babel" src="components/PageHero.jsx?v=3"></script>
-<script type="text/babel" src="components/FounderNarrative.jsx?v=7"></script>
+<script type="text/babel" src="components/PageHero.jsx?v=4"></script>
+<script type="text/babel" src="components/FounderNarrative.jsx?v=8"></script>
 <script type="text/babel" src="components/TeamGrid.jsx?v=28"></script>
 <script type="text/babel" src="components/Sections.jsx"></script>
 <script type="text/babel" src="components/ExtraSections.jsx?v=2"></script>
@@ -213,21 +212,27 @@ function TBIContactSection() {
 
 function PeopleApp() {
   const hero = EB_PEOPLE.hero || {};
+  const founder = EB_PEOPLE.founder || {};
   return (
     <>
       <TopNav hasHero={false} />
       <main>
         <PageHero
+          cmsKey="people"
           eyebrow={hero.eyebrow || "People"}
           title={hero.title || "A small operation,"}
           titleItalic={hero.titleItalic || "by design."}
           subtitle={hero.subtitle || "Carefully sourced, carefully run — twelve of us behind every decision."}
         />
-        <FounderNarrative
-          hideReadMore
-          imageBesideText
-          image="assets/homepage/founder-mum-daughter.jpg"
-        />
+        {isSectionVisible(founder) && (
+          <FounderNarrative
+            hideReadMore
+            imageBesideText
+            image={founder.image || "assets/homepage/founder-mum-daughter.jpg"}
+            introLine={founder.introLine}
+            paragraphs={founder.paragraphs}
+          />
+        )}
         {isSectionVisible(EB_PEOPLE.team) && <div id="team"><TeamGrid /></div>}
         {isSectionVisible(EB_PEOPLE.intro) && <TBIIntroSection />}
         {isSectionVisible(EB_PEOPLE.services) && <TBIServicesSection />}

@@ -20,13 +20,13 @@
 <div id="root"></div>
 
 <!-- CMS-managed content -->
-<script src="data/homepage.js?v=20260921090222766"></script>
-<script src="data/people.js?v=20260921090222766"></script>
+<script src="data/homepage.js?v=20260921093835178"></script>
+<script src="data/people.js?v=20260921093835178"></script>
 
 <script type="text/babel" src="components/Placeholder.jsx"></script>
 <script type="text/babel" src="components/motion.jsx"></script>
 <script type="text/babel" src="components/TopNav.jsx?v=17"></script>
-<script type="text/babel" src="components/PageHero.jsx?v=3"></script>
+<script type="text/babel" src="components/PageHero.jsx?v=4"></script>
 <script type="text/babel" src="components/OrderSection.jsx?v=2"></script>
 <script type="text/babel" src="components/Sections.jsx"></script>
 
@@ -105,6 +105,8 @@ function DistributorApp() {
       <TopNav hasHero={false} />
       <main>
         <PageHero
+          cmsKey="people"
+          cmsPath="distributor"
           eyebrow={hero.eyebrow || "For trade customers"}
           title={hero.title || "Become a"}
           titleItalic={hero.titleItalic || "distributor."}

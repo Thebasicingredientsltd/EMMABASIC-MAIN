@@ -42,6 +42,31 @@
   </div>
 </div>
 
+{% set page_hero = page_hero or {} %}
+<form method="post" action="{{ url_for('catalog_hero_save') }}" style="margin:20px 0 8px;">
+  <div class="card">
+    <h2 style="margin-top:0;">Page header — “{{ page_hero.title or 'Small shelf,' }} {{ page_hero.titleItalic or 'big intention.' }}”</h2>
+    <p class="field-help">The large headline at the top of the Our Products page, above the category list.</p>
+    <label>Eyebrow</label>
+    <input type="text" name="hero_eyebrow" value="{{ page_hero.eyebrow or '' }}"/>
+    <div class="row">
+      <div>
+        <label>First line</label>
+        <input type="text" name="hero_title" value="{{ page_hero.title or '' }}"/>
+      </div>
+      <div>
+        <label>Second line (italic)</label>
+        <input type="text" name="hero_titleItalic" value="{{ page_hero.titleItalic or '' }}"/>
+      </div>
+    </div>
+    <label>Subtitle</label>
+    <textarea name="hero_subtitle" rows="2">{{ page_hero.subtitle or '' }}</textarea>
+    <div style="margin-top:14px;">
+      <button class="btn" type="submit">Save Our Products headline</button>
+    </div>
+  </div>
+</form>
+
 {% for c in catalog %}
 <div class="card">
   <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap;">

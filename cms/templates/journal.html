@@ -4,10 +4,35 @@
 <div style="display:flex; align-items:center; justify-content:space-between;">
   <div>
     <h1>Blog posts</h1>
-    <p class="sub">Field Notes / Journal articles.</p>
+    <p class="sub">Field Notes / Journal articles — plus the opening headline on the Field Notes page.</p>
   </div>
   <a class="btn" href="{{ url_for('journal_new') }}">+ New post</a>
 </div>
+
+{% set hero = hero or {} %}
+<form method="post" action="{{ url_for('journal_hero_save') }}" style="margin-bottom:28px;">
+  <div class="card">
+    <h2 style="margin-top:0;">Page header — Field Notes</h2>
+    <p class="field-help">The opening headline at the top of the Field Notes page, above the list of posts.</p>
+    <label>Eyebrow</label>
+    <input type="text" name="hero_eyebrow" value="{{ hero.eyebrow or '' }}"/>
+    <div class="row">
+      <div>
+        <label>First line (optional)</label>
+        <input type="text" name="hero_title" value="{{ hero.title or '' }}"/>
+      </div>
+      <div>
+        <label>Second line (italic, optional)</label>
+        <input type="text" name="hero_titleItalic" value="{{ hero.titleItalic or '' }}"/>
+      </div>
+    </div>
+    <label>Subtitle</label>
+    <textarea name="hero_subtitle" rows="2">{{ hero.subtitle or '' }}</textarea>
+    <div style="margin-top:14px;">
+      <button class="btn" type="submit">Save Field Notes headline</button>
+    </div>
+  </div>
+</form>
 
 <div class="card">
   {% for p in posts %}

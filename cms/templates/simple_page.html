@@ -6,22 +6,34 @@
 
 <form method="post" action="{{ url_for(save_endpoint) }}">
   <div class="card">
-    <h2 style="margin-top:0;">Opening headline</h2>
-    <label>Eyebrow</label>
+    <h2 style="margin-top:0;">Page header — “{{ hero.title or page_title }}{% if hero.titleItalic %} {{ hero.titleItalic }}{% endif %}”</h2>
+    <p class="field-help">The large headline at the top of this page.</p>
+    <label>Eyebrow (small label above the line)</label>
     <input type="text" name="hero_eyebrow" value="{{ hero.eyebrow or '' }}"/>
     <div class="row">
       <div>
-        <label>Title</label>
+        <label>First line</label>
         <input type="text" name="hero_title" value="{{ hero.title or '' }}"/>
       </div>
       <div>
-        <label>Title (italic)</label>
+        <label>Second line (italic)</label>
         <input type="text" name="hero_titleItalic" value="{{ hero.titleItalic or '' }}"/>
       </div>
     </div>
     <label>Subtitle</label>
     <textarea name="hero_subtitle" rows="3">{{ hero.subtitle or '' }}</textarea>
   </div>
+  {% set gallery = d.gallery or none %}
+  {% if gallery %}
+  <div class="card">
+    <h2 style="margin-top:0;">Photo gallery heading</h2>
+    <p class="field-help">The heading above the team photo gallery on Our Story.</p>
+    <div class="row">
+      <div><label>First line</label><input type="text" name="gallery_heading" value="{{ gallery.heading or '' }}"/></div>
+      <div><label>Second line (italic)</label><input type="text" name="gallery_headingItalic" value="{{ gallery.headingItalic or '' }}"/></div>
+    </div>
+  </div>
+  {% endif %}
   <div class="actions-bar save-bar">
     <button class="btn" type="submit">Save {{ page_title }}</button>
     <a class="btn secondary" href="{{ url_for('index') }}">Cancel</a>

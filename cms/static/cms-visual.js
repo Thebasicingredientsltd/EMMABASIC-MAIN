@@ -9,7 +9,11 @@
       ["journal", window.EB_JOURNAL],
       ["products", window.EB_PRODUCTS],
       ["catalog", window.EB_CATALOG],
-      ["nav", window.EB_NAV]
+      ["nav", window.EB_NAV],
+      ["places", window.EB_PLACES],
+      ["story", window.EB_STORY],
+      ["company", window.EB_COMPANY],
+      ["matcha", window.EB_MATCHA]
     ].filter(function (pair) { return pair[1]; });
   }
 
@@ -112,7 +116,19 @@
       });
   }
 
+  function bindMarked() {
+    document.querySelectorAll("[data-cms-path]").forEach(function (el) {
+      var key = el.getAttribute("data-cms-key");
+      var path = el.getAttribute("data-cms-path");
+      if (!key || !path || el.getAttribute("data-cms-bound")) return;
+      var f = { key: key, path: path, value: textOf(el) };
+      if (el.tagName === "IMG") markImage(el, f);
+      else markText(el, f);
+    });
+  }
+
   function bind() {
+    bindMarked();
     var fields = collect();
     var byText = {};
     fields.forEach(function (f) {

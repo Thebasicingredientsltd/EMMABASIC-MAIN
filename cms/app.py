@@ -211,6 +211,16 @@ def save_data(key, data):
     storage.persist(changes, message="CMS: update %s" % key)
 
 
+def load_catalog_bundle():
+    """Catalog file is `{hero, categories}`. Older array-only files still load."""
+    data = load_data("catalog")
+    if isinstance(data, list):
+        return {"hero": {}, "categories": data}
+    data.setdefault("hero", {})
+    data.setdefault("categories", [])
+    return data
+
+
 def _stage_file(relpath, data_bytes):
     """Buffer an uploaded file for the current request; it is written/committed
     together with the next save_data (or flushed explicitly by /api/upload)."""
@@ -736,7 +746,21 @@ def product_delete(index):
 # ---------------------------------------------------------------------------
 @app.route("/journal")
 def journal():
-    return render_template("journal.html", posts=load_data("journal").get("posts", []))
+    data = load_data("journal")
+    return render_template(
+        "journal.html",
+        posts=data.get("posts", []),
+        hero=data.get("hero") or {},
+    )
+
+
+@app.route("/journal/hero/save", methods=["POST"])
+def journal_hero_save():
+    data = load_data("journal")
+    _apply_hero_form(data.setdefault("hero", {}))
+    save_data("journal", data)
+    flash("Field Notes headline saved.", "ok")
+    return redirect(url_for("journal"))
 
 
 @app.route("/journal/new")
@@ -972,6 +996,13 @@ def people_save():
     hero["title"] = request.form.get("hero_title", "").strip()
     hero["titleItalic"] = request.form.get("hero_titleItalic", "").strip()
     hero["subtitle"] = request.form.get("hero_subtitle", "").strip()
+
+    # Photo + letter under the headline (People page only — not Homepage).
+    founder = d.setdefault("founder", {})
+    founder["image"] = resolve_image("founder_image", founder.get("image", ""))
+    founder["introLine"] = request.form.get("founder_introLine", "").strip()
+    founder["paragraphs"] = text_to_paras(request.form.get("founder_paragraphs", ""))
+    founder["visible"] = form_checkbox("founder_visible")
 
     # Team — heading/intro plus a repeatable list of members.
     team = d.setdefault("team", {})
@@ -1216,13 +1247,20 @@ def story():
         visual_page="story",
         active="story",
         d=load_data("story"),
-        extra="The founder story below the headline is edited on the Homepage.",
+        extra="The founder story below the headline is edited on the Homepage. The photo gallery heading is on this page.",
     )
 
 
 @app.route("/story/save", methods=["POST"])
 def story_save():
-    return _simple_page_save("story", "Our Story content saved.", "story")
+    data = load_data("story")
+    _apply_hero_form(data.setdefault("hero", {}))
+    gallery = data.setdefault("gallery", {})
+    gallery["heading"] = request.form.get("gallery_heading", "").strip()
+    gallery["headingItalic"] = request.form.get("gallery_headingItalic", "").strip()
+    save_data("story", data)
+    flash("Our Story content saved.", "ok")
+    return redirect(url_for("story"))
 
 
 @app.route("/company")
@@ -1273,7 +1311,21 @@ def _catalog_counts(catalog):
 
 @app.route("/catalog")
 def catalog():
-    return render_template("catalog.html", catalog=load_data("catalog"))
+    bundle = load_catalog_bundle()
+    return render_template(
+        "catalog.html",
+        catalog=bundle["categories"],
+        page_hero=bundle.get("hero") or {},
+    )
+
+
+@app.route("/catalog/hero/save", methods=["POST"])
+def catalog_hero_save():
+    bundle = load_catalog_bundle()
+    _apply_hero_form(bundle.setdefault("hero", {}))
+    save_data("catalog", bundle)
+    flash("Our Products headline saved.", "ok")
+    return redirect(url_for("catalog"))
 
 
 @app.route("/catalog/table")
@@ -1282,7 +1334,7 @@ def catalog_table():
     page, with a subset of safe scalar text fields editable inline."""
     return render_template(
         "catalog_table.html",
-        catalog=load_data("catalog"),
+        catalog=load_catalog_bundle()["categories"],
         text_fields=CATALOG_TABLE_TEXT_FIELDS,
         list_fields=CATALOG_TABLE_LIST_FIELDS,
     )
@@ -1298,7 +1350,8 @@ def catalog_table_save():
     other key (images, nutrition, education, qa, pairings, displayMode,
     imageScale, …) untouched.
     """
-    cats = load_data("catalog")
+    bundle = load_catalog_bundle()
+    cats = bundle["categories"]
     updated = 0
     for ci, cat in enumerate(cats):
         for pi, prod in enumerate(cat.get("products", [])):
@@ -1325,7 +1378,7 @@ def catalog_table_save():
                 prod["updatedAt"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
             updated += 1
 
-    save_data("catalog", cats)
+    save_data("catalog", bundle)
     flash("Saved %d product%s from the table." % (updated, "" if updated == 1 else "s"), "ok")
     return redirect(url_for("catalog_table"))
 
@@ -1338,7 +1391,7 @@ def catalog_category_new():
 
 @app.route("/catalog/category/<int:ci>")
 def catalog_category_edit(ci):
-    cats = load_data("catalog")
+    cats = load_catalog_bundle()["categories"]
     if ci < 0 or ci >= len(cats):
         flash("Category not found.", "error")
         return redirect(url_for("catalog"))
@@ -1347,7 +1400,8 @@ def catalog_category_edit(ci):
 
 @app.route("/catalog/category/save", methods=["POST"])
 def catalog_category_save():
-    cats = load_data("catalog")
+    bundle = load_catalog_bundle()
+    cats = bundle["categories"]
     index = int(request.form.get("index", "-1"))
     is_new = request.form.get("is_new") == "1"
 
@@ -1368,17 +1422,18 @@ def catalog_category_save():
         cats.append(cat)
     else:
         cats[index] = cat
-    save_data("catalog", cats)
+    save_data("catalog", bundle)
     flash("Saved category: %s" % cat["name"], "ok")
     return redirect(url_for("catalog"))
 
 
 @app.route("/catalog/category/<int:ci>/delete", methods=["POST"])
 def catalog_category_delete(ci):
-    cats = load_data("catalog")
+    bundle = load_catalog_bundle()
+    cats = bundle["categories"]
     if 0 <= ci < len(cats):
         removed = cats.pop(ci)
-        save_data("catalog", cats)
+        save_data("catalog", bundle)
         flash("Deleted category: %s (and its %d products)"
               % (removed.get("name", ""), len(removed.get("products", []))), "ok")
     return redirect(url_for("catalog"))
@@ -1386,7 +1441,7 @@ def catalog_category_delete(ci):
 
 @app.route("/catalog/product/new")
 def catalog_product_new():
-    cats = load_data("catalog")
+    cats = load_catalog_bundle()["categories"]
     ci = int(request.args.get("cat", "0"))
     blank = {
         "id": "", "name": "", "japanese": "", "origin": "", "tone": "warm",
@@ -1404,7 +1459,7 @@ def catalog_product_new():
 
 @app.route("/catalog/product/<int:ci>/<int:pi>")
 def catalog_product_edit(ci, pi):
-    cats = load_data("catalog")
+    cats = load_catalog_bundle()["categories"]
     if ci < 0 or ci >= len(cats) or pi < 0 or pi >= len(cats[ci].get("products", [])):
         flash("Product not found.", "error")
         return redirect(url_for("catalog"))
@@ -1421,7 +1476,8 @@ def catalog_product_edit(ci, pi):
 
 @app.route("/catalog/product/save", methods=["POST"])
 def catalog_product_save():
-    cats = load_data("catalog")
+    bundle = load_catalog_bundle()
+    cats = bundle["categories"]
     ci = int(request.form.get("cat_index", "-1"))
     pi = int(request.form.get("prod_index", "-1"))
     is_new = request.form.get("is_new") == "1"
@@ -1518,17 +1574,18 @@ def catalog_product_save():
     else:
         cats[ci]["products"][pi] = prod
 
-    save_data("catalog", cats)
+    save_data("catalog", bundle)
     flash("Saved product: %s" % prod["name"], "ok")
     return redirect(url_for("catalog"))
 
 
 @app.route("/catalog/product/<int:ci>/<int:pi>/delete", methods=["POST"])
 def catalog_product_delete(ci, pi):
-    cats = load_data("catalog")
+    bundle = load_catalog_bundle()
+    cats = bundle["categories"]
     if 0 <= ci < len(cats) and 0 <= pi < len(cats[ci].get("products", [])):
         removed = cats[ci]["products"].pop(pi)
-        save_data("catalog", cats)
+        save_data("catalog", bundle)
         flash("Deleted product: %s" % removed.get("name", ""), "ok")
     return redirect(url_for("catalog"))
 
@@ -1559,7 +1616,8 @@ def catalog_reorder():
     if not isinstance(order, list) or not all(isinstance(i, int) for i in order):
         return {"ok": False, "error": "order must be a list of integers"}, 400
 
-    cats = load_data("catalog")
+    bundle = load_catalog_bundle()
+    cats = bundle["categories"]
 
     if kind == "products":
         try:
@@ -1573,16 +1631,16 @@ def catalog_reorder():
             cats[ci]["products"] = reorder_by_index(prods, order)
         except ValueError as exc:
             return {"ok": False, "error": str(exc)}, 400
-        save_data("catalog", cats)
+        save_data("catalog", bundle)
         flash("Reordered products in %s." % cats[ci].get("name", "category"), "ok")
         return {"ok": True}
 
     if kind == "categories":
         try:
-            cats = reorder_by_index(cats, order)
+            bundle["categories"] = reorder_by_index(cats, order)
         except ValueError as exc:
             return {"ok": False, "error": str(exc)}, 400
-        save_data("catalog", cats)
+        save_data("catalog", bundle)
         flash("Reordered categories.", "ok")
         return {"ok": True}
 

@@ -9,27 +9,48 @@
 {% endmacro %}
 {% macro hidden_pill(section) %}{% if not is_section_visible(section) %} <span class="pill">Hidden on site</span>{% endif %}{% endmacro %}
 {% block content %}
+{% set founder = d.founder or {} %}
+{% set hero = d.hero or {} %}
 <h1>People &amp; Places</h1>
-<p class="sub">Everything on the People &amp; Places page — the team, the "who we are" story, services, and contact details. Uncheck <em>Show this section</em> on a block to hide it on the live site without deleting the copy.</p>
+<p class="sub">Everything on the People &amp; Places page — the page header (<em>A small operation, by design.</em>), founder photo and letter, the team, the "who we are" story, services, and contact details. Uncheck <em>Show this section</em> on a block to hide it on the live site without deleting the copy.</p>
 
 <form method="post" action="{{ url_for('people_save') }}" enctype="multipart/form-data">
 
   <div class="card">
-    <h2 style="margin-top:0;">Hero</h2>
-    <label>Eyebrow</label>
-    <input type="text" name="hero_eyebrow" value="{{ d.hero.eyebrow }}"/>
+    <h2 style="margin-top:0;">Page header — “{{ hero.title or 'A small operation,' }} {{ hero.titleItalic or 'by design.' }}”</h2>
+    <p class="field-help">This is the large headline at the very top of the People page, above the founder photo. It is two lines: roman, then italic.</p>
+    <label>Eyebrow (small label above the line)</label>
+    <input type="text" name="hero_eyebrow" value="{{ hero.eyebrow or '' }}"/>
     <div class="row">
       <div>
-        <label>Title</label>
-        <input type="text" name="hero_title" value="{{ d.hero.title }}"/>
+        <label>First line</label>
+        <input type="text" name="hero_title" value="{{ hero.title or '' }}"/>
       </div>
       <div>
-        <label>Title (italic)</label>
-        <input type="text" name="hero_titleItalic" value="{{ d.hero.titleItalic }}"/>
+        <label>Second line (italic)</label>
+        <input type="text" name="hero_titleItalic" value="{{ hero.titleItalic or '' }}"/>
       </div>
     </div>
-    <label>Subtitle</label>
-    <textarea name="hero_subtitle" rows="2">{{ d.hero.subtitle }}</textarea>
+    <label>Subtitle (the smaller line beside the headline)</label>
+    <textarea name="hero_subtitle" rows="2">{{ hero.subtitle or '' }}</textarea>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;">Founder photo &amp; story{{ hidden_pill(d.founder) }}</h2>
+    {{ show_on_site('founder', d.founder) }}
+    <p class="field-help">The photo and letter at the top of the People page, just under the headline. This is separate from the founder story on the Homepage.</p>
+    <label>Photo</label>
+    <div class="img-field">
+      <img class="preview" src="{{ imgsrc(founder.image) }}" alt="preview"/>
+      <div class="grow">
+        <input type="text" name="founder_image" value="{{ founder.image or '' }}"/>
+        <input type="file" name="founder_image_file" accept="image/*" style="margin-top:8px;"/>
+      </div>
+    </div>
+    <label>Intro line</label>
+    <input type="text" name="founder_introLine" value="{{ founder.introLine or '' }}"/>
+    <label>Paragraphs (separate each with a blank line)</label>
+    <textarea name="founder_paragraphs" rows="10">{{ (founder.paragraphs or []) | join('\n\n') }}</textarea>
   </div>
 
   <div class="card">
@@ -182,6 +203,7 @@
   <div class="actions-bar save-bar">
     <button class="btn" type="submit">Save People &amp; Places</button>
     <a class="btn secondary" href="{{ url_for('index') }}">Cancel</a>
+    <a class="btn secondary" href="{{ url_for('visual_editor', page='people') }}">Open visual editor</a>
   </div>
 </form>
 

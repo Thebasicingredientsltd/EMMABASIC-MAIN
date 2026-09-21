@@ -1,5 +1,11 @@
 /* Emma Basic — journal / blog data (CMS-managed). The payload below is strict JSON. */
 window.EB_JOURNAL = {
+  "hero": {
+    "eyebrow": "Field Notes",
+    "title": "",
+    "titleItalic": "",
+    "subtitle": "Recipes, sourcing decisions, cooking techniques, and the occasional account of a very long run."
+  },
   "posts": [
     {
       "id": "matcha-preparation",

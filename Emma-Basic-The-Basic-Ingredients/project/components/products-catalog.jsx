@@ -7,7 +7,9 @@
    through the CMS — not in this file.
    ============================================================ */
 
-const CATALOG = Array.isArray(window.EB_CATALOG) ? window.EB_CATALOG : [];
+const CATALOG = Array.isArray(window.EB_CATALOG)
+  ? window.EB_CATALOG
+  : ((window.EB_CATALOG && window.EB_CATALOG.categories) || []);
 
 /* Flat list — useful for search, count, and cross-links. */
 const CATALOG_FLAT = CATALOG.flatMap(c =>

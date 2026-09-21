@@ -1,9 +1,22 @@
 /* ============================================================
    PageHero — reusable interior-page hero. TypeReveal headline,
    hairline wipe, subtitle fade-up.
+
+   cmsKey / cmsPath let the CRM visual editor bind this block even
+   though TypeReveal splits the headline into per-word spans.
    ============================================================ */
-function PageHero({ eyebrow, title, titleItalic, subtitle }) {
+function PageHero({ eyebrow, title, titleItalic, subtitle, cmsKey, cmsPath = "hero" }) {
   const [lineRef, lineVisible] = useReveal(0.1);
+  const visual = typeof window !== "undefined" && window.__CMS_VISUAL;
+  function cmsProps(field) {
+    if (!cmsKey) return {};
+    return { "data-cms-key": cmsKey, "data-cms-path": cmsPath + "." + field };
+  }
+  function headline(text, delay) {
+    if (!text) return null;
+    if (visual) return text;
+    return <TypeReveal text={text} delay={delay} stagger={50} />;
+  }
 
   return (
     <section className="eb-page-hero" style={{
@@ -15,7 +28,7 @@ function PageHero({ eyebrow, title, titleItalic, subtitle }) {
 
         {/* Eyebrow + hairline sweep */}
         <div ref={lineRef} style={{ marginBottom: 40 }}>
-          <span style={{
+          <span {...cmsProps("eyebrow")} style={{
             fontFamily: "var(--f-body)", fontSize: 11, letterSpacing: "0.22em",
             textTransform: "uppercase", color: "var(--ink-60)",
             display: "block", marginBottom: 16,
@@ -43,17 +56,17 @@ function PageHero({ eyebrow, title, titleItalic, subtitle }) {
             overflow: "visible", paddingBottom: "0.08em",
             fontVariationSettings: '"opsz" 144, "SOFT" 30',
           }}>
-            <TypeReveal text={title} delay={300} stagger={50} style={{ display: "block" }} />
+            <span {...cmsProps("title")} style={{ display: "block" }}>{headline(title, 300)}</span>
             {titleItalic && (
-              <em style={{ display: "block", fontStyle: "normal", fontFamily: "var(--f-body)", fontWeight: 400, letterSpacing: "-0.02em", marginTop: "-0.12em", wordSpacing: "-0.08em" }}>
-                <TypeReveal text={titleItalic} delay={500} stagger={50} />
+              <em {...cmsProps("titleItalic")} style={{ display: "block", fontStyle: "normal", fontFamily: "var(--f-body)", fontWeight: 400, letterSpacing: "-0.02em", marginTop: "-0.12em", wordSpacing: "-0.08em" }}>
+                {headline(titleItalic, 500)}
               </em>
             )}
           </h1>}
 
           {subtitle && (
             <Reveal delay={700}>
-              <p style={{
+              <p {...cmsProps("subtitle")} style={{
                 fontFamily: "var(--f-display)", fontStyle: "italic",
                 fontSize: "clamp(16px, 1.4vw, 22px)", lineHeight: 1.5,
                 margin: 0, paddingBottom: 8,
