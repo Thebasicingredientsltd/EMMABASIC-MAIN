@@ -334,6 +334,19 @@ def form_checkbox(name):
     return str(raw).strip().lower() in ("on", "true", "1", "yes")
 
 
+def _form_lines(name, keep_blank=False):
+    """Split a textarea into lines. Empty lines are dropped unless keep_blank."""
+    raw = (request.form.get(name, "") or "").replace("\r\n", "\n")
+    lines = [ln.rstrip() for ln in raw.split("\n")]
+    if keep_blank:
+        while lines and not lines[0].strip():
+            lines.pop(0)
+        while lines and not lines[-1].strip():
+            lines.pop()
+        return lines
+    return [ln.strip() for ln in lines if ln.strip()]
+
+
 def is_section_visible(section):
     """Live-site default: a section is shown unless `visible` is explicitly false."""
     if not isinstance(section, dict):
@@ -1140,17 +1153,51 @@ def distributor():
 
 @app.route("/distributor/save", methods=["POST"])
 def distributor_save():
-    """Save Become a Distributor copy (hero, how to order, contact)."""
+    """Save the How to Place Your First Order sheet (not People contact)."""
     d = load_data("people")
-    hero = d.setdefault("distributor", {})
-    hero["eyebrow"] = request.form.get("hero_eyebrow", "").strip()
-    hero["title"] = request.form.get("hero_title", "").strip()
-    hero["titleItalic"] = request.form.get("hero_titleItalic", "").strip()
-    hero["subtitle"] = request.form.get("hero_subtitle", "").strip()
-    hero["visible"] = form_checkbox("hero_visible")
+    dist = d.setdefault("distributor", {})
+    dist["title"] = request.form.get("banner_title", "").strip()
+    dist["email"] = request.form.get("banner_email", "").strip()
+    dist["visible"] = form_checkbox("hero_visible")
+
+    old_steps = dist.get("steps") or []
+    count = int(request.form.get("step_count", "0") or "0")
+    steps = []
+    for i in range(count):
+        if ("step%d_title" % i) not in request.form and ("step%d_number" % i) not in request.form:
+            continue
+        title = request.form.get("step%d_title" % i, "").strip()
+        number = request.form.get("step%d_number" % i, "").strip()
+        icon = request.form.get("step%d_icon" % i, "").strip()
+        bullets = _form_lines("step%d_bullets" % i)
+        if not title and not number and not icon and not bullets:
+            continue
+        prev = dict(old_steps[i]) if i < len(old_steps) else {}
+        prev.update({
+            "icon": icon,
+            "number": number,
+            "title": title,
+            "bullets": bullets,
+            "visible": form_checkbox("step%d_visible" % i),
+        })
+        steps.append(prev)
+    dist["steps"] = steps
+
+    other = dist.setdefault("otherWays", {})
+    other["heading"] = request.form.get("other_heading", "").strip()
+    other["visible"] = form_checkbox("other_visible")
+    collect = other.setdefault("collect", {})
+    collect["title"] = request.form.get("collect_title", "").strip()
+    collect["lines"] = _form_lines("collect_lines", keep_blank=True)
+    own = other.setdefault("ownDistributor", {})
+    own["title"] = request.form.get("own_title", "").strip()
+    own["lines"] = _form_lines("own_lines", keep_blank=True)
+
+    sheet = dist.setdefault("sheetFooter", {})
+    sheet["text"] = request.form.get("sheet_footer_text", "").strip()
+    sheet["visible"] = form_checkbox("sheet_footer_visible")
+
     _apply_footer_form(d, "distributorFooter")
-    _apply_trade_form(d.setdefault("trade", {}))
-    _apply_contact_form(d.setdefault("contact", {}))
     save_data("people", d)
     flash("Become a Distributor content saved.", "ok")
     return redirect(url_for("distributor"))

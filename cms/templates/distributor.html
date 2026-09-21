@@ -7,30 +7,26 @@
 <p class="field-help" style="margin:0 0 14px;">Uncheck to hide this block on the website without deleting the content. You can turn it back on later.</p>
 {% endmacro %}
 {% macro hidden_pill(section) %}{% if not is_section_visible(section) %} <span class="pill">Hidden on site</span>{% endif %}{% endmacro %}
-{% set hero = d.distributor or {} %}
+{% set dstr = d.distributor or {} %}
+{% set steps = dstr.steps or [] %}
+{% set other = dstr.otherWays or {} %}
+{% set collect = other.collect or {} %}
+{% set own = other.ownDistributor or {} %}
+{% set sheet = dstr.sheetFooter or {} %}
 {% block content %}
 <h1>Become a Distributor</h1>
-<p class="sub">Everything on the Become a Distributor page — the opening headline, how to order, and the contact block. Changes show on the website after you save (publish when you want them live).</p>
+<p class="sub">This page follows the <em>How to Place Your First Order</em> new-customer sheet. The site menu stays at the top. Uncheck a box to hide that block on the website without deleting the words.</p>
 
 <form method="post" action="{{ url_for('distributor_save') }}">
 
   <div class="card">
-    <h2 style="margin-top:0;">Opening headline{{ hidden_pill(hero) }}</h2>
-    {{ show_on_site('hero', hero, 'Show this page header on the live site') }}
-    <label>Eyebrow</label>
-    <input type="text" name="hero_eyebrow" value="{{ hero.eyebrow or '' }}"/>
-    <div class="row">
-      <div>
-        <label>Title</label>
-        <input type="text" name="hero_title" value="{{ hero.title or '' }}"/>
-      </div>
-      <div>
-        <label>Title (italic)</label>
-        <input type="text" name="hero_titleItalic" value="{{ hero.titleItalic or '' }}"/>
-      </div>
-    </div>
-    <label>Subtitle</label>
-    <textarea name="hero_subtitle" rows="3">{{ hero.subtitle or '' }}</textarea>
+    <h2 style="margin-top:0;">Title bar{{ hidden_pill(dstr) }}</h2>
+    {{ show_on_site('hero', dstr, 'Show this page header on the live site') }}
+    <p class="field-help">The dark gray bar at the top of the sheet: the title and the order email.</p>
+    <label>Title</label>
+    <input type="text" name="banner_title" value="{{ dstr.title or '' }}"/>
+    <label>Order email</label>
+    <input type="text" name="banner_email" value="{{ dstr.email or '' }}"/>
   </div>
 
   <div class="card">
@@ -40,55 +36,55 @@
   </div>
 
   <div class="card">
-    <h2 style="margin-top:0;">How to order{{ hidden_pill(d.trade) }}</h2>
-    {{ show_on_site('trade', d.trade) }}
-    <div class="row">
-      <div><label>Eyebrow</label><input type="text" name="trade_eyebrow" value="{{ d.trade.eyebrow }}"/></div>
-      <div><label>Heading</label><input type="text" name="trade_heading" value="{{ d.trade.heading }}"/></div>
-    </div>
-    <label>Intro</label>
-    <textarea name="trade_intro" rows="2">{{ d.trade.intro }}</textarea>
-
-    <label>Items (question &amp; answer)</label>
-    <p class="field-help">Any attached PDF application forms are kept automatically.</p>
-    <div id="trades">
-      {% for it in (d.trade['items'] or []) %}
-      <div class="tile-editor" data-trade>
-        <label>Question</label>
-        <input type="text" name="trade{{ loop.index0 }}_q" value="{{ it.q }}"/>
-        <label>Answer</label>
-        <textarea name="trade{{ loop.index0 }}_a" rows="3">{{ it.a }}</textarea>
-        {% if it.forms %}
-        <p class="field-help">Attached forms: {% for f in (it.forms or []) %}{{ f.label }}{{ ', ' if not loop.last }}{% endfor %}</p>
-        {% endif %}
-        <div style="margin-top:10px;"><button type="button" class="btn danger small" onclick="this.closest('[data-trade]').remove()">Remove item</button></div>
+    <h2 style="margin-top:0;">Numbered steps</h2>
+    <p class="field-help">Each step is a gray number on the left and the instructions on the right. One bullet per line.</p>
+    <div id="steps">
+      {% for step in steps %}
+      <div class="tile-editor" data-step>
+        {{ show_on_site('step' ~ loop.index0, step, 'Show this step on the live site') }}
+        <div class="row">
+          <div><label>Icon</label><input type="text" name="step{{ loop.index0 }}_icon" value="{{ step.icon or '' }}"/></div>
+          <div><label>Number</label><input type="text" name="step{{ loop.index0 }}_number" value="{{ step.number or '' }}"/></div>
+        </div>
+        <label>Heading</label>
+        <input type="text" name="step{{ loop.index0 }}_title" value="{{ step.title or '' }}"/>
+        <label>Bullets (one per line)</label>
+        <textarea name="step{{ loop.index0 }}_bullets" rows="5">{{ (step.bullets or [])|join('\n') }}</textarea>
+        <div style="margin-top:10px;"><button type="button" class="btn danger small" onclick="this.closest('[data-step]').remove()">Remove step</button></div>
       </div>
       {% endfor %}
     </div>
-    <input type="hidden" name="trade_count" id="trade_count" value="{{ (d.trade['items'] or [])|length }}"/>
-    <button type="button" class="btn secondary small" id="add-trade">+ Add item</button>
+    <input type="hidden" name="step_count" id="step_count" value="{{ steps|length }}"/>
+    <button type="button" class="btn secondary small" id="add-step">+ Add step</button>
   </div>
 
   <div class="card">
-    <h2 style="margin-top:0;">Contact{{ hidden_pill(d.contact) }}</h2>
-    {{ show_on_site('contact', d.contact) }}
-    <p class="field-help">This contact block is shared with the People &amp; Places page.</p>
+    <h2 style="margin-top:0;">Other ways to receive your order{{ hidden_pill(other) }}</h2>
+    {{ show_on_site('other', other, 'Show this section on the live site') }}
+    <label>Section heading</label>
+    <input type="text" name="other_heading" value="{{ other.heading or '' }}"/>
     <div class="row">
-      <div><label>Heading line 1</label><input type="text" name="contact_headingLine1" value="{{ d.contact.headingLine1 }}"/></div>
-      <div><label>Heading line 2</label><input type="text" name="contact_headingLine2" value="{{ d.contact.headingLine2 }}"/></div>
+      <div>
+        <label>Left column heading</label>
+        <input type="text" name="collect_title" value="{{ collect.title or '' }}"/>
+        <label>Left column lines (blank line makes a gap)</label>
+        <textarea name="collect_lines" rows="8">{{ (collect.lines or [])|join('\n') }}</textarea>
+      </div>
+      <div>
+        <label>Right column heading</label>
+        <input type="text" name="own_title" value="{{ own.title or '' }}"/>
+        <label>Right column lines (blank line makes a gap)</label>
+        <textarea name="own_lines" rows="8">{{ (own.lines or [])|join('\n') }}</textarea>
+      </div>
     </div>
-    <label>Body</label>
-    <textarea name="contact_body" rows="3">{{ d.contact.body }}</textarea>
-    <div class="row">
-      <div><label>Region label</label><input type="text" name="contact_regionLabel" value="{{ d.contact.regionLabel }}"/></div>
-      <div><label>Email</label><input type="text" name="contact_email" value="{{ d.contact.email }}"/></div>
-    </div>
-    <div class="row">
-      <div><label>Address line 1</label><input type="text" name="contact_addressLine1" value="{{ d.contact.addressLine1 }}"/></div>
-      <div><label>Address line 2</label><input type="text" name="contact_addressLine2" value="{{ d.contact.addressLine2 }}"/></div>
-    </div>
-    <label>Note</label>
-    <textarea name="contact_note" rows="2">{{ d.contact.note }}</textarea>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;">Small line under the sheet{{ hidden_pill(sheet) }}</h2>
+    {{ show_on_site('sheet_footer', sheet, 'Show this line on the live site') }}
+    <p class="field-help">The grey line at the bottom of the How to Order sheet (not the site footer).</p>
+    <label>Text</label>
+    <input type="text" name="sheet_footer_text" value="{{ sheet.text or '' }}"/>
   </div>
 
   <div class="actions-bar save-bar">
@@ -98,26 +94,34 @@
   </div>
 </form>
 
-<template id="trade-template">
-  <div class="tile-editor" data-trade>
-    <label>Question</label>
-    <input type="text" name="tradeIDX_q" value=""/>
-    <label>Answer</label>
-    <textarea name="tradeIDX_a" rows="3"></textarea>
-    <div style="margin-top:10px;"><button type="button" class="btn danger small" onclick="this.closest('[data-trade]').remove()">Remove item</button></div>
+<template id="step-template">
+  <div class="tile-editor" data-step>
+    <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
+      <input type="checkbox" name="stepIDX_visible" value="on" style="width:auto;" checked/> Show this step on the live site
+    </label>
+    <p class="field-help" style="margin:0 0 14px;">Uncheck to hide this block on the website without deleting the content. You can turn it back on later.</p>
+    <div class="row">
+      <div><label>Icon</label><input type="text" name="stepIDX_icon" value=""/></div>
+      <div><label>Number</label><input type="text" name="stepIDX_number" value=""/></div>
+    </div>
+    <label>Heading</label>
+    <input type="text" name="stepIDX_title" value=""/>
+    <label>Bullets (one per line)</label>
+    <textarea name="stepIDX_bullets" rows="5"></textarea>
+    <div style="margin-top:10px;"><button type="button" class="btn danger small" onclick="this.closest('[data-step]').remove()">Remove step</button></div>
   </div>
 </template>
 {% endblock %}
 
 {% block scripts %}
 <script>
-  document.getElementById('add-trade').addEventListener('click', function () {
-    var counter = document.getElementById('trade_count');
+  document.getElementById('add-step').addEventListener('click', function () {
+    var counter = document.getElementById('step_count');
     var count = parseInt(counter.value, 10);
-    var tpl = document.getElementById('trade-template').innerHTML.replace(/IDX/g, count);
+    var tpl = document.getElementById('step-template').innerHTML.replace(/IDX/g, count);
     var wrap = document.createElement('div');
     wrap.innerHTML = tpl.trim();
-    document.getElementById('trades').appendChild(wrap.firstChild);
+    document.getElementById('steps').appendChild(wrap.firstChild);
     counter.value = count + 1;
   });
 </script>

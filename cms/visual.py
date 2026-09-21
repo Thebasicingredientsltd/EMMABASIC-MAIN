@@ -68,8 +68,8 @@ SITE_PAGES = [
         "data_key": "people",
         "sections": [
             {"id": "hero", "path": "distributor.visible", "label": "Page header"},
-            {"id": "trade", "path": "trade.visible", "label": "How to order"},
-            {"id": "contact", "path": "contact.visible", "label": "Contact"},
+            {"id": "otherWays", "path": "distributor.otherWays.visible", "label": "Other ways to receive"},
+            {"id": "sheetFooter", "path": "distributor.sheetFooter.visible", "label": "Guide footer line"},
             {"id": "footer", "path": "distributorFooter.visible", "label": "Page footer"},
         ],
     },

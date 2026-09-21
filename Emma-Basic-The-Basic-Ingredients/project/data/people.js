@@ -30,7 +30,7 @@ window.EB_PEOPLE = {
         "bio": "Read the ingredients on the food label.\n\nDon't let the legal but harmful additives hurt you and your loved ones. Cook fresh ingredients in your kitchen are, of course, the finest. Processed foods are not all evil. Many responsible manufacturers are sharing the same belief as we do, in pursuit of removing additives.\n\nRemove additives, my quest, and my purpose.",
         "tone": "cool",
         "image": "assets/uploads/Emma_Main-20260918-191609.jpg",
-        "image2": "assets/uploads/Emma_Personal_B-20260921-090129.jpg",
+        "image2": "assets/uploads/Emma_Personal_B-20260921-113608.jpg",
         "phone": "+44 7894 512430",
         "email": "Emma@thebasicingredients.com"
       },
@@ -88,8 +88,8 @@ window.EB_PEOPLE = {
         "role": "Sales Executive",
         "bio": "",
         "tone": "cool",
-        "image": "assets/uploads/Laurie_Work-20260915-083805.jpg",
-        "image2": "assets/uploads/Laurie_Personal-20260915-083808.jpg",
+        "image": "assets/uploads/Laurie_Work-20260921-113622.jpg",
+        "image2": "assets/uploads/Laurie_Personal-20260921-113617.jpg",
         "phone": ""
       },
       {
@@ -172,11 +172,76 @@ window.EB_PEOPLE = {
     "closing": "We provide advice on food safety, legality, authenticity and quality. If you are a food & drink brand looking for export opportunities, you can rely on us at all stages — from labelling assessment to customs clearance."
   },
   "distributor": {
-    "eyebrow": "For trade customers",
-    "title": "Become a",
-    "titleItalic": "distributor.",
-    "subtitle": "Stock Emma Basic — the additive-free range trusted across UK retail. Here's how to open a trade account and start ordering.",
-    "visible": true
+    "title": "How to Place Your First Order",
+    "email": "beatrice@thebasicingredients.com",
+    "visible": true,
+    "steps": [
+      {
+        "icon": "🏪",
+        "number": "1",
+        "title": "Open a Trade Account",
+        "bullets": [
+          "Email beatrice@thebasicingredients.com to register.",
+          "Cash in Advance — available to all new customers.",
+          "Net 30 Days Credit — subject to CreditSafe rating."
+        ],
+        "visible": true
+      },
+      {
+        "icon": "📋",
+        "number": "2",
+        "title": "Choose Products & Place Your Order",
+        "bullets": [
+          "Browse the catalogue; note the product code, name & quantity.",
+          "Full cases only — case sizes vary per product.",
+          "Email by 10 AM to: beatrice@thebasicingredients.com",
+          "Include: product code | product name | no. of cases",
+          "Order by 10 AM Day 1 → Delivered Day 3"
+        ],
+        "visible": true
+      },
+      {
+        "icon": "🚚",
+        "number": "3",
+        "title": "Free Delivery Minimums",
+        "bullets": [
+          "Within M25 (London): £500",
+          "Manchester: £1000 / Newcastle & Scotland: £1500",
+          "Rest of UK: £800 minimum order"
+        ],
+        "visible": true
+      }
+    ],
+    "otherWays": {
+      "heading": "Other Ways to Receive Your Order",
+      "visible": true,
+      "collect": {
+        "title": "Collect from Our Warehouse",
+        "lines": [
+          "Ambient — Kinaxia Logistics",
+          "DC115 Danes Way, Crick NN6 7GZ",
+          "Mon–Fri 07:00–20:00 | 01327 225122",
+          "",
+          "Frozen — JS Davidson Ltd",
+          "Shrewsbury Ave, Peterborough",
+          "PE2 7LB",
+          "Mon–Fri 06:00–15:00 | 01733 731301"
+        ]
+      },
+      "ownDistributor": {
+        "title": "Use Your Own Distributor",
+        "lines": [
+          "Already have a distributor?",
+          "Put us in touch — we'll handle it.",
+          "",
+          "B2B Ordering App — Coming soon!"
+        ]
+      }
+    },
+    "sheetFooter": {
+      "text": "thebasicingredients.com  |  New customer guide  |  May 2026",
+      "visible": true
+    }
   },
   "trade": {
     "eyebrow": "For trade customers",
@@ -232,9 +297,9 @@ window.EB_PEOPLE = {
     "visible": true
   },
   "footer": {
-    "visible": true
+    "visible": false
   },
   "distributorFooter": {
-    "visible": true
+    "visible": false
   }
 };
