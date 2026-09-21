@@ -99,53 +99,62 @@ function FounderNarrative({ hideReadMore = false, imageBesideText = false, image
       }}>
         <div className="eb-founder-beside" style={{
           maxWidth: "var(--maxw)", margin: "0 auto",
-          display: "grid",
-          gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)",
+          display: "flex",
+          alignItems: "stretch",
           gap: "clamp(48px, 8vw, 120px)",
-          alignItems: "start",
         }}>
-          <Reveal>
-            {/* Natural ratio, not a fixed crop — this slot holds a portrait,
-                so a forced aspect would cut faces off. */}
-            <div style={{ overflow: "hidden", background: "var(--paper-bright)" }}>
-              <img
-                src={photo}
-                alt="Emma Basic — founder"
-                style={{ display: "block", width: "100%", height: "auto" }}
-              />
-            </div>
-          </Reveal>
+          <div style={{ flex: "1 1 0", minWidth: 0 }}>
+            <Reveal>
+              {/* Natural ratio, not a fixed crop — this slot holds a portrait,
+                  so a forced aspect would cut faces off. */}
+              <div style={{ overflow: "hidden", background: "var(--paper-bright)" }}>
+                <img
+                  src={photo}
+                  alt="Emma Basic — founder"
+                  style={{ display: "block", width: "100%", height: "auto" }}
+                />
+              </div>
+            </Reveal>
+          </div>
 
-          <div>
+          <div className="eb-founder-copy" style={{
+            flex: "1 1 0",
+            minWidth: 0,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            gap: "0.85em",
+          }}>
             <Reveal>
               <p className="eb-founder-intro" style={{
                 fontFamily: "var(--f-body)", fontWeight: 400,
                 fontSize: "clamp(18px, 1.65vw, 24px)",
-                lineHeight: 1.22, letterSpacing: "-0.01em",
-                color: "var(--ink)", margin: "0 0 12px",
+                lineHeight: 1.28, letterSpacing: "-0.01em",
+                color: "var(--ink)", margin: 0,
               }}>
                 {intro}
               </p>
             </Reveal>
-            <div className="eb-founder-letter" style={{
-              fontFamily: "var(--f-body)", fontSize: "clamp(15px, 1.05vw, 16.5px)",
-              lineHeight: 1.42, color: "var(--ink-90)",
-              display: "grid", gap: "0.55em",
-            }}>
-              {visibleParas.map((text, i) => (
-                <Reveal key={i} delay={i * 80}>
-                  <p style={{ margin: 0 }} dangerouslySetInnerHTML={{ __html: text }} />
-                </Reveal>
-              ))}
-            </div>
+            {visibleParas.map((text, i) => (
+              <Reveal key={i} delay={i * 80}>
+                <p className="eb-founder-letter-p" style={{
+                  fontFamily: "var(--f-body)",
+                  fontSize: "clamp(15px, 1.05vw, 16.5px)",
+                  lineHeight: 1.5,
+                  color: "var(--ink-90)",
+                  margin: 0,
+                }} dangerouslySetInnerHTML={{ __html: text }} />
+              </Reveal>
+            ))}
             {!hideReadMore && readMoreLink}
           </div>
         </div>
         <style>{`
           @media (max-width: 900px) {
-            .eb-founder-beside { grid-template-columns: 1fr !important; }
-            .eb-founder-intro { font-size: clamp(18px, 4.4vw, 22px) !important; line-height: 1.3 !important; margin-bottom: 18px !important; }
-            .eb-founder-letter { font-size: 16px !important; line-height: 1.6 !important; gap: 1em !important; }
+            .eb-founder-beside { flex-direction: column !important; }
+            .eb-founder-copy { justify-content: flex-start !important; gap: 1em !important; }
+            .eb-founder-intro { font-size: clamp(18px, 4.4vw, 22px) !important; line-height: 1.3 !important; }
+            .eb-founder-letter-p { font-size: 16px !important; line-height: 1.6 !important; }
           }
         `}</style>
       </section>
