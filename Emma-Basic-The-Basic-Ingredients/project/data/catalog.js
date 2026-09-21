@@ -7,6 +7,9 @@ window.EB_CATALOG = {
     "subtitle": "Seven categories. No additives, no fillers, no shortcuts. The range is growing slowly — each product earns its place, or it doesn't ship.",
     "visible": true
   },
+  "footer": {
+    "visible": true
+  },
   "categories": [
     {
       "id": "seasonings",

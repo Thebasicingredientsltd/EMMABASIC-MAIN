@@ -20,8 +20,8 @@
 <div id="root"></div>
 
 <!-- CMS-managed content -->
-<script src="data/people.js?v=20260921110456494"></script>
-<script src="data/nav.js?v=20260921110456494"></script>
+<script src="data/people.js?v=20260921111954886"></script>
+<script src="data/nav.js?v=20260921111954886"></script>
 
 <script type="text/babel" src="components/Placeholder.jsx"></script>
 <script type="text/babel" src="components/motion.jsx"></script>
@@ -29,7 +29,7 @@
 <script type="text/babel" src="components/PageHero.jsx?v=5"></script>
 <script type="text/babel" src="components/FounderNarrative.jsx?v=8"></script>
 <script type="text/babel" src="components/TeamGrid.jsx?v=28"></script>
-<script type="text/babel" src="components/Sections.jsx"></script>
+<script type="text/babel" src="components/Sections.jsx?v=5"></script>
 <script type="text/babel" src="components/ExtraSections.jsx?v=2"></script>
 
 <script type="text/babel">
@@ -240,7 +240,7 @@ function PeopleApp() {
         {isSectionVisible(EB_PEOPLE.contact) && <TBIContactSection />}
         <ExtraSections source={EB_PEOPLE} />
       </main>
-      <SiteFooter />
+      <SiteFooter visible={(EB_PEOPLE.footer || {}).visible} />
     </>
   );
 }

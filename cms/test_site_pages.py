@@ -76,6 +76,7 @@ class SitePagesSidebarTests(unittest.TestCase):
                     "hero_titleItalic": hero.get("titleItalic", ""),
                     "hero_subtitle": hero.get("subtitle", ""),
                     "hero_visible": "on",
+                    "footer_visible": "on",
                 }
                 response = self.client.post(endpoint, data=payload)
                 self.assertEqual(response.status_code, 302, endpoint)
@@ -97,6 +98,7 @@ class SitePagesSidebarTests(unittest.TestCase):
                 "hero_titleItalic": hero.get("titleItalic", ""),
                 "hero_subtitle": hero.get("subtitle", ""),
                 "hero_visible": "on",
+                "footer_visible": "on",
                 "about_heading": marker,
                 "about_headingItalic": about.get("headingItalic", ""),
                 "about_body": about.get("body", ""),

@@ -10,6 +10,7 @@
 </div>
 
 {% set hero = hero or {} %}
+{% set footer = footer or {} %}
 <form method="post" action="{{ url_for('journal_hero_save') }}" style="margin-bottom:28px;">
   <div class="card">
     <h2 style="margin-top:0;">Page header — Field Notes{% if not is_section_visible(hero) %} <span class="pill">Hidden on site</span>{% endif %}</h2>
@@ -31,6 +32,13 @@
     </div>
     <label>Subtitle</label>
     <textarea name="hero_subtitle" rows="2">{{ hero.subtitle or '' }}</textarea>
+    <div style="margin-top:18px; padding-top:16px; border-top:1px solid var(--rule);">
+      <h2 style="margin:0 0 8px;">Page footer{% if not is_section_visible(footer) %} <span class="pill">Hidden on site</span>{% endif %}</h2>
+      <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
+        <input type="checkbox" name="footer_visible" value="on" style="width:auto;" {{ 'checked' if is_section_visible(footer) }}/> Show footer on this page
+      </label>
+      <p class="field-help">The site footer at the bottom of Field Notes only. Other pages keep theirs.</p>
+    </div>
     <div style="margin-top:14px;">
       <button class="btn" type="submit">Save Field Notes headline</button>
     </div>

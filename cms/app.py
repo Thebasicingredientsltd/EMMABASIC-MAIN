@@ -753,6 +753,7 @@ def journal():
         "journal.html",
         posts=data.get("posts", []),
         hero=data.get("hero") or {},
+        footer=data.get("footer") or {},
     )
 
 
@@ -760,6 +761,7 @@ def journal():
 def journal_hero_save():
     data = load_data("journal")
     _apply_hero_form(data.setdefault("hero", {}))
+    _apply_footer_form(data)
     save_data("journal", data)
     flash("Field Notes headline saved.", "ok")
     return redirect(url_for("journal"))
@@ -902,6 +904,7 @@ def homepage_save():
     if buttons:
         hero["buttons"] = buttons
     hero["visible"] = form_checkbox("hero_visible")
+    _apply_footer_form(h)
 
     banner = h.setdefault("banner", {})
     banner["text"] = request.form.get("banner_text", "").strip()
@@ -996,6 +999,7 @@ def people_save():
     # Hero — same helper as other pages so an unchecked box (omitted from POST)
     # saves visible:false instead of leaving the previous True in place.
     _apply_hero_form(d.setdefault("hero", {}))
+    _apply_footer_form(d)
 
     # Photo + letter under the headline (People page only — not Homepage).
     founder = d.setdefault("founder", {})
@@ -1144,6 +1148,7 @@ def distributor_save():
     hero["titleItalic"] = request.form.get("hero_titleItalic", "").strip()
     hero["subtitle"] = request.form.get("hero_subtitle", "").strip()
     hero["visible"] = form_checkbox("hero_visible")
+    _apply_footer_form(d, "distributorFooter")
     _apply_trade_form(d.setdefault("trade", {}))
     _apply_contact_form(d.setdefault("contact", {}))
     save_data("people", d)
@@ -1159,9 +1164,15 @@ def _apply_hero_form(hero):
     hero["visible"] = form_checkbox("hero_visible")
 
 
+def _apply_footer_form(data, key="footer"):
+    """Per-page footer visibility. Unchecked box is omitted from POST → False."""
+    data.setdefault(key, {})["visible"] = form_checkbox("footer_visible")
+
+
 def _simple_page_save(key, flash_msg, redirect_endpoint):
     data = load_data(key)
     _apply_hero_form(data.setdefault("hero", {}))
+    _apply_footer_form(data)
     save_data(key, data)
     flash(flash_msg, "ok")
     return redirect(url_for(redirect_endpoint))
@@ -1176,6 +1187,7 @@ def places():
 def places_save():
     d = load_data("places")
     _apply_hero_form(d.setdefault("hero", {}))
+    _apply_footer_form(d)
     featured = d.setdefault("featured", {})
     featured["eyebrow"] = request.form.get("featured_eyebrow", "").strip()
     featured["heading"] = request.form.get("featured_heading", "").strip()
@@ -1257,6 +1269,7 @@ def story():
 def story_save():
     data = load_data("story")
     _apply_hero_form(data.setdefault("hero", {}))
+    _apply_footer_form(data)
     gallery = data.setdefault("gallery", {})
     gallery["heading"] = request.form.get("gallery_heading", "").strip()
     gallery["headingItalic"] = request.form.get("gallery_headingItalic", "").strip()
@@ -1274,6 +1287,7 @@ def company():
 def company_save():
     d = load_data("company")
     _apply_hero_form(d.setdefault("hero", {}))
+    _apply_footer_form(d)
     about = d.setdefault("about", {})
     about["heading"] = request.form.get("about_heading", "").strip()
     about["headingItalic"] = request.form.get("about_headingItalic", "").strip()
@@ -1318,6 +1332,7 @@ def catalog():
         "catalog.html",
         catalog=bundle["categories"],
         page_hero=bundle.get("hero") or {},
+        page_footer=bundle.get("footer") or {},
     )
 
 
@@ -1325,6 +1340,7 @@ def catalog():
 def catalog_hero_save():
     bundle = load_catalog_bundle()
     _apply_hero_form(bundle.setdefault("hero", {}))
+    _apply_footer_form(bundle)
     save_data("catalog", bundle)
     flash("Our Products headline saved.", "ok")
     return redirect(url_for("catalog"))

@@ -11,6 +11,7 @@
 {% block content %}
 {% set founder = d.founder or {} %}
 {% set hero = d.hero or {} %}
+{% set footer = d.footer or {} %}
 <h1>People &amp; Places</h1>
 <p class="sub">Everything on the People &amp; Places page — the page header (<em>A small operation, by design.</em>), founder photo and letter, the team, the "who we are" story, services, and contact details. Uncheck <em>Show this section</em> on a block to hide it on the live site without deleting the copy.</p>
 
@@ -34,6 +35,12 @@
     </div>
     <label>Subtitle (the smaller line beside the headline)</label>
     <textarea name="hero_subtitle" rows="2">{{ hero.subtitle or '' }}</textarea>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;">Page footer{{ hidden_pill(footer) }}</h2>
+    {{ show_on_site('footer', footer, 'Show footer on this page') }}
+    <p class="field-help">The site footer at the bottom of the People page only. Other pages keep theirs. Uncheck to hide it without deleting the copy.</p>
   </div>
 
   <div class="card">

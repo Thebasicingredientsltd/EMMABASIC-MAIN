@@ -26,6 +26,13 @@
     <label>Subtitle</label>
     <textarea name="hero_subtitle" rows="3">{{ hero.subtitle or '' }}</textarea>
   </div>
+  <div class="card">
+    <h2 style="margin-top:0;">Page footer{% if not is_section_visible(d.footer) %} <span class="pill">Hidden on site</span>{% endif %}</h2>
+    <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
+      <input type="checkbox" name="footer_visible" value="on" style="width:auto;" {{ 'checked' if is_section_visible(d.footer) }}/> Show footer on this page
+    </label>
+    <p class="field-help">The site footer at the bottom of this page only. Other pages keep theirs.</p>
+  </div>
   {% set gallery = d.gallery or none %}
   {% if gallery %}
   <div class="card">

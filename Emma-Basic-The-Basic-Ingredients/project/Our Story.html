@@ -37,15 +37,15 @@
 <div id="root"></div>
 
 <!-- CMS-managed content -->
-<script src="data/homepage.js?v=20260921110456494"></script>
-<script src="data/story.js?v=20260921110456494"></script>
+<script src="data/homepage.js?v=20260921111954886"></script>
+<script src="data/story.js?v=20260921111954886"></script>
 
 <script type="text/babel" src="components/Placeholder.jsx"></script>
 <script type="text/babel" src="components/motion.jsx"></script>
 <script type="text/babel" src="components/TopNav.jsx?v=17"></script>
 <script type="text/babel" src="components/PageHero.jsx?v=5"></script>
 <script type="text/babel" src="components/FounderNarrative.jsx?v=8"></script>
-<script type="text/babel" src="components/Sections.jsx"></script>
+<script type="text/babel" src="components/Sections.jsx?v=5"></script>
 
 <script type="text/babel">
 function LocationMap() {
@@ -292,7 +292,7 @@ function OurStoryApp() {
         <LocationMap />
         <TeamPhotoGallery />
       </main>
-      <SiteFooter />
+      <SiteFooter visible={(window.EB_STORY && window.EB_STORY.footer || {}).visible} />
     </>
   );
 }

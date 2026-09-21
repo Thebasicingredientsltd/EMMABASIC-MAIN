@@ -43,6 +43,7 @@
 </div>
 
 {% set page_hero = page_hero or {} %}
+{% set page_footer = page_footer or {} %}
 <form method="post" action="{{ url_for('catalog_hero_save') }}" style="margin:20px 0 8px;">
   <div class="card">
     <h2 style="margin-top:0;">Page header — “{{ page_hero.title or 'Small shelf,' }} {{ page_hero.titleItalic or 'big intention.' }}”{% if not is_section_visible(page_hero) %} <span class="pill">Hidden on site</span>{% endif %}</h2>
@@ -64,6 +65,13 @@
     </div>
     <label>Subtitle</label>
     <textarea name="hero_subtitle" rows="2">{{ page_hero.subtitle or '' }}</textarea>
+    <div style="margin-top:18px; padding-top:16px; border-top:1px solid var(--rule);">
+      <h2 style="margin:0 0 8px;">Page footer{% if not is_section_visible(page_footer) %} <span class="pill">Hidden on site</span>{% endif %}</h2>
+      <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
+        <input type="checkbox" name="footer_visible" value="on" style="width:auto;" {{ 'checked' if is_section_visible(page_footer) }}/> Show footer on this page
+      </label>
+      <p class="field-help">The site footer at the bottom of Our Products only. Other pages keep theirs.</p>
+    </div>
     <div style="margin-top:14px;">
       <button class="btn" type="submit">Save Our Products headline</button>
     </div>

@@ -176,5 +176,8 @@ window.EB_HOME = {
       "enabled": false,
       "href": ""
     }
+  },
+  "footer": {
+    "visible": true
   }
 };

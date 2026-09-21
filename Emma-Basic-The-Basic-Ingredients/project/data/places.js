@@ -221,5 +221,8 @@ window.EB_PLACES = {
       "lat": 51.9083,
       "lng": 4.464
     }
-  ]
+  ],
+  "footer": {
+    "visible": true
+  }
 };

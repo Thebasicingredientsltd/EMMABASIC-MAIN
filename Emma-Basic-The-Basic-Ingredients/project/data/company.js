@@ -24,5 +24,8 @@ window.EB_COMPANY = {
     "email": "boris@thebasicingredients.com",
     "note": "For trade enquiries, export opportunities, and OEM partnerships.",
     "visible": true
+  },
+  "footer": {
+    "visible": true
   }
 };

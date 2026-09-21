@@ -23,6 +23,7 @@ SITE_PAGES = [
         "data_key": "homepage",
         "sections": [
             {"id": "hero", "path": "hero.visible", "label": "Page header"},
+            {"id": "footer", "path": "footer.visible", "label": "Page footer"},
         ],
     },
     {
@@ -32,6 +33,7 @@ SITE_PAGES = [
         "data_key": "people",
         "sections": [
             {"id": "hero", "path": "hero.visible", "label": "Page header"},
+            {"id": "footer", "path": "footer.visible", "label": "Page footer"},
             {"id": "founder", "path": "founder.visible", "label": "Founder photo & story"},
             {"id": "team", "path": "team.visible", "label": "Team"},
             {"id": "intro", "path": "intro.visible", "label": "Who we are"},
@@ -46,6 +48,7 @@ SITE_PAGES = [
         "data_key": "catalog",
         "sections": [
             {"id": "hero", "path": "hero.visible", "label": "Page header"},
+            {"id": "footer", "path": "footer.visible", "label": "Page footer"},
         ],
     },
     {
@@ -55,6 +58,7 @@ SITE_PAGES = [
         "data_key": "journal",
         "sections": [
             {"id": "hero", "path": "hero.visible", "label": "Page header"},
+            {"id": "footer", "path": "footer.visible", "label": "Page footer"},
         ],
     },
     {
@@ -66,6 +70,7 @@ SITE_PAGES = [
             {"id": "hero", "path": "distributor.visible", "label": "Page header"},
             {"id": "trade", "path": "trade.visible", "label": "How to order"},
             {"id": "contact", "path": "contact.visible", "label": "Contact"},
+            {"id": "footer", "path": "distributorFooter.visible", "label": "Page footer"},
         ],
     },
     {
@@ -75,6 +80,7 @@ SITE_PAGES = [
         "data_key": "places",
         "sections": [
             {"id": "hero", "path": "hero.visible", "label": "Page header"},
+            {"id": "footer", "path": "footer.visible", "label": "Page footer"},
         ],
     },
     {
@@ -84,6 +90,7 @@ SITE_PAGES = [
         "data_key": "story",
         "sections": [
             {"id": "hero", "path": "hero.visible", "label": "Page header"},
+            {"id": "footer", "path": "footer.visible", "label": "Page footer"},
         ],
     },
     {
@@ -93,6 +100,7 @@ SITE_PAGES = [
         "data_key": "company",
         "sections": [
             {"id": "hero", "path": "hero.visible", "label": "Page header"},
+            {"id": "footer", "path": "footer.visible", "label": "Page footer"},
         ],
     },
     {
@@ -102,6 +110,7 @@ SITE_PAGES = [
         "data_key": "matcha",
         "sections": [
             {"id": "hero", "path": "hero.visible", "label": "Page header"},
+            {"id": "footer", "path": "footer.visible", "label": "Page footer"},
         ],
     },
 ]

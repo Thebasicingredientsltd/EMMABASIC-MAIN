@@ -92,7 +92,7 @@ function ProductDetail() {
             paddingBottom: 2,
           }}>Browse all products →</a>
         </div>
-        <SiteFooter />
+        <SiteFooter visible={((window.EB_CATALOG && window.EB_CATALOG.footer) || {}).visible} />
       </>
     );
   }
@@ -108,7 +108,7 @@ function ProductDetail() {
         {product.education && <ProductEducation product={product} />}
         {product.extraImages && product.extraImages.length > 0 && <ProductExtraImages images={product.extraImages} gapBetween={!!product.extraImagesGap} />}
       </main>
-      <SiteFooter />
+      <SiteFooter visible={((window.EB_CATALOG && window.EB_CATALOG.footer) || {}).visible} />
     </>
   );
 }

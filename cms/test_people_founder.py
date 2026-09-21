@@ -117,6 +117,7 @@ def _form_from_people(data):
     _on(payload, "intro_visible", intro)
     _on(payload, "services_visible", services)
     _on(payload, "contact_visible", contact)
+    _on(payload, "footer_visible", data.get("footer") or {})
     for i, member in enumerate(members):
         payload["member%d_name" % i] = member.get("name", "")
         payload["member%d_role" % i] = member.get("role", "")

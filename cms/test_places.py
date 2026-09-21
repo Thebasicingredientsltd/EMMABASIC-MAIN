@@ -77,6 +77,8 @@ def _form_from_places(data):
     }
     if hero.get("visible") is not False:
         payload["hero_visible"] = "on"
+    if (data.get("footer") or {}).get("visible") is not False:
+        payload["footer_visible"] = "on"
     for i, item in enumerate(retailers):
         payload["retailer%d_name" % i] = item.get("name", "")
         payload["retailer%d_city" % i] = item.get("city", "")

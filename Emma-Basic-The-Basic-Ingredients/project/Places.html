@@ -37,7 +37,7 @@
 <div id="root"></div>
 
 <!-- CMS-managed content -->
-<script src="data/places.js?v=20260921110456494"></script>
+<script src="data/places.js?v=20260921111954886"></script>
 
 <script type="text/babel" src="components/Placeholder.jsx"></script>
 <script type="text/babel" src="components/motion.jsx"></script>
@@ -46,7 +46,7 @@
 <script type="text/babel" src="components/SupplierMap.jsx?v=4"></script>
 <script type="text/babel" src="components/StockistCarousel.jsx?v=8"></script>
 <script type="text/babel" src="components/NearestShopFinder.jsx?v=4"></script>
-<script type="text/babel" src="components/Sections.jsx"></script>
+<script type="text/babel" src="components/Sections.jsx?v=5"></script>
 
 <script type="text/babel">
 function LocationMap() {
@@ -226,7 +226,7 @@ function PlacesApp() {
         <NearestShopFinder />
         <LocationMap />
       </main>
-      <SiteFooter />
+      <SiteFooter visible={(window.EB_PLACES && window.EB_PLACES.footer || {}).visible} />
     </>
   );
 }

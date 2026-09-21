@@ -50,6 +50,7 @@ function App() {
 
   const open = openId ? PRODUCTS.find(p => p.id === openId) : null;
   const homeHero = (typeof window !== "undefined" && window.EB_HOME && window.EB_HOME.hero) || {};
+  const homeFooter = (typeof window !== "undefined" && window.EB_HOME && window.EB_HOME.footer) || {};
 
   return (
     <>
@@ -63,7 +64,7 @@ function App() {
         <SocialFeed />
         <ExtraSections source={typeof window !== "undefined" ? window.EB_HOME : {}} />
       </main>
-      <SiteFooter />
+      <SiteFooter visible={homeFooter.visible} />
       <SlideOutPanel product={open} open={!!openId} onClose={() => setOpenId(null)} />
       <TweakPanel open={editMode} state={state} setState={setState} />
     </>

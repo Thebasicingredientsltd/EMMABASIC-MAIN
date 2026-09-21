@@ -50,6 +50,14 @@
   </div>
 
   <div class="card">
+    <h2 style="margin-top:0;">Page footer{% if not is_section_visible(h.footer) %} <span class="pill">Hidden on site</span>{% endif %}</h2>
+    <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
+      <input type="checkbox" name="footer_visible" value="on" style="width:auto;" {{ 'checked' if is_section_visible(h.footer) }}/> Show footer on this page
+    </label>
+    <p class="field-help">The site footer at the bottom of the homepage only. Other pages keep theirs.</p>
+  </div>
+
+  <div class="card">
     <h2 style="margin-top:0;">Additive-free banner</h2>
     <label>Statement</label>
     <textarea name="banner_text" rows="2">{{ h.banner.text }}</textarea>

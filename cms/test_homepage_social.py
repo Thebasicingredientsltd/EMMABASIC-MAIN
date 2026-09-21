@@ -135,6 +135,8 @@ def _form_from_homepage(data):
     }
     if hero.get("visible") is not False:
         payload["hero_visible"] = "on"
+    if (data.get("footer") or {}).get("visible") is not False:
+        payload["footer_visible"] = "on"
     if social.get("visible", True) is not False:
         payload["social_visible"] = "on"
     if ig.get("enabled", True) is not False:

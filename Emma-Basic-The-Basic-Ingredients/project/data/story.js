@@ -10,5 +10,8 @@ window.EB_STORY = {
   "gallery": {
     "heading": "The team,",
     "headingItalic": "in the wild."
+  },
+  "footer": {
+    "visible": true
   }
 };

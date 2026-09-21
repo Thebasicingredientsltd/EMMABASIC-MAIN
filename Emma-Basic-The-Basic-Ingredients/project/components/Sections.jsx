@@ -128,7 +128,10 @@ function LifestyleTile({ tile, index, span }) {
   );
 }
 
-function SiteFooter() {
+function SiteFooter({ visible }) {
+  if (visible === false) {
+    return null;
+  }
   const cols = [
     ["Browse", [
       { label: "Matcha", href: "Our Products.html#cat-matcha" },

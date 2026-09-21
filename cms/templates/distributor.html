@@ -34,6 +34,12 @@
   </div>
 
   <div class="card">
+    <h2 style="margin-top:0;">Page footer{{ hidden_pill(d.distributorFooter) }}</h2>
+    {{ show_on_site('footer', d.distributorFooter, 'Show footer on this page') }}
+    <p class="field-help">The site footer at the bottom of Become a Distributor only. Other pages keep theirs.</p>
+  </div>
+
+  <div class="card">
     <h2 style="margin-top:0;">How to order{{ hidden_pill(d.trade) }}</h2>
     {{ show_on_site('trade', d.trade) }}
     <div class="row">

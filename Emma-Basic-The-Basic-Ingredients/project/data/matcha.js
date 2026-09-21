@@ -6,5 +6,8 @@ window.EB_MATCHA = {
     "titleItalic": "Grade Matcha.",
     "subtitle": "Shade-grown for 25 days. 100% pure Tencha leaf. Every batch tested by accredited laboratories.",
     "visible": true
+  },
+  "footer": {
+    "visible": true
   }
 };

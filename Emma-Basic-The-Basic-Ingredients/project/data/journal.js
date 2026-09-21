@@ -7,6 +7,9 @@ window.EB_JOURNAL = {
     "subtitle": "Recipes, sourcing decisions, cooking techniques, and the occasional account of a very long run.",
     "visible": true
   },
+  "footer": {
+    "visible": true
+  },
   "posts": [
     {
       "id": "matcha-preparation",
