@@ -26,6 +26,6 @@ window.EB_COMPANY = {
     "visible": true
   },
   "footer": {
-    "visible": true
+    "visible": false
   }
 };

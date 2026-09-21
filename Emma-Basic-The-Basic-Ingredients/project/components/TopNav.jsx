@@ -36,7 +36,6 @@ function TopNav({ hasHero = false }) {
     { label: "Field Notes", href: "Journal.html" },
     { label: "People",      href: "People%20%26%20Places.html" },
     { label: "Become a Distributor", href: "Become%20a%20Distributor.html" },
-    { label: "The Basic Ingredients Ltd", href: "The%20Basic%20Ingredients.html" },
   ];
 
   const allLinks = [...leftLinks, ...rightLinks];
