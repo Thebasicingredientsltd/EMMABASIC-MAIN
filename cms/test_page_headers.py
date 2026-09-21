@@ -4,12 +4,18 @@ Run with:  python test_page_headers.py
 """
 
 import os
+import re
 import sys
 import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from app import app, load_catalog_bundle, load_data, save_data  # noqa: E402
+
+
+def _hero_checkbox(html):
+    match = re.search(r'<input type="checkbox" name="hero_visible"[^>]*>', html)
+    return match.group(0) if match else ""
 
 
 class PageHeaderEditorTests(unittest.TestCase):
@@ -87,10 +93,16 @@ class PageHeaderEditorTests(unittest.TestCase):
             response = self.client.post("/people/save", data=payload)
             self.assertEqual(response.status_code, 302)
             self.assertIs(load_data("people")["hero"].get("visible"), False)
+            form = self.client.get("/people").get_data(as_text=True)
+            box = _hero_checkbox(form)
+            self.assertTrue(box)
+            self.assertNotIn("checked", box)
             payload["hero_visible"] = "on"
             response = self.client.post("/people/save", data=payload)
             self.assertEqual(response.status_code, 302)
             self.assertIs(load_data("people")["hero"].get("visible"), True)
+            form = self.client.get("/people").get_data(as_text=True)
+            self.assertIn("checked", _hero_checkbox(form))
         finally:
             with app.app_context():
                 save_data("people", original)
@@ -110,6 +122,9 @@ class PageHeaderEditorTests(unittest.TestCase):
             )
             self.assertEqual(response.status_code, 302)
             self.assertIs(load_catalog_bundle()["hero"].get("visible"), False)
+            box = _hero_checkbox(self.client.get("/catalog").get_data(as_text=True))
+            self.assertTrue(box)
+            self.assertNotIn("checked", box)
             response = self.client.post(
                 "/catalog/hero/save",
                 data={

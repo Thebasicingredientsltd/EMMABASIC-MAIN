@@ -10,7 +10,7 @@
   <div class="card">
     <h2 style="margin-top:0;">Hero{% if not is_section_visible(h.hero) %} <span class="pill">Hidden on site</span>{% endif %}</h2>
     <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
-      <input type="checkbox" name="hero_visible" style="width:auto;" {{ 'checked' if is_section_visible(h.hero) }}/> Show this page header on the live site
+      <input type="checkbox" name="hero_visible" value="on" style="width:auto;" {{ 'checked' if is_section_visible(h.hero) }}/> Show this page header on the live site
     </label>
     <p class="field-help">Uncheck to hide the full-bleed homepage hero without deleting the photo or copy.</p>
     <label>Background image</label>

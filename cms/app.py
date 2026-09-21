@@ -325,11 +325,13 @@ def parse_num(raw):
 def form_checkbox(name):
     """True when an HTML checkbox named `name` was checked.
 
-    Unchecked boxes are omitted from the POST body, matching the journal
-    `featured` field. Use this for per-section `visible` flags so a page
-    block can be hidden on the live site without deleting its content.
+    Unchecked boxes are omitted from the POST body. Missing therefore means
+    False — never default a section back to visible on save.
     """
-    return request.form.get(name) == "on"
+    raw = request.form.get(name)
+    if raw is None:
+        return False
+    return str(raw).strip().lower() in ("on", "true", "1", "yes")
 
 
 def is_section_visible(section):
@@ -991,13 +993,9 @@ def people():
 def people_save():
     d = load_data("people")
 
-    # Hero
-    hero = d.setdefault("hero", {})
-    hero["eyebrow"] = request.form.get("hero_eyebrow", "").strip()
-    hero["title"] = request.form.get("hero_title", "").strip()
-    hero["titleItalic"] = request.form.get("hero_titleItalic", "").strip()
-    hero["subtitle"] = request.form.get("hero_subtitle", "").strip()
-    hero["visible"] = form_checkbox("hero_visible")
+    # Hero — same helper as other pages so an unchecked box (omitted from POST)
+    # saves visible:false instead of leaving the previous True in place.
+    _apply_hero_form(d.setdefault("hero", {}))
 
     # Photo + letter under the headline (People page only — not Homepage).
     founder = d.setdefault("founder", {})

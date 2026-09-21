@@ -5,7 +5,7 @@ window.EB_PEOPLE = {
     "title": "A small operation,",
     "titleItalic": "by design.",
     "subtitle": "Carefully sourced, carefully run — twelve of us behind every decision.",
-    "visible": true
+    "visible": false
   },
   "founder": {
     "image": "assets/homepage/founder-mum-daughter.jpg",
