@@ -223,6 +223,6 @@ window.EB_PLACES = {
     }
   ],
   "footer": {
-    "visible": true
+    "visible": false
   }
 };

@@ -8,7 +8,7 @@ window.EB_JOURNAL = {
     "visible": true
   },
   "footer": {
-    "visible": true
+    "visible": false
   },
   "posts": [
     {
