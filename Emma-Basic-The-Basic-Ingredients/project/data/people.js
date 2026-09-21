@@ -17,7 +17,7 @@ window.EB_PEOPLE = {
         "bio": "Read the ingredients on the food label.\n\nDon't let the legal but harmful additives hurt you and your loved ones. Cook fresh ingredients in your kitchen are, of course, the finest. Processed foods are not all evil. Many responsible manufacturers are sharing the same belief as we do, in pursuit of removing additives.\n\nRemove additives, my quest, and my purpose.",
         "tone": "cool",
         "image": "assets/uploads/Emma_Main-20260918-191609.jpg",
-        "image2": "assets/uploads/Emma_Personal-20260915-080445.jpg",
+        "image2": "assets/uploads/Emma_Personal_B-20260921-090129.jpg",
         "phone": "+44 7894 512430",
         "email": "Emma@thebasicingredients.com"
       },
