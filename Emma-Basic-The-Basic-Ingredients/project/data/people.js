@@ -49,7 +49,7 @@ window.EB_PEOPLE = {
         "role": "Inventory Buyer",
         "bio": "Human beings are drowning in plastic pollution.\n\nBirds and fish are dying because of plastic.\n\nAs a buyer, I DO NOT like to see plastic. Inspire me with your creative and sustainable packages.\n\nIf you have a sustainable product that matches our values, I would love to hear from you.",
         "tone": "cool",
-        "image": "assets/uploads/Ling_Work-20260915-083758.jpg",
+        "image": "assets/uploads/DSC02247-20260921-103621.jpg",
         "image2": "assets/uploads/Ling_Personal-20260915-083801.jpg",
         "phone": "+44 7526 938210",
         "email": "ling@thebasicingredients.com"
