@@ -8,7 +8,7 @@ window.EB_CATALOG = {
     "visible": true
   },
   "footer": {
-    "visible": true
+    "visible": false
   },
   "categories": [
     {
