@@ -70,7 +70,7 @@ const TWEAK_DEFAULTS = { "serif": "fraunces", "paper": "warm" };
 
 <div id="root"></div>
 
-<script src="data/matcha.js?v=20260921093835178"></script>
+<script src="data/matcha.js?v=20260921101649016"></script>
 
 <script type="text/babel" src="components/Placeholder.jsx"></script>
 
@@ -78,7 +78,7 @@ const TWEAK_DEFAULTS = { "serif": "fraunces", "paper": "warm" };
 
 <script type="text/babel" src="components/TopNav.jsx?v=17"></script>
 
-<script type="text/babel" src="components/PageHero.jsx?v=4"></script>
+<script type="text/babel" src="components/PageHero.jsx?v=5"></script>
 
 <script type="text/babel" src="components/Sections.jsx"></script>
 
@@ -193,7 +193,15 @@ function MatchaHero() {
 
   }, []);
 
-
+  if (hero.visible === false) {
+    return (
+      <div
+        className="eb-page-hero-spacer"
+        aria-hidden="true"
+        style={{ height: 96, background: "var(--paper)" }}
+      />
+    );
+  }
 
   return (
 
@@ -1166,12 +1174,13 @@ function MatchaCTA() {
 /* ---- App ---- */
 
 function MatchaLabApp() {
+  const hero = (window.EB_MATCHA && window.EB_MATCHA.hero) || {};
 
   return (
 
     <>
 
-      <TopNav hasHero={true} />
+      <TopNav hasHero={hero.visible !== false} />
 
       <main>
 

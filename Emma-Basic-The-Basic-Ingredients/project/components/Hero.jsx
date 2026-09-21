@@ -26,6 +26,16 @@ function Hero() {
     return () => { cancelAnimationFrame(raf1); cancelAnimationFrame(raf2); };
   }, []);
 
+  if (H.visible === false) {
+    return (
+      <div
+        className="eb-page-hero-spacer"
+        aria-hidden="true"
+        style={{ height: 96, background: "var(--paper)" }}
+      />
+    );
+  }
+
   // Apple-style expand: starts as inset rounded card, expands to full-bleed
   const expandP = Math.min(1, p * 2.5); // completes at ~40% scroll
   const inset = (1 - expandP) * 5;       // 5vw → 0

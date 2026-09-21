@@ -111,6 +111,7 @@ def _form_from_people(data):
         "contact_addressLine2": contact.get("addressLine2", ""),
         "contact_note": contact.get("note", ""),
     }
+    _on(payload, "hero_visible", hero)
     _on(payload, "founder_visible", founder)
     _on(payload, "team_visible", team)
     _on(payload, "intro_visible", intro)

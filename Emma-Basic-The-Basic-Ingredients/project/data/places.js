@@ -4,7 +4,8 @@ window.EB_PLACES = {
     "eyebrow": "Places",
     "title": "Where to find",
     "titleItalic": "our products.",
-    "subtitle": "Good shops, independent grocers, and department stores — stocking Emma Basic near you."
+    "subtitle": "Good shops, independent grocers, and department stores — stocking Emma Basic near you.",
+    "visible": true
   },
   "featured": {
     "eyebrow": "Where to find us",

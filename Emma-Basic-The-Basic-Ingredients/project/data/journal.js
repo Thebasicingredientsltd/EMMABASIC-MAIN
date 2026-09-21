@@ -4,7 +4,8 @@ window.EB_JOURNAL = {
     "eyebrow": "Field Notes",
     "title": "",
     "titleItalic": "",
-    "subtitle": "Recipes, sourcing decisions, cooking techniques, and the occasional account of a very long run."
+    "subtitle": "Recipes, sourcing decisions, cooking techniques, and the occasional account of a very long run.",
+    "visible": true
   },
   "posts": [
     {

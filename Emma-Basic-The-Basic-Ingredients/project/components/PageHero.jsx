@@ -5,9 +5,18 @@
    cmsKey / cmsPath let the CRM visual editor bind this block even
    though TypeReveal splits the headline into per-word spans.
    ============================================================ */
-function PageHero({ eyebrow, title, titleItalic, subtitle, cmsKey, cmsPath = "hero" }) {
+function PageHero({ eyebrow, title, titleItalic, subtitle, cmsKey, cmsPath = "hero", visible }) {
   const [lineRef, lineVisible] = useReveal(0.1);
   const visual = typeof window !== "undefined" && window.__CMS_VISUAL;
+  if (visible === false) {
+    return (
+      <div
+        className="eb-page-hero-spacer"
+        aria-hidden="true"
+        style={{ height: 96, background: "#F6F6F6" }}
+      />
+    );
+  }
   function cmsProps(field) {
     if (!cmsKey) return {};
     return { "data-cms-key": cmsKey, "data-cms-path": cmsPath + "." + field };

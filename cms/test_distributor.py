@@ -75,6 +75,8 @@ def _form_from_people(data):
         "contact_email": contact.get("email", ""),
         "contact_note": contact.get("note", ""),
     }
+    if hero.get("visible") is not False:
+        payload["hero_visible"] = "on"
     if trade.get("visible") is not False:
         payload["trade_visible"] = "on"
     if contact.get("visible") is not False:

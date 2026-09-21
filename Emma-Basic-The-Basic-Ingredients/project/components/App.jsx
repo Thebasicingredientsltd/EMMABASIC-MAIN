@@ -49,10 +49,11 @@ function App() {
   }, [state.paper]);
 
   const open = openId ? PRODUCTS.find(p => p.id === openId) : null;
+  const homeHero = (typeof window !== "undefined" && window.EB_HOME && window.EB_HOME.hero) || {};
 
   return (
     <>
-      <TopNav hasHero={true} />
+      <TopNav hasHero={homeHero.visible !== false} />
       <main>
         <Hero />
         <ProductRail onOpen={setOpenId} />

@@ -21,6 +21,9 @@ SITE_PAGES = [
         "file": "Emma Basic Homepage.html",
         "label": "Homepage",
         "data_key": "homepage",
+        "sections": [
+            {"id": "hero", "path": "hero.visible", "label": "Page header"},
+        ],
     },
     {
         "id": "people",
@@ -28,6 +31,7 @@ SITE_PAGES = [
         "label": "People & Places",
         "data_key": "people",
         "sections": [
+            {"id": "hero", "path": "hero.visible", "label": "Page header"},
             {"id": "founder", "path": "founder.visible", "label": "Founder photo & story"},
             {"id": "team", "path": "team.visible", "label": "Team"},
             {"id": "intro", "path": "intro.visible", "label": "Who we are"},
@@ -40,12 +44,18 @@ SITE_PAGES = [
         "file": "Our Products.html",
         "label": "Our Products",
         "data_key": "catalog",
+        "sections": [
+            {"id": "hero", "path": "hero.visible", "label": "Page header"},
+        ],
     },
     {
         "id": "journal",
         "file": "Journal.html",
         "label": "Field Notes",
         "data_key": "journal",
+        "sections": [
+            {"id": "hero", "path": "hero.visible", "label": "Page header"},
+        ],
     },
     {
         "id": "distributor",
@@ -53,6 +63,7 @@ SITE_PAGES = [
         "label": "Become a Distributor",
         "data_key": "people",
         "sections": [
+            {"id": "hero", "path": "distributor.visible", "label": "Page header"},
             {"id": "trade", "path": "trade.visible", "label": "How to order"},
             {"id": "contact", "path": "contact.visible", "label": "Contact"},
         ],
@@ -62,24 +73,36 @@ SITE_PAGES = [
         "file": "Places.html",
         "label": "Where to find our products",
         "data_key": "places",
+        "sections": [
+            {"id": "hero", "path": "hero.visible", "label": "Page header"},
+        ],
     },
     {
         "id": "story",
         "file": "Our Story.html",
         "label": "Our Story",
         "data_key": "story",
+        "sections": [
+            {"id": "hero", "path": "hero.visible", "label": "Page header"},
+        ],
     },
     {
         "id": "company",
         "file": "The Basic Ingredients.html",
         "label": "The Basic Ingredients",
         "data_key": "company",
+        "sections": [
+            {"id": "hero", "path": "hero.visible", "label": "Page header"},
+        ],
     },
     {
         "id": "matcha",
         "file": "Matcha Lab.html",
         "label": "Matcha Lab",
         "data_key": "matcha",
+        "sections": [
+            {"id": "hero", "path": "hero.visible", "label": "Page header"},
+        ],
     },
 ]
 

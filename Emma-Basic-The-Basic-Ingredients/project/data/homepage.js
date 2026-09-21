@@ -16,7 +16,8 @@ window.EB_HOME = {
         "href": "The%20Basic%20Ingredients.html",
         "primary": false
       }
-    ]
+    ],
+    "visible": true
   },
   "productRail": {
     "heading": "Our team's staples."

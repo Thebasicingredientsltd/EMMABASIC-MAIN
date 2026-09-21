@@ -133,6 +133,8 @@ def _form_from_homepage(data):
         "social_facebook_href": fb.get("href", ""),
         "social_x_href": x.get("href", ""),
     }
+    if hero.get("visible") is not False:
+        payload["hero_visible"] = "on"
     if social.get("visible", True) is not False:
         payload["social_visible"] = "on"
     if ig.get("enabled", True) is not False:

@@ -4,6 +4,7 @@ window.EB_MATCHA = {
     "eyebrow": "The Matcha Lab — M002",
     "title": "Premium",
     "titleItalic": "Grade Matcha.",
-    "subtitle": "Shade-grown for 25 days. 100% pure Tencha leaf. Every batch tested by accredited laboratories."
+    "subtitle": "Shade-grown for 25 days. 100% pure Tencha leaf. Every batch tested by accredited laboratories.",
+    "visible": true
   }
 };

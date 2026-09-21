@@ -4,7 +4,8 @@ window.EB_STORY = {
     "eyebrow": "Our Story",
     "title": "Made for the shelf",
     "titleItalic": "we couldn't find.",
-    "subtitle": "Emma Basic is an additive-free food brand for home cooking. It's still run the same way — real ingredients, nothing hidden."
+    "subtitle": "Emma Basic is an additive-free food brand for home cooking. It's still run the same way — real ingredients, nothing hidden.",
+    "visible": true
   },
   "gallery": {
     "heading": "The team,",

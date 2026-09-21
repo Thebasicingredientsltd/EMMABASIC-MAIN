@@ -12,8 +12,11 @@
 {% set hero = hero or {} %}
 <form method="post" action="{{ url_for('journal_hero_save') }}" style="margin-bottom:28px;">
   <div class="card">
-    <h2 style="margin-top:0;">Page header — Field Notes</h2>
-    <p class="field-help">The opening headline at the top of the Field Notes page, above the list of posts.</p>
+    <h2 style="margin-top:0;">Page header — Field Notes{% if not is_section_visible(hero) %} <span class="pill">Hidden on site</span>{% endif %}</h2>
+    <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
+      <input type="checkbox" name="hero_visible" style="width:auto;" {{ 'checked' if is_section_visible(hero) }}/> Show this page header on the live site
+    </label>
+    <p class="field-help">Uncheck to hide the Field Notes headline without deleting it.</p>
     <label>Eyebrow</label>
     <input type="text" name="hero_eyebrow" value="{{ hero.eyebrow or '' }}"/>
     <div class="row">

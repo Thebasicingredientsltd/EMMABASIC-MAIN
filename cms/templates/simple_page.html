@@ -6,8 +6,11 @@
 
 <form method="post" action="{{ url_for(save_endpoint) }}">
   <div class="card">
-    <h2 style="margin-top:0;">Page header — “{{ hero.title or page_title }}{% if hero.titleItalic %} {{ hero.titleItalic }}{% endif %}”</h2>
-    <p class="field-help">The large headline at the top of this page.</p>
+    <h2 style="margin-top:0;">Page header — “{{ hero.title or page_title }}{% if hero.titleItalic %} {{ hero.titleItalic }}{% endif %}”{% if not is_section_visible(hero) %} <span class="pill">Hidden on site</span>{% endif %}</h2>
+    <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
+      <input type="checkbox" name="hero_visible" style="width:auto;" {{ 'checked' if is_section_visible(hero) }}/> Show this page header on the live site
+    </label>
+    <p class="field-help">Uncheck to hide the headline on the website without deleting it. The large headline sits at the top of this page.</p>
     <label>Eyebrow (small label above the line)</label>
     <input type="text" name="hero_eyebrow" value="{{ hero.eyebrow or '' }}"/>
     <div class="row">

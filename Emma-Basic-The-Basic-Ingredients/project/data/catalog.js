@@ -4,7 +4,8 @@ window.EB_CATALOG = {
     "eyebrow": "Our Products — N°01 through N°07",
     "title": "Small shelf,",
     "titleItalic": "big intention.",
-    "subtitle": "Seven categories. No additives, no fillers, no shortcuts. The range is growing slowly — each product earns its place, or it doesn't ship."
+    "subtitle": "Seven categories. No additives, no fillers, no shortcuts. The range is growing slowly — each product earns its place, or it doesn't ship.",
+    "visible": true
   },
   "categories": [
     {

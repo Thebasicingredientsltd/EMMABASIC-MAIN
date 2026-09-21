@@ -4,7 +4,8 @@ window.EB_COMPANY = {
     "eyebrow": "The Basic Ingredients Ltd",
     "title": "Clean label,",
     "titleItalic": "by design.",
-    "subtitle": ""
+    "subtitle": "",
+    "visible": true
   },
   "about": {
     "heading": "Who we",

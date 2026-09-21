@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% set active = "distributor" %}
-{% macro show_on_site(name, section) %}
+{% macro show_on_site(name, section, label='Show this section on the live site') %}
 <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
-  <input type="checkbox" name="{{ name }}_visible" style="width:auto;" {{ 'checked' if is_section_visible(section) }}/> Show this section on the live site
+  <input type="checkbox" name="{{ name }}_visible" style="width:auto;" {{ 'checked' if is_section_visible(section) }}/> {{ label }}
 </label>
 <p class="field-help" style="margin:0 0 14px;">Uncheck to hide this block on the website without deleting the content. You can turn it back on later.</p>
 {% endmacro %}
@@ -15,7 +15,8 @@
 <form method="post" action="{{ url_for('distributor_save') }}">
 
   <div class="card">
-    <h2 style="margin-top:0;">Opening headline</h2>
+    <h2 style="margin-top:0;">Opening headline{{ hidden_pill(hero) }}</h2>
+    {{ show_on_site('hero', hero, 'Show this page header on the live site') }}
     <label>Eyebrow</label>
     <input type="text" name="hero_eyebrow" value="{{ hero.eyebrow or '' }}"/>
     <div class="row">

@@ -45,8 +45,11 @@
 {% set page_hero = page_hero or {} %}
 <form method="post" action="{{ url_for('catalog_hero_save') }}" style="margin:20px 0 8px;">
   <div class="card">
-    <h2 style="margin-top:0;">Page header — “{{ page_hero.title or 'Small shelf,' }} {{ page_hero.titleItalic or 'big intention.' }}”</h2>
-    <p class="field-help">The large headline at the top of the Our Products page, above the category list.</p>
+    <h2 style="margin-top:0;">Page header — “{{ page_hero.title or 'Small shelf,' }} {{ page_hero.titleItalic or 'big intention.' }}”{% if not is_section_visible(page_hero) %} <span class="pill">Hidden on site</span>{% endif %}</h2>
+    <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
+      <input type="checkbox" name="hero_visible" style="width:auto;" {{ 'checked' if is_section_visible(page_hero) }}/> Show this page header on the live site
+    </label>
+    <p class="field-help">Uncheck to hide the headline on Our Products without deleting it.</p>
     <label>Eyebrow</label>
     <input type="text" name="hero_eyebrow" value="{{ page_hero.eyebrow or '' }}"/>
     <div class="row">

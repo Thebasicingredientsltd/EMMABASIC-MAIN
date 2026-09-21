@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% set active = "people" %}
 {% macro imgsrc(path) %}{{ url_for('site_assets', filename=path[7:]) if path and path.startswith('assets/') else (path or '') }}{% endmacro %}
-{% macro show_on_site(name, section) %}
+{% macro show_on_site(name, section, label='Show this section on the live site') %}
 <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
-  <input type="checkbox" name="{{ name }}_visible" style="width:auto;" {{ 'checked' if is_section_visible(section) }}/> Show this section on the live site
+  <input type="checkbox" name="{{ name }}_visible" style="width:auto;" {{ 'checked' if is_section_visible(section) }}/> {{ label }}
 </label>
 <p class="field-help" style="margin:0 0 14px;">Uncheck to hide this block on the website without deleting the content. You can turn it back on later.</p>
 {% endmacro %}
@@ -17,7 +17,8 @@
 <form method="post" action="{{ url_for('people_save') }}" enctype="multipart/form-data">
 
   <div class="card">
-    <h2 style="margin-top:0;">Page header — “{{ hero.title or 'A small operation,' }} {{ hero.titleItalic or 'by design.' }}”</h2>
+    <h2 style="margin-top:0;">Page header — “{{ hero.title or 'A small operation,' }} {{ hero.titleItalic or 'by design.' }}”{{ hidden_pill(hero) }}</h2>
+    {{ show_on_site('hero', hero, 'Show this page header on the live site') }}
     <p class="field-help">This is the large headline at the very top of the People page, above the founder photo. It is two lines: roman, then italic.</p>
     <label>Eyebrow (small label above the line)</label>
     <input type="text" name="hero_eyebrow" value="{{ hero.eyebrow or '' }}"/>

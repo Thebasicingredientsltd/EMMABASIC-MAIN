@@ -2,9 +2,10 @@
 window.EB_PEOPLE = {
   "hero": {
     "eyebrow": "People",
-    "title": "",
-    "titleItalic": "",
-    "subtitle": ""
+    "title": "A small operation,",
+    "titleItalic": "by design.",
+    "subtitle": "Carefully sourced, carefully run — twelve of us behind every decision.",
+    "visible": true
   },
   "founder": {
     "image": "assets/homepage/founder-mum-daughter.jpg",
@@ -174,7 +175,8 @@ window.EB_PEOPLE = {
     "eyebrow": "For trade customers",
     "title": "Become a",
     "titleItalic": "distributor.",
-    "subtitle": "Stock Emma Basic — the additive-free range trusted across UK retail. Here's how to open a trade account and start ordering."
+    "subtitle": "Stock Emma Basic — the additive-free range trusted across UK retail. Here's how to open a trade account and start ordering.",
+    "visible": true
   },
   "trade": {
     "eyebrow": "For trade customers",

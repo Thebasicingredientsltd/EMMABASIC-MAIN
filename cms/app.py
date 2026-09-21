@@ -899,6 +899,7 @@ def homepage_save():
             buttons.append({"label": label, "href": href, "primary": i == 1})
     if buttons:
         hero["buttons"] = buttons
+    hero["visible"] = form_checkbox("hero_visible")
 
     banner = h.setdefault("banner", {})
     banner["text"] = request.form.get("banner_text", "").strip()
@@ -996,6 +997,7 @@ def people_save():
     hero["title"] = request.form.get("hero_title", "").strip()
     hero["titleItalic"] = request.form.get("hero_titleItalic", "").strip()
     hero["subtitle"] = request.form.get("hero_subtitle", "").strip()
+    hero["visible"] = form_checkbox("hero_visible")
 
     # Photo + letter under the headline (People page only — not Homepage).
     founder = d.setdefault("founder", {})
@@ -1143,6 +1145,7 @@ def distributor_save():
     hero["title"] = request.form.get("hero_title", "").strip()
     hero["titleItalic"] = request.form.get("hero_titleItalic", "").strip()
     hero["subtitle"] = request.form.get("hero_subtitle", "").strip()
+    hero["visible"] = form_checkbox("hero_visible")
     _apply_trade_form(d.setdefault("trade", {}))
     _apply_contact_form(d.setdefault("contact", {}))
     save_data("people", d)
@@ -1155,6 +1158,7 @@ def _apply_hero_form(hero):
     hero["title"] = request.form.get("hero_title", "").strip()
     hero["titleItalic"] = request.form.get("hero_titleItalic", "").strip()
     hero["subtitle"] = request.form.get("hero_subtitle", "").strip()
+    hero["visible"] = form_checkbox("hero_visible")
 
 
 def _simple_page_save(key, flash_msg, redirect_endpoint):

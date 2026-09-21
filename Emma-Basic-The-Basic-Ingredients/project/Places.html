@@ -37,12 +37,12 @@
 <div id="root"></div>
 
 <!-- CMS-managed content -->
-<script src="data/places.js?v=20260921093835178"></script>
+<script src="data/places.js?v=20260921101649016"></script>
 
 <script type="text/babel" src="components/Placeholder.jsx"></script>
 <script type="text/babel" src="components/motion.jsx"></script>
 <script type="text/babel" src="components/TopNav.jsx?v=17"></script>
-<script type="text/babel" src="components/PageHero.jsx?v=4"></script>
+<script type="text/babel" src="components/PageHero.jsx?v=5"></script>
 <script type="text/babel" src="components/SupplierMap.jsx?v=4"></script>
 <script type="text/babel" src="components/StockistCarousel.jsx?v=8"></script>
 <script type="text/babel" src="components/NearestShopFinder.jsx?v=4"></script>
@@ -215,6 +215,7 @@ function PlacesApp() {
       <main>
         <PageHero
           cmsKey="places"
+          visible={hero.visible}
           eyebrow={hero.eyebrow || "Places"}
           title={hero.title || "Where to find"}
           titleItalic={hero.titleItalic || "our products."}

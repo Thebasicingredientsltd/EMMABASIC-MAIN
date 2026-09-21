@@ -20,12 +20,12 @@
 <div id="root"></div>
 
 <!-- CMS-managed content (plain JS, loads synchronously before components) -->
-<script src="data/catalog.js?v=20260921093835178"></script>
+<script src="data/catalog.js?v=20260921101649016"></script>
 
 <script type="text/babel" src="components/Placeholder.jsx?v=2"></script>
 <script type="text/babel" src="components/motion.jsx?v=2"></script>
 <script type="text/babel" src="components/TopNav.jsx?v=17"></script>
-<script type="text/babel" src="components/PageHero.jsx?v=4"></script>
+<script type="text/babel" src="components/PageHero.jsx?v=5"></script>
 <script type="text/babel" src="components/products-catalog.jsx?v=82"></script>
 <script type="text/babel" src="components/CatalogIndex.jsx?v=24"></script>
 <script type="text/babel" src="components/Sections.jsx?v=4"></script>
@@ -41,6 +41,7 @@ function OurProductsApp() {
       <main>
         <PageHero
           cmsKey="catalog"
+          visible={hero.visible}
           eyebrow={hero.eyebrow || "Our Products — N°01 through N°07"}
           title={hero.title || "Small shelf,"}
           titleItalic={hero.titleItalic || "big intention."}

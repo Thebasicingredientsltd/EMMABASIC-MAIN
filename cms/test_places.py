@@ -75,6 +75,8 @@ def _form_from_places(data):
         "hq_lat": "" if hq.get("lat") is None else str(hq.get("lat")),
         "hq_lng": "" if hq.get("lng") is None else str(hq.get("lng")),
     }
+    if hero.get("visible") is not False:
+        payload["hero_visible"] = "on"
     for i, item in enumerate(retailers):
         payload["retailer%d_name" % i] = item.get("name", "")
         payload["retailer%d_city" % i] = item.get("city", "")
