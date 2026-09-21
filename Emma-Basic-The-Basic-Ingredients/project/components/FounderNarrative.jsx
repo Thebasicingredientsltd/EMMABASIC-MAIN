@@ -118,19 +118,19 @@ function FounderNarrative({ hideReadMore = false, imageBesideText = false, image
 
           <div>
             <Reveal>
-              <p style={{
+              <p className="eb-founder-intro" style={{
                 fontFamily: "var(--f-body)", fontWeight: 400,
-                fontSize: "clamp(20px, 1.9vw, 28px)",
-                lineHeight: 1.3, letterSpacing: "-0.01em",
-                color: "var(--ink)", margin: "0 0 clamp(24px, 3.5vh, 36px)",
+                fontSize: "clamp(18px, 1.65vw, 24px)",
+                lineHeight: 1.22, letterSpacing: "-0.01em",
+                color: "var(--ink)", margin: "0 0 12px",
               }}>
                 {intro}
               </p>
             </Reveal>
-            <div style={{
-              fontFamily: "var(--f-body)", fontSize: "clamp(16px, 1.1vw, 18px)",
-              lineHeight: 1.75, color: "var(--ink-90)",
-              display: "grid", gap: "1.4em",
+            <div className="eb-founder-letter" style={{
+              fontFamily: "var(--f-body)", fontSize: "clamp(15px, 1.05vw, 16.5px)",
+              lineHeight: 1.42, color: "var(--ink-90)",
+              display: "grid", gap: "0.55em",
             }}>
               {visibleParas.map((text, i) => (
                 <Reveal key={i} delay={i * 80}>
@@ -144,6 +144,8 @@ function FounderNarrative({ hideReadMore = false, imageBesideText = false, image
         <style>{`
           @media (max-width: 900px) {
             .eb-founder-beside { grid-template-columns: 1fr !important; }
+            .eb-founder-intro { font-size: clamp(18px, 4.4vw, 22px) !important; line-height: 1.3 !important; margin-bottom: 18px !important; }
+            .eb-founder-letter { font-size: 16px !important; line-height: 1.6 !important; gap: 1em !important; }
           }
         `}</style>
       </section>
