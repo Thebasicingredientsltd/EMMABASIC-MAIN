@@ -47,7 +47,7 @@ window.EB_JOURNAL = {
       "date": "24 Mar 2026",
       "title": "What we eat after a long run.",
       "excerpt": "The rice goes on before the run. By the time you're back, it's waiting. Furikake, a soft egg, sesame oil. That's it.",
-      "image": "assets/journal/Nori-furikake-journal.png",
+      "image": "assets/uploads/Nori-furikake-journal-20260923-081544.jpg",
       "tone": "ink",
       "featured": false
     },
@@ -138,7 +138,7 @@ window.EB_JOURNAL = {
       "date": "24 Mar 2026",
       "readTime": "3 min read",
       "title": "What we eat after a long run.",
-      "image": "assets/journal/Nori-furikake-journal.png",
+      "image": "assets/uploads/Nori-furikake-journal-20260923-081548.jpg",
       "imagePosition": "",
       "intro": "",
       "body": []
