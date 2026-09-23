@@ -200,12 +200,12 @@ window.EB_PRODUCTS = [
     "imageZoom": null,
     "amazon": "",
     "usps": [
-      "Raw & unpasteurised — never heat-treated, preserving live cultures and enzymes",
-      "Four ingredients only: water, soybeans, rice, salt — nothing added",
-      "Non-GMO soybeans, traditionally fermented using time-honoured artisanal methods",
-      "Bold umami depth — works in soups, glazes, dressings, stir-fries, and ramen broth",
-      "Vegan and suitable for vegetarians",
-      "Naturally rich amber colour deepens as the miso continues to age and develop flavour"
+      "✅ Raw & unpasteurised — never heat-treated, preserving live cultures and enzymes",
+      "✅ Four ingredients only: water, soybeans, rice, salt — nothing added",
+      "✅ Non-GMO soybeans, traditionally fermented using time-honoured artisanal methods",
+      "✅ Bold umami depth — works in soups, glazes, dressings, stir-fries, and ramen broth",
+      "✅ Vegan and suitable for vegetarians",
+      "✅ Naturally rich amber colour deepens as the miso continues to age and develop flavour"
     ],
     "ingredients": [
       "Water",
