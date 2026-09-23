@@ -26,6 +26,29 @@ function Hero() {
     return () => { cancelAnimationFrame(raf1); cancelAnimationFrame(raf2); };
   }, []);
 
+  React.useLayoutEffect(() => {
+    const root = imgRef && imgRef.current;
+    if (!root) return;
+    const fit = () => {
+      const h1 = root.querySelector(".eb-hero__headline");
+      const line = root.querySelector(".eb-hero__slide--2");
+      if (!h1 || !line) return;
+      h1.style.removeProperty("font-size");
+      const max = h1.clientWidth;
+      if (!max) return;
+      let size = parseFloat(window.getComputedStyle(h1).fontSize);
+      for (let i = 0; i < 32 && line.scrollWidth > max - 2 && size > 32; i++) {
+        size -= 1;
+        h1.style.setProperty("font-size", size + "px", "important");
+      }
+    };
+    fit();
+    const fonts = document.fonts && document.fonts.ready;
+    if (fonts) fonts.then(fit);
+    window.addEventListener("resize", fit);
+    return () => window.removeEventListener("resize", fit);
+  }, [imgRef, loaded, headlineLine2]);
+
   if (H.visible === false) {
     return (
       <div
@@ -36,10 +59,12 @@ function Hero() {
     );
   }
 
-  // Apple-style expand: starts as inset rounded card, expands to full-bleed
+  // Apple-style expand: starts as inset rounded card, expands to full-bleed.
+  // Phones stay full-bleed so the long italic line has the full type width.
+  const narrow = typeof window !== "undefined" && window.innerWidth < 720;
   const expandP = Math.min(1, p * 2.5); // completes at ~40% scroll
-  const inset = (1 - expandP) * 5;       // 5vw → 0
-  const radius = (1 - expandP) * 20;     // 20px → 0
+  const inset = narrow ? 0 : (1 - expandP) * 5;       // 5vw → 0
+  const radius = narrow ? 0 : (1 - expandP) * 20;     // 20px → 0
   const innerScale = 1.04 + p * 0.06;
   const ty = (0.5 - p) * 30;
   const overlayOpacity = 0.22 + p * 0.18;
@@ -90,14 +115,16 @@ function Hero() {
         justifyContent: "center",
         padding: "120px var(--pad-x) 80px",
       }}>
-        <div style={{ maxWidth: 1280, width: "100%", display: "grid", gap: "clamp(24px, 4vh, 48px)" }}>
-          <h1 style={{
+        <div style={{ maxWidth: 1280, width: "100%", minWidth: 0, display: "grid", gap: "clamp(24px, 4vh, 48px)" }}>
+          <h1 className="eb-hero__headline" style={{
             margin: 0,
             fontSize: "clamp(56px, 10vw, 160px)",
             letterSpacing: "-0.035em",
             lineHeight: 0.9,
             fontFamily: "var(--f-display)",
             fontWeight: 400,
+            minWidth: 0,
+            maxWidth: "100%",
           }}>
             <span className="eb-hero__mask">
               <span className="eb-hero__slide eb-hero__slide--1">{headlineLine1}</span>
@@ -161,12 +188,13 @@ function Hero() {
         .eb-hero--in .eb-hero__bar--top { height: 0; }
         .eb-hero--in .eb-hero__bar--bot { height: 0; }
 
-        .eb-hero__mask { display: inline-block; overflow: hidden; vertical-align: bottom; line-height: 0.9; padding-bottom: 0.2em; margin-bottom: -0.16em; }
+        .eb-hero__mask { display: inline-block; overflow: hidden; vertical-align: bottom; line-height: 0.9; padding-bottom: 0.2em; margin-bottom: -0.16em; max-width: 100%; }
         .eb-hero__slide {
           display: inline-block;
           transform: translateY(110%);
           transition: transform 1200ms cubic-bezier(0.22, 1, 0.36, 1);
         }
+        .eb-hero__slide--2 { padding-right: 0.14em; }
         .eb-hero--in .eb-hero__slide--1 { transform: translateY(0); transition-delay: 1300ms; }
         .eb-hero--in .eb-hero__slide--2 { transform: translateY(0); transition-delay: 1500ms; }
 
@@ -185,13 +213,20 @@ function Hero() {
         .eb-hero--in .eb-hero__scroll { opacity: 0.7; }
 
         @media (max-width: 820px) {
-          .eb-hero__body { grid-template-columns: 1fr; gap: 24px; }
+          .eb-hero__body { grid-template-columns: 1fr; gap: 24px; min-width: 0; }
+          /* "uncompromised." is one italic word (~8.3em). Size the headline
+             to that width so overflow-x:hidden does not clip the last letters. */
+          .eb-hero__headline {
+            font-size: clamp(36px, calc((100vw - 2 * var(--pad-x)) / 8.6), 88px) !important;
+          }
+          .eb-hero__mask { display: block; }
         }
         @media (max-width: 768px) {
           .eb-hero__type-pad { padding-top: 80px !important; padding-bottom: 56px !important; }
+          .eb-hero { min-height: 100svh !important; }
         }
         @media (max-width: 600px) {
-          .eb-hero__buttons { flex-direction: column; align-items: flex-start; }
+          .eb-hero__buttons { flex-direction: column; align-items: stretch; }
           .eb-hero__buttons a { width: 100%; justify-content: center; }
         }
       `}</style>
