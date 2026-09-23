@@ -57,7 +57,7 @@ window.EB_JOURNAL = {
       "date": "17 Mar 2026",
       "title": "Tamari vs soy sauce. They are not the same thing.",
       "excerpt": "One uses wheat. One doesn't. The difference in flavour is real, and once you know it, you can't un-taste it.",
-      "image": "assets/journal/Soy-sauce-image.jpg",
+      "image": "assets/uploads/Soy-sauce-image-20260923-081605.jpg",
       "tone": "warm",
       "featured": false
     },
@@ -148,7 +148,7 @@ window.EB_JOURNAL = {
       "date": "17 Mar 2026",
       "readTime": "4 min read",
       "title": "Tamari vs. soy sauce. They are not the same thing.",
-      "image": "assets/journal/Soy-sauce-image.jpg",
+      "image": "assets/uploads/Soy-sauce-image-20260923-081610.jpg",
       "imagePosition": "",
       "intro": "",
       "body": []
