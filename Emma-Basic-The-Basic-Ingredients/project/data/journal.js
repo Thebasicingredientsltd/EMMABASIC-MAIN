@@ -67,7 +67,7 @@ window.EB_JOURNAL = {
       "date": "10 Mar 2026",
       "title": "The yaki-gyoza method. Steam-fry, not fry.",
       "excerpt": "Hot oil, golden base, then water and a lid. Two minutes of steam finishes what the pan starts. Order matters.",
-      "image": "assets/journal/Chicken-gyoza-journal.jpg",
+      "image": "assets/uploads/Chicken-gyoza-journal-20260923-081628.jpg",
       "tone": "warm",
       "featured": false
     },
@@ -158,7 +158,7 @@ window.EB_JOURNAL = {
       "date": "10 Mar 2026",
       "readTime": "4 min read",
       "title": "The yaki-gyoza method. Steam-fry, not fry.",
-      "image": "assets/journal/Chicken-gyoza-journal.jpg",
+      "image": "assets/uploads/Chicken-gyoza-journal-20260923-081640.jpg",
       "imagePosition": "",
       "intro": "",
       "body": []
