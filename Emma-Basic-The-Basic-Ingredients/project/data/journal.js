@@ -37,7 +37,7 @@ window.EB_JOURNAL = {
       "date": "01 Apr 2026",
       "title": "Binchotan: 300 years of Japanese charcoal production.",
       "excerpt": "We spent a day with a Wakayama producer. Here's what we learned about a process that hasn't changed since the Edo period.",
-      "image": "assets/journal/Binochtan-water-filter-journal.jpg",
+      "image": "assets/uploads/Binochtan-water-filter-journal-20260923-081519.jpg",
       "tone": "ink",
       "featured": false
     },
@@ -128,7 +128,7 @@ window.EB_JOURNAL = {
       "date": "01 Apr 2026",
       "readTime": "6 min read",
       "title": "Binchotan: 300 years of Japanese charcoal production.",
-      "image": "assets/journal/Binochtan-water-filter-journal.jpg",
+      "image": "assets/uploads/Binochtan-water-filter-journal-20260923-081525.jpg",
       "imagePosition": "",
       "intro": "",
       "body": []
