@@ -232,7 +232,13 @@ window.EB_PRODUCTS = [
     "imagePosition": "",
     "imageZoom": null,
     "amazon": "",
-    "usps": [],
+    "usps": [
+      "✅ READY IN 3 MINS: Soak wakame in warm water for 2-3 minutes. Add into your miso soup, salad or stir-fries.",
+      "✅ WAKAME UDON: Wakame is traditionally used as a topping for udon soup together with ginger and spring onion.",
+      "✅ WAKAME SALAD: Mix with your prefered other vegetables, top with a dressing made of: Soy sauce + Vinegar + Toasted Sesame Oil. Sprinkle on top a pinch of toasted sesame seeds.",
+      "✅ SOURCE OF FIBRE : Dry wakame 36.1g fibre per 100g. Wakame after soaking in water is around 3.6g/100g.",
+      "✅ RE-SEALABLE PACKAGE: Convenient, no mess in the kitchen. Helps to maintain product freshness."
+    ],
     "ingredients": [
       "Wakame seaweed"
     ],
