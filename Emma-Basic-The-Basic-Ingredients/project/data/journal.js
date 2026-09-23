@@ -27,8 +27,8 @@ window.EB_JOURNAL = {
       "date": "08 Apr 2026",
       "title": "Koshihikari and the short-grain question. What the rice in your bowl actually is.",
       "excerpt": "Most sushi rice in British kitchens is Italian. The difference between that and genuine short-grain Japonica is something you taste immediately — once you know what you're looking for.",
-      "image": "assets/journal/Sushi-rice-journal-image.avif",
-      "tone": "warm",
+      "image": "assets/uploads/Sushi-rice-journal-image-20260923-081451.avif",
+      "tone": "cool",
       "featured": false
     },
     {
@@ -118,7 +118,7 @@ window.EB_JOURNAL = {
       "date": "08 Apr 2026",
       "readTime": "6 min read",
       "title": "Koshihikari and the short-grain question. What the rice in your bowl actually is.",
-      "image": "assets/journal/Sushi-rice-journal-image.avif",
+      "image": "assets/uploads/Sushi-rice-journal-image-20260923-081503.avif",
       "imagePosition": "",
       "intro": "",
       "body": []
