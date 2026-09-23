@@ -97,7 +97,7 @@ window.EB_JOURNAL = {
       "date": "17 Feb 2026",
       "title": "Wakame: the seaweed worth knowing.",
       "excerpt": "It's not nori. It's not kelp. Wakame is its own thing — silky, mild, nutritionally serious, and underused in Western kitchens.",
-      "image": "assets/journal/wakame-50g-journal.png",
+      "image": "assets/uploads/wakame-50g-journal-20260923-081738.jpg",
       "tone": "warm",
       "featured": false
     }
@@ -188,7 +188,7 @@ window.EB_JOURNAL = {
       "date": "17 Feb 2026",
       "readTime": "5 min read",
       "title": "Wakame: the seaweed worth knowing.",
-      "image": "assets/journal/wakame-50g-journal.png",
+      "image": "assets/uploads/wakame-50g-journal-20260923-081742.jpg",
       "imagePosition": "",
       "intro": "",
       "body": []
