@@ -12,9 +12,13 @@ import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
+import app as app_module  # noqa: E402
+import storage  # noqa: E402
+from app import app  # noqa: E402
 from visual import (  # noqa: E402
     add_custom_section,
     add_site_page,
+    draft_site_page,
     get_path,
     parse_path,
     set_path,
@@ -74,8 +78,46 @@ class SectionAndPageTests(unittest.TestCase):
             self.assertIn('id="root"', html)
             self.assertEqual(nav["right"][-1]["label"], "Our Studio")
             self.assertEqual(nav["right"][-1]["href"], result["filename"])
+            self.assertIn("Our Studio", result["html"])
         finally:
             shutil.rmtree(tmp, ignore_errors=True)
+
+    def test_draft_site_page_avoids_existing_names(self):
+        nav = {"left": [], "right": []}
+        first = draft_site_page("Notes", "Notes", "Hi", nav, [])
+        second = draft_site_page("Notes", "Notes", "Hi", {"left": [], "right": []}, [first["filename"]])
+        self.assertEqual(first["filename"], "notes.html")
+        self.assertEqual(second["filename"], "notes-2.html")
+
+
+class PreviewRouteTests(unittest.TestCase):
+    def setUp(self):
+        self._password = app_module.CMS_PASSWORD
+        self._backend = storage.BACKEND
+        app_module.CMS_PASSWORD = ""
+        storage.BACKEND = "local"
+        app.config["TESTING"] = True
+        self.client = app.test_client()
+
+    def tearDown(self):
+        app_module.CMS_PASSWORD = self._password
+        storage.BACKEND = self._backend
+
+    def test_preview_home_returns_rewritten_html(self):
+        response = self.client.get("/preview/home")
+        self.assertEqual(response.status_code, 200)
+        html = response.get_data(as_text=True)
+        self.assertIn("/preview-static/", html)
+        self.assertIn("cms-visual.js", html)
+
+    def test_preview_people_handles_spaces_in_filename(self):
+        response = self.client.get("/preview/people")
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("cms-visual.js", response.get_data(as_text=True))
+
+    def test_preview_missing_page_is_404(self):
+        response = self.client.get("/preview/not-a-real-page")
+        self.assertEqual(response.status_code, 404)
 
 
 if __name__ == "__main__":

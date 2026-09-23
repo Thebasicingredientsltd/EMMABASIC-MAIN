@@ -1998,26 +1998,40 @@ def visual_editor():
     )
 
 
+def _project_rel(filename):
+    return PROJECT_REL + "/" + str(filename).replace("\\", "/").lstrip("/")
+
+
+def _read_project_html(filename):
+    return storage.read_text(_project_rel(filename))
+
+
 @app.route("/preview/<page_id>")
 def visual_preview(page_id):
-    from visual import page_by_id, rewrite_preview_html, SITE_PAGES
+    from visual import page_by_id, rewrite_preview_html
     page = page_by_id(page_id)
-    if page is None:
-        custom = os.path.join(PROJECT_DIR, page_id if page_id.endswith(".html") else page_id + ".html")
-        if not os.path.isfile(custom):
-            abort(404)
-        with open(custom, encoding="utf-8") as fh:
-            html = fh.read()
-        return Response(rewrite_preview_html(html, os.path.basename(custom)), mimetype="text/html")
-    path = os.path.join(PROJECT_DIR, page["file"])
-    with open(path, encoding="utf-8") as fh:
-        html = fh.read()
-    return Response(rewrite_preview_html(html, page["file"]), mimetype="text/html")
+    filename = page["file"] if page else (
+        page_id if str(page_id).endswith(".html") else str(page_id) + ".html"
+    )
+    try:
+        html = _read_project_html(filename)
+    except Exception:
+        abort(404)
+    return Response(rewrite_preview_html(html, os.path.basename(filename)), mimetype="text/html")
 
 
 @app.route("/preview-static/<path:filename>")
 def preview_static(filename):
-    return send_from_directory(PROJECT_DIR, filename)
+    try:
+        data = storage.read_bytes(_project_rel(filename))
+    except Exception:
+        abort(404)
+    if data is None:
+        abort(404)
+    ctype = mimetypes.guess_type(filename)[0] or "application/octet-stream"
+    resp = Response(data, mimetype=ctype)
+    resp.headers["Cache-Control"] = "private, max-age=60"
+    return resp
 
 
 @app.route("/api/visual/patch", methods=["POST"])
@@ -2080,7 +2094,7 @@ def visual_section():
 
 @app.route("/api/visual/page", methods=["POST"])
 def visual_add_page():
-    from visual import add_site_page
+    from visual import draft_site_page
     body = request.get_json(force=True, silent=True) or {}
     title = (body.get("title") or "").strip()
     if not title:
@@ -2090,12 +2104,16 @@ def visual_add_page():
     except Exception:
         nav = {"left": [], "right": []}
     try:
-        result = add_site_page(
-            PROJECT_DIR,
+        result = draft_site_page(
             title,
             body.get("heading") or title,
             body.get("body") or "",
             nav,
+            storage.list_dir(PROJECT_REL),
+        )
+        storage.persist(
+            [(_project_rel(result["filename"]), result["html"], False)],
+            message="CMS: add page %s" % result["filename"],
         )
         save_data("nav", result["nav"])
     except Exception as exc:

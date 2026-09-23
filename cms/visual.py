@@ -222,12 +222,13 @@ root.render(<CustomPage />);
 """
 
 
-def add_site_page(project_dir, title, heading, body, nav):
-    """Write a new HTML page and append it to the site nav."""
+def draft_site_page(title, heading, body, nav, existing_names=None):
+    """Build a new page's HTML and nav entry without touching disk."""
+    existing = set(existing_names or [])
     base = slugify(title)
     filename = base + ".html"
     n = 2
-    while os.path.exists(os.path.join(project_dir, filename)):
+    while filename in existing:
         filename = "%s-%d.html" % (base, n)
         n += 1
     html = PAGE_TEMPLATE.format(
@@ -235,13 +236,20 @@ def add_site_page(project_dir, title, heading, body, nav):
         heading_js=json_str(heading or title),
         body_js=json_str(body or ""),
     )
-    path = os.path.join(project_dir, filename)
-    with open(path, "w", encoding="utf-8") as fh:
-        fh.write(html)
     nav = nav if isinstance(nav, dict) else {}
     nav.setdefault("right", [])
     nav["right"].append({"label": title, "href": filename})
-    return {"filename": filename, "title": title, "nav": nav}
+    return {"filename": filename, "title": title, "html": html, "nav": nav}
+
+
+def add_site_page(project_dir, title, heading, body, nav):
+    """Write a new HTML page and append it to the site nav."""
+    existing = os.listdir(project_dir) if os.path.isdir(project_dir) else []
+    result = draft_site_page(title, heading, body, nav, existing)
+    path = os.path.join(project_dir, result["filename"])
+    with open(path, "w", encoding="utf-8") as fh:
+        fh.write(result["html"])
+    return result
 
 
 def json_str(value):
