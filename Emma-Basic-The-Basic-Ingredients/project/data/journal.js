@@ -77,7 +77,7 @@ window.EB_JOURNAL = {
       "date": "03 Mar 2026",
       "title": "Why we only use physically pressed sesame oil.",
       "excerpt": "Most sesame oil is solvent-extracted. Ours isn't. The process takes longer, costs more, and the difference is unmistakeable.",
-      "image": "assets/journal/Sesame-oil-journal.jpg",
+      "image": "assets/uploads/Sesame-oil-journal-20260923-081656.jpg",
       "tone": "warm",
       "featured": false
     },
