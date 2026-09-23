@@ -132,11 +132,22 @@ def _rel(abs_path):
 # ---------------------------------------------------------------------------
 # A login is enforced whenever the CMS is online (GitHub backend) or whenever a
 # CMS_PASSWORD is configured. Local runs without a password stay frictionless.
+# Online, both CMS_USERNAME and CMS_PASSWORD must be set (Vercel env vars).
+CMS_USERNAME = os.environ.get("CMS_USERNAME", "admin").strip() or "admin"
 CMS_PASSWORD = os.environ.get("CMS_PASSWORD", "")
 
 
 def _auth_required():
     return storage.is_github() or bool(CMS_PASSWORD)
+
+
+def _credentials_match(supplied, expected):
+    left = (supplied or "").encode("utf-8")
+    right = (expected or "").encode("utf-8")
+    if not right or len(left) != len(right):
+        hmac.compare_digest(right or b"x", right or b"x")
+        return False
+    return hmac.compare_digest(left, right)
 
 
 @app.before_request
@@ -156,12 +167,13 @@ def login():
         return redirect(url_for("index"))
     error = None
     if request.method == "POST":
-        supplied = request.form.get("password", "")
-        if CMS_PASSWORD and hmac.compare_digest(supplied, CMS_PASSWORD):
+        user_ok = _credentials_match(request.form.get("username", "").strip(), CMS_USERNAME)
+        pass_ok = _credentials_match(request.form.get("password", ""), CMS_PASSWORD)
+        if user_ok and pass_ok:
             session["cms_auth"] = True
             session.permanent = True
             return redirect(request.form.get("next") or url_for("index"))
-        error = ("Incorrect password." if CMS_PASSWORD
+        error = ("Incorrect username or password." if CMS_PASSWORD
                  else "No CMS_PASSWORD is configured on the server.")
     return render_template("login.html", error=error, next=request.args.get("next", ""))
 

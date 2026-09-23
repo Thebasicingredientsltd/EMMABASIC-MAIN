@@ -29,12 +29,13 @@
     .brand { font-family: "Fraunces", serif; font-weight: 600; font-size: 24px; letter-spacing: -0.01em; margin: 0 0 4px; }
     .sub { color: var(--ink-60); font-size: 13.5px; margin: 0 0 22px; }
     label { display: block; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-60); margin-bottom: 8px; }
-    input[type=password] {
+    input[type=text], input[type=password] {
       width: 100%; padding: 12px 14px; font-size: 15px; color: var(--ink);
       background: var(--paper); border: 1px solid var(--rule-strong); border-radius: var(--r-md);
       transition: border-color 160ms var(--ease-out), box-shadow 160ms var(--ease-out); outline: none;
     }
-    input[type=password]:focus { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent); }
+    input[type=text]:focus, input[type=password]:focus { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent); }
+    .field { margin-bottom: 14px; }
     button {
       margin-top: 16px; width: 100%; padding: 12px 16px; font-size: 15px; font-weight: 600;
       color: #fff; background: var(--ink); border: none; border-radius: var(--r-md); cursor: pointer;
@@ -56,8 +57,14 @@
     <p class="sub">Content management — please sign in.</p>
     {% if error %}<div class="error">{{ error }}</div>{% endif %}
     <input type="hidden" name="next" value="{{ next }}"/>
-    <label for="password">Password</label>
-    <input id="password" type="password" name="password" autofocus autocomplete="current-password" required/>
+    <div class="field">
+      <label for="username">Username</label>
+      <input id="username" type="text" name="username" autofocus autocomplete="username" required/>
+    </div>
+    <div class="field">
+      <label for="password">Password</label>
+      <input id="password" type="password" name="password" autocomplete="current-password" required/>
+    </div>
     <button type="submit">Sign in</button>
   </form>
 </body>

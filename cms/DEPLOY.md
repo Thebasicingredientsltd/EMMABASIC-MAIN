@@ -32,15 +32,16 @@ picks the commit up and goes live. No local checkout or `git` binary is needed.
 
 3. **Set Environment Variables** in the Vercel project (see `.env.example`):
    - `CMS_BACKEND=github`
+   - `CMS_USERNAME=` the username you type to sign in (e.g. `admin`)
    - `CMS_PASSWORD=` a long random password (what you type to sign in)
    - `CMS_SECRET=` a long random hex string (signs the session cookie)
    - `GITHUB_TOKEN=` the token from step 1
    - `GITHUB_REPO=Thebasicingredientsltd/EMMABASIC-MAIN`
    - `GITHUB_BRANCH=main` (the branch the live site deploys from)
 
-4. **Deploy.** Open the deployment URL, sign in with `CMS_PASSWORD`, and edit as
-   usual. Saves commit + deploy automatically; the "Publish" button just
-   confirms that auto-publish is on.
+4. **Deploy.** Open the deployment URL, sign in with `CMS_USERNAME` and
+   `CMS_PASSWORD`, and edit as usual. Saves commit + deploy automatically; the
+   "Publish" button just confirms that auto-publish is on.
 
 ## Notes & caveats
 

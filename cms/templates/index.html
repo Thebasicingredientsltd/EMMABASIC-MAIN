@@ -83,7 +83,9 @@
   <div class="publish-head">
     <div>
       <h2 style="margin:0 0 4px;">Publish to GitHub</h2>
-      {% if git.ok %}
+      {% if git.auto %}
+        <p class="muted" style="margin:0;">Auto-publish is on — every save commits to GitHub and the live site updates.</p>
+      {% elif git.ok %}
         {% if git.changes %}
           <p class="muted" style="margin:0;"><span class="change-dot"></span>
             {% if git.unpushed and not git.dirty %}
@@ -115,7 +117,7 @@
     <label>Change note (optional)</label>
     <input type="text" name="message" placeholder="e.g. Updated matcha photo and blog post"/>
     <div class="actions-bar">
-      <button class="btn" type="submit" {{ 'disabled' if git.ok and not git.changes }}>
+      <button class="btn" type="submit" {{ 'disabled' if git.ok and not git.changes and not git.auto }}>
         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
         Publish to GitHub
       </button>
