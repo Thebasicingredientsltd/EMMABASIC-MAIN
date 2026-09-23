@@ -67,6 +67,12 @@ class LoginTests(unittest.TestCase):
         self.assertEqual(dashboard.status_code, 200)
         self.assertIn("Dashboard", dashboard.get_data(as_text=True))
 
+    def test_api_upload_without_login_returns_json(self):
+        response = self.client.post("/api/upload", follow_redirects=False)
+        self.assertEqual(response.status_code, 401)
+        self.assertTrue(response.is_json)
+        self.assertIn("sign in", response.get_json().get("error", "").lower())
+
 
 if __name__ == "__main__":
     unittest.main()

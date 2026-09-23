@@ -158,6 +158,8 @@ def _require_login():
         return
     if session.get("cms_auth"):
         return
+    if request.path.startswith("/api/"):
+        return jsonify({"ok": False, "error": "Please sign in again, then retry the upload."}), 401
     return redirect(url_for("login", next=request.path))
 
 
