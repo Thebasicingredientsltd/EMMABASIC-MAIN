@@ -87,7 +87,7 @@ window.EB_JOURNAL = {
       "date": "24 Feb 2026",
       "title": "24 miles. Cold. What you eat matters more than you think.",
       "excerpt": "Long run nutrition doesn't have to be complicated. Soba, dashi, sesame. The body wants simple things, done well.",
-      "image": "assets/journal/soba-dashi-journal.jpg",
+      "image": "assets/uploads/soba-dashi-journal-20260923-081715.jpg",
       "tone": "ink",
       "featured": false
     },
@@ -178,7 +178,7 @@ window.EB_JOURNAL = {
       "date": "24 Feb 2026",
       "readTime": "3 min read",
       "title": "24 miles. Cold. What you eat matters more than you think.",
-      "image": "assets/journal/soba-dashi-journal.jpg",
+      "image": "assets/uploads/soba-dashi-journal-20260923-081721.jpg",
       "imagePosition": "",
       "intro": "",
       "body": []
