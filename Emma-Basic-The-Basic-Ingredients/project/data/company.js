@@ -29,7 +29,7 @@ window.EB_COMPANY = {
     "visible": false
   },
   "seo": {
-    "title": "",
+    "title": "The Basic Ingredients Ltd - Emma Basic",
     "description": "The Basic Ingredients Ltd is a food company specialising in clean-label products — export, import, and OEM across the UK, Europe, and Asia.",
     "canonical": "",
     "image": "",
