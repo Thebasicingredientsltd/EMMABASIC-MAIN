@@ -79,7 +79,7 @@ window.EB_PEOPLE = {
         "role": "Technical Account Manager",
         "bio": "",
         "tone": "cool",
-        "image": "assets/uploads/yoko_Work-20260916-090754.jpg",
+        "image": "assets/uploads/Yoko_Work_B-20260924-171342.jpg",
         "image2": "",
         "phone": ""
       },
@@ -88,7 +88,7 @@ window.EB_PEOPLE = {
         "role": "Sales Executive",
         "bio": "",
         "tone": "cool",
-        "image": "assets/uploads/1000044919-20260924-093309.jpg",
+        "image": "assets/uploads/Laurie_Work-20260924-171353.jpg",
         "image2": "assets/uploads/Laurie_Personal-20260921-113617.jpg",
         "phone": ""
       },
