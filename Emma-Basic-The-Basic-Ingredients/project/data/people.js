@@ -88,7 +88,7 @@ window.EB_PEOPLE = {
         "role": "Sales Executive",
         "bio": "",
         "tone": "cool",
-        "image": "assets/uploads/Laurie_Work-20260921-113622.jpg",
+        "image": "assets/uploads/1000044919-20260924-093309.jpg",
         "image2": "assets/uploads/Laurie_Personal-20260921-113617.jpg",
         "phone": ""
       },
