@@ -92,7 +92,7 @@ function Hero() {
         justifyContent: "center",
         padding: "120px var(--pad-x) 80px",
       }}>
-        <div style={{ maxWidth: 1280, width: "100%", minWidth: 0, display: "grid", gap: "clamp(24px, 4vh, 48px)" }}>
+        <div className="eb-hero__copy" style={{ maxWidth: 1280, width: "100%", minWidth: 0, display: "grid", gap: "clamp(24px, 4vh, 48px)" }}>
           <h1 className="eb-hero__headline" style={{
             margin: 0,
             fontSize: "clamp(56px, 10vw, 160px)",
@@ -192,14 +192,33 @@ function Hero() {
         @media (max-width: 820px) {
           .eb-hero__body { grid-template-columns: 1fr; gap: 24px; min-width: 0; }
           .eb-hero__mask { display: block; }
+          /* Block masks + a <br> create a full extra line box. Stack the lines instead. */
+          .eb-hero__headline br { display: none; }
         }
         @media (max-width: 768px) {
-          .eb-hero__type-pad { padding-top: 80px !important; padding-bottom: 56px !important; }
+          .eb-hero__type-pad { padding-top: 64px !important; padding-bottom: 40px !important; }
           .eb-hero { min-height: 100svh !important; }
+          .eb-hero__copy { gap: 16px !important; }
+          .eb-hero__headline { letter-spacing: -0.04em !important; }
+          .eb-hero__mask {
+            overflow: visible;
+            padding-bottom: 0.04em;
+            margin-bottom: 0;
+            line-height: 0.82;
+          }
+          /* Keep original clamp size; do not clip the italic word (wrapping left a stray "d."). */
+          .eb-hero__slide--2 {
+            display: inline-block;
+            max-width: none;
+            white-space: nowrap;
+            padding-right: 0.14em;
+          }
         }
         @media (max-width: 600px) {
           .eb-hero__buttons { flex-direction: column; align-items: stretch; }
           .eb-hero__buttons a { width: 100%; justify-content: center; }
+          .eb-hero__copy { gap: 14px !important; }
+          .eb-hero__type-pad { padding-top: 56px !important; padding-bottom: 36px !important; }
         }
       `}</style>
     </section>
