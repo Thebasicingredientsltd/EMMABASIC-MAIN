@@ -43,6 +43,7 @@ from flask import (
 )
 from werkzeug.utils import secure_filename
 
+import seo
 import storage
 
 try:
@@ -221,7 +222,7 @@ def save_data(key, data):
     )
     changes = _drain_staged_files()
     changes.append((_rel(info["file"]), text, False))
-    changes.extend(_cache_bust_changes(key))
+    changes.extend(_html_publish_changes(key, data))
     storage.persist(changes, message="CMS: update %s" % key)
 
 
@@ -346,6 +347,31 @@ def form_checkbox(name):
     if raw is None:
         return False
     return str(raw).strip().lower() in ("on", "true", "1", "yes")
+
+
+def _apply_seo_form(target):
+    """Write Search & sharing fields from the current request onto `target`.
+
+    Unchecked `seo_noindex` is omitted from POST, so missing means False.
+    If every field is left blank, the seo object is removed.
+    """
+    existing = target.get("seo") if isinstance(target.get("seo"), dict) else {}
+    # Page editors always submit seo_title (even when blank). Other saves
+    # (reorder, visual patch, older tests) omit the fields and must not wipe SEO.
+    if "seo_title" not in request.form and "seo_description" not in request.form:
+        return
+    payload = {
+        "title": request.form.get("seo_title", "").strip(),
+        "description": request.form.get("seo_description", "").strip(),
+        "canonical": request.form.get("seo_canonical", "").strip(),
+        "image": resolve_image("seo_image", existing.get("image", "")),
+        "ogType": request.form.get("seo_og_type", "").strip() or "website",
+        "noindex": form_checkbox("seo_noindex"),
+    }
+    if seo.seo_is_blank(payload):
+        target.pop("seo", None)
+    else:
+        target["seo"] = payload
 
 
 def _form_lines(name, keep_blank=False):
@@ -781,6 +807,7 @@ def journal():
         posts=data.get("posts", []),
         hero=data.get("hero") or {},
         footer=data.get("footer") or {},
+        page_seo=data.get("seo") or {},
     )
 
 
@@ -789,6 +816,7 @@ def journal_hero_save():
     data = load_data("journal")
     _apply_hero_form(data.setdefault("hero", {}))
     _apply_footer_form(data)
+    _apply_seo_form(data)
     save_data("journal", data)
     flash("Field Notes headline saved.", "ok")
     return redirect(url_for("journal"))
@@ -854,6 +882,9 @@ def journal_save():
         "tone": request.form.get("tone", "warm").strip(),
         "featured": request.form.get("featured") == "on",
     }
+    if existing_post.get("seo"):
+        post["seo"] = dict(existing_post["seo"])
+    _apply_seo_form(post)
 
     article = {
         "category": post["category"],
@@ -1006,6 +1037,7 @@ def homepage_save():
         "href": request.form.get("social_x_href", "").strip(),
     }
 
+    _apply_seo_form(h)
     save_data("homepage", h)
     flash("Homepage content saved.", "ok")
     return redirect(url_for("homepage"))
@@ -1097,6 +1129,7 @@ def people_save():
     services["cards"] = cards
 
     _apply_contact_form(d.setdefault("contact", {}))
+    _apply_seo_form(d)
 
     save_data("people", d)
     flash("People & Places content saved.", "ok")
@@ -1212,6 +1245,7 @@ def distributor_save():
     sheet["visible"] = form_checkbox("sheet_footer_visible")
 
     _apply_footer_form(d, "distributorFooter")
+    _apply_seo_form(d.setdefault("distributor", {}))
     save_data("people", d)
     flash("Become a Distributor content saved.", "ok")
     return redirect(url_for("distributor"))
@@ -1234,6 +1268,7 @@ def _simple_page_save(key, flash_msg, redirect_endpoint):
     data = load_data(key)
     _apply_hero_form(data.setdefault("hero", {}))
     _apply_footer_form(data)
+    _apply_seo_form(data)
     save_data(key, data)
     flash(flash_msg, "ok")
     return redirect(url_for(redirect_endpoint))
@@ -1297,6 +1332,7 @@ def places_save():
             prev.pop("lng", None)
         shops.append(prev)
     d["shops"] = shops
+    _apply_seo_form(d)
 
     hq = d.setdefault("hq", {})
     hq["label"] = request.form.get("hq_label", "").strip()
@@ -1334,6 +1370,7 @@ def story_save():
     gallery = data.setdefault("gallery", {})
     gallery["heading"] = request.form.get("gallery_heading", "").strip()
     gallery["headingItalic"] = request.form.get("gallery_headingItalic", "").strip()
+    _apply_seo_form(data)
     save_data("story", data)
     flash("Our Story content saved.", "ok")
     return redirect(url_for("story"))
@@ -1356,6 +1393,7 @@ def company_save():
     about["buttonLabel"] = request.form.get("about_buttonLabel", "").strip()
     about["buttonHref"] = request.form.get("about_buttonHref", "").strip()
     _apply_contact_form(d.setdefault("contact", {}))
+    _apply_seo_form(d)
     save_data("company", d)
     flash("The Basic Ingredients content saved.", "ok")
     return redirect(url_for("company"))
@@ -1394,6 +1432,7 @@ def catalog():
         catalog=bundle["categories"],
         page_hero=bundle.get("hero") or {},
         page_footer=bundle.get("footer") or {},
+        page_seo=bundle.get("seo") or {},
     )
 
 
@@ -1402,6 +1441,7 @@ def catalog_hero_save():
     bundle = load_catalog_bundle()
     _apply_hero_form(bundle.setdefault("hero", {}))
     _apply_footer_form(bundle)
+    _apply_seo_form(bundle)
     save_data("catalog", bundle)
     flash("Our Products headline saved.", "ok")
     return redirect(url_for("catalog"))
@@ -1637,6 +1677,8 @@ def catalog_product_save():
         prod["qa"] = qa
     else:
         prod.pop("qa", None)
+
+    _apply_seo_form(prod)
 
     if not prod["id"] or not prod["name"]:
         flash("A product needs at least an id and a name.", "error")
@@ -1929,6 +1971,29 @@ def _cache_bust_changes(keys=None):
         except Exception:
             continue
         new_text = pattern.sub(r"\g<1>\g<2>?v=" + stamp + r"\g<4>", text)
+        if new_text != text:
+            changes.append((rel, new_text, False))
+    return changes
+
+
+def _html_publish_changes(key, data):
+    """Cache-bust data scripts and write SEO tags into the matching HTML pages."""
+    keys = (key,) if isinstance(key, str) else tuple(key)
+    pattern = _data_script_re(keys)
+    stamp = datetime.now().strftime("%Y%m%d%H%M%S%f")[:-3]
+    changes = []
+    for name in storage.list_dir(PROJECT_REL):
+        if not name.lower().endswith(".html"):
+            continue
+        rel = PROJECT_REL + "/" + name
+        try:
+            text = storage.read_text(rel)
+        except Exception:
+            continue
+        new_text = text
+        if isinstance(data, dict):
+            new_text = seo.apply_to_html(new_text, name, key, data)
+        new_text = pattern.sub(r"\g<1>\g<2>?v=" + stamp + r"\g<4>", new_text)
         if new_text != text:
             changes.append((rel, new_text, False))
     return changes

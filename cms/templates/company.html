@@ -7,7 +7,7 @@
 <h1>The Basic Ingredients Ltd</h1>
 <p class="sub">Company page for The Basic Ingredients Ltd — headline, about copy, and contact details.</p>
 
-<form method="post" action="{{ url_for('company_save') }}">
+<form method="post" action="{{ url_for('company_save') }}" enctype="multipart/form-data">
   <div class="card">
     <h2 style="margin-top:0;">Opening headline{% if not is_section_visible(hero) %} <span class="pill">Hidden on site</span>{% endif %}</h2>
     <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
@@ -37,6 +37,11 @@
     </label>
     <p class="field-help">The site footer at the bottom of this page only. Other pages keep theirs.</p>
   </div>
+
+  {% set seo = d.seo or {} %}
+  {% set seo_placeholder_title = 'The Basic Ingredients — Emma Basic' %}
+  {% set seo_placeholder_canonical = 'https://emmabasic.co.uk/The%20Basic%20Ingredients.html' %}
+  {% include '_seo_fields.html' %}
 
   <div class="card">
     <h2 style="margin-top:0;">About</h2>

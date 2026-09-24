@@ -27,5 +27,13 @@ window.EB_COMPANY = {
   },
   "footer": {
     "visible": false
+  },
+  "seo": {
+    "title": "",
+    "description": "The Basic Ingredients Ltd is a food company specialising in clean-label products — export, import, and OEM across the UK, Europe, and Asia.",
+    "canonical": "",
+    "image": "",
+    "ogType": "website",
+    "noindex": false
   }
 };

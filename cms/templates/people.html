@@ -43,6 +43,11 @@
     <p class="field-help">The site footer at the bottom of the People page only. Other pages keep theirs. Uncheck to hide it without deleting the copy.</p>
   </div>
 
+  {% set seo = d.seo or {} %}
+  {% set seo_placeholder_title = 'People — Emma Basic' %}
+  {% set seo_placeholder_canonical = 'https://emmabasic.co.uk/People%20%26%20Places.html' %}
+  {% include '_seo_fields.html' %}
+
   <div class="card">
     <h2 style="margin-top:0;">Founder photo &amp; story{{ hidden_pill(d.founder) }}</h2>
     {{ show_on_site('founder', d.founder) }}

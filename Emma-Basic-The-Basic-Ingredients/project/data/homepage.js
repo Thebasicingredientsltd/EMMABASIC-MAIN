@@ -179,5 +179,13 @@ window.EB_HOME = {
   },
   "footer": {
     "visible": true
+  },
+  "seo": {
+    "title": "",
+    "description": "Pure ingredients for the run, the kitchen, and everything between. Additive-free, from Emma Basic.",
+    "canonical": "",
+    "image": "assets/uploads/Hero-Home-Page-Running-20260731-121433.jpg",
+    "ogType": "website",
+    "noindex": false
   }
 };

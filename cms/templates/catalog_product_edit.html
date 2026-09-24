@@ -174,6 +174,12 @@
     <div class="field-help">One Q&amp;A per block. First line is the question, the following line(s) are the answer. Separate blocks with a blank line.</div>
   </div>
 
+  {% set seo = p.seo or {} %}
+  {% set seo_placeholder_title = (p.name or 'Product') ~ ' — Emma Basic' %}
+  {% set seo_placeholder_canonical = 'https://emmabasic.co.uk/product.html?id=' ~ (p.id or '') %}
+  {% set seo_extra_help = 'This is for this product’s own page. Sharing apps sometimes show the Our Products page instead, because every product uses the same web address with a different id.' %}
+  {% include '_seo_fields.html' %}
+
   <div class="actions-bar save-bar">
     <button class="btn" type="submit">Save product</button>
     <a class="btn secondary" href="{{ url_for('catalog') }}">Cancel</a>

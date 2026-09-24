@@ -11,7 +11,7 @@
 
 {% set hero = hero or {} %}
 {% set footer = footer or {} %}
-<form method="post" action="{{ url_for('journal_hero_save') }}" style="margin-bottom:28px;">
+<form method="post" action="{{ url_for('journal_hero_save') }}" enctype="multipart/form-data" style="margin-bottom:28px;">
   <div class="card">
     <h2 style="margin-top:0;">Page header — Field Notes{% if not is_section_visible(hero) %} <span class="pill">Hidden on site</span>{% endif %}</h2>
     <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
@@ -39,9 +39,13 @@
       </label>
       <p class="field-help">The site footer at the bottom of Field Notes only. Other pages keep theirs.</p>
     </div>
-    <div style="margin-top:14px;">
-      <button class="btn" type="submit">Save Field Notes headline</button>
-    </div>
+  </div>
+  {% set seo = page_seo or {} %}
+  {% set seo_placeholder_title = 'Field Notes — Emma Basic' %}
+  {% set seo_placeholder_canonical = 'https://emmabasic.co.uk/Journal.html' %}
+  {% include '_seo_fields.html' %}
+  <div class="actions-bar save-bar">
+    <button class="btn" type="submit">Save Field Notes headline</button>
   </div>
 </form>
 

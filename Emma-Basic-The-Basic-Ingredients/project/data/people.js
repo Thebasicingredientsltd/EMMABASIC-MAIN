@@ -241,6 +241,14 @@ window.EB_PEOPLE = {
     "sheetFooter": {
       "text": "thebasicingredients.com  |  New customer guide  |  May 2026",
       "visible": false
+    },
+    "seo": {
+      "title": "",
+      "description": "How to place your first Emma Basic order — trade accounts, delivery, and collection.",
+      "canonical": "",
+      "image": "",
+      "ogType": "website",
+      "noindex": false
     }
   },
   "trade": {
@@ -301,5 +309,13 @@ window.EB_PEOPLE = {
   },
   "distributorFooter": {
     "visible": false
+  },
+  "seo": {
+    "title": "",
+    "description": "Carefully sourced, carefully run — twelve of us behind every decision.",
+    "canonical": "",
+    "image": "assets/homepage/founder-mum-daughter.jpg",
+    "ogType": "website",
+    "noindex": false
   }
 };

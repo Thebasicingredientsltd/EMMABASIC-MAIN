@@ -7,7 +7,7 @@
 <h1>Where to find our products</h1>
 <p class="sub">Everything on the Places page — the opening headline, featured shops, the full stockist list, and the London HQ details.</p>
 
-<form method="post" action="{{ url_for('places_save') }}">
+<form method="post" action="{{ url_for('places_save') }}" enctype="multipart/form-data">
 
   <div class="card">
     <h2 style="margin-top:0;">Opening headline{% if not is_section_visible(hero) %} <span class="pill">Hidden on site</span>{% endif %}</h2>
@@ -38,6 +38,11 @@
     </label>
     <p class="field-help">The site footer at the bottom of this page only. Other pages keep theirs.</p>
   </div>
+
+  {% set seo = d.seo or {} %}
+  {% set seo_placeholder_title = 'Places — Emma Basic' %}
+  {% set seo_placeholder_canonical = 'https://emmabasic.co.uk/Places.html' %}
+  {% include '_seo_fields.html' %}
 
   <div class="card">
     <h2 style="margin-top:0;">Featured shops (carousel)</h2>

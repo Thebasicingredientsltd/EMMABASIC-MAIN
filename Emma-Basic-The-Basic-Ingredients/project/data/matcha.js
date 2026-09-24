@@ -9,5 +9,13 @@ window.EB_MATCHA = {
   },
   "footer": {
     "visible": true
+  },
+  "seo": {
+    "title": "",
+    "description": "Shade-grown for 25 days. 100% pure Tencha leaf. Every batch tested by accredited laboratories.",
+    "canonical": "",
+    "image": "",
+    "ogType": "website",
+    "noindex": false
   }
 };

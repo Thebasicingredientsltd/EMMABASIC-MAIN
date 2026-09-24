@@ -57,6 +57,11 @@
     <p class="field-help">The site footer at the bottom of the homepage only. Other pages keep theirs.</p>
   </div>
 
+  {% set seo = h.seo or {} %}
+  {% set seo_placeholder_title = 'Emma Basic' %}
+  {% set seo_placeholder_canonical = 'https://emmabasic.co.uk/' %}
+  {% include '_seo_fields.html' %}
+
   <div class="card">
     <h2 style="margin-top:0;">Additive-free banner</h2>
     <label>Statement</label>

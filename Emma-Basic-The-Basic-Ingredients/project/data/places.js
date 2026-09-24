@@ -224,5 +224,13 @@ window.EB_PLACES = {
   ],
   "footer": {
     "visible": false
+  },
+  "seo": {
+    "title": "",
+    "description": "Good shops, independent grocers, and department stores — stocking Emma Basic near you.",
+    "canonical": "",
+    "image": "",
+    "ogType": "website",
+    "noindex": false
   }
 };

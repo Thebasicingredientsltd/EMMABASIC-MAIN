@@ -17,7 +17,7 @@
 <h1>Become a Distributor</h1>
 <p class="sub">This page follows the <em>How to Place Your First Order</em> new-customer sheet. The site menu stays at the top. Uncheck a box to hide that block on the website without deleting the words.</p>
 
-<form method="post" action="{{ url_for('distributor_save') }}">
+<form method="post" action="{{ url_for('distributor_save') }}" enctype="multipart/form-data">
 
   <div class="card">
     <h2 style="margin-top:0;">Title bar{{ hidden_pill(dstr) }}</h2>
@@ -34,6 +34,11 @@
     {{ show_on_site('footer', d.distributorFooter, 'Show footer on this page') }}
     <p class="field-help">The site footer at the bottom of Become a Distributor only. Other pages keep theirs.</p>
   </div>
+
+  {% set seo = dstr.seo or {} %}
+  {% set seo_placeholder_title = 'Become a Distributor — Emma Basic' %}
+  {% set seo_placeholder_canonical = 'https://emmabasic.co.uk/Become%20a%20Distributor.html' %}
+  {% include '_seo_fields.html' %}
 
   <div class="card">
     <h2 style="margin-top:0;">Numbered steps</h2>

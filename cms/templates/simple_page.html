@@ -4,7 +4,7 @@
 <h1>{{ page_title }}</h1>
 <p class="sub">Opening headline for this page. Save to update the website (publish when you want it live).{% if extra %} {{ extra }}{% endif %}</p>
 
-<form method="post" action="{{ url_for(save_endpoint) }}">
+<form method="post" action="{{ url_for(save_endpoint) }}" enctype="multipart/form-data">
   <div class="card">
     <h2 style="margin-top:0;">Page header — “{{ hero.title or page_title }}{% if hero.titleItalic %} {{ hero.titleItalic }}{% endif %}”{% if not is_section_visible(hero) %} <span class="pill">Hidden on site</span>{% endif %}</h2>
     <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
@@ -33,6 +33,10 @@
     </label>
     <p class="field-help">The site footer at the bottom of this page only. Other pages keep theirs.</p>
   </div>
+  {% set seo = d.seo or {} %}
+  {% set seo_placeholder_title = page_title ~ ' — Emma Basic' %}
+  {% set seo_placeholder_canonical = 'https://emmabasic.co.uk/Our%20Story.html' if active == 'story' else 'https://emmabasic.co.uk/Matcha%20Lab.html' %}
+  {% include '_seo_fields.html' %}
   {% set gallery = d.gallery or none %}
   {% if gallery %}
   <div class="card">

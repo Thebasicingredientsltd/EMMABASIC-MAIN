@@ -88,6 +88,13 @@
     </div>
   </div>
 
+  {% set seo = post.seo or {} %}
+  {% set seo_placeholder_title = (post.title or 'Field Notes') ~ ' — Emma Basic' %}
+  {% set seo_placeholder_canonical = 'https://emmabasic.co.uk/journal-post.html?id=' ~ (post.id or '') %}
+  {% set seo_default_og_type = 'article' %}
+  {% set seo_extra_help = 'This is for this article’s own page. Sharing apps sometimes show the Field Notes page instead, because every article uses the same web address with a different id.' %}
+  {% include '_seo_fields.html' %}
+
   <div class="actions-bar save-bar">
     <button class="btn" type="submit">Save post</button>
     <a class="btn secondary" href="{{ url_for('journal') }}">Cancel</a>

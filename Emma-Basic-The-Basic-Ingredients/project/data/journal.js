@@ -10,6 +10,14 @@ window.EB_JOURNAL = {
   "footer": {
     "visible": false
   },
+  "seo": {
+    "title": "",
+    "description": "Recipes, sourcing decisions, cooking techniques, and the occasional account of a very long run.",
+    "canonical": "",
+    "image": "",
+    "ogType": "website",
+    "noindex": false
+  },
   "posts": [
     {
       "id": "matcha-preparation",

@@ -1,0 +1,53 @@
+{% set seo = seo or {} %}
+{% set seo_placeholder_title = seo_placeholder_title or 'Emma Basic' %}
+{% set seo_placeholder_canonical = seo_placeholder_canonical or 'https://emmabasic.co.uk/' %}
+{% set seo_default_og_type = seo_default_og_type or 'website' %}
+{% set seo_img = seo.image or '' %}
+{% set seo_preview = url_for('site_assets', filename=seo_img[7:]) if seo_img.startswith('assets/') else seo_img %}
+<div class="card">
+  <h2 style="margin-top:0;">Search &amp; sharing (SEO)</h2>
+  <p class="field-help">This is what Google and WhatsApp/Facebook show when someone finds or shares this page. Leave a field blank to use the usual page headline and web address.</p>
+  {% if seo_extra_help %}
+  <p class="field-help">{{ seo_extra_help }}</p>
+  {% endif %}
+
+  <label for="seo_title">Title for the browser tab</label>
+  <input id="seo_title" type="text" name="seo_title" value="{{ seo.title or '' }}" placeholder="{{ seo_placeholder_title }}" maxlength="90"/>
+  <p class="field-help">About a short headline. If you leave this blank, we use “{{ seo_placeholder_title }}”.</p>
+
+  <label for="seo_description">Short description</label>
+  <textarea id="seo_description" name="seo_description" rows="3" maxlength="320" placeholder="One or two sentences about this page.">{{ seo.description or '' }}</textarea>
+  <p class="field-help">One or two sentences. This sits under the title in search results and in the preview when the page is shared.</p>
+
+  <label for="seo_canonical">Official web address</label>
+  <input id="seo_canonical" type="url" name="seo_canonical" value="{{ seo.canonical or '' }}" placeholder="{{ seo_placeholder_canonical }}"/>
+  <p class="field-help">Leave blank to use {{ seo_placeholder_canonical }}</p>
+
+  <label>Picture for sharing</label>
+  <div class="img-field">
+    <img class="preview" src="{{ seo_preview }}" alt=""/>
+    <div class="grow">
+      <input type="text" name="seo_image" value="{{ seo_img }}" placeholder="assets/..."/>
+      <input type="file" name="seo_image_file" accept="image/*" style="margin-top:8px;"/>
+    </div>
+  </div>
+  <p class="field-help">Shown next to the title when this page is shared. A landscape photo works well.</p>
+
+  <div class="row">
+    <div>
+      <label for="seo_og_type">Type of page</label>
+      {% set og_now = seo.ogType or seo_default_og_type %}
+      <select id="seo_og_type" name="seo_og_type">
+        <option value="website" {{ 'selected' if og_now != 'article' }}>Website</option>
+        <option value="article" {{ 'selected' if og_now == 'article' }}>Article</option>
+      </select>
+      <p class="field-help">Website is right for most pages. Choose Article for a Field Notes post.</p>
+    </div>
+    <div>
+      <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:18px 0 6px; font-weight:500;">
+        <input type="checkbox" name="seo_noindex" value="on" style="width:auto;" {{ 'checked' if seo.noindex }}/> Hide this page from Google
+      </label>
+      <p class="field-help">Leave unticked so people can find the page. Tick only if this page should not appear in search.</p>
+    </div>
+  </div>
+</div>

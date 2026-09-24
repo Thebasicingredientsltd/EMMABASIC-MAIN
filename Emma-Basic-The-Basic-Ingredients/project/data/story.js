@@ -13,5 +13,13 @@ window.EB_STORY = {
   },
   "footer": {
     "visible": true
+  },
+  "seo": {
+    "title": "",
+    "description": "Emma Basic is an additive-free food brand for home cooking. It's still run the same way — real ingredients, nothing hidden.",
+    "canonical": "",
+    "image": "",
+    "ogType": "website",
+    "noindex": false
   }
 };
