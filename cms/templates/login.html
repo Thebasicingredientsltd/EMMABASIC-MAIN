@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
   <title>Sign in · Emma Basic CMS</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -49,9 +49,16 @@
       border: 1px solid color-mix(in srgb, #b3261e 30%, transparent);
     }
     @media (prefers-reduced-motion: reduce) { .card { animation: none; } }
+    @media (max-width: 900px) {
+      body { align-items: stretch; padding: max(24px, env(safe-area-inset-top)) 16px max(24px, env(safe-area-inset-bottom)); }
+      .card { max-width: 100%; padding: 24px 18px; margin: auto 0; }
+      input[type=text], input[type=password] { min-height: 44px; font-size: 16px; }
+      button { min-height: 44px; }
+    }
   </style>
+  <link rel="stylesheet" href="{{ url_for('static', filename='cms-mobile.css') }}"/>
 </head>
-<body>
+<body class="cms-login">
   <form class="card" method="post" action="{{ url_for('login') }}{% if next %}?next={{ next }}{% endif %}">
     <h1 class="brand">Emma Basic</h1>
     <p class="sub">Content management — please sign in.</p>

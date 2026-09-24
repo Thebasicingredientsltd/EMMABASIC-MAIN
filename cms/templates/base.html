@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <title>{% block title %}Emma Basic CMS{% endblock %}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -311,27 +311,9 @@
     outline: 2px solid var(--accent); outline-offset: 2px;
   }
 
-  /* =========================================================
-     Responsive — sidebar collapses to a top bar
-     ========================================================= */
-  @media (max-width: 900px) {
-    body { flex-direction: column; }
-    aside.sidebar {
-      flex-direction: row; align-items: center; width: auto; height: auto;
-      padding: 10px 14px; border-right: none; border-bottom: 1px solid var(--rule);
-      gap: 8px; overflow-x: auto;
-    }
-    .brand { padding: 0 8px 0 4px; }
-    .brand .brand-sub { display: none; }
-    .sidebar-nav { flex-direction: row; gap: 4px; }
-    .nav-label { display: none; }
-    .sidebar-nav a { white-space: nowrap; padding: 8px 12px; }
-    .sidebar-nav a span.lbl { display: none; }
-    .sidebar-nav a.active::before { display: none; }
-    .sidebar-foot { margin: 0 0 0 auto; padding: 0; flex-direction: row; }
-    main { padding: 24px 20px 80px; }
-    h1 { font-size: 26px; }
-  }
+  /* Phone layout lives in cms-mobile.css (max-width: 900px). Hide the
+     hamburger chrome on desktop so a missing stylesheet cannot overlay the CRM. */
+  .cms-topbar, .cms-nav-backdrop { display: none; }
 
   /* Reduced motion — keep meaning, drop movement */
   @media (prefers-reduced-motion: reduce) {
@@ -342,9 +324,23 @@
     }
   }
 </style>
+<link rel="stylesheet" href="{{ url_for('static', filename='cms-mobile.css') }}"/>
 </head>
 <body>
-<aside class="sidebar">
+<header class="cms-topbar">
+  <button type="button" class="cms-menu-btn" id="cmsMenuBtn" aria-label="Open menu" aria-controls="cmsSidebar" aria-expanded="false">
+    <span class="cms-menu-bars" aria-hidden="true"></span>
+  </button>
+  <a href="{{ url_for('index') }}" class="brand">
+    <span class="mark">E</span>
+    <span class="brand-text">
+      <span class="brand-name">Emma Basic</span>
+      <span class="brand-sub">CMS</span>
+    </span>
+  </a>
+</header>
+<button type="button" class="cms-nav-backdrop" id="cmsNavBackdrop" aria-label="Close menu" hidden></button>
+<aside class="sidebar" id="cmsSidebar">
   <a href="{{ url_for('index') }}" class="brand">
     <span class="mark">E</span>
     <span class="brand-text">
@@ -401,6 +397,62 @@
     {% endfor %}
   {% endwith %}
 </div>
+
+<script>
+  // Phone menu: slide the sidebar in as an overlay. Desktop never shows
+  // the hamburger, so this is a no-op there.
+  (function () {
+    var btn = document.getElementById("cmsMenuBtn");
+    var sidebar = document.getElementById("cmsSidebar");
+    var backdrop = document.getElementById("cmsNavBackdrop");
+    if (!btn || !sidebar) return;
+
+    function isPhone() {
+      return window.matchMedia && window.matchMedia("(max-width: 900px)").matches;
+    }
+
+    function setOpen(open) {
+      if (!isPhone()) open = false;
+      document.body.classList.toggle("cms-nav-open", open);
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      btn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+      if (backdrop) {
+        if (open) backdrop.removeAttribute("hidden");
+        else backdrop.setAttribute("hidden", "");
+      }
+      if (!isPhone()) {
+        sidebar.removeAttribute("inert");
+        sidebar.removeAttribute("aria-hidden");
+        return;
+      }
+      if (open) {
+        sidebar.removeAttribute("inert");
+        sidebar.setAttribute("aria-hidden", "false");
+      } else {
+        sidebar.setAttribute("inert", "");
+        sidebar.setAttribute("aria-hidden", "true");
+      }
+    }
+
+    btn.addEventListener("click", function () {
+      setOpen(!document.body.classList.contains("cms-nav-open"));
+    });
+    if (backdrop) backdrop.addEventListener("click", function () { setOpen(false); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") setOpen(false);
+    });
+    sidebar.querySelectorAll("a").forEach(function (a) {
+      a.addEventListener("click", function () { setOpen(false); });
+    });
+    setOpen(false);
+    if (window.matchMedia) {
+      var wide = window.matchMedia("(min-width: 901px)");
+      var onWide = function () { setOpen(false); };
+      if (wide.addEventListener) wide.addEventListener("change", onWide);
+      else if (wide.addListener) wide.addListener(onWide);
+    }
+  })();
+</script>
 
 <script>
   // Auto-dismiss flash toasts. Enter from the right, exit to the right

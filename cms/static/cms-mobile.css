@@ -1,0 +1,475 @@
+/* CMS phone layout — desktop (≥901px) is unchanged.
+   Loaded after the base styles. Do not restyle the public website. */
+
+.cms-topbar,
+.cms-nav-backdrop {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  body {
+    flex-direction: column;
+    overflow-x: hidden;
+    max-width: 100%;
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+  body.cms-nav-open {
+    overflow: hidden;
+  }
+
+  img,
+  video {
+    max-width: 100%;
+    height: auto;
+  }
+  iframe {
+    max-width: 100%;
+  }
+  .content-inner,
+  .card,
+  .grow,
+  .muted,
+  .field-help,
+  p,
+  h1, h2, h3,
+  code {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  /* ---------- Top bar + hamburger ---------- */
+  .cms-topbar {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    min-height: 56px;
+    padding: max(8px, env(safe-area-inset-top)) 10px 8px;
+    background: color-mix(in srgb, var(--paper-bright) 86%, transparent);
+    backdrop-filter: saturate(160%) blur(18px);
+    -webkit-backdrop-filter: saturate(160%) blur(18px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .cms-topbar .brand {
+    padding: 0 6px;
+    min-width: 0;
+  }
+  .cms-topbar .brand-sub {
+    display: none;
+  }
+  .cms-menu-btn {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+    border-radius: var(--r-sm);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  .cms-menu-btn:active {
+    transform: scale(0.97);
+    background: var(--paper-shade);
+  }
+  .cms-menu-bars,
+  .cms-menu-bars::before,
+  .cms-menu-bars::after {
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: currentColor;
+    border-radius: 1px;
+    position: relative;
+    transition: transform 200ms var(--ease-out), opacity 160ms var(--ease-out), top 200ms var(--ease-out);
+  }
+  .cms-menu-bars::before,
+  .cms-menu-bars::after {
+    content: "";
+    position: absolute;
+    left: 0;
+  }
+  .cms-menu-bars::before { top: -6px; }
+  .cms-menu-bars::after { top: 6px; }
+  body.cms-nav-open .cms-menu-bars {
+    background: transparent;
+  }
+  body.cms-nav-open .cms-menu-bars::before {
+    top: 0;
+    transform: rotate(45deg);
+  }
+  body.cms-nav-open .cms-menu-bars::after {
+    top: 0;
+    transform: rotate(-45deg);
+  }
+
+  .cms-nav-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    background: rgba(20, 17, 13, 0.38);
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body.cms-nav-open .cms-nav-backdrop {
+    display: block;
+    animation: cms-backdrop-in 200ms var(--ease-out) both;
+  }
+
+  /* Drawer sits under the top bar so labels are not covered */
+  aside.sidebar {
+    position: fixed;
+    top: 56px;
+    left: 0;
+    bottom: 0;
+    z-index: 50;
+    width: min(280px, 86vw);
+    height: auto;
+    flex-direction: column;
+    align-items: stretch;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 12px 14px calc(16px + env(safe-area-inset-bottom));
+    border-right: 1px solid var(--rule);
+    border-bottom: none;
+    gap: 0;
+    transform: translateX(-105%);
+    transition: transform 220ms var(--ease-out);
+    box-shadow: none;
+    background: var(--paper-bright);
+  }
+  body.cms-nav-open aside.sidebar {
+    transform: translateX(0);
+    box-shadow: var(--shadow-lg);
+  }
+  aside.sidebar > .brand {
+    display: none;
+  }
+  .sidebar-nav {
+    flex-direction: column;
+    gap: 2px;
+    overflow: visible;
+  }
+  .nav-label {
+    display: block;
+  }
+  .sidebar-nav a {
+    white-space: normal;
+    padding: 11px 12px;
+    min-height: 44px;
+  }
+  .sidebar-nav a span.lbl {
+    display: inline;
+  }
+  .sidebar-nav a.active::before {
+    display: block;
+  }
+  .sidebar-foot {
+    margin-top: auto;
+    padding-top: 12px;
+    flex-direction: column;
+  }
+  .sidebar-foot a.viewsite {
+    min-height: 44px;
+  }
+
+  main {
+    padding: 16px 14px calc(96px + env(safe-area-inset-bottom));
+    width: 100%;
+    max-width: 100%;
+  }
+  h1 { font-size: 26px; }
+  .sub { margin-bottom: 20px; }
+  .card {
+    padding: 16px;
+    max-width: 100%;
+  }
+
+  /* Page title + action button rows */
+  .content-inner > div[style*="display:flex"] {
+    flex-wrap: wrap !important;
+    gap: 12px;
+  }
+  .content-inner > div[style*="display:flex"] > .btn,
+  .content-inner > div[style*="display:flex"] > a.btn {
+    width: 100%;
+    justify-content: center;
+    min-height: 44px;
+  }
+  .content-inner > div[style*="display:flex"] div[style*="display:flex"] {
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 8px;
+  }
+  .content-inner > div[style*="display:flex"] div[style*="display:flex"] .btn,
+  .content-inner > div[style*="display:flex"] div[style*="display:flex"] a.btn {
+    flex: 1 1 auto;
+    min-height: 44px;
+    justify-content: center;
+  }
+
+  /* Forms: one column, thumb-sized controls, no iOS zoom-on-focus */
+  .row {
+    flex-direction: column;
+    gap: 0;
+  }
+  .row > div {
+    min-width: 0;
+    width: 100%;
+    flex: none;
+  }
+  .grid2,
+  .grid4 {
+    grid-template-columns: 1fr;
+  }
+  .dash-cards {
+    grid-template-columns: 1fr;
+  }
+  label { margin-top: 14px; }
+  input[type=text],
+  input[type=url],
+  input[type=email],
+  input[type=password],
+  input[type=number],
+  input[type=search],
+  input[type=tel],
+  textarea,
+  select {
+    width: 100%;
+    max-width: 100%;
+    min-height: 44px;
+    font-size: 16px;
+  }
+  textarea { min-height: 88px; }
+  input[type=file] {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-height: 44px;
+    font-size: 16px;
+    padding: 10px 0;
+  }
+  input[type=checkbox] {
+    width: 22px;
+    height: 22px;
+    min-width: 22px;
+    min-height: 22px;
+    accent-color: var(--accent);
+    flex-shrink: 0;
+  }
+  .section-vis,
+  label[style*="display:flex"] {
+    min-height: 44px;
+    align-items: center;
+    gap: 10px;
+  }
+  .btn,
+  .btn.small {
+    min-height: 44px;
+    padding: 12px 16px;
+    justify-content: center;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .actions-bar:not(.save-bar) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .actions-bar:not(.save-bar) .btn,
+  .actions-bar:not(.save-bar) a.btn {
+    width: 100%;
+  }
+  .save-bar,
+  .eb-save-bar,
+  .eb-save-bar-top {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .save-bar .btn,
+  .save-bar a.btn,
+  .eb-save-bar .btn,
+  .eb-save-bar a.btn {
+    width: auto;
+    flex: 1 1 auto;
+  }
+  .save-bar {
+    bottom: max(10px, env(safe-area-inset-bottom));
+  }
+
+  /* Image pickers */
+  .img-field {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .img-field .preview {
+    width: 100%;
+    max-width: 220px;
+    height: auto;
+    aspect-ratio: 1;
+  }
+  .dropzone {
+    width: 100%;
+    max-width: 220px;
+    height: 160px;
+  }
+
+  /* Lists / catalog / journal rows */
+  .list-item {
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 12px;
+    padding: 12px 0;
+    margin: 0;
+  }
+  .list-item .grow {
+    flex: 1 1 140px;
+    min-width: 0;
+  }
+  .list-item .thumb {
+    width: 52px;
+    height: 52px;
+  }
+  .list-item .eb-updated {
+    flex: 1 1 100%;
+    text-align: left;
+    white-space: normal;
+  }
+  .list-item > a.btn,
+  .list-item > form {
+    flex: 1 1 calc(50% - 8px);
+  }
+  .list-item > form {
+    display: flex;
+    margin: 0;
+  }
+  .list-item > form .btn,
+  .list-item > a.btn {
+    width: 100%;
+  }
+
+  /* Wide tables stay on the page: scroll inside the table, not the screen */
+  .eb-table-wrap,
+  .table-scroll,
+  .content-inner :has(> table) {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  table.eb-table input[type=text],
+  table.eb-table input[type=url],
+  table.eb-table textarea {
+    min-width: 140px;
+    font-size: 16px;
+  }
+  table.eb-table td.f-tagline input,
+  table.eb-table td.f-ingredients input,
+  table.eb-table td.f-allergens input,
+  table.eb-table td.f-amazon input,
+  table.eb-table textarea {
+    min-width: 160px;
+  }
+
+  .toast-wrap {
+    left: 12px;
+    right: 12px;
+    top: calc(env(safe-area-inset-top) + 64px);
+    max-width: none;
+  }
+
+  /* Visual editor chrome */
+  .visual-shell {
+    min-height: calc(100dvh - 72px);
+    gap: 10px;
+  }
+  .visual-toolbar {
+    padding: 12px;
+  }
+  .visual-toolbar-row,
+  .visual-inline {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .visual-label {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    gap: 6px;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 13px;
+  }
+  .visual-label select,
+  .visual-inline input,
+  .visual-inline .btn,
+  .visual-toolbar .btn {
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+  }
+  .visual-chip {
+    min-height: 44px;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+  .visual-frame {
+    min-height: 55vh;
+    width: 100%;
+  }
+}
+
+@keyframes cms-backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (max-width: 900px) and (prefers-reduced-motion: reduce) {
+  aside.sidebar,
+  .cms-menu-bars,
+  .cms-menu-bars::before,
+  .cms-menu-bars::after {
+    transition: none;
+  }
+  body.cms-nav-open .cms-nav-backdrop {
+    animation: none;
+  }
+}
+
+/* Sign-in screen (does not use base.html) */
+@media (max-width: 900px) {
+  body.cms-login {
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: max(24px, env(safe-area-inset-top)) 16px max(24px, env(safe-area-inset-bottom));
+  }
+  body.cms-login .card {
+    max-width: 100%;
+    padding: 24px 18px;
+    margin: auto 0;
+  }
+  body.cms-login input[type=text],
+  body.cms-login input[type=password] {
+    min-height: 44px;
+    font-size: 16px;
+  }
+  body.cms-login button {
+    min-height: 44px;
+    touch-action: manipulation;
+  }
+}
