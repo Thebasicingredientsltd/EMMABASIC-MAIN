@@ -26,29 +26,6 @@ function Hero() {
     return () => { cancelAnimationFrame(raf1); cancelAnimationFrame(raf2); };
   }, []);
 
-  React.useLayoutEffect(() => {
-    const root = imgRef && imgRef.current;
-    if (!root) return;
-    const fit = () => {
-      const h1 = root.querySelector(".eb-hero__headline");
-      const line = root.querySelector(".eb-hero__slide--2");
-      if (!h1 || !line) return;
-      h1.style.removeProperty("font-size");
-      const max = h1.clientWidth;
-      if (!max) return;
-      let size = parseFloat(window.getComputedStyle(h1).fontSize);
-      for (let i = 0; i < 32 && line.scrollWidth > max - 2 && size > 32; i++) {
-        size -= 1;
-        h1.style.setProperty("font-size", size + "px", "important");
-      }
-    };
-    fit();
-    const fonts = document.fonts && document.fonts.ready;
-    if (fonts) fonts.then(fit);
-    window.addEventListener("resize", fit);
-    return () => window.removeEventListener("resize", fit);
-  }, [imgRef, loaded, headlineLine2]);
-
   if (H.visible === false) {
     return (
       <div
@@ -214,11 +191,6 @@ function Hero() {
 
         @media (max-width: 820px) {
           .eb-hero__body { grid-template-columns: 1fr; gap: 24px; min-width: 0; }
-          /* "uncompromised." is one italic word (~8.3em). Size the headline
-             to that width so overflow-x:hidden does not clip the last letters. */
-          .eb-hero__headline {
-            font-size: clamp(36px, calc((100vw - 2 * var(--pad-x)) / 8.6), 88px) !important;
-          }
           .eb-hero__mask { display: block; }
         }
         @media (max-width: 768px) {
