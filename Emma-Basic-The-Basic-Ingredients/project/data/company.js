@@ -5,7 +5,7 @@ window.EB_COMPANY = {
     "title": "Clean label,",
     "titleItalic": "by design.",
     "subtitle": "",
-    "visible": true
+    "visible": false
   },
   "about": {
     "heading": "Who we",
