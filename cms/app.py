@@ -1288,6 +1288,7 @@ def places_save():
     featured["eyebrow"] = request.form.get("featured_eyebrow", "").strip()
     featured["heading"] = request.form.get("featured_heading", "").strip()
     featured["headingItalic"] = request.form.get("featured_headingItalic", "").strip()
+    featured["hideHeading"] = form_checkbox("featured_hideHeading")
     old_retailers = featured.get("retailers") or []
     retailers = []
     count = int(request.form.get("retailer_count", "0"))

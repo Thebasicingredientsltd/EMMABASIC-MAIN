@@ -17,12 +17,20 @@ const TBI_RETAILERS = [
   { id: "diverse", name: "Diverse Fine Foods", city: "UK Wide",             style: "sans-light",     url: "https://diversefinefood.co.uk/page/1/?s=emma+basic&post_type=product&dgwt_wcas=1" },
 ];
 
-function StockistCarousel({ retailers, eyebrow, heading, headingItalic }) {
+function cmsCopy(prop, cmsVal, fallback) {
+  if (prop !== undefined && prop !== null) return prop;
+  if (cmsVal !== undefined) return cmsVal;
+  return fallback;
+}
+
+function StockistCarousel({ retailers, eyebrow, heading, headingItalic, hideHeading }) {
   const cms = (typeof window !== "undefined" && window.EB_PLACES && window.EB_PLACES.featured) || {};
   const list = retailers || (cms.retailers && cms.retailers.length ? cms.retailers.map((r, i) => ({ id: r.name || i, ...r })) : CAROUSEL_RETAILERS);
-  const _eyebrow = eyebrow || cms.eyebrow || "Where to find us";
-  const _heading = heading || cms.heading || "Listed at a";
-  const _headingItalic = headingItalic || cms.headingItalic || "few good places.";
+  const fromCms = heading === undefined;
+  const _hideHeading = hideHeading === true || (fromCms && cms.hideHeading === true);
+  const _eyebrow = cmsCopy(eyebrow, cms.eyebrow, "Where to find us");
+  const _heading = cmsCopy(heading, cms.heading, "Listed at a");
+  const _headingItalic = cmsCopy(headingItalic, cms.headingItalic, "few good places.");
   const railRef = React.useRef(null);
   const [canL, setCanL] = React.useState(false);
   const [canR, setCanR] = React.useState(true);
@@ -109,20 +117,24 @@ function StockistCarousel({ retailers, eyebrow, heading, headingItalic }) {
       }}>
         <Reveal>
           <div>
-            <span style={{
-              fontFamily: "var(--f-body)", fontSize: 10.5, letterSpacing: "0.22em",
-              textTransform: "uppercase", color: "rgba(246,246,246,0.55)",
-              display: "block", marginBottom: 20,
-            }}>{_eyebrow}</span>
-            <h2 style={{
-              fontFamily: "var(--f-display)", fontWeight: 400,
-              fontSize: "clamp(44px, 6vw, 92px)",
-              letterSpacing: "-0.03em", lineHeight: 0.92, margin: 0,
-              fontVariationSettings: '"opsz" 144, "SOFT" 30',
-            }}>
-              {_heading}
-              {_headingItalic && <><br/><em style={{ fontStyle: "normal", fontFamily: "var(--f-body)", fontWeight: 400, letterSpacing: "-0.02em" }}>{_headingItalic}</em></>}
-            </h2>
+            {_eyebrow ? (
+              <span style={{
+                fontFamily: "var(--f-body)", fontSize: 10.5, letterSpacing: "0.22em",
+                textTransform: "uppercase", color: "rgba(246,246,246,0.55)",
+                display: "block", marginBottom: 20,
+              }}>{_eyebrow}</span>
+            ) : null}
+            {!_hideHeading && (_heading || _headingItalic) ? (
+              <h2 style={{
+                fontFamily: "var(--f-display)", fontWeight: 400,
+                fontSize: "clamp(44px, 6vw, 92px)",
+                letterSpacing: "-0.03em", lineHeight: 0.92, margin: 0,
+                fontVariationSettings: '"opsz" 144, "SOFT" 30',
+              }}>
+                {_heading}
+                {_headingItalic ? <><br/><em style={{ fontStyle: "normal", fontFamily: "var(--f-body)", fontWeight: 400, letterSpacing: "-0.02em" }}>{_headingItalic}</em></> : null}
+              </h2>
+            ) : null}
           </div>
         </Reveal>
         <Reveal delay={160}>

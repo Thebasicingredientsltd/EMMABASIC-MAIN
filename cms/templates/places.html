@@ -45,13 +45,28 @@
   {% include '_seo_fields.html' %}
 
   <div class="card">
-    <h2 style="margin-top:0;">Featured shops (carousel)</h2>
+    <h2 style="margin-top:0;">The heading on the Find Us page{% if featured.hideHeading %} <span class="pill">Hidden on site</span>{% endif %}</h2>
+    <p class="field-help">This is the large type in the dark band of shop names — for example “Listed at a few good places.” It is separate from the Opening headline above.</p>
+    <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
+      <input type="checkbox" name="featured_hideHeading" value="on" style="width:auto;" {{ 'checked' if featured.hideHeading }}/> Hide this heading
+    </label>
+    <p class="field-help">Tick this to take the heading off the website without deleting the words. You can also delete the words in the boxes below, then save.</p>
+    <label>Small label above the heading</label>
+    <input type="text" name="featured_eyebrow" value="{{ featured.eyebrow or '' }}"/>
     <div class="row">
-      <div><label>Eyebrow</label><input type="text" name="featured_eyebrow" value="{{ featured.eyebrow or '' }}"/></div>
-      <div><label>Heading</label><input type="text" name="featured_heading" value="{{ featured.heading or '' }}"/></div>
+      <div>
+        <label>Section heading</label>
+        <input type="text" name="featured_heading" value="{{ featured.heading or '' }}"/>
+      </div>
+      <div>
+        <label>Second line (italic)</label>
+        <input type="text" name="featured_headingItalic" value="{{ featured.headingItalic or '' }}"/>
+      </div>
     </div>
-    <label>Heading (italic)</label>
-    <input type="text" name="featured_headingItalic" value="{{ featured.headingItalic or '' }}"/>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;">Featured shops (carousel)</h2>
     <label>Shops</label>
     <p class="field-help">Name, area, and an optional website or map link. These appear in the dark carousel near the top of the page.</p>
     <div id="retailers">

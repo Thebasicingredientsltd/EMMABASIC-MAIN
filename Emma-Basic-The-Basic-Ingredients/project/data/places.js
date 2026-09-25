@@ -9,8 +9,8 @@ window.EB_PLACES = {
   },
   "featured": {
     "eyebrow": "FIND US IN STORES",
-    "heading": "",
-    "headingItalic": "",
+    "heading": "Listed at a",
+    "headingItalic": "few good places.",
     "retailers": [
       {
         "name": "SELFRIDGES",
