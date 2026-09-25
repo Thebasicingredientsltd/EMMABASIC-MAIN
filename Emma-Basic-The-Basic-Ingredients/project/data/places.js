@@ -8,7 +8,7 @@ window.EB_PLACES = {
     "visible": false
   },
   "featured": {
-    "eyebrow": "Find us in stores",
+    "eyebrow": "FIND US IN STORES",
     "heading": "",
     "headingItalic": "",
     "retailers": [
