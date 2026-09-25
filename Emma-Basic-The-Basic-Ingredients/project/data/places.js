@@ -37,7 +37,7 @@ window.EB_PLACES = {
         "url": "https://www.souschef.co.uk/pages/search-results?q=emma+basic"
       }
     ],
-    "hideHeading": false
+    "hideHeading": true
   },
   "hq": {
     "label": "London HQ",
