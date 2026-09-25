@@ -8,9 +8,9 @@ window.EB_PLACES = {
     "visible": false
   },
   "featured": {
-    "eyebrow": "FIND US IN STORES",
+    "eyebrow": "",
     "heading": "",
-    "headingItalic": "",
+    "headingItalic": "Find us in stores",
     "retailers": [
       {
         "name": "SELFRIDGES",
@@ -37,7 +37,7 @@ window.EB_PLACES = {
         "url": "https://www.souschef.co.uk/pages/search-results?q=emma+basic"
       }
     ],
-    "hideHeading": true
+    "hideHeading": false
   },
   "hq": {
     "label": "London HQ",
