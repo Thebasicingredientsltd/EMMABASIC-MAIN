@@ -67,6 +67,12 @@ class SeoHelperTests(unittest.TestCase):
         self.assertFalse(seo.seo_is_blank({"title": "", "noindex": True}))
         self.assertFalse(seo.seo_is_blank({"description": "Hello"}))
 
+    def test_company_default_title_uses_legal_name(self):
+        page = seo.page_by_id("company")
+        self.assertEqual(page["default_title"], "The Basic Ingredients Ltd")
+        resolved = seo.resolve_seo(page, {})
+        self.assertEqual(resolved["title"], "The Basic Ingredients Ltd")
+
 
 class SeoCmsTests(unittest.TestCase):
     def setUp(self):

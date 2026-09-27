@@ -139,7 +139,7 @@ PAGES = [
         "data_key": "company",
         "file": "The Basic Ingredients.html",
         "url_path": "/The%20Basic%20Ingredients.html",
-        "default_title": "The Basic Ingredients — Emma Basic",
+        "default_title": "The Basic Ingredients Ltd",
         "seo_path": ("seo",),
         "script_id": "company",
         "fallback_desc_paths": (("about", "body"), ("hero", "subtitle")),

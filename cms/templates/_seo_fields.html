@@ -6,14 +6,14 @@
 {% set seo_preview = url_for('site_assets', filename=seo_img[7:]) if seo_img.startswith('assets/') else seo_img %}
 <div class="card">
   <h2 style="margin-top:0;">Search &amp; sharing (SEO)</h2>
-  <p class="field-help">This is what Google and WhatsApp/Facebook show when someone finds or shares this page. Leave a field blank to use the usual page headline and web address.</p>
+  <p class="field-help">This is what Google and WhatsApp/Facebook show when someone finds or shares this page — including the extra links under your homepage in Google (sitelinks). Leave a field blank to use the usual page headline and web address.</p>
   {% if seo_extra_help %}
   <p class="field-help">{{ seo_extra_help }}</p>
   {% endif %}
 
-  <label for="seo_title">Title for the browser tab</label>
+  <label for="seo_title">Title</label>
   <input id="seo_title" type="text" name="seo_title" value="{{ seo.title or '' }}" placeholder="{{ seo_placeholder_title }}" maxlength="90"/>
-  <p class="field-help">About a short headline. If you leave this blank, we use “{{ seo_placeholder_title }}”.</p>
+  <p class="field-help">The name Google copies for search results and sitelinks, and the browser tab. Keep it short. If you leave this blank, we use “{{ seo_placeholder_title }}”.</p>
 
   <label for="seo_description">Short description</label>
   <textarea id="seo_description" name="seo_description" rows="3" maxlength="320" placeholder="One or two sentences about this page.">{{ seo.description or '' }}</textarea>
