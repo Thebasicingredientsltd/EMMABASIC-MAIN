@@ -24,20 +24,38 @@ window.EB_JOURNAL = {
       "category": "Ingredient Stories",
       "date": "14 Apr 2026",
       "title": "How to prepare matcha properly — and why most people don't.",
+      "author": "Olivia",
       "excerpt": "The temperature of the water, the direction of the whisk, the age of the powder. Small things with large consequences.",
       "image": "assets/uploads/Matcha-journal-image-20260923-081404.jpg",
       "tone": "warm",
-      "featured": false
+      "featured": false,
+      "seo": {
+        "title": "",
+        "description": "",
+        "canonical": "",
+        "image": "",
+        "ogType": "article",
+        "noindex": false
+      }
     },
     {
       "id": "sushi-rice-ratio",
       "category": "Recipes",
       "date": "08 Apr 2026",
       "title": "Koshihikari and the short-grain question. What the rice in your bowl actually is.",
+      "author": "Olivia",
       "excerpt": "Most sushi rice in British kitchens is Italian. The difference between that and genuine short-grain Japonica is something you taste immediately — once you know what you're looking for.",
       "image": "assets/uploads/Sushi-rice-journal-image-20260923-081451.avif",
       "tone": "cool",
-      "featured": false
+      "featured": false,
+      "seo": {
+        "title": "",
+        "description": "",
+        "canonical": "",
+        "image": "",
+        "ogType": "article",
+        "noindex": false
+      }
     },
     {
       "id": "binchotan-kitchen",
@@ -366,7 +384,8 @@ window.EB_JOURNAL = {
       "image": "assets/uploads/Matcha-journal-image-20260923-081431.jpg",
       "imagePosition": "center 35%",
       "intro": "",
-      "body": []
+      "body": [],
+      "author": "Olivia"
     },
     "sushi-rice-ratio": {
       "category": "Recipes",
@@ -376,7 +395,8 @@ window.EB_JOURNAL = {
       "image": "assets/uploads/Sushi-rice-journal-image-20260923-081503.avif",
       "imagePosition": "",
       "intro": "",
-      "body": []
+      "body": [],
+      "author": "Olivia"
     },
     "binchotan-kitchen": {
       "category": "Behind the Product",

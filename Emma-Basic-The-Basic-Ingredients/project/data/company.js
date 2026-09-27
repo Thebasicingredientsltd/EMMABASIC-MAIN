@@ -30,7 +30,7 @@ window.EB_COMPANY = {
   },
   "seo": {
     "title": "The Basic Ingredients Ltd",
-    "description": "The Basic Ingredients Ltd is a food company specialising in clean-label products — export, import, and OEM across the UK, Europe, and Asia.",
+    "description": "A food company specialising in clean-label products — export, import, and OEM across the UK, Europe, and Asia.",
     "canonical": "",
     "image": "",
     "ogType": "website",
