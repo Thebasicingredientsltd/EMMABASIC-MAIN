@@ -1308,6 +1308,11 @@ def places_save():
         retailers.append(prev)
     featured["retailers"] = retailers
 
+    directory = d.setdefault("directory", {})
+    directory["heading"] = request.form.get("directory_heading", "").strip()
+    directory["headingItalic"] = request.form.get("directory_headingItalic", "").strip()
+    directory["hideHeading"] = form_checkbox("directory_hideHeading")
+
     shops = []
     shop_count = int(request.form.get("shop_count", "0"))
     old_shops = d.get("shops") or []

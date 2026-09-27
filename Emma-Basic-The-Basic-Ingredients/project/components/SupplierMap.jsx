@@ -111,7 +111,19 @@ const STOCKISTS = [
   },
 ];
 
-function SupplierMap() {
+function cmsCopy(prop, cmsVal, fallback) {
+  if (prop !== undefined && prop !== null) return prop;
+  if (cmsVal !== undefined) return cmsVal;
+  return fallback;
+}
+
+function SupplierMap({ heading, headingItalic, hideHeading }) {
+  const cms = (typeof window !== "undefined" && window.EB_PLACES && window.EB_PLACES.directory) || {};
+  const fromCms = heading === undefined;
+  const _hideHeading = hideHeading === true || (fromCms && cms.hideHeading === true);
+  const _heading = cmsCopy(heading, cms.heading, "Where to find us.");
+  const _headingItalic = cmsCopy(headingItalic, cms.headingItalic, "Stocked across the UK.");
+  const showHeading = !_hideHeading && (_heading || _headingItalic);
   const [active, setActive] = React.useState("london");
   const activeStockist = STOCKISTS.find(s => s.id === active);
   const detailRef = React.useRef(null);
@@ -140,17 +152,22 @@ function SupplierMap() {
             alignItems: "end", gap: 32,
             marginBottom: "clamp(56px, 7vh, 96px)",
           }}>
+            {showHeading ? (
             <h2 style={{
               fontFamily: "var(--f-display)", fontWeight: 400,
               fontSize: "clamp(44px, 6vw, 92px)",
               letterSpacing: "-0.03em", lineHeight: 0.92, margin: 0,
               fontVariationSettings: '"opsz" 144, "SOFT" 30',
             }}>
-              <span style={{ whiteSpace: "nowrap" }}>Where to find us.</span><br/>
+              {_heading ? <span style={{ whiteSpace: "nowrap" }}>{_heading}</span> : null}
+              {_heading && _headingItalic ? <br/> : null}
+              {_headingItalic ? (
               <em style={{ fontStyle: "normal", fontFamily: "var(--f-body)", fontWeight: 400, letterSpacing: "-0.02em" }}>
-                Stocked across the UK.
+                {_headingItalic}
               </em>
+              ) : null}
             </h2>
+            ) : <div />}
             <div style={{ paddingBottom: 10, textAlign: "right" }}>
               <span style={{
                 fontFamily: "var(--f-body)", fontSize: 10.5, letterSpacing: "0.22em",

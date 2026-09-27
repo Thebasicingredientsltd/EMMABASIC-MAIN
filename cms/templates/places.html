@@ -2,6 +2,7 @@
 {% set active = "places" %}
 {% set hero = d.hero or {} %}
 {% set featured = d.featured or {} %}
+{% set directory = d.directory or {} %}
 {% set hq = d.hq or {} %}
 {% block content %}
 <h1>Where to find our products</h1>
@@ -85,6 +86,25 @@
     </div>
     <input type="hidden" name="retailer_count" id="retailer_count" value="{{ (featured.retailers or [])|length }}"/>
     <button type="button" class="btn secondary small" id="add-retailer">+ Add featured shop</button>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;">The heading above the shop list{% if directory.hideHeading %} <span class="pill">Hidden on site</span>{% endif %}</h2>
+    <p class="field-help">This is the large type above the numbered list of towns — for example “Where to find us. Stocked across the UK.” It is separate from the Opening headline and from the heading in the dark band of shop names.</p>
+    <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
+      <input type="checkbox" name="directory_hideHeading" value="on" style="width:auto;" {{ 'checked' if directory.hideHeading }}/> Hide this heading
+    </label>
+    <p class="field-help">Tick this to take the heading off the website without deleting the words. You can also delete the words in the boxes below, then save.</p>
+    <div class="row">
+      <div>
+        <label>Line one</label>
+        <input type="text" name="directory_heading" value="{{ directory.get('heading', 'Where to find us.') }}"/>
+      </div>
+      <div>
+        <label>Line two</label>
+        <input type="text" name="directory_headingItalic" value="{{ directory.get('headingItalic', 'Stocked across the UK.') }}"/>
+      </div>
+    </div>
   </div>
 
   <div class="card">

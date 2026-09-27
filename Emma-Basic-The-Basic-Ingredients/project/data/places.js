@@ -39,6 +39,11 @@ window.EB_PLACES = {
     ],
     "hideHeading": false
   },
+  "directory": {
+    "heading": "Where to find us.",
+    "headingItalic": "Stocked across the UK.",
+    "hideHeading": false
+  },
   "hq": {
     "label": "London HQ",
     "addressLine1": "4 New Concordia Wharf",
