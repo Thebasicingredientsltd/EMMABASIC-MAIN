@@ -181,7 +181,7 @@ window.EB_HOME = {
     "visible": true
   },
   "seo": {
-    "title": "",
+    "title": "Emma Basic",
     "description": "Pure ingredients for the run, the kitchen, and everything between. Additive-free, from Emma Basic.",
     "canonical": "",
     "image": "assets/uploads/Hero-Home-Page-Running-20260731-121433.jpg",
