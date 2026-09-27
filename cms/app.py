@@ -827,10 +827,12 @@ def journal_new():
     blank_post = {
         "id": "", "category": "Ingredient Stories", "date": "", "title": "",
         "excerpt": "", "image": "", "tone": "warm", "featured": False,
+        "author": "",
     }
     blank_article = {
         "category": "Ingredient Stories", "date": "", "readTime": "", "title": "",
         "image": "", "imagePosition": "", "intro": "", "body": [],
+        "author": "",
     }
     return render_template(
         "journal_edit.html", post=blank_post, article=blank_article,
@@ -850,6 +852,7 @@ def journal_edit(index):
         "category": post.get("category", ""), "date": post.get("date", ""),
         "readTime": "", "title": post.get("title", ""), "image": post.get("image", ""),
         "imagePosition": "", "intro": "", "body": [],
+        "author": post.get("author", ""),
     })
     return render_template(
         "journal_edit.html", post=post, article=article,
@@ -877,6 +880,7 @@ def journal_save():
         "category": request.form.get("category", "").strip(),
         "date": request.form.get("date", "").strip(),
         "title": request.form.get("title", "").strip(),
+        "author": request.form.get("author", "").strip(),
         "excerpt": request.form.get("excerpt", "").strip(),
         "image": image,
         "tone": request.form.get("tone", "warm").strip(),
@@ -895,6 +899,7 @@ def journal_save():
         "imagePosition": request.form.get("imagePosition", "").strip(),
         "intro": request.form.get("intro", "").strip(),
         "body": text_to_body(request.form.get("body", "")),
+        "author": post["author"],
     }
 
     if not post_id or not post["title"]:

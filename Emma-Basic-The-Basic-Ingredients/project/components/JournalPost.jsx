@@ -2,7 +2,9 @@
    JournalPost — reads ?id= from URL, renders full article.
    ============================================================ */
 
-const JOURNAL_ARTICLES = (typeof window !== "undefined" && window.EB_JOURNAL && window.EB_JOURNAL.articles) ? window.EB_JOURNAL.articles : {};
+const JOURNAL_DATA = (typeof window !== "undefined" && window.EB_JOURNAL) ? window.EB_JOURNAL : {};
+const JOURNAL_ARTICLES = JOURNAL_DATA.articles || {};
+const JOURNAL_POSTS = Array.isArray(JOURNAL_DATA.posts) ? JOURNAL_DATA.posts : [];
 
 /* ── Render helpers ─────────────────────────────────────────── */
 
@@ -38,6 +40,8 @@ function ArticleBlock({ block, index }) {
 function JournalPost() {
   const id = new URLSearchParams(window.location.search).get("id");
   const post = JOURNAL_ARTICLES[id];
+  const listing = JOURNAL_POSTS.find(p => p.id === id) || {};
+  const author = String((post && post.author) || listing.author || "").trim();
 
   if (!post) {
     return (
@@ -79,22 +83,30 @@ function JournalPost() {
           fontFamily: "var(--f-body)", fontSize: 10.5, letterSpacing: "0.22em",
           textTransform: "uppercase", color: "var(--ink-60)",
         }}>
-          <a href="Journal.html" style={{
-            color: "var(--ink-60)", textDecoration: "none",
-            display: "inline-flex", alignItems: "center", gap: 8,
-            transition: "color 200ms var(--ease-out)",
-          }}
-            onMouseEnter={e => e.currentTarget.style.color = "var(--ink)"}
-            onMouseLeave={e => e.currentTarget.style.color = "var(--ink-60)"}
-          >
-            ← Journal
-          </a>
-          <span style={{ opacity: 0.35 }}>·</span>
-          <span>{post.category}</span>
-          <span style={{ opacity: 0.35 }}>·</span>
-          <span>{post.date}</span>
-          <span style={{ opacity: 0.35 }}>·</span>
-          <span>{post.readTime}</span>
+          {(() => {
+            const items = [
+              <a key="back" href="Journal.html" style={{
+                color: "var(--ink-60)", textDecoration: "none",
+                display: "inline-flex", alignItems: "center", gap: 8,
+                transition: "color 200ms var(--ease-out)",
+              }}
+                onMouseEnter={e => e.currentTarget.style.color = "var(--ink)"}
+                onMouseLeave={e => e.currentTarget.style.color = "var(--ink-60)"}
+              >
+                ← Journal
+              </a>,
+            ];
+            if (post.category) items.push(<span key="cat">{post.category}</span>);
+            if (post.date) items.push(<span key="date">{post.date}</span>);
+            if (author) items.push(<span key="author">{author}</span>);
+            if (post.readTime) items.push(<span key="rt">{post.readTime}</span>);
+            return items.map((el, i) => (
+              <React.Fragment key={el.key || i}>
+                {i > 0 ? <span style={{ opacity: 0.35 }}>·</span> : null}
+                {el}
+              </React.Fragment>
+            ));
+          })()}
         </div>
 
         {/* Title */}
@@ -108,6 +120,7 @@ function JournalPost() {
         </h1>
 
         {/* Intro */}
+        {post.intro ? (
         <p style={{
           fontFamily: "var(--f-display)", fontWeight: 400,
           fontSize: "clamp(20px, 1.8vw, 26px)", lineHeight: 1.5,
@@ -119,6 +132,7 @@ function JournalPost() {
         }}>
           {post.intro}
         </p>
+        ) : null}
 
         {/* Body */}
         <div>

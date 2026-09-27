@@ -49,6 +49,9 @@
     </div>
     <label>Title</label>
     <input type="text" name="title" value="{{ post.title }}" required/>
+    <label>Author</label>
+    <input type="text" name="author" value="{{ post.author or article.author or '' }}" placeholder="Emma"/>
+    <p class="field-help">Shown next to the date on Field Notes. Leave blank to hide it.</p>
     <label>Excerpt (shown on card)</label>
     <textarea name="excerpt" rows="3">{{ post.excerpt }}</textarea>
     <label style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0;">

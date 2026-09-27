@@ -61,7 +61,7 @@
       <div style="font-weight:600;">{{ p.title }}
         {% if p.featured %}<span class="pill">Featured</span>{% endif %}
       </div>
-      <div class="muted">{{ p.category }} · {{ p.date }}</div>
+      <div class="muted">{{ p.category }} · {{ p.date }}{% if p.author %} · {{ p.author }}{% endif %}</div>
     </div>
     <a class="btn secondary small" href="{{ url_for('journal_edit', index=loop.index0) }}">Edit</a>
     <form method="post" action="{{ url_for('journal_delete', index=loop.index0) }}" onsubmit="return confirm('Delete this post?');">
