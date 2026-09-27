@@ -115,7 +115,7 @@ window.EB_JOURNAL = {
       "date": "08/10/2021",
       "title": "What makes a good soy sauce",
       "excerpt": "",
-      "image": "",
+      "image": "assets/uploads/Rice_and_Soy_Sauce-20260927-100405.jpg",
       "tone": "warm",
       "featured": false,
       "seo": {
