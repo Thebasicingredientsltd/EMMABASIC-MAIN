@@ -40,7 +40,7 @@ window.EB_PLACES = {
     "hideHeading": false
   },
   "directory": {
-    "heading": "Where to find us.",
+    "heading": "",
     "headingItalic": "Stocked across the UK.",
     "hideHeading": false
   },
