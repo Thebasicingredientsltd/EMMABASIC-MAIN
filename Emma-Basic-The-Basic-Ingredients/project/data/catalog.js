@@ -590,7 +590,7 @@ window.EB_CATALOG = {
           ],
           "imageScale": 3,
           "tone": "warm",
-          "origin": "Harvested Nov–Apr · BRC Grade A",
+          "origin": "Harvested Nov–Apr",
           "tagline": "Harvested at the start of the season. Young, fresh, not chewy.",
           "pairings": [
             "Sushi rice",
@@ -641,7 +641,8 @@ window.EB_CATALOG = {
               "q": "Can I use these for onigiri?",
               "a": "Yes — they're standard full-sheet size, suitable for sushi rolls, hand rolls, onigiri, and crumbling over ramen or salads."
             }
-          ]
+          ],
+          "updatedAt": "2026-09-28T16:30:00+00:00"
         },
         {
           "id": "S006",
@@ -796,7 +797,7 @@ window.EB_CATALOG = {
             "assets/uploads/Mark_Generation-20260731-112736.png"
           ],
           "tone": "cool",
-          "origin": "Wild-harvested · Japan",
+          "origin": "",
           "tagline": "Dried at source. Rehydrates in minutes.",
           "pairings": [
             "Miso soup",
@@ -846,7 +847,8 @@ window.EB_CATALOG = {
               "q": "What can I use it in?",
               "a": "Miso soup, udon, cucumber salad, rice bowls, and stir-fries."
             }
-          ]
+          ],
+          "updatedAt": "2026-09-28T16:30:00+00:00"
         },
         {
           "id": "crispy-seaweed",
@@ -1260,7 +1262,7 @@ window.EB_CATALOG = {
             "assets/uploads/V060_-_Hero_6-20260731-120130.jpg"
           ],
           "tone": "warm",
-          "origin": "Japanese style · 14 pieces · 180g",
+          "origin": "14 pieces · 180g",
           "tagline": "Tofu wrapped in yuba and fried until golden. Steam from frozen.",
           "pairings": [
             "Dashi broth",
@@ -1306,7 +1308,8 @@ window.EB_CATALOG = {
               "Yuba — the skin that forms on the surface of soy milk as it's heated — is one of those ingredients that barely exists in Western cooking and is ubiquitous in Japanese and Chinese cuisine. It has a high protein content, a silky texture, and a neutral flavour that takes on whatever surrounds it.",
               "Our crispy rolls wrap tofu in yuba and fry until the exterior is golden and shatteringly crisp, while the interior stays soft and yielding. Steam from frozen for six to eight minutes — no defrosting required. Serve with dashi broth or a simple soy dipping sauce."
             ]
-          }
+          },
+          "updatedAt": "2026-09-28T16:30:00+00:00"
         }
       ]
     },
@@ -1332,7 +1335,7 @@ window.EB_CATALOG = {
             "assets/Range-image.png"
           ],
           "tone": "warm",
-          "origin": "Buckwheat · Japan",
+          "origin": "Buckwheat",
           "tagline": "Nutty buckwheat. Serve cold with dipping sauce or in hot broth.",
           "pairings": [
             "Dashi broth",
@@ -1373,7 +1376,7 @@ window.EB_CATALOG = {
               "Soba is traditionally served cold in summer with a dipping sauce (mentsuyu) and warm in winter in broth. The cold preparation is particularly good because the buckwheat flavour comes through more clearly when the noodle isn't steaming. Cook for four minutes, rinse thoroughly in cold water, drain. That's all there is to it."
             ]
           },
-          "updatedAt": "2026-07-31T17:08:17+00:00"
+          "updatedAt": "2026-09-28T16:30:00+00:00"
         },
         {
           "id": "udon-noodles",
@@ -1390,7 +1393,7 @@ window.EB_CATALOG = {
             "assets/Range-image.png"
           ],
           "tone": "warm",
-          "origin": "Wheat · Japan",
+          "origin": "Wheat",
           "tagline": "The bowl of comfort after a cold walk home.",
           "pairings": [
             "Miso broth",
@@ -1430,7 +1433,7 @@ window.EB_CATALOG = {
               "Our dried udon rehydrates to a proper thickness — closer to Sanuki-style than the thin versions you find in most supermarkets. Cook for eight to ten minutes, rinse, add to your broth. The noodle will continue softening in liquid, so serve immediately after the final rinse."
             ]
           },
-          "updatedAt": "2026-07-31T17:07:48+00:00"
+          "updatedAt": "2026-09-28T16:30:00+00:00"
         },
         {
           "id": "shirataki-noodles",
@@ -1466,7 +1469,7 @@ window.EB_CATALOG = {
             "assets/Range-image.png"
           ],
           "tone": "warm",
-          "origin": "Konjac · China",
+          "origin": "Konjac",
           "tagline": "Zero carb, near-zero calorie. Rinse, heat, done — no cooking required.",
           "pairings": [
             "Miso broth",
@@ -1568,7 +1571,7 @@ window.EB_CATALOG = {
               "a": "Yes. Konjac noodles have a very low glycemic index, making them a good choice for people with diabetes. However, it's essential to consult a healthcare professional for personalised dietary advice."
             }
           ],
-          "updatedAt": "2026-07-31T17:09:07+00:00"
+          "updatedAt": "2026-09-28T16:30:00+00:00"
         },
         {
           "id": "shirataki-noodles-v2",
@@ -1595,7 +1598,7 @@ window.EB_CATALOG = {
             "assets/uploads/CrossSell-20260731-181005.jpg"
           ],
           "tone": "warm",
-          "origin": "Konjac · China",
+          "origin": "Konjac",
           "tagline": "Zero carb, near-zero calorie. Rinse, heat, done — no cooking required.",
           "pairings": [
             "Miso broth",
@@ -1695,7 +1698,7 @@ window.EB_CATALOG = {
               "a": "Yes. Konjac noodles have a very low glycemic index, making them a good choice for people with diabetes. However, it's essential to consult a healthcare professional for personalised dietary advice."
             }
           ],
-          "updatedAt": "2026-07-31T17:10:07+00:00"
+          "updatedAt": "2026-09-28T16:30:00+00:00"
         },
         {
           "id": "konjac-fettuccine",
@@ -1725,7 +1728,7 @@ window.EB_CATALOG = {
             "assets/Range-image.png"
           ],
           "tone": "warm",
-          "origin": "Konjac · China",
+          "origin": "Konjac",
           "tagline": "Wide konjac ribbons. Pasta-style shape, zero-calorie base.",
           "pairings": [
             "Tomato sauce",
@@ -1782,7 +1785,7 @@ window.EB_CATALOG = {
               "a": "Very mild — a neutral base that takes on whatever surrounds it. The wider flat shape helps sauce adhere compared to round shirataki."
             }
           ],
-          "updatedAt": "2026-07-31T17:14:30+00:00"
+          "updatedAt": "2026-09-28T16:30:00+00:00"
         },
         {
           "id": "rice-vermicelli",
@@ -1881,7 +1884,7 @@ window.EB_CATALOG = {
           ],
           "extraImagesGap": true,
           "tone": "warm",
-          "origin": "Physically pressed · Japan",
+          "origin": "Physically pressed",
           "tagline": "Physically pressed — never chemically refined.",
           "pairings": [
             "Steamed greens",
@@ -1923,7 +1926,7 @@ window.EB_CATALOG = {
               "Skillfully toasted seeds, gently pressed, produce the rich caramel colour, the deep nutty aroma, and the flavour that makes this oil worth seeking out. A finishing oil only — a few drops over noodles, steamed greens, or cold dishes is all you need."
             ]
           },
-          "updatedAt": "2026-07-31T17:17:56+00:00"
+          "updatedAt": "2026-09-28T16:30:00+00:00"
         },
         {
           "id": "C066H",
@@ -2160,7 +2163,7 @@ window.EB_CATALOG = {
             "assets/Range-image.png"
           ],
           "tone": "warm",
-          "origin": "Gluten Free & Reduced Salt · Japan",
+          "origin": "Gluten Free & Reduced Salt",
           "tagline": "Full-bodied tamari. Brewed slowly, no wheat, lower salt.",
           "pairings": [
             "Sushi",
@@ -2200,7 +2203,7 @@ window.EB_CATALOG = {
               "The absence of wheat gives tamari a deeper, more rounded flavour than standard soy sauce, which uses wheat as a fermentation substrate. The protein content is higher and the salt lower. This 1L bottle is the right choice if your household uses soy sauce daily, or if you're gluten-intolerant and want a reliable supply."
             ]
           },
-          "updatedAt": "2026-07-31T17:52:10+00:00"
+          "updatedAt": "2026-09-28T16:30:00+00:00"
         }
       ]
     },
