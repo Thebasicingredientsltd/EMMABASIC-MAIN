@@ -1,6 +1,6 @@
 /* ============================================================
-   HowToOrder — Become a Distributor page, laid out like the
-   "How to Place Your First Order" new-customer sheet.
+   HowToOrder — How to Place Your First Order sheet.
+   Lives on the combined Find us page (Places.html), below stockists.
    Copy is CMS-managed on window.EB_PEOPLE.distributor.
    ============================================================ */
 function HowToOrder() {
@@ -59,7 +59,8 @@ function HowToOrder() {
   return (
     <section id="how-to-order" style={{
       background: "var(--paper)",
-      padding: "clamp(112px, 13vh, 140px) var(--pad-x) clamp(48px, 8vh, 88px)",
+      padding: "clamp(48px, 8vh, 88px) var(--pad-x)",
+      borderTop: "1px solid var(--rule)",
     }}>
       <div style={{ maxWidth: 760, margin: "0 auto" }}>
 

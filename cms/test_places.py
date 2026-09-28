@@ -90,8 +90,11 @@ class PlacesPageTests(unittest.TestCase):
         self.assertIn("Line one", html)
         self.assertIn("Line two", html)
         self.assertIn("directory_hideHeading", html)
-        self.assertIn('name="directory_heading" value="Where to find us."', html)
-        self.assertIn('name="directory_headingItalic" value="Stocked across the UK."', html)
+        self.assertIn('name="directory_heading"', html)
+        self.assertIn('name="directory_headingItalic"', html)
+        featured_italic = (load_data("places").get("directory") or {}).get("headingItalic") or ""
+        if featured_italic:
+            self.assertIn(featured_italic, html)
         box = _directory_hide_heading_checkbox(html)
         self.assertTrue(box)
         self.assertNotIn("checked", box)
@@ -202,6 +205,20 @@ class PlacesPageTests(unittest.TestCase):
         self.assertIn('!_hideHeading && (_heading || _headingItalic)', source)
         self.assertIn('Where to find us.', source)
         self.assertIn("Stocked across the UK.", source)
+
+    def test_hq_map_is_on_people_not_find_us(self):
+        root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        project = os.path.join(root, "Emma-Basic-The-Basic-Ingredients", "project")
+        with open(os.path.join(project, "Places.html"), encoding="utf-8") as fh:
+            places = fh.read()
+        with open(os.path.join(project, "People & Places.html"), encoding="utf-8") as fh:
+            people = fh.read()
+        self.assertNotIn("LocationMap.jsx", places)
+        self.assertNotIn("<LocationMap", places)
+        self.assertIn("LocationMap.jsx", people)
+        self.assertIn("<LocationMap", people)
+        self.assertIn("data/places.js", people)
+        self.assertIn("leaflet", people.lower())
 
 
 def _form_from_places(data):

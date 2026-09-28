@@ -65,7 +65,7 @@ SITE_PAGES = [
     },
     {
         "id": "distributor",
-        "file": "Become a Distributor.html",
+        "file": "Places.html",
         "label": "Become a Distributor",
         "data_key": "people",
         "sections": [

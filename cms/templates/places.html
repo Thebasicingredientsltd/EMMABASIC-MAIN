@@ -6,7 +6,7 @@
 {% set hq = d.hq or {} %}
 {% block content %}
 <h1>Where to find our products</h1>
-<p class="sub">Everything on the Places page — the opening headline, featured shops, the full stockist list, and the London HQ details.</p>
+<p class="sub">Everything on the Find us page: shops first, then how to order (edited separately). The London HQ map is on the People page, not here.</p>
 
 <form method="post" action="{{ url_for('places_save') }}" enctype="multipart/form-data">
 
@@ -132,7 +132,8 @@
   </div>
 
   <div class="card">
-    <h2 style="margin-top:0;">London HQ</h2>
+    <h2 style="margin-top:0;">London HQ map</h2>
+    <p class="field-help">This map is shown at the bottom of the People page, not on Find us. Change the label, address, or map pin here.</p>
     <label>Label</label>
     <input type="text" name="hq_label" value="{{ hq.label or '' }}"/>
     <div class="row">

@@ -142,7 +142,7 @@ function SiteFooter({ visible }) {
     ["Company", [
       { label: "Our Story", href: "Our Story.html" },
       { label: "People & Places", href: "People%20%26%20Places.html" },
-      { label: "Become a Distributor", href: "Become%20a%20Distributor.html" },
+      { label: "Find us", href: "Places.html" },
       { label: "Journal", href: "Journal.html" },
     ]],
   ];

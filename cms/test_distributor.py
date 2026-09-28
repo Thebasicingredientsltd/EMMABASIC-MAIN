@@ -88,12 +88,23 @@ class DistributorPageTests(unittest.TestCase):
                 save_data("people", original)
 
     def test_live_page_uses_how_to_order_sheet(self):
-        path = os.path.join(PROJECT, "Become a Distributor.html")
+        path = os.path.join(PROJECT, "Places.html")
         with open(path, encoding="utf-8") as fh:
             src = fh.read()
         self.assertIn("HowToOrder", src)
-        self.assertIn("EB_PEOPLE.distributor", src)
-        self.assertNotIn("<OrderSection", src)
+        self.assertIn("data/people.js", src)
+        self.assertIn("data/places.js", src)
+        self.assertIn("NearestShopFinder", src)
+        self.assertLess(src.find("NearestShopFinder"), src.find("<HowToOrder"))
+        self.assertNotIn("LocationMap.jsx", src)
+        self.assertNotIn("<LocationMap", src)
+
+        redirect = os.path.join(PROJECT, "Become a Distributor.html")
+        with open(redirect, encoding="utf-8") as fh:
+            html = fh.read()
+        self.assertIn("Places.html", html)
+        self.assertNotIn("HowToOrder", html)
+        self.assertIn("refresh", html.lower())
 
 
 def _form_from_distributor(data):

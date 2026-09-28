@@ -188,7 +188,7 @@
 
   <div class="card">
     <h2 style="margin-top:0;">How to Place Your First Order</h2>
-    <p class="field-help">The Become a Distributor page is the How to Order sheet. Edit it there so the wording stays in one place.</p>
+    <p class="field-help">How to order appears on the Find us page, underneath the shop list. Edit it there so the wording stays in one place.</p>
     <a class="btn secondary small" href="{{ url_for('distributor') }}">Edit Become a Distributor</a>
   </div>
 
@@ -211,6 +211,12 @@
     </div>
     <label>Note</label>
     <textarea name="contact_note" rows="2">{{ d.contact.note }}</textarea>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;">London HQ map</h2>
+    <p class="field-help">The London HQ map sits at the bottom of this People page. Change the address and map pin under Where to find our products, so the details stay in one place.</p>
+    <a class="btn secondary small" href="{{ url_for('places') }}">Edit London HQ</a>
   </div>
 
   <div class="actions-bar save-bar">

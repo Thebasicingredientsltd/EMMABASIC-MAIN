@@ -15,7 +15,7 @@
 {% set sheet = dstr.sheetFooter or {} %}
 {% block content %}
 <h1>Become a Distributor</h1>
-<p class="sub">This page follows the <em>How to Place Your First Order</em> new-customer sheet. The site menu stays at the top. Uncheck a box to hide that block on the website without deleting the words.</p>
+<p class="sub">This is the <em>How to Place Your First Order</em> sheet. On the website it appears on the Find us page, underneath the shop list. Uncheck a box to hide that block without deleting the words.</p>
 
 <form method="post" action="{{ url_for('distributor_save') }}" enctype="multipart/form-data">
 
@@ -32,12 +32,12 @@
   <div class="card">
     <h2 style="margin-top:0;">Page footer{{ hidden_pill(d.distributorFooter) }}</h2>
     {{ show_on_site('footer', d.distributorFooter, 'Show footer on this page') }}
-    <p class="field-help">The site footer at the bottom of Become a Distributor only. Other pages keep theirs.</p>
+    <p class="field-help">The live Find us page uses the footer setting on Where to find our products. This box is kept so you can still hide or show a footer if needed in the visual editor.</p>
   </div>
 
   {% set seo = dstr.seo or {} %}
   {% set seo_placeholder_title = 'Become a Distributor — Emma Basic' %}
-  {% set seo_placeholder_canonical = 'https://emmabasic.co.uk/Become%20a%20Distributor.html' %}
+  {% set seo_placeholder_canonical = 'https://emmabasic.co.uk/Places.html' %}
   {% include '_seo_fields.html' %}
 
   <div class="card">
