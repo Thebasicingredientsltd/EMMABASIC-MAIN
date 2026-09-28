@@ -12,6 +12,8 @@ import re
 from datetime import datetime
 from html import escape
 
+import maintenance
+
 PATH_TOKEN = re.compile(r"[^.\[\]]+|\[\d+\]")
 NON_SLUG = re.compile(r"[^a-z0-9]+")
 
@@ -175,6 +177,7 @@ PAGE_TEMPLATE = """<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
+{gate}
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>{title} — Emma Basic</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -233,6 +236,7 @@ def draft_site_page(title, heading, body, nav, existing_names=None):
         n += 1
     html = PAGE_TEMPLATE.format(
         title=escape(title),
+        gate=maintenance.gate_block(),
         heading_js=json_str(heading or title),
         body_js=json_str(body or ""),
     )
@@ -264,6 +268,9 @@ REL_ATTR = re.compile(
 
 def rewrite_preview_html(html, page_file):
     """Point relative assets at /preview-static and inject the visual editor."""
+    # The under-construction gate would bounce this preview away from the page
+    # being edited — which is exactly when the owner needs to see it.
+    html = maintenance.strip_gate(html)
     html = REL_ATTR.sub(r"\1/preview-static/\2\3", html)
     inject = (
         '<script>window.__CMS_VISUAL=true;window.__CMS_PAGE_FILE=%s;</script>'

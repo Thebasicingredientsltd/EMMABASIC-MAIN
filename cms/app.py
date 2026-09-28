@@ -43,6 +43,7 @@ from flask import (
 )
 from werkzeug.utils import secure_filename
 
+import maintenance
 import seo
 import storage
 
@@ -76,6 +77,7 @@ DATA_FILES = {
     "story": {"file": os.path.join(DATA_DIR, "story.js"), "var": "window.EB_STORY"},
     "company": {"file": os.path.join(DATA_DIR, "company.js"), "var": "window.EB_COMPANY"},
     "matcha": {"file": os.path.join(DATA_DIR, "matcha.js"), "var": "window.EB_MATCHA"},
+    "site": {"file": os.path.join(DATA_DIR, "site.js"), "var": "window.EB_SITE"},
 }
 
 ALLOWED_EXT = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".avif", ".svg"}
@@ -110,6 +112,7 @@ HEADERS = {
     "story": "/* Emma Basic — Our Story page content (CMS-managed). The payload below is strict JSON. */",
     "company": "/* Emma Basic — The Basic Ingredients page content (CMS-managed). The payload below is strict JSON. */",
     "matcha": "/* Emma Basic — Matcha Lab page content (CMS-managed). The payload below is strict JSON. */",
+    "site": "/* Emma Basic — site-wide settings (CMS-managed). The payload below is strict JSON. */",
 }
 
 app = Flask(__name__)
@@ -1429,6 +1432,110 @@ def matcha_save():
 
 
 # ---------------------------------------------------------------------------
+# Routes — under-construction mode
+# ---------------------------------------------------------------------------
+# Where the website itself is served. Online the CMS and the site are separate
+# deployments, so the preview links have to point at the live domain.
+LOCAL_SITE_ORIGIN = "http://localhost:8080"
+HOMEPAGE_FILE = "Emma%20Basic%20Homepage.html"
+
+
+def site_base_url():
+    return seo.SITE_ORIGIN if storage.is_github() else LOCAL_SITE_ORIGIN
+
+
+def load_site():
+    """Site-wide settings, tolerating a checkout that predates `site.js`.
+
+    A missing or unreadable file must leave the website visible, so it falls
+    back to the defaults rather than raising.
+    """
+    try:
+        return load_data("site")
+    except Exception:
+        return {}
+
+
+def current_maintenance():
+    """The maintenance settings for this request, read at most once."""
+    cached = getattr(g, "_maintenance", None)
+    if cached is None:
+        cached = maintenance.from_data(load_site())
+        g._maintenance = cached
+    return cached
+
+
+def _maintenance_links(settings):
+    base = site_base_url()
+    key = settings.get("previewKey") or ""
+    return {
+        "notice": "%s/%s?force=1" % (base, maintenance.PAGE_FILE),
+        "bypass": "%s/%s?preview=%s" % (base, HOMEPAGE_FILE, key) if key else "",
+        "site": "%s/%s" % (base, HOMEPAGE_FILE),
+    }
+
+
+@app.context_processor
+def _inject_maintenance():
+    """Expose the switch to every CRM page so the banner can warn about it."""
+    # Signed-out visitors only see the login screen, which has no banner — and
+    # on the GitHub backend the lookup would be a wasted API call.
+    if _auth_required() and not session.get("cms_auth"):
+        return {"site_maintenance": dict(maintenance.DEFAULTS)}
+    return {"site_maintenance": current_maintenance()}
+
+
+@app.route("/maintenance")
+def maintenance_page():
+    settings = current_maintenance()
+    return render_template(
+        "maintenance.html", m=settings, links=_maintenance_links(settings),
+    )
+
+
+@app.route("/maintenance/save", methods=["POST"])
+def maintenance_save():
+    data = load_site()
+    was_enabled = maintenance.is_enabled(data)
+
+    settings = maintenance.from_data(data)
+    settings["enabled"] = form_checkbox("maintenance_enabled")
+    for field in maintenance.TEXT_FIELDS:
+        settings[field] = request.form.get(field, settings.get(field, "")).strip()
+    # A pass always exists so the owner is never locked out of their own site.
+    if request.form.get("new_preview_key") == "1" or not settings["previewKey"]:
+        settings["previewKey"] = maintenance.new_preview_key()
+
+    data["maintenance"] = settings
+    save_data("site", data)
+
+    if settings["enabled"] != was_enabled:
+        flash(
+            "Visitors now see the under construction page."
+            if settings["enabled"] else "The website is open to visitors again.",
+            "ok",
+        )
+    else:
+        flash("Under construction page saved.", "ok")
+    return redirect(url_for("maintenance_page"))
+
+
+@app.route("/maintenance/off", methods=["POST"])
+def maintenance_off():
+    """One-click way back for the banner shown on every CRM page."""
+    data = load_site()
+    if not maintenance.is_enabled(data):
+        flash("The website was already open to visitors.", "ok")
+        return redirect(request.referrer or url_for("index"))
+    settings = maintenance.from_data(data)
+    settings["enabled"] = False
+    data["maintenance"] = settings
+    save_data("site", data)
+    flash("The website is open to visitors again.", "ok")
+    return redirect(request.referrer or url_for("index"))
+
+
+# ---------------------------------------------------------------------------
 # Routes — product catalog (the full "Our Products" range)
 # ---------------------------------------------------------------------------
 def _catalog_counts(catalog):
@@ -1988,7 +2095,8 @@ def _cache_bust_changes(keys=None):
 
 
 def _html_publish_changes(key, data):
-    """Cache-bust data scripts and write SEO tags into the matching HTML pages."""
+    """Cache-bust data scripts and write SEO + maintenance markup into the
+    matching HTML pages."""
     keys = (key,) if isinstance(key, str) else tuple(key)
     pattern = _data_script_re(keys)
     stamp = datetime.now().strftime("%Y%m%d%H%M%S%f")[:-3]
@@ -2004,6 +2112,7 @@ def _html_publish_changes(key, data):
         new_text = text
         if isinstance(data, dict):
             new_text = seo.apply_to_html(new_text, name, key, data)
+        new_text = maintenance.apply_to_html(new_text, name, key, data)
         new_text = pattern.sub(r"\g<1>\g<2>?v=" + stamp + r"\g<4>", new_text)
         if new_text != text:
             changes.append((rel, new_text, False))
