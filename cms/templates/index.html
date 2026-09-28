@@ -75,6 +75,13 @@
     <div class="dash-title">Matcha Lab</div>
     <div class="muted">Matcha Lab landing page</div>
   </div></a>
+  <a href="{{ url_for('maintenance_page') }}"><div class="card">
+    <div class="dash-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18"/><path d="M10.6 5.2A8.9 8.9 0 0 1 12 5c5 0 9 4.5 9 7 0 .8-.5 1.9-1.4 3"/><path d="M6.2 7.4C3.9 8.9 3 10.9 3 12c0 2.5 4 7 9 7 1.6 0 3-.4 4.2-1.1"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>
+    </div>
+    <div class="dash-title">Under construction</div>
+    <div class="muted">{{ 'Website hidden from visitors' if site_maintenance.enabled else 'Hide the site while you edit' }}</div>
+  </div></a>
 </div>
 
 <hr class="hr"/>
@@ -137,6 +144,5 @@
   .dash-cards a:hover .dash-icon { background: var(--accent); color: var(--paper-bright); transform: scale(1.06) rotate(-4deg); }
   .dash-title { font-weight: 600; margin-top: 4px; }
   .change-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); margin-right: 8px; vertical-align: middle; animation: eb-pulse 2s var(--ease-in-out) infinite; }
-  @keyframes eb-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
 </style>
 {% endblock %}

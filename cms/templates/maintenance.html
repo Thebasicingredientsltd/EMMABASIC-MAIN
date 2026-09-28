@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+{% set active = "maintenance" %}
+{% block title %}Under construction — Emma Basic CMS{% endblock %}
+{% block content %}
+<h1>Under construction</h1>
+<p class="sub">Hide the whole website behind a holding page while you change content, then switch it back on. Visitors never see a half-finished page — you still can, using your preview link.</p>
+
+<form method="post" action="{{ url_for('maintenance_save') }}">
+  <div class="card uc-switch-card {{ 'is-on' if m.enabled }}" id="ucCard">
+    <div class="uc-switch-row">
+      <label class="uc-switch" for="maintenance_enabled">
+        <input type="checkbox" id="maintenance_enabled" name="maintenance_enabled" value="on" {{ 'checked' if m.enabled }}/>
+        <span class="uc-track" aria-hidden="true"><span class="uc-knob"></span></span>
+      </label>
+      <div class="grow">
+        <div class="uc-state" id="ucStateOn">
+          <strong>Visitors see the under construction page.</strong>
+          <p class="muted" style="margin:4px 0 0;">Every page of the website redirects to the holding page below.</p>
+        </div>
+        <div class="uc-state" id="ucStateOff">
+          <strong>The website is open to visitors.</strong>
+          <p class="muted" style="margin:4px 0 0;">Turn this on to take the site down to the holding page while you work.</p>
+        </div>
+        <p class="field-help uc-pending" id="ucPending" hidden>Not saved yet — press Save below to apply this.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;">What the holding page says</h2>
+    <p class="field-help">The words visitors read while the site is hidden. Leave a box empty to drop that line from the page.</p>
+    <label>Small label above the headline</label>
+    <input type="text" name="eyebrow" value="{{ m.eyebrow }}"/>
+    <div class="row">
+      <div>
+        <label>Headline, first line</label>
+        <input type="text" name="heading" value="{{ m.heading }}"/>
+      </div>
+      <div>
+        <label>Headline, second line</label>
+        <input type="text" name="headingItalic" value="{{ m.headingItalic }}"/>
+      </div>
+    </div>
+    <label>Message</label>
+    <textarea name="body" rows="3">{{ m.body }}</textarea>
+    <p class="field-help">One or two sentences. Say when you expect to be back if you know.</p>
+    <label>Smaller note underneath (optional)</label>
+    <textarea name="note" rows="2">{{ m.note }}</textarea>
+    <label>Contact email address (optional)</label>
+    <input type="email" name="email" value="{{ m.email }}" placeholder="boris@thebasicingredients.com"/>
+    <p class="field-help">Shown as a link so anyone who needs you during the work can still get in touch.</p>
+  </div>
+
+  <div class="actions-bar save-bar">
+    <button class="btn" type="submit">Save</button>
+    <a class="btn secondary" href="{{ links.notice }}" target="_blank" rel="noopener">Preview the holding page</a>
+    <a class="btn secondary" href="{{ url_for('index') }}">Cancel</a>
+  </div>
+</form>
+
+<div class="card">
+  <h2 style="margin-top:0;">Your preview link</h2>
+  <p class="field-help">Open this once and the website stays visible to you, page after page, while everyone else gets the holding page. Add <code>?preview=off</code> to any address to stop using it.</p>
+  <div class="uc-link-row">
+    <input type="text" id="ucBypass" value="{{ links.bypass }}" readonly onclick="this.select()"/>
+    <button type="button" class="btn secondary" id="ucCopy">Copy</button>
+  </div>
+  <p class="field-help">Keep it to yourself — anyone who has the link can see the site while it is hidden.</p>
+  <form method="post" action="{{ url_for('maintenance_save') }}" style="margin-top:14px;">
+    <input type="hidden" name="new_preview_key" value="1"/>
+    {% if m.enabled %}<input type="hidden" name="maintenance_enabled" value="on"/>{% endif %}
+    {% for field in ['eyebrow', 'heading', 'headingItalic', 'body', 'note', 'email'] %}
+    <input type="hidden" name="{{ field }}" value="{{ m[field] }}"/>
+    {% endfor %}
+    <button class="btn secondary small" type="submit">Make a new link</button>
+    <span class="muted" style="margin-left:8px;">Replaces the link above, in case it has been passed around.</span>
+  </form>
+</div>
+
+<style>
+  /* The switch card states its own condition — the colour is a reinforcement,
+     never the only signal. */
+  .uc-switch-card { border-left: 3px solid var(--rule-strong); }
+  .uc-switch-card.is-on { border-left-color: var(--accent); background: var(--accent-soft); }
+  .uc-switch-row { display: flex; align-items: flex-start; gap: 18px; }
+  .uc-state { display: none; }
+  .uc-switch-card:not(.is-on) #ucStateOff { display: block; }
+  .uc-switch-card.is-on #ucStateOn { display: block; }
+
+  .uc-switch { margin: 2px 0 0; flex-shrink: 0; cursor: pointer; }
+  .uc-switch input { position: absolute; opacity: 0; width: 0; height: 0; }
+  .uc-track {
+    display: block; width: 50px; height: 30px; border-radius: 999px;
+    background: var(--ink-20); border: 1px solid var(--rule-strong);
+    transition: background var(--dur) var(--ease-out), border-color var(--dur) var(--ease-out);
+  }
+  .uc-knob {
+    display: block; width: 24px; height: 24px; margin: 2px; border-radius: 50%;
+    background: var(--paper-bright); box-shadow: var(--shadow-sm);
+    transition: transform var(--dur) var(--ease-out);
+  }
+  .uc-switch input:checked + .uc-track { background: var(--accent); border-color: var(--accent); }
+  .uc-switch input:checked + .uc-track .uc-knob { transform: translateX(20px); }
+  .uc-switch input:focus-visible + .uc-track { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .uc-switch:active .uc-knob { transform: scale(0.94); }
+  .uc-switch input:checked + .uc-track:active .uc-knob { transform: translateX(20px) scale(0.94); }
+
+  .uc-pending { color: var(--accent); font-weight: 600; }
+  .uc-link-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .uc-link-row input { flex: 1; min-width: 260px; font-family: ui-monospace, Menlo, monospace; font-size: 13px; }
+  code { font-family: ui-monospace, Menlo, monospace; font-size: 0.92em; background: var(--paper-shade); padding: 1px 5px; border-radius: 4px; }
+</style>
+
+<script>
+  // Reflect the switch immediately so the card never describes the opposite of
+  // what it shows, and say plainly that a save is still needed.
+  (function () {
+    var box = document.getElementById("maintenance_enabled");
+    var card = document.getElementById("ucCard");
+    var pending = document.getElementById("ucPending");
+    if (!box || !card) return;
+    var initial = box.checked;
+    box.addEventListener("change", function () {
+      card.classList.toggle("is-on", box.checked);
+      pending.hidden = box.checked === initial;
+    });
+  })();
+
+  (function () {
+    var btn = document.getElementById("ucCopy");
+    var field = document.getElementById("ucBypass");
+    if (!btn || !field) return;
+    btn.addEventListener("click", function () {
+      field.select();
+      var done = function () { btn.textContent = "Copied"; setTimeout(function () { btn.textContent = "Copy"; }, 1600); };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(field.value).then(done, function () { document.execCommand("copy"); done(); });
+      } else {
+        document.execCommand("copy");
+        done();
+      }
+    });
+  })();
+</script>
+{% endblock %}

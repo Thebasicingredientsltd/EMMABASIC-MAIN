@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow"/>
+<title>Emma Basic — under construction</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+
+<link rel="stylesheet" href="components/tokens.css?v=2"/>
+
+<!-- Read before anything paints: once the website is back on, nobody should
+     be left looking at this page. Deliberately NOT gated by
+     components/maintenance.js — this is where the gate sends people. -->
+<script src="data/site.js"></script>
+<script>
+(function () {
+  var settings = (window.EB_SITE || {}).maintenance || {};
+  if (settings.enabled === true) return;
+  // ?force=1 lets the CMS show the notice while the site is still live.
+  if (/[?&]force=1(&|$)/.test(window.location.search)) return;
+  document.documentElement.style.visibility = "hidden";
+  window.location.replace("Emma%20Basic%20Homepage.html");
+})();
+</script>
+
+<style>
+  body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    padding: clamp(48px, 10vh, 120px) var(--pad-x);
+  }
+  .uc-inner { width: 100%; max-width: 760px; margin: 0 auto; }
+
+  /* A calm rise, staggered top to bottom. Rarely seen, so it can afford a
+     moment of composure — but only transform/opacity, and only once. */
+  .uc-eyebrow, .uc-rule, .uc-title, .uc-body, .uc-note, .uc-mail {
+    animation: uc-rise 620ms var(--ease-out) both;
+  }
+  .uc-rule { animation-name: uc-wipe; animation-duration: 900ms; }
+  .uc-title { animation-delay: 80ms; }
+  .uc-body { animation-delay: 160ms; }
+  .uc-note { animation-delay: 220ms; }
+  .uc-mail { animation-delay: 280ms; }
+
+  @keyframes uc-rise {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes uc-wipe {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+
+  .uc-eyebrow {
+    font-family: var(--f-mono);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-60);
+    margin: 0 0 18px;
+  }
+  .uc-rule {
+    height: 1px;
+    background: var(--rule);
+    border: 0;
+    margin: 0 0 clamp(28px, 5vh, 48px);
+    transform-origin: left;
+  }
+  .uc-title {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: clamp(38px, 6vw, 82px);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+    margin: 0 0 clamp(24px, 4vh, 36px);
+    font-variation-settings: "opsz" 144, "SOFT" 30;
+  }
+  .uc-title-line { display: block; }
+  .uc-title-alt {
+    font-style: normal;
+    font-family: var(--f-body);
+    letter-spacing: -0.02em;
+    margin-top: -0.08em;
+    color: var(--ink-60);
+  }
+  .uc-body {
+    font-family: var(--f-display);
+    font-style: italic;
+    font-size: clamp(17px, 1.6vw, 23px);
+    line-height: 1.5;
+    max-width: 34em;
+    margin: 0 0 20px;
+    color: var(--ink-90);
+  }
+  .uc-note {
+    font-family: var(--f-body);
+    font-size: 15px;
+    line-height: 1.6;
+    max-width: 34em;
+    margin: 0 0 32px;
+    color: var(--ink-60);
+  }
+  .uc-mail {
+    display: inline-block;
+    font-family: var(--f-mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--rule-strong);
+    transition: border-color var(--dur-hover) var(--ease-out),
+                color var(--dur-hover) var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .uc-mail:hover { border-bottom-color: var(--ink); }
+  }
+  .uc-mail:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .uc-eyebrow, .uc-rule, .uc-title, .uc-body, .uc-note, .uc-mail {
+      animation: none;
+    }
+  }
+</style>
+</head>
+
+<body data-screen-label="Under construction">
+<main class="uc">
+  <div class="uc-inner">
+<!--cms-maintenance-start-->
+<p class="uc-eyebrow">Emma Basic</p>
+<hr class="uc-rule"/>
+<h1 class="uc-title">
+<span class="uc-title-line">Under construction</span>
+<em class="uc-title-line uc-title-alt">back shortly.</em>
+</h1>
+<p class="uc-body">We&#x27;re updating the site. It will be back as soon as every page reads exactly as it should.</p>
+<p class="uc-note">Our products are still on the shelves in the meantime.</p>
+<a class="uc-mail" href="mailto:boris@thebasicingredients.com">boris@thebasicingredients.com</a>
+<!--cms-maintenance-end-->
+  </div>
+</main>
+</body>
+</html>
