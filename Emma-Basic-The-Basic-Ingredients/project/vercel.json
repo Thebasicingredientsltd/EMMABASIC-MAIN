@@ -1,5 +1,17 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    {
+      "source": "/Become a Distributor.html",
+      "destination": "/Places.html",
+      "permanent": true
+    },
+    {
+      "source": "/Become%20a%20Distributor.html",
+      "destination": "/Places.html",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/data/(.*)",

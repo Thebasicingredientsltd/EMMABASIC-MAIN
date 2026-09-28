@@ -35,7 +35,7 @@ function TopNav({ hasHero = false }) {
   const rightLinks = (Array.isArray(nav.right) && nav.right.length) ? nav.right : [
     { label: "Field Notes", href: "Journal.html" },
     { label: "People",      href: "People%20%26%20Places.html" },
-    { label: "Become a Distributor", href: "Become%20a%20Distributor.html" },
+    { label: "Find us", href: "Places.html" },
   ];
 
   const allLinks = [...leftLinks, ...rightLinks];

@@ -16,8 +16,8 @@ window.EB_NAV = {
       "href": "People%20%26%20Places.html"
     },
     {
-      "label": "Become a Distributor",
-      "href": "Become%20a%20Distributor.html"
+      "label": "Find us",
+      "href": "Places.html"
     }
   ]
 };

@@ -133,6 +133,7 @@ PAGES = [
         "seo_path": ("distributor", "seo"),
         "script_id": "distributor",
         "fallback_desc_paths": (("distributor", "title"),),
+        "skip_html": True,
     },
     {
         "id": "company",
@@ -360,6 +361,8 @@ def apply_to_html(html, filename, data_key, data):
     """Inject SEO for this HTML file when it belongs to the saved data key."""
     page = page_for_file(filename)
     if not page or page["data_key"] != data_key:
+        return html
+    if page.get("skip_html"):
         return html
     if not isinstance(data, dict):
         return html
