@@ -168,7 +168,7 @@ window.EB_JOURNAL = {
     {
       "id": "what-is-vermicelli",
       "category": "Ingredient Stories",
-      "date": "27 Feb 2025",
+      "date": "02 June 2024",
       "title": "What is vermicelli?",
       "author": "Emma",
       "excerpt": "The Cambridge dictionary says: A type of pasta made in long, thin threads.",
@@ -774,7 +774,7 @@ window.EB_JOURNAL = {
     },
     "what-is-vermicelli": {
       "category": "Ingredient Stories",
-      "date": "27 Feb 2025",
+      "date": "02 June 2024",
       "readTime": "",
       "title": "What is vermicelli?",
       "image": "assets/uploads/EmmaBasic-January_SandyWood_102_edited-20260927-115006-04.jpg",
@@ -783,27 +783,23 @@ window.EB_JOURNAL = {
       "body": [
         {
           "type": "p",
-          "text": "The Cambridge dictionary says: A type of pasta made in long, thin threads."
+          "text": "What is vermicelli? \nThe Cambridge Dictionary says: “A type of pasta made in long, thin threads.”\nThe Oxford English Dictionary records evidence of the word from before 1668, in the writing of William Davenant. Essentially, vermicelli is borrowed from the Italian.\n•\tLatin: Vermis = worm\n•\tItalian suffix: -celli = little or small\nSo yes, vermicelli literally means “little worms”, which – let’s be honest – doesn’t sound quite as appetising as its more elegant description: “the thin version of spaghetti”."
         },
         {
           "type": "p",
-          "text": "The Oxford English Dictionary records evidence from before 1668, in the writing of Wiliam Davenant. Essentially, vermicelli is borrowed from the Italian."
+          "text": "In Chinese, vermicelli is 粉丝 (fěn sī) and can be made from rice, mung bean, green pea or sweet potato starch, depending on the region. In Japanese, vermicelli is called 春雨 (harusame), which means “spring rain” – gentle and delicate, unlike the cats-and-dogs downpours of a summer storm!"
         },
         {
           "type": "p",
-          "text": "• Latin: Vermis = worm"
+          "text": "Our vermicelli packet suggests four different ways to prepare it."
         },
         {
           "type": "p",
-          "text": "• Italian suffix: -celli = little or small"
+          "text": "In my parents’ kitchen, it was served piping hot in soup, tossed cold with soybean paste, or stir-fried with green veggies. Surprisingly, the first time I had vermicelli in a summer roll was not in Vietnam but in Shizuoka, Japan, where it was called Nama Harumaki on the menu. Now, watching Gordon Ramsay make summer roll in a video, it all looks ridiculously easy – like “just roll it together, no brain required” easy. Is it really that effortless? I think not. I bet he practised, swore a bit, practised some more, and probably left a few assistants traumatised in the process!"
         },
         {
           "type": "p",
-          "text": "So yes, vermicelli literally means \"little worms\", which—let’s be honest—doesn’t sound quite as appetizing as its more elegant description: \"the thin version of spaghetti. In Chinese, vermicelli is 粉丝 (fěn sī) and can be made from rice, mung bean, green pea, or sweet potato starch, depending on the region. In Japanese, vermicelli is named as 春雨 (harusame), which means \"spring rain\"—gentle and delicate, unlike raining cats-and-dogs of summer storms!"
-        },
-        {
-          "type": "p",
-          "text": "Emma Basic Vermicelli package suggests four different ways to prepare. In my parents’ kitchen, it was served piping hot in soup, tossed cold with soybean paste, or stir-fried with green veggies. The first time I had vermicelli in a cold spring roll. Surprisingly, not in Vietnam, but in Shizuoka, Japan. Nama Haruaki was the name on the menu. Now, watching Gordon Ramsay make in a video, it all looks ridiculously easy—like, “just roll it together, no brain required” easy. Is it really that effortless? I think not. I bet he practiced, swore a bit, practiced more, and probably left a few assistants traumatised in the process!"
+          "text": "https://www.youtube.com/watch?v=impOpTBgBpM"
         }
       ],
       "author": "Emma"
