@@ -301,7 +301,7 @@ window.EB_JOURNAL = {
     {
       "id": "what-is-clean-label",
       "category": "Ingredient Stories",
-      "date": "17 Nov 2021",
+      "date": "02 June 2018",
       "title": "What is clean label?",
       "author": "Emma",
       "excerpt": "Do you read labels?",
@@ -578,7 +578,7 @@ window.EB_JOURNAL = {
     },
     "what-is-clean-label": {
       "category": "Ingredient Stories",
-      "date": "17 Nov 2021",
+      "date": "02 June 2018",
       "readTime": "",
       "title": "What is clean label?",
       "image": "assets/uploads/NL_photo_1-20260927-115005-02.jpg",
@@ -587,99 +587,19 @@ window.EB_JOURNAL = {
       "body": [
         {
           "type": "p",
-          "text": "Do you read labels?"
+          "text": "Clean Label, often called “Clean Dec” (decoration) by UK food manufacturers, is not a phrase familiar to consumers. Nor is it a government-regulated term like “organic”.\nThe definition of Clean Label varies from brand to brand. The purpose behind it is to provide safe, healthy food that supports our wellbeing. So what do we, the Emma Basic team, do to practise Clean Label?\n•\tRemove additives. Legally permitted additives each have a unique code starting with E. The Emma Basic brand is determined to remove E numbers from its ingredient lists. When formulating the recipe for a new product, we use fewer ingredients and permit no additives.\n•\tRemove highly processed ingredients. This is a frequently overlooked area.\nFor instance, we replace refined oils with simple ingredients from natural sources, produced mechanically."
         },
         {
           "type": "p",
-          "text": "Probably not."
+          "text": "Emma Basic Curry is a typical example of a Clean Label product. With Clean Label, it is not what is added but what is removed that counts.\n1.\tSugar: the benchmark contains 15.1g sugar per 100g, vs 10g per 100g in Emma Basic Curry.\n2.\tAdditives: the benchmark contains:\n3 flavour enhancers: E621 (MSG), E631 and E627.\n3 emulsifiers: E473, E322 and E471, to make the curry thicker.\nAcidity regulator: malic acid (E296), which is commonly used in curry.\n1 colouring: E150a. Emma Basic Curry is brighter without using any colourings. Why on earth does the benchmark use one, when its colour is still so dull?"
         },
         {
           "type": "p",
-          "text": "Labels are often full of unpronounceables,"
+          "text": "What do we do for single-ingredient products, where there are no additives to remove? We focus on the level of harmful contaminants. Checking and verifying chemistry, microbiology and genetic testing results is our daily practice. For instance, sesame products carry four potential risks:"
         },
         {
           "type": "p",
-          "text": "E numbers we don’t have a clue."
-        },
-        {
-          "type": "p",
-          "text": "Besides, life is too busy."
-        },
-        {
-          "type": "p",
-          "text": "But your health is in your hands!"
-        },
-        {
-          "type": "p",
-          "text": "An easy way to choose, quite simply,"
-        },
-        {
-          "type": "p",
-          "text": "If you spot a word you can’t pronounce,"
-        },
-        {
-          "type": "p",
-          "text": "Stay away from it."
-        },
-        {
-          "type": "p",
-          "text": "Instead of a photoshopped serving example"
-        },
-        {
-          "type": "p",
-          "text": "That you may never achieve, honestly,"
-        },
-        {
-          "type": "p",
-          "text": "We encourage you to read the labels"
-        },
-        {
-          "type": "p",
-          "text": "Emma Basic, a clean label, a clean taste."
-        },
-        {
-          "type": "p",
-          "text": "No MSG,"
-        },
-        {
-          "type": "p",
-          "text": "No Colourings,"
-        },
-        {
-          "type": "p",
-          "text": "No GMO,"
-        },
-        {
-          "type": "p",
-          "text": "No preservatives."
-        },
-        {
-          "type": "p",
-          "text": "Full of nothing."
-        },
-        {
-          "type": "p",
-          "text": "We are so shamelessly"
-        },
-        {
-          "type": "p",
-          "text": "Proud of ourselves that"
-        },
-        {
-          "type": "p",
-          "text": "We spent day and night,"
-        },
-        {
-          "type": "p",
-          "text": "Removing the additives,"
-        },
-        {
-          "type": "p",
-          "text": "Mercilessly,"
-        },
-        {
-          "type": "p",
-          "text": "For you."
+          "text": "1.\tPesticides (chlorpyrifos). Sesame seeds and oil from India have repeatedly been rejected by Port Health at various EU ports, typically in the Netherlands, Denmark and Germany.\n2.\tMicro: Salmonella in sesame seeds.\n3.\t3-MCPD and glycidyl esters in sesame seed oil.\n4.\tEthylene oxide. Ethylene oxide is used in India to sterilise sesame seeds. Long-term exposure to ethylene oxide increases the risk of white blood cell cancers such as leukaemia and increases the risk of breast cancer. Sesame seeds and oil from India have repeatedly been inspected and rejected by Port Health at various EU ports, typically in the Netherlands, Denmark, Germany, Norway and Poland.\n5.\tAflatoxin B1. Aflatoxin B1 can cause poisoning and increases the risk of liver cancer. Aflatoxin often occurs in nuts and their oils, rice and other foods, and is carcinogenic, meaning it has the potential to cause cancer. I often heard about aflatoxin B1 in my childhood. Every time I eat food made from peanuts, I worry about the risk of consuming aflatoxin. Few can resist the yummy taste of peanut butter, yet I have deliberately walked a little faster past the peanut butter shelf when shopping with our daughter."
         }
       ],
       "author": "Emma"
