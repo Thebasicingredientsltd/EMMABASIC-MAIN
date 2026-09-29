@@ -1,7 +1,7 @@
 /* Emma Basic — site-wide settings (CMS-managed). The payload below is strict JSON. */
 window.EB_SITE = {
   "maintenance": {
-    "enabled": true,
+    "enabled": false,
     "eyebrow": "Emma Basic",
     "heading": "Under construction",
     "headingItalic": "back shortly.",
