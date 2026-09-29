@@ -1151,35 +1151,27 @@ window.EB_JOURNAL = {
       "body": [
         {
           "type": "p",
-          "text": "Well, one thing is certain—it must be a translucent type of noodle after cooking!"
+          "text": "Angus asked me: ‘What are glass noodles?’"
         },
         {
           "type": "p",
-          "text": "Many noodles fit into the glass noodle category, including:"
+          "text": "Well, one thing is certain – they must turn translucent once cooked!"
         },
         {
           "type": "p",
-          "text": "1. Longkou vermicelli from China, made of green pea and mung bean starch."
+          "text": "Many noodles fit into the glass noodle category, including:\n1.\tLongkou vermicelli from China, made from green pea and mung bean starch.\n2.\tSweet potato noodles, popular in Chinese and Korean cuisine.\n3.\tKonjac shirataki, zero carbohydrate, made from konjac flour."
         },
         {
           "type": "p",
-          "text": "2. Sweet potato noodles, popular in Chinese and Korean cuisine."
+          "text": "Now, you might not agree with me classifying konjac shirataki as glass noodles. Konjac shirataki noodles are already extremely translucent, even before cooking. That’s because they’re 97% water! The remaining 3%? Just glucomannan fibre – basically, a noodle-shaped water balloon."
         },
         {
           "type": "p",
-          "text": "3. Konjac shirataki, zero carbohydrate, made from Konjac Flour."
+          "text": "Angus’s shirataki stir-fry, made with Emma Basic  Keto Konjac Noodles, Dashi Soy Sauce and Toasted Pure Sesame Oil.\nProduct development inspired by Dr Berg & The Keto Kitchen."
         },
         {
           "type": "p",
-          "text": "Now, you might not agree with me if I classify konjac shirataki as glass noodles. Konjac shirataki noodles are already extremely translucent even before cooking. That’s because they’re 97% water! The remaining 3%? Just glucomannan fibre-basically, a noodle shaped water balloon."
-        },
-        {
-          "type": "p",
-          "text": "Angus’ shirataki stir fry using Keto Konjac Noodles, together with Dashi Soy Sauce and Toasted Pure Sesame oil."
-        },
-        {
-          "type": "p",
-          "text": "Product development Inspired by Dr Berg & The Keto Kitchen"
+          "text": "https://www.youtube.com/watch?v=-GOnv-KbQtY\nhttps://www.youtube.com/watch?v=iaY0Suewq9g"
         }
       ],
       "author": "Emma"
