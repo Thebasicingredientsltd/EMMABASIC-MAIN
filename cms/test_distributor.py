@@ -96,6 +96,8 @@ class DistributorPageTests(unittest.TestCase):
         self.assertIn("data/places.js", src)
         self.assertIn("NearestShopFinder", src)
         self.assertLess(src.find("NearestShopFinder"), src.find("<HowToOrder"))
+        self.assertIn("HowToOrderView", src)
+        self.assertIn('section === "how-to-order"', src)
         self.assertNotIn("LocationMap.jsx", src)
         self.assertNotIn("<LocationMap", src)
 
@@ -103,8 +105,22 @@ class DistributorPageTests(unittest.TestCase):
         with open(redirect, encoding="utf-8") as fh:
             html = fh.read()
         self.assertIn("Places.html", html)
-        self.assertNotIn("HowToOrder", html)
+        self.assertIn("section=how-to-order", html)
+        self.assertNotIn("<HowToOrder", html)
         self.assertIn("refresh", html.lower())
+
+        vercel = os.path.join(PROJECT, "vercel.json")
+        with open(vercel, encoding="utf-8") as fh:
+            routes = fh.read()
+        self.assertIn("Become a Distributor.html", routes)
+        self.assertIn("section=how-to-order", routes)
+
+        how_to = os.path.join(PROJECT, "components", "HowToOrder.jsx")
+        with open(how_to, encoding="utf-8") as fh:
+            jsx = fh.read()
+        self.assertIn('id="how-to-order"', jsx)
+        self.assertIn("Become a", jsx)
+        self.assertIn("window.EB_PEOPLE.distributor", jsx)
 
 
 def _form_from_distributor(data):

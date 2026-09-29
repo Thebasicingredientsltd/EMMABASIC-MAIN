@@ -65,7 +65,7 @@
 <script type="text/babel" src="components/SupplierMap.jsx?v=5"></script>
 <script type="text/babel" src="components/StockistCarousel.jsx?v=9"></script>
 <script type="text/babel" src="components/NearestShopFinder.jsx?v=4"></script>
-<script type="text/babel" src="components/HowToOrder.jsx?v=3"></script>
+<script type="text/babel" src="components/HowToOrder.jsx?v=4"></script>
 <script type="text/babel" src="components/Sections.jsx?v=6"></script>
 
 <script type="text/babel">
@@ -157,8 +157,40 @@ function OseyoSection() {
   );
 }
 
+function orderSectionId() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const section = params.get("section");
+    if (section === "how-to-order" || section === "order" || section === "distributor") {
+      return "how-to-order";
+    }
+  } catch (err) {}
+  const hash = (window.location.hash || "").replace(/^#/, "");
+  if (hash === "become-a-distributor" || hash === "distributor") return "how-to-order";
+  return hash;
+}
+
+function scrollToOrderSection() {
+  const id = orderSectionId();
+  if (!id) return;
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ block: "start" });
+}
+
 function PlacesApp() {
   const hero = (window.EB_PLACES && window.EB_PLACES.hero) || {};
+  const HowToOrderView = window.HowToOrder;
+  React.useEffect(() => {
+    scrollToOrderSection();
+    const t1 = window.setTimeout(scrollToOrderSection, 120);
+    const t2 = window.setTimeout(scrollToOrderSection, 500);
+    window.addEventListener("hashchange", scrollToOrderSection);
+    return () => {
+      window.clearTimeout(t1);
+      window.clearTimeout(t2);
+      window.removeEventListener("hashchange", scrollToOrderSection);
+    };
+  }, []);
   return (
     <>
       <TopNav hasHero={false} />
@@ -174,7 +206,7 @@ function PlacesApp() {
         <StockistCarousel />
         <SupplierMap />
         <NearestShopFinder />
-        <HowToOrder />
+        {HowToOrderView ? <HowToOrderView /> : <HowToOrder />}
       </main>
       <SiteFooter visible={(window.EB_PLACES && window.EB_PLACES.footer || {}).visible} />
     </>

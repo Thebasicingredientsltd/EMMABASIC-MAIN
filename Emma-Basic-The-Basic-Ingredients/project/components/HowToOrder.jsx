@@ -61,7 +61,41 @@ function HowToOrder() {
       background: "var(--paper)",
       padding: "clamp(48px, 8vh, 88px) var(--pad-x)",
       borderTop: "1px solid var(--rule)",
+      scrollMarginTop: 96,
     }}>
+      <div id="become-a-distributor" style={{
+        maxWidth: "var(--maxw)",
+        margin: "0 auto clamp(40px, 6vh, 64px)",
+      }}>
+        <div className="hto-intro-grid" style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "clamp(32px, 6vw, 96px)",
+          alignItems: "end",
+        }}>
+          <h2 style={{
+            fontFamily: "var(--f-display)",
+            fontWeight: 400,
+            fontSize: "clamp(40px, 5vw, 80px)",
+            lineHeight: 1.0,
+            letterSpacing: "-0.035em",
+            margin: 0,
+            fontVariationSettings: '"opsz" 144, "SOFT" 30',
+          }}>
+            Become a <em style={{ fontStyle: "normal", fontFamily: "var(--f-body)", fontWeight: 400, letterSpacing: "-0.02em" }}>distributor.</em>
+          </h2>
+          <p style={{
+            fontFamily: "var(--f-body)",
+            fontSize: "clamp(16px, 1.3vw, 18px)",
+            lineHeight: 1.72,
+            margin: 0,
+            color: "var(--ink-60)",
+            paddingTop: 8,
+          }}>
+            Trade accounts, first orders, delivery, and collection — the full How to Order guide, on this same page.
+          </p>
+        </div>
+      </div>
       <div style={{ maxWidth: 760, margin: "0 auto" }}>
 
         {shown(d) && (
@@ -202,6 +236,7 @@ function HowToOrder() {
         @media (max-width: 640px) {
           .hto-step { grid-template-columns: 64px 1fr !important; }
           .hto-other { grid-template-columns: 1fr !important; }
+          .hto-intro-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </section>

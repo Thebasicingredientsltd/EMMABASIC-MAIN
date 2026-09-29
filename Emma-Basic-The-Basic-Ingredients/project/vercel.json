@@ -3,12 +3,12 @@
   "redirects": [
     {
       "source": "/Become a Distributor.html",
-      "destination": "/Places.html",
+      "destination": "/Places.html?section=how-to-order",
       "permanent": true
     },
     {
       "source": "/Become%20a%20Distributor.html",
-      "destination": "/Places.html",
+      "destination": "/Places.html?section=how-to-order",
       "permanent": true
     }
   ],
