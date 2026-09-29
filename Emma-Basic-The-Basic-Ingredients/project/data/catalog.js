@@ -884,7 +884,7 @@ window.EB_CATALOG = {
           ],
           "tone": "warm",
           "origin": "",
-          "tagline": "Lightly salted, sesame-oil brushed sheets. Snap them into shards.",
+          "tagline": "Lightly salted, olive-oil brushed sheets. Snap them into shards.",
           "pairings": [
             "Rice",
             "Lunchbox",
@@ -926,7 +926,7 @@ window.EB_CATALOG = {
               "The nutrition profile of seaweed is surprisingly strong — high in iodine, fibre, and protein relative to its weight. These sheets are light but nutrient-dense. We sell them in the lunchbox format because that's how most people use them, but they're just as good crumbled over rice, soup, or salad."
             ]
           },
-          "updatedAt": "2026-09-28T16:32:37+00:00"
+          "updatedAt": "2026-09-29T13:59:11+00:00"
         },
         {
           "id": "panko",
