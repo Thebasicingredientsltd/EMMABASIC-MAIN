@@ -339,8 +339,9 @@ window.EB_JOURNAL = {
     {
       "id": "what-makes-a-good-soy-sauce",
       "category": "Ingredient Stories",
-      "date": "08 Oct 2021",
+      "date": "02 June 2019",
       "title": "What makes a good soy sauce",
+      "author": "",
       "excerpt": "A good soy sauce should only contain 3 ingredients: Water, Soybean, Salt.",
       "image": "assets/uploads/Rice_and_Soy_Sauce-20260927-100405.jpg",
       "tone": "warm",
@@ -352,8 +353,7 @@ window.EB_JOURNAL = {
         "image": "",
         "ogType": "article",
         "noindex": false
-      },
-      "author": ""
+      }
     },
     {
       "id": "why-is-ali-babas-spell-open-sesame",
@@ -470,7 +470,7 @@ window.EB_JOURNAL = {
     },
     "what-makes-a-good-soy-sauce": {
       "category": "Ingredient Stories",
-      "date": "08 Oct 2021",
+      "date": "02 June 2019",
       "readTime": "",
       "title": "What makes a good soy sauce",
       "image": "assets/uploads/Rice_and_Soy_Sauce-20260927-100323.jpg",
@@ -479,47 +479,23 @@ window.EB_JOURNAL = {
       "body": [
         {
           "type": "p",
-          "text": "A good soy sauce should only contain 3 ingredients: Water, Soybean, Salt."
+          "text": "A good soy sauce should contain only three ingredients: water, soybeans and salt. \nNaturally brewed, of course, with one invisible but important extra: time. Only soy sauce made by slow fermentation can deliver that irresistible umami and aroma. Rather like a decent cup of tea, it simply can’t be rushed."
         },
         {
           "type": "p",
-          "text": "Naturally brewed, of course, with an invisible, but important ingredient: Time."
+          "text": "Sadly, the shelves are full of shortcut, mass-produced imitations, topped up with additives and extras such as alcohol, sugar, MSG, caramel colouring, potassium sorbate and lactic acid."
         },
         {
           "type": "p",
-          "text": "Only soy sauce produced by slow fermentation can provide you with irresistible umami and aroma."
+          "text": "Naturally brewed soy sauce is simply delicious. From the age of 8 to 16, I lived between a primary school and a local soy sauce manufacturer. Growing up with the aroma of soy sauce day and night, I took it for granted that soy sauce was made from soybeans. After all, it isn’t called corn sauce, wheat sauce or MSG-with-colouring sauce. It’s called soy sauce. The clue, you’d think, is in the name. My standard lunch as a child was a bowl of rice mixed with aromatic soy sauce and sesame oil – I still love it today. Emma Basic Gluten Free Soy Sauce is made from soybeans only: no wheat, no corn, nothing bad or ugly."
         },
         {
           "type": "p",
-          "text": "Sadly, the industry is full of short cut, mass produced, fake soy sauce, containing harmful ingredients & additives such as Alcohol, Sugar, MSG, Caramel Colourings, Potassium Sorbate, and Latic acid."
+          "text": "Many people picture soy sauce as almost black. In fact, a clear, shiny reddish colour is the sign of a fresh, delicious soy sauce. Soy sauce gradually grows darker and saltier once it meets the air."
         },
         {
           "type": "p",
-          "text": "Naturally brewed soy sauce is simply delicious."
-        },
-        {
-          "type": "p",
-          "text": "From the age of 8 to 16 years old I lived in between a primary school and a local soy sauce manufacturer. Growing up with the aroma of soy sauce day and night, I took it for granted that soy sauce is made of soybeans. After all, it is not called corn sauce, wheat sauce, or MSG water with colourings!  It is called soy sauce. A typical standard lunch for me was a bowl of rice mixed with aromatic soy sauce and sesame oil. Emma Basic Gluten Free Soy sauce is made of soybean only. No wheat, no corn, no baddies."
-        },
-        {
-          "type": "p",
-          "text": "Many may think soy sauce colour is blackish.  In fact, clear, shiny reddish colour is the indication of a fresh and delicious soy sauce. Soy sauce gradually grows darker and tastes saltier when it meets air. I would strongly recommend keeping soy sauce in the fridge to delay oxidation and maintain the umami at it’s best."
-        },
-        {
-          "type": "p",
-          "text": "We are often being asked, is your soy sauce light soy sauce or dark sauce?"
-        },
-        {
-          "type": "p",
-          "text": "The answer is light soy sauce."
-        },
-        {
-          "type": "p",
-          "text": "Light soy sauce (生抽)(淡口) tastes salty surprisingly, usually 15g salt per 100g. Light reddish colour. The name ‘light’ has nothing to do with the salt content. Emma Basic Gluten Free Soy Sauce is a reduced salt product, containing 8g salt per 100g. The NHS recommends consuming no more than 6g of salt per day. In most reduced salt soy sauce products, preservative E202, or alcohol is added to keep the shelf life. This is something we cannot tolerant. We’ve replaced those harmful additives with a dash of naturally brewed rice vinegar which smartly increases the life of the product without impacting the delicate flavour. We will never produce a product which isn’t healthy enough for ourselves or our families."
-        },
-        {
-          "type": "p",
-          "text": "Dark Soy sauce (老抽) (濃口)tastes less salty, much darker, almost black in colour. The main purpose to use dark soy sauce is to give your dishes a caramel colour. It is extremely difficult to find a bottle of dark soy sauce which contains NO colourings. Plain Caramel (E150a) is supposed to be less harmful but is still not good for you. Definitely stay away from these baddies: Caustic sulphite caramel E150b, Ammonia caramel E150c, and Sulphite ammonia caramel E150d."
+          "text": "I always keep mine in the fridge after opening, to slow oxidation and keep the umami at its best."
         }
       ],
       "author": ""
