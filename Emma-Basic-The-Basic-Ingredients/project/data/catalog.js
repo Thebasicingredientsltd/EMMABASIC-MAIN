@@ -878,7 +878,6 @@ window.EB_CATALOG = {
             "assets/uploads/2026_03_02_BasicIngredient-036-20260731-113347.jpg",
             "assets/uploads/2026_03_02_BasicIngredient-051-20260731-113400.jpg",
             "assets/uploads/S000_-_Hero_6-20260731-113420.jpg",
-            "assets/uploads/Runway_Nano_Banana_2_Show_me_a_clean__minimal_040326-20260731-113431.png",
             "assets/uploads/S000_-_PT_02-20260731-113452.jpg",
             "assets/uploads/Emma_Basic_Cross-Sell_Lifestyle_Kitchen-20260731-113505.png"
           ],
@@ -926,7 +925,7 @@ window.EB_CATALOG = {
               "The nutrition profile of seaweed is surprisingly strong — high in iodine, fibre, and protein relative to its weight. These sheets are light but nutrient-dense. We sell them in the lunchbox format because that's how most people use them, but they're just as good crumbled over rice, soup, or salad."
             ]
           },
-          "updatedAt": "2026-09-29T13:59:11+00:00"
+          "updatedAt": "2026-09-29T13:59:41+00:00"
         },
         {
           "id": "panko",
