@@ -198,7 +198,7 @@ window.EB_PRODUCTS = [
     "image": "assets/products-original-backup/miso-homepage.png",
     "imagePosition": "",
     "imageZoom": null,
-    "amazon": "",
+    "amazon": "https://www.amazon.co.uk/dp/B0DT7SL672",
     "usps": [
       "✅ Raw & unpasteurised — never heat-treated, preserving live cultures and enzymes",
       "✅ Four ingredients only: water, soybeans, rice, salt — nothing added",
