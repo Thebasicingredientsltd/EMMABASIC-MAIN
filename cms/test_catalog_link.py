@@ -139,10 +139,15 @@ class CatalogUnderlinkTests(unittest.TestCase):
         self.assertTrue(box)
         self.assertNotIn("checked", box)
 
-    def test_matcha_lab_page_points_to_our_products(self):
+    def test_matcha_lab_page_shows_link_fields(self):
         html = self.client.get("/matcha").get_data(as_text=True)
+        self.assertIn("Link under Matcha on Our Products", html)
+        self.assertIn("Hide this link", html)
         self.assertIn("Visit the Matcha Lab", html)
-        self.assertIn("Edit category", html)
+        self.assertIn("Matcha Lab.html", html)
+        box = _checkbox(html, "link_hide")
+        self.assertTrue(box)
+        self.assertNotIn("checked", box)
 
     def test_hide_omitted_checkbox_keeps_link_then_can_hide(self):
         original = load_data("catalog")
@@ -202,11 +207,41 @@ class CatalogUnderlinkTests(unittest.TestCase):
             with app.app_context():
                 save_data("catalog", original)
 
+    def test_matcha_lab_save_can_hide_the_link(self):
+        original_matcha = load_data("matcha")
+        original_catalog = load_data("catalog")
+        try:
+            hero = original_matcha.get("hero") or {}
+            payload = {
+                "hero_eyebrow": hero.get("eyebrow", ""),
+                "hero_title": hero.get("title", ""),
+                "hero_titleItalic": hero.get("titleItalic", ""),
+                "hero_subtitle": hero.get("subtitle", ""),
+                "hero_visible": "on",
+                "footer_visible": "on",
+                "link_label": "Visit the Matcha Lab",
+                "link_href": "Matcha Lab.html",
+                "link_hide": "on",
+            }
+            response = self.client.post("/matcha/save", data=payload)
+            self.assertEqual(response.status_code, 302)
+            _ci, _pi, cat, _prod = _matcha()
+            link = (cat.get("meta") or {}).get("link") or {}
+            self.assertIs(link.get("hide"), True)
+            self.assertEqual(link.get("label"), "Visit the Matcha Lab")
+            form = self.client.get("/matcha").get_data(as_text=True)
+            self.assertIn("checked", _checkbox(form, "link_hide"))
+            self.assertIn("Hidden on site", form)
+        finally:
+            with app.app_context():
+                save_data("matcha", original_matcha)
+                save_data("catalog", original_catalog)
+
     def test_live_page_honours_empty_and_hide(self):
         with open(CATALOG_JSX, encoding="utf-8") as fh:
             source = fh.read()
         self.assertIn("function categoryUnderlink", source)
-        self.assertIn("link.hide", source)
+        self.assertIn("link.hide === true", source)
         self.assertIn("if (!label || !href) return null", source)
 
     def test_matcha_lab_not_added_to_public_header(self):

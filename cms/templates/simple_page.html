@@ -37,6 +37,9 @@
   {% set seo_placeholder_title = page_title ~ ' — Emma Basic' %}
   {% set seo_placeholder_canonical = 'https://emmabasic.co.uk/Our%20Story.html' if active == 'story' else 'https://emmabasic.co.uk/Matcha%20Lab.html' %}
   {% include '_seo_fields.html' %}
+  {% if show_category_underlink|default(false) %}
+  {% include '_underlink_fields.html' %}
+  {% endif %}
   {% set gallery = d.gallery or none %}
   {% if gallery %}
   <div class="card">
