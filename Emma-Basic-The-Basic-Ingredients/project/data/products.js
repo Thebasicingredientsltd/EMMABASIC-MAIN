@@ -160,7 +160,7 @@ window.EB_PRODUCTS = [
   {
     "id": "dashi-soy-sauce",
     "name": "Dashi Soy Sauce",
-    "origin": "Brewed · Japan",
+    "origin": "Brewed",
     "lot": "DS-240501",
     "pill": "GLUTEN FREE",
     "tagline": "Brewed slowly. No shortcuts.",
