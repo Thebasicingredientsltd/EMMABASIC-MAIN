@@ -131,7 +131,7 @@ window.EB_PEOPLE = {
       },
       {
         "name": "Cotton",
-        "role": "Chief Morale Officer",
+        "role": "Chief Hearding Office ( CHO)",
         "bio": "Attends every tasting. Has never approved an additive.",
         "tone": "cool",
         "image": "assets/Employees-page/cotton 1.jpg",
