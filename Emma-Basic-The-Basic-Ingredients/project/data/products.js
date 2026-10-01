@@ -131,7 +131,7 @@ window.EB_PRODUCTS = [
   {
     "id": "sesame-oil",
     "name": "Pure Toasted Sesame Oil",
-    "origin": "Physically pressed",
+    "origin": "",
     "lot": "SO-240319",
     "pill": "NEW FORMULA",
     "tagline": "Physically pressed — never chemically refined.",
