@@ -523,7 +523,6 @@ window.EB_CATALOG = {
           ],
           "badges": [
             "Catering Size",
-            "No MSG",
             "No Colourings",
             "No Preservatives",
             "Gluten Free"
@@ -569,7 +568,7 @@ window.EB_CATALOG = {
               "a": "Yes — uses chickpea flour rather than wheat flour as the base."
             }
           ],
-          "updatedAt": "2026-09-28T16:32:37+00:00"
+          "updatedAt": "2026-10-01T08:42:13+00:00"
         },
         {
           "id": "sushi-nori",
@@ -1016,7 +1015,6 @@ window.EB_CATALOG = {
           "badges": [
             "Great Taste",
             "Catering Size",
-            "No Additives",
             "No Hydrogenated Oils",
             "Source of Fibre"
           ],
@@ -1056,7 +1054,7 @@ window.EB_CATALOG = {
               "The result is a crumb that's much larger and more open than standard. When you fry with it, the larger surface area creates more crunch, absorbs less oil, and holds its texture longer. That's why katsu always uses panko. Three ingredients: flour, yeast, salt. Nothing else."
             ]
           },
-          "updatedAt": "2026-09-28T16:32:37+00:00"
+          "updatedAt": "2026-10-01T08:42:13+00:00"
         },
         {
           "id": "panko-10kg",
@@ -2047,7 +2045,6 @@ window.EB_CATALOG = {
             "Broth"
           ],
           "badges": [
-            "No MSG",
             "No Colourings",
             "Vegan",
             "Gluten Free"
@@ -2087,7 +2084,7 @@ window.EB_CATALOG = {
               "Dashi is the backbone of Japanese cooking: a clean, deeply savoury stock that amplifies everything it touches without ever announcing itself. Blended with soy, it softens the salt edge and adds the rounded umami that makes this sauce work as a dipping sauce, a soup base, or a quiet finishing drizzle. Nothing artificial. No MSG, no colourings, no shortcuts."
             ]
           },
-          "updatedAt": "2026-09-28T16:32:37+00:00"
+          "updatedAt": "2026-10-01T08:42:13+00:00"
         },
         {
           "id": "light-soy-sauce",
@@ -2111,8 +2108,6 @@ window.EB_CATALOG = {
             "Marinades"
           ],
           "badges": [
-            "No MSG",
-            "No Additives",
             "Vegan"
           ],
           "amazon": "https://www.amazon.co.uk/dp/B0CT625N5Z",
@@ -2145,7 +2140,7 @@ window.EB_CATALOG = {
               "Dark soy is thicker, less salty, and used primarily for colour — braised pork belly, char siu, and sauces that need a deep mahogany tone. If a recipe calls for both, there's a reason. If you only stock one for cooking, light soy is more versatile. If you only stock one for dipping, use tamari or dashi soy."
             ]
           },
-          "updatedAt": "2026-09-28T16:32:37+00:00"
+          "updatedAt": "2026-10-01T08:42:13+00:00"
         },
         {
           "id": "soy-sauce-tamari",
