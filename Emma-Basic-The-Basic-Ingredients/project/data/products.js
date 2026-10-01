@@ -190,7 +190,7 @@ window.EB_PRODUCTS = [
   {
     "id": "white-miso-1kg",
     "name": "Miso 1kg",
-    "origin": "Traditionally fermented · Produced in China",
+    "origin": "Traditionally fermented",
     "lot": "MS-240319",
     "pill": "UNPASTEURISED",
     "tagline": "Raw, unpasteurised white miso. Fermented from soybeans, rice, and salt — nothing else.",
