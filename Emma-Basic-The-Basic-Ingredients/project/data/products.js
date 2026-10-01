@@ -160,7 +160,7 @@ window.EB_PRODUCTS = [
   {
     "id": "dashi-soy-sauce",
     "name": "Dashi Soy Sauce",
-    "origin": "Brewed",
+    "origin": "",
     "lot": "DS-240501",
     "pill": "GLUTEN FREE",
     "tagline": "Brewed slowly. No shortcuts.",
@@ -168,7 +168,7 @@ window.EB_PRODUCTS = [
     "image": "assets/products-original-backup/dashi-soy-sauce-homepage.jpg",
     "imagePosition": "left center",
     "imageZoom": 1.1,
-    "amazon": "",
+    "amazon": "https://www.amazon.co.uk/dp/B0CS3W3CY3",
     "usps": [
       "DASHI: Dashi is the very foundation of Japanse cuisine. Emma Basic Dashi is skillfully made by simmering natural kelp and shiitake mushrooms. Dedicated in making dashi in Japan since 1789.",
       "NEVER ANY ADDITIVES: No-MSG No Colourings No Acidity regulators No Potassium Sorbate.",
