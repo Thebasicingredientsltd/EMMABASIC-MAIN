@@ -304,7 +304,17 @@ function CatalogIndex() {
   );
 }
 
+function categoryUnderlink(category) {
+  const link = category && category.meta && category.meta.link;
+  if (!link || link.hide === true) return null;
+  const label = String(link.label || "").trim();
+  const href = String(link.href || "").trim();
+  if (!label || !href) return null;
+  return { label, href };
+}
+
 function CategorySection({ category, index }) {
+  const underlink = categoryUnderlink(category);
   return (
     <section id={`cat-${category.id}`} style={{
       padding: "clamp(48px, 7vh, 80px) var(--pad-x) clamp(40px, 6vh, 72px)",
@@ -373,16 +383,16 @@ function CategorySection({ category, index }) {
           ))}
         </div>
 
-        {category.meta?.link && (
+        {underlink && (
           <Reveal delay={200}>
             <div style={{ marginTop: "clamp(40px, 6vh, 80px)", display: "flex", justifyContent: "flex-end" }}>
-              <a href={category.meta.link.href} style={{
+              <a href={underlink.href} style={{
                 fontFamily: "var(--f-body)", fontSize: 11, letterSpacing: "0.22em",
                 textTransform: "uppercase", color: "var(--ink)",
                 textDecoration: "none", borderBottom: "1px solid var(--ink)",
                 paddingBottom: 2,
               }}>
-                {category.meta.link.label} →
+                {underlink.label} →
               </a>
             </div>
           </Reveal>

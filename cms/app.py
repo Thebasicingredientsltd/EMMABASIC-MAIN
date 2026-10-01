@@ -340,6 +340,30 @@ def parse_num(raw):
     return int(val) if val.is_integer() else val
 
 
+def _apply_category_link_form(cat):
+    """Link under a category on Our Products.
+
+    Unchecked `link_hide` is omitted from POST, so missing means False.
+    Older saves (reorder, table edit) omit the fields and must not wipe the
+    link. Empty text with Hide unticked removes the link object.
+    """
+    if "link_label" not in request.form and "link_href" not in request.form:
+        return
+    label = request.form.get("link_label", "").strip()
+    href = request.form.get("link_href", "").strip()
+    hide = form_checkbox("link_hide")
+    meta = dict(cat.get("meta") if isinstance(cat.get("meta"), dict) else {})
+    if not label and not href and not hide:
+        meta.pop("link", None)
+        if meta:
+            cat["meta"] = meta
+        else:
+            cat.pop("meta", None)
+        return
+    meta["link"] = {"label": label, "href": href, "hide": hide}
+    cat["meta"] = meta
+
+
 def form_checkbox(name):
     """True when an HTML checkbox named `name` was checked.
 
@@ -1413,8 +1437,24 @@ def company_save():
     return redirect(url_for("company"))
 
 
+def _category_by_id(cat_id):
+    for cat in load_catalog_bundle()["categories"]:
+        if cat.get("id") == cat_id:
+            return cat
+    return None
+
+
+def _category_underlink(cat):
+    if not isinstance(cat, dict):
+        return {}
+    meta = cat.get("meta") if isinstance(cat.get("meta"), dict) else {}
+    link = meta.get("link") if isinstance(meta.get("link"), dict) else {}
+    return link
+
+
 @app.route("/matcha")
 def matcha():
+    matcha_cat = _category_by_id("matcha")
     return render_template(
         "simple_page.html",
         page_title="Matcha Lab",
@@ -1422,13 +1462,30 @@ def matcha():
         visual_page="matcha",
         active="matcha",
         d=load_data("matcha"),
-        extra="This is the Matcha Lab landing page (M002). Product details also live in the Catalog.",
+        extra="This is the Matcha Lab landing page (M002). Product details live in Our Products. The link under Matcha on that page is the box below — or edit it on the Matcha product in Our Products.",
+        show_category_underlink=True,
+        underlink=_category_underlink(matcha_cat),
+        underlink_heading="Link under Matcha on Our Products",
+        underlink_help="This is the small link under the Matcha product on Our Products. It currently says “Visit the Matcha Lab”. Clear the link text, or tick Hide this link, then save, to take it off the website.",
     )
 
 
 @app.route("/matcha/save", methods=["POST"])
 def matcha_save():
-    return _simple_page_save("matcha", "Matcha Lab content saved.", "matcha")
+    data = load_data("matcha")
+    _apply_hero_form(data.setdefault("hero", {}))
+    _apply_footer_form(data)
+    _apply_seo_form(data)
+    save_data("matcha", data)
+    if "link_label" in request.form or "link_href" in request.form:
+        bundle = load_catalog_bundle()
+        for cat in bundle["categories"]:
+            if cat.get("id") == "matcha":
+                _apply_category_link_form(cat)
+                save_data("catalog", bundle)
+                break
+    flash("Matcha Lab content saved.", "ok")
+    return redirect(url_for("matcha"))
 
 
 # ---------------------------------------------------------------------------
@@ -1650,6 +1707,7 @@ def catalog_category_save():
     cat["japanese"] = request.form.get("japanese", "").strip()
     cat["blurb"] = request.form.get("blurb", "").strip()
     cat.setdefault("products", [])
+    _apply_category_link_form(cat)
 
     if not cat["id"] or not cat["name"]:
         flash("A category needs at least an id and a name.", "error")
@@ -1812,6 +1870,10 @@ def catalog_product_save():
         cats[target_ci].setdefault("products", []).append(prod)
     else:
         cats[ci]["products"][pi] = prod
+
+    # The Our Products under-link belongs to the category Emma was editing,
+    # not the destination if the product is moved.
+    _apply_category_link_form(cats[ci] if not is_new else cats[target_ci])
 
     save_data("catalog", bundle)
     flash("Saved product: %s" % prod["name"], "ok")

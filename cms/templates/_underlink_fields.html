@@ -1,0 +1,19 @@
+{% set underlink = underlink or {} %}
+<div class="card">
+  <h2 style="margin-top:0;">{{ underlink_heading }}{% if underlink.hide %} <span class="pill">Hidden on site</span>{% endif %}</h2>
+  <p class="field-help">{{ underlink_help }}</p>
+  <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
+    <input type="checkbox" name="link_hide" value="on" style="width:auto;" {{ 'checked' if underlink.hide }}/> Hide this link
+  </label>
+  <p class="field-help">Tick this to take the link off the website without deleting the words. You can also delete the link text below, then save.</p>
+  <div class="row">
+    <div>
+      <label>Link text</label>
+      <input type="text" name="link_label" value="{{ underlink.label or '' }}" placeholder="Visit the Matcha Lab"/>
+    </div>
+    <div>
+      <label>Link address</label>
+      <input type="text" name="link_href" value="{{ underlink.href or '' }}" placeholder="Matcha Lab.html"/>
+    </div>
+  </div>
+</div>

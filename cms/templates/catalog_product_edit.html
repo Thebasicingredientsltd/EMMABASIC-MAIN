@@ -118,6 +118,12 @@
     <input type="url" name="amazon" value="{{ p.amazon or '' }}" placeholder="https://www.amazon.co.uk/dp/..."/>
   </div>
 
+  {% set _cat = cats[ci] if (cats and ci is not none and ci >= 0 and ci < (cats|length)) else {} %}
+  {% set underlink = (_cat.meta.link if _cat.meta and _cat.meta.link else {}) %}
+  {% set underlink_heading = 'Link under this product' %}
+  {% set underlink_help = 'This is the small link under this product on the Our Products page — for Matcha it currently says “Visit the Matcha Lab”.' %}
+  {% include '_underlink_fields.html' %}
+
   <div class="card">
     <div class="row">
       <div>

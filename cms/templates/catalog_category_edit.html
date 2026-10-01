@@ -33,6 +33,11 @@
     <textarea name="blurb" rows="3">{{ c.blurb or '' }}</textarea>
   </div>
 
+  {% set underlink = (c.meta.link if c.meta and c.meta.link else {}) %}
+  {% set underlink_heading = 'Link under this category' %}
+  {% set underlink_help = 'This is the small link at the bottom of this category on Our Products — for Matcha it currently says “Visit the Matcha Lab”.' %}
+  {% include '_underlink_fields.html' %}
+
   <div class="actions-bar">
     <button class="btn" type="submit">Save category</button>
     <a class="btn secondary" href="{{ url_for('catalog') }}">Cancel</a>
