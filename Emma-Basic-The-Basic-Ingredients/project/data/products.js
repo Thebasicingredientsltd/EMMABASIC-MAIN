@@ -74,7 +74,7 @@ window.EB_PRODUCTS = [
   {
     "id": "soba-noodles",
     "name": "Soba Noodles",
-    "origin": "Buckwheat · Japan",
+    "origin": "Buckwheat",
     "lot": "SN-240501",
     "pill": "SOURCE OF PROTEIN",
     "tagline": "100% buckwheat. Nothing added.",
