@@ -3,7 +3,7 @@ window.EB_PRODUCTS = [
   {
     "id": "curry-cubes",
     "name": "Japanese Curry Cubes",
-    "origin": "Produced in China",
+    "origin": "",
     "lot": "CC-240410",
     "pill": "BEST SELLER",
     "tagline": "Block-style roux. Dissolve into stock, add what's in the fridge.",
