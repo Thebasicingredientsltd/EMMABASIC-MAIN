@@ -82,7 +82,7 @@ window.EB_PRODUCTS = [
     "image": "assets/products-original-backup/soba-noodles-homepage.png",
     "imagePosition": "",
     "imageZoom": null,
-    "amazon": "",
+    "amazon": "https://www.amazon.co.uk/dp/B0DMXFPDD3",
     "usps": [
       "KAKE UDON: Combine Emma Basic Dashi, Wakame and Shicimi to make KAKE UDON. There is nothing more comforting than a hot bowl of udon soup. A testament to the many \"standing-eating udon\" shops in Japan. Fast, no-frills eateries where customers eat a quick bowl of udon while standing. Commonly Found in Train Stations – catering to hungry travelers in a rush.",
       "CURRY UDON: Try Emma Basic Japanese Style Curry over hot udon noodles with fried tofu or chicken. Udon is the best match for Japanese curry, rather than soba or ramen. Here’s why:thick Noodles Hold Up to Thick Curry Sauce Japanese curry is rich, thick, and slightly sweet, unlike the thinner broths of ramen or soba dishes. Udon noodles are thick, chewy, and smooth, making them perfect for carrying and absorbing the curry sauce without getting soggy.",
