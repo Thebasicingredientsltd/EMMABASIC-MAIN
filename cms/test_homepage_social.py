@@ -133,6 +133,9 @@ def _form_from_homepage(data):
         "social_facebook_href": fb.get("href", ""),
         "social_x_href": x.get("href", ""),
     }
+    for i, b in enumerate(buttons[:2], start=1):
+        if b.get("hide") is True:
+            payload["hero_btn%d_hide" % i] = "on"
     if hero.get("visible") is not False:
         payload["hero_visible"] = "on"
     if (data.get("footer") or {}).get("visible") is not False:

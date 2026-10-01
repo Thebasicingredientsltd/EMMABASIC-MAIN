@@ -10,10 +10,12 @@ function Hero() {
   const headlineLine1 = H.headlineLine1 || "Recovery,";
   const headlineLine2 = H.headlineLine2 || "uncompromised.";
   const heroBody = H.body || "Pure ingredients for pure effort<br/>for the run, the kitchen, and everything between.";
-  const heroButtons = Array.isArray(H.buttons) && H.buttons.length ? H.buttons : [
-    { label: "Browse the Collection", href: "Our Products.html", primary: true },
-    { label: "Read Our Story", href: "People%20%26%20Places.html", primary: false },
-  ];
+  // Defaults only when the CMS has never saved buttons. An empty or all-hidden
+  // list from the CMS means "no buttons" and must not fall back.
+  const heroButtons = (Array.isArray(H.buttons) ? H.buttons : [
+    { label: "FIND US", href: "Places.html", primary: true },
+    { label: "FOR SHOPKEEPERS", href: "The%20Basic%20Ingredients.html", primary: false },
+  ]).filter((b) => b && b.hide !== true && String(b.label || "").trim());
   const [imgRef, p] = useScrollProgress();
   const [loaded, setLoaded] = React.useState(false);
   React.useLayoutEffect(() => {
@@ -119,11 +121,13 @@ function Hero() {
               maxWidth: 640, margin: 0,
               fontWeight: 400,
             }} dangerouslySetInnerHTML={{ __html: heroBody }} />
-            <div className="eb-hero__buttons" style={{ display: "flex", gap: 12, flexWrap: "wrap", alignSelf: "end" }}>
-              {heroButtons.map((b, i) => (
-                <HeroButton key={i} label={b.label} href={b.href} primary={b.primary} />
-              ))}
-            </div>
+            {heroButtons.length > 0 && (
+              <div className="eb-hero__buttons" style={{ display: "flex", gap: 12, flexWrap: "wrap", alignSelf: "end" }}>
+                {heroButtons.map((b, i) => (
+                  <HeroButton key={i} label={b.label} href={b.href} primary={b.primary} />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -33,19 +33,23 @@
     </div>
     <label>Body text</label>
     <textarea name="hero_body" rows="2">{{ h.hero.body }}</textarea>
+    <h3>Hero buttons</h3>
+    <p class="field-help">The two buttons under the headline. Tick <strong>Hide this button</strong> to take a button off the website without deleting its words. If both are hidden, the button row disappears.</p>
+    {% set hero_btns = h.hero.buttons or [] %}
     <div class="row">
+      {% for i in [1, 2] %}
+      {% set b = hero_btns[i - 1] if hero_btns|length >= i else {} %}
       <div>
-        <label>Button 1 label</label>
-        <input type="text" name="hero_btn1_label" value="{{ h.hero.buttons[0].label if h.hero.buttons|length > 0 }}"/>
-        <label>Button 1 link</label>
-        <input type="text" name="hero_btn1_href" value="{{ h.hero.buttons[0].href if h.hero.buttons|length > 0 }}"/>
+        <h4 style="margin:12px 0 6px;">Button {{ i }}{% if b.hide %} <span class="pill">Hidden on site</span>{% endif %}</h4>
+        <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
+          <input type="checkbox" name="hero_btn{{ i }}_hide" value="on" style="width:auto;" {{ 'checked' if b.hide }}/> Hide this button
+        </label>
+        <label>Button {{ i }} label</label>
+        <input type="text" name="hero_btn{{ i }}_label" value="{{ b.label or '' }}"/>
+        <label>Button {{ i }} link</label>
+        <input type="text" name="hero_btn{{ i }}_href" value="{{ b.href or '' }}"/>
       </div>
-      <div>
-        <label>Button 2 label</label>
-        <input type="text" name="hero_btn2_label" value="{{ h.hero.buttons[1].label if h.hero.buttons|length > 1 }}"/>
-        <label>Button 2 link</label>
-        <input type="text" name="hero_btn2_href" value="{{ h.hero.buttons[1].href if h.hero.buttons|length > 1 }}"/>
-      </div>
+      {% endfor %}
     </div>
   </div>
 

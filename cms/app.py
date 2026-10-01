@@ -364,6 +364,26 @@ def _apply_category_link_form(cat):
     cat["meta"] = meta
 
 
+def _apply_hero_buttons_form(hero):
+    """Homepage hero buttons (two fixed slots).
+
+    Both slots are always stored so an emptied or hidden button stays that
+    way; the live site must not fall back to defaults. Unchecked
+    `hero_btnN_hide` is omitted from POST, so missing means False.
+    """
+    if not any(("hero_btn%d_label" % i) in request.form for i in (1, 2)):
+        return
+    buttons = []
+    for i in (1, 2):
+        buttons.append({
+            "label": request.form.get("hero_btn%d_label" % i, "").strip(),
+            "href": request.form.get("hero_btn%d_href" % i, "").strip(),
+            "primary": i == 1,
+            "hide": form_checkbox("hero_btn%d_hide" % i),
+        })
+    hero["buttons"] = buttons
+
+
 def form_checkbox(name):
     """True when an HTML checkbox named `name` was checked.
 
@@ -984,15 +1004,7 @@ def homepage_save():
     hero["headlineLine1"] = request.form.get("hero_headlineLine1", "").strip()
     hero["headlineLine2"] = request.form.get("hero_headlineLine2", "").strip()
     hero["body"] = request.form.get("hero_body", "").strip()
-    # Hero buttons (up to 2)
-    buttons = []
-    for i in (1, 2):
-        label = request.form.get("hero_btn%d_label" % i, "").strip()
-        href = request.form.get("hero_btn%d_href" % i, "").strip()
-        if label:
-            buttons.append({"label": label, "href": href, "primary": i == 1})
-    if buttons:
-        hero["buttons"] = buttons
+    _apply_hero_buttons_form(hero)
     hero["visible"] = form_checkbox("hero_visible")
     _apply_footer_form(h)
 
