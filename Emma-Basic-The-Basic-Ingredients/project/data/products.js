@@ -102,7 +102,7 @@ window.EB_PRODUCTS = [
   {
     "id": "sushi-rice",
     "name": "Sushi Rice",
-    "origin": "Single-variety · Vietnam",
+    "origin": "Single-variety",
     "lot": "SR-240501",
     "pill": null,
     "tagline": "Short-grain Japonica. Perfect texture every time.",
