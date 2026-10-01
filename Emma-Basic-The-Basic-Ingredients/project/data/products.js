@@ -223,7 +223,7 @@ window.EB_PRODUCTS = [
   {
     "id": "wakame",
     "name": "Wakame 50g",
-    "origin": "Wild-harvested · Japan",
+    "origin": "Wild-harvested",
     "lot": "WK-240501",
     "pill": null,
     "tagline": "Dried at source. Rehydrates in minutes.",
