@@ -42,7 +42,7 @@ window.EB_PRODUCTS = [
   {
     "id": "premium-matcha",
     "name": "Premium Grade Matcha",
-    "origin": "Shaded 25 days · Produced in China",
+    "origin": "",
     "lot": "HB-240418",
     "pill": "BEST SELLER",
     "tagline": "100% pure Tencha leaf. No additives. Batch tested.",
