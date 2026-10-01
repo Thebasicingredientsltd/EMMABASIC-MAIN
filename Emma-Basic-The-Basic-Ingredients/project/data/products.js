@@ -231,7 +231,7 @@ window.EB_PRODUCTS = [
     "image": "assets/products-original-backup/wakame-homepage.png",
     "imagePosition": "",
     "imageZoom": null,
-    "amazon": "",
+    "amazon": "https://www.amazon.co.uk/dp/B0DQDVFWZP",
     "usps": [
       "✅ READY IN 3 MINS: Soak wakame in warm water for 2-3 minutes. Add into your miso soup, salad or stir-fries.",
       "✅ WAKAME UDON: Wakame is traditionally used as a topping for udon soup together with ginger and spring onion.",
