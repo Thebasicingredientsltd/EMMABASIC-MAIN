@@ -11,7 +11,7 @@ window.EB_CATALOG = {
     "visible": false
   },
   "seo": {
-    "title": "",
+    "title": "Our products – Products with no E numbers",
     "description": "Seven categories. No additives, no fillers, no shortcuts. The range is growing slowly — each product earns its place, or it doesn't ship.",
     "canonical": "",
     "image": "",
