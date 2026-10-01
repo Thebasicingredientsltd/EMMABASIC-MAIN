@@ -2505,7 +2505,7 @@ window.EB_CATALOG = {
       "number": "N°08",
       "name": "Frozen",
       "japanese": "冷凍食品",
-      "blurb": "Cold chain, quick meal. Steamer to plate in ten. No MSG, no fillers we wouldn't eat ourselves.",
+      "blurb": "",
       "products": [
         {
           "id": "edamame",
