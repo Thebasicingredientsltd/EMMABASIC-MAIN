@@ -1358,8 +1358,38 @@ def places_save():
     directory["headingItalic"] = request.form.get("directory_headingItalic", "").strip()
     directory["hideHeading"] = form_checkbox("directory_hideHeading")
 
+    # Headings, carousel, SEO and HQ are one modest form. The stockist
+    # directory is saved separately (highlights, or one shop) so this save
+    # is not a dump of every address. An older form that still posts
+    # shop_count may rewrite the list; a normal save leaves the shops as
+    # they are.
+    if "shop_count" in request.form:
+        _apply_legacy_shop_list(d)
+    _apply_seo_form(d)
+
+    hq = d.setdefault("hq", {})
+    hq["label"] = request.form.get("hq_label", "").strip()
+    hq["addressLine1"] = request.form.get("hq_addressLine1", "").strip()
+    hq["addressLine2"] = request.form.get("hq_addressLine2", "").strip()
+    lat = parse_num(request.form.get("hq_lat", ""))
+    lng = parse_num(request.form.get("hq_lng", ""))
+    if lat is not None:
+        hq["lat"] = lat
+    if lng is not None:
+        hq["lng"] = lng
+    save_data("places", d)
+    flash("Where to find our products content saved.", "ok")
+    return redirect(url_for("places"))
+
+
+def _apply_legacy_shop_list(d):
+    """Rewrite the shop list from a form that still posts every stockist.
+
+    Kept so an older cached page, and the spreadsheet hand-edit tests, can
+    still save. The live page does not use this shape.
+    """
     shops = []
-    shop_count = int(request.form.get("shop_count", "0"))
+    shop_count = int(request.form.get("shop_count", "0") or "0")
     old_shops = d.get("shops") or []
     for i in range(shop_count):
         if ("shop%d_name" % i) not in request.form:
@@ -1399,21 +1429,126 @@ def places_save():
         shops.append(prev)
     stockists_import.fill_missing_coordinates(shops)
     d["shops"] = shops
-    _apply_seo_form(d)
 
-    hq = d.setdefault("hq", {})
-    hq["label"] = request.form.get("hq_label", "").strip()
-    hq["addressLine1"] = request.form.get("hq_addressLine1", "").strip()
-    hq["addressLine2"] = request.form.get("hq_addressLine2", "").strip()
-    lat = parse_num(request.form.get("hq_lat", ""))
-    lng = parse_num(request.form.get("hq_lng", ""))
-    if lat is not None:
-        hq["lat"] = lat
-    if lng is not None:
-        hq["lng"] = lng
+
+def _merge_shop_from_request(prev, highlight=None):
+    """Copy one shop's text fields from the current form onto prev.
+
+    highlight is True, False, or None. None leaves an existing tick alone
+    (the box was not part of this save). False clears it.
+    """
+    prev = dict(prev or {})
+    prev["name"] = request.form.get("name", "").strip()
+    prev["city"] = request.form.get("city", "").strip()
+    prev["address"] = request.form.get("address", "").strip()
+    for field in ("postcode", "url", "phone"):
+        value = request.form.get(field, "").strip()
+        if field == "postcode":
+            value = stockists_import.normalise_postcode(value) or value.upper()
+        if value:
+            prev[field] = value
+        else:
+            prev.pop(field, None)
+    for field in ("lat", "lng"):
+        num = parse_num(request.form.get(field, ""))
+        if num is not None:
+            prev[field] = num
+        else:
+            prev.pop(field, None)
+    if highlight is True:
+        prev["highlight"] = True
+    elif highlight is False:
+        prev.pop("highlight", None)
+    return prev
+
+
+def _shop_index_list(raw_values, limit):
+    seen = []
+    for raw in raw_values:
+        try:
+            i = int(str(raw).strip())
+        except (TypeError, ValueError):
+            continue
+        if i < 0 or i >= limit or i in seen:
+            continue
+        seen.append(i)
+    return seen
+
+
+def _places_shops_or_redirect():
+    d = load_data("places")
+    shops = d.get("shops") or []
+    return d, shops
+
+
+@app.route("/places/highlights", methods=["POST"])
+def places_highlights_save():
+    """Save only which shops are highlighted. Body is shop indexes, not addresses."""
+    d, shops = _places_shops_or_redirect()
+    present = _shop_index_list(request.form.getlist("id"), len(shops))
+    if not present:
+        flash("Nothing was saved. Refresh the page, tick the shops, and press Save highlights again.", "error")
+        return redirect(url_for("places") + "#shops")
+    highlighted = set(_shop_index_list(request.form.getlist("on"), len(shops)))
+    for i in present:
+        if i in highlighted:
+            shops[i]["highlight"] = True
+        else:
+            shops[i].pop("highlight", None)
+    d["shops"] = shops
     save_data("places", d)
-    flash("Where to find our products content saved.", "ok")
-    return redirect(url_for("places"))
+    flash("Highlights saved. The map will update in a minute or two.", "ok")
+    return redirect(url_for("places") + "#shops")
+
+
+@app.route("/places/shop/add", methods=["POST"])
+def places_shop_add():
+    d, shops = _places_shops_or_redirect()
+    shop = _merge_shop_from_request({}, highlight=form_checkbox("highlight"))
+    if not shop.get("name") and not shop.get("address"):
+        flash("Add a shop name or address, then press Add stockist.", "error")
+        return redirect(url_for("places") + "#add-shop")
+    stockists_import.fill_missing_coordinates([shop])
+    shops.append(shop)
+    d["shops"] = shops
+    save_data("places", d)
+    flash("Added %s." % (shop.get("name") or "that shop"), "ok")
+    return redirect(url_for("places") + "#shop-%d" % (len(shops) - 1))
+
+
+@app.route("/places/shop/<int:index>", methods=["POST"])
+def places_shop_save(index):
+    d, shops = _places_shops_or_redirect()
+    if index >= len(shops):
+        flash("That shop is no longer on the list. Refresh the page and try again.", "error")
+        return redirect(url_for("places") + "#shops")
+    highlight = None
+    if "highlight" in request.form:
+        highlight = True if form_checkbox("highlight") else False
+    shop = _merge_shop_from_request(shops[index], highlight=highlight)
+    if not shop.get("name") and not shop.get("address"):
+        flash("A shop needs a name or an address.", "error")
+        return redirect(url_for("places") + "#shop-%d" % index)
+    stockists_import.fill_missing_coordinates([shop])
+    shops[index] = shop
+    d["shops"] = shops
+    save_data("places", d)
+    flash("Saved %s." % (shop.get("name") or "that shop"), "ok")
+    return redirect(url_for("places") + "#shop-%d" % index)
+
+
+@app.route("/places/shop/<int:index>/remove", methods=["POST"])
+def places_shop_remove(index):
+    d, shops = _places_shops_or_redirect()
+    if index >= len(shops):
+        flash("That shop is no longer on the list. Refresh the page and try again.", "error")
+        return redirect(url_for("places") + "#shops")
+    name = shops[index].get("name") or "That shop"
+    del shops[index]
+    d["shops"] = shops
+    save_data("places", d)
+    flash("Removed %s." % name, "ok")
+    return redirect(url_for("places") + "#shops")
 
 
 STOCKIST_UPLOAD_MAX_BYTES = 4 * 1024 * 1024

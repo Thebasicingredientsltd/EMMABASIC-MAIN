@@ -310,6 +310,23 @@
   .save-bar {
     bottom: max(10px, env(safe-area-inset-bottom));
   }
+  #shops,
+  .shop-card {
+    scroll-margin-top: 72px;
+  }
+  details.shop-edit > summary {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    font-size: 16px;
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+  .shop-summary {
+    margin: 0 0 8px;
+    font-size: 16px;
+  }
 
   /* Image pickers */
   .img-field {

@@ -754,9 +754,11 @@ class ImportRouteTests(unittest.TestCase):
             self.confirm(html, "merge")
             form = self.client.get("/places").get_data(as_text=True)
             idx = len(original["shops"])
-            self.assertIn('name="shop%d_postcode" value="BS1 4DJ"' % idx, form)
-            self.assertIn('name="shop%d_url" value="https://hn.example"' % idx, form)
-            self.assertIn('name="shop%d_phone" value="0117 000"' % idx, form)
+            self.assertIn('name="postcode" value="BS1 4DJ"', form)
+            self.assertIn('name="url" value="https://hn.example"', form)
+            self.assertIn('name="phone" value="0117 000"', form)
+            self.assertIn("/places/shop/%d" % idx, form)
+            self.assertNotIn('name="shop%d_postcode"' % idx, form)
         finally:
             _restore(original)
 

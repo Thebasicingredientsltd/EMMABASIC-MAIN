@@ -7,6 +7,7 @@ import os
 import re
 import sys
 import unittest
+from urllib.parse import urlencode
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -27,6 +28,14 @@ def _hide_heading_checkbox(html):
 
 def _directory_hide_heading_checkbox(html):
     return _checkbox(html, "directory_hideHeading")
+
+
+def _on_checkbox(html, index):
+    match = re.search(
+        r'<input\b[^>]*\bname="on"[^>]*\bvalue="%s"[^>]*>' % index,
+        html,
+    )
+    return match.group(0) if match else ""
 
 
 class PlacesPageTests(unittest.TestCase):
@@ -189,7 +198,7 @@ class PlacesPageTests(unittest.TestCase):
             self.assertEqual(saved.get("postcode"), before.get("postcode"))
             form = self.client.get("/places").get_data(as_text=True)
             self.assertIn("Highlight on the map", form)
-            self.assertIn("checked", _checkbox(form, "shop0_highlight"))
+            self.assertIn("checked", _on_checkbox(form, "0"))
 
             payload = _form_from_places(load_data("places"))
             payload.pop("shop0_highlight", None)
@@ -200,7 +209,7 @@ class PlacesPageTests(unittest.TestCase):
             self.assertEqual(cleared.get("lat"), before.get("lat"))
             self.assertEqual(cleared.get("lng"), before.get("lng"))
             form = self.client.get("/places").get_data(as_text=True)
-            self.assertNotIn("checked", _checkbox(form, "shop0_highlight"))
+            self.assertNotIn("checked", _on_checkbox(form, "0"))
         finally:
             with app.app_context():
                 save_data("places", original)
@@ -275,6 +284,161 @@ class PlacesPageTests(unittest.TestCase):
         self.assertIn("<LocationMap", people)
         self.assertIn("data/places.js", people)
         self.assertIn("leaflet", people.lower())
+
+    def test_highlight_save_does_not_post_the_directory(self):
+        original = load_data("places")
+        shops = original.get("shops") or []
+        self.assertGreater(len(shops), 2)
+        before = shops[0]
+        address = before.get("address") or ""
+        self.assertTrue(address)
+        page = self.client.get("/places").get_data(as_text=True)
+        self.assertIn("/places/highlights", page)
+        self.assertIn("Save highlights", page)
+        self.assertIn("Save this shop", page)
+        self.assertNotIn('name="shop0_name"', page)
+        self.assertNotIn('name="shop0_address"', page)
+        self.assertNotIn('name="shop_count"', page)
+        try:
+            turned_on = {"id": ["1"], "on": ["1"]}
+            body = urlencode(turned_on, doseq=True).encode("utf-8")
+            self.assertLess(len(body), 20000)
+            self.assertNotIn(address.encode("utf-8"), body)
+            self.assertNotIn(b"shop0_", body)
+            response = self.client.post("/places/highlights", data=turned_on)
+            self.assertEqual(response.status_code, 302)
+            saved = load_data("places")["shops"]
+            self.assertIs(saved[1].get("highlight"), True)
+            self.assertEqual(saved[1].get("lat"), shops[1].get("lat"))
+            self.assertEqual(saved[1].get("lng"), shops[1].get("lng"))
+            self.assertEqual(saved[1].get("postcode"), shops[1].get("postcode"))
+            self.assertEqual(saved[1].get("name"), shops[1].get("name"))
+            self.assertEqual(saved[0].get("highlight"), before.get("highlight"))
+            self.assertEqual(saved[2], shops[2])
+
+            only_first = {"id": ["0"], "on": ["0"]}
+            response = self.client.post("/places/highlights", data=only_first)
+            self.assertEqual(response.status_code, 302)
+            saved = load_data("places")["shops"]
+            self.assertIs(saved[0].get("highlight"), True)
+            self.assertEqual(saved[0].get("lat"), before.get("lat"))
+            self.assertEqual(saved[0].get("lng"), before.get("lng"))
+            self.assertEqual(saved[0].get("postcode"), before.get("postcode"))
+            self.assertEqual(saved[0].get("address"), address)
+            self.assertIs(saved[1].get("highlight"), True)
+            self.assertEqual(saved[2], shops[2])
+            form = self.client.get("/places").get_data(as_text=True)
+            self.assertIn("checked", _on_checkbox(form, "0"))
+
+            response = self.client.post("/places/highlights", data={"id": ["0"]})
+            self.assertEqual(response.status_code, 302)
+            cleared = load_data("places")["shops"]
+            self.assertNotIn("highlight", cleared[0])
+            self.assertEqual(cleared[0].get("lat"), before.get("lat"))
+            self.assertEqual(cleared[0].get("lng"), before.get("lng"))
+            self.assertEqual(cleared[0].get("postcode"), before.get("postcode"))
+            self.assertEqual(cleared[0].get("address"), address)
+            self.assertIs(cleared[1].get("highlight"), True)
+            self.assertEqual(len(cleared), len(shops))
+            form = self.client.get("/places").get_data(as_text=True)
+            self.assertNotIn("checked", _on_checkbox(form, "0"))
+        finally:
+            with app.app_context():
+                save_data("places", original)
+
+    def test_saving_one_shop_leaves_the_others_alone(self):
+        original = load_data("places")
+        shops = original.get("shops") or []
+        before = shops[0]
+        payload = {
+            "name": before.get("name") or "",
+            "city": before.get("city") or "",
+            "address": before.get("address") or "",
+            "postcode": before.get("postcode") or "",
+            "url": before.get("url") or "",
+            "phone": before.get("phone") or "",
+            "lat": "" if before.get("lat") is None else str(before.get("lat")),
+            "lng": "" if before.get("lng") is None else str(before.get("lng")),
+            "highlight": "on",
+        }
+        self.assertFalse(any(key.startswith("shop") for key in payload))
+        try:
+            response = self.client.post("/places/shop/0", data=payload)
+            self.assertEqual(response.status_code, 302)
+            saved = load_data("places")["shops"]
+            self.assertIs(saved[0].get("highlight"), True)
+            self.assertEqual(saved[0].get("name"), before.get("name"))
+            self.assertEqual(saved[0].get("lat"), before.get("lat"))
+            self.assertEqual(saved[0].get("lng"), before.get("lng"))
+            self.assertEqual(saved[0].get("postcode"), before.get("postcode"))
+            self.assertEqual(saved[1], shops[1])
+            self.assertEqual(len(saved), len(shops))
+
+            payload["highlight"] = ""
+            response = self.client.post("/places/shop/0", data=payload)
+            self.assertEqual(response.status_code, 302)
+            cleared = load_data("places")["shops"]
+            self.assertNotIn("highlight", cleared[0])
+            self.assertEqual(cleared[0].get("lat"), before.get("lat"))
+            self.assertEqual(cleared[1], shops[1])
+        finally:
+            with app.app_context():
+                save_data("places", original)
+
+    def test_page_save_without_stockist_fields_keeps_every_shop(self):
+        original = load_data("places")
+        try:
+            payload = _form_from_places(original)
+            for key in list(payload):
+                if key.startswith("shop"):
+                    payload.pop(key)
+            self.assertNotIn("shop_count", payload)
+            self.assertNotIn("shop0_name", payload)
+            response = self.client.post("/places/save", data=payload)
+            self.assertEqual(response.status_code, 302)
+            self.assertEqual(load_data("places").get("shops"), original.get("shops"))
+        finally:
+            with app.app_context():
+                save_data("places", original)
+
+    def test_add_and_remove_shop_touch_only_that_row(self):
+        from unittest import mock
+        import stockists_import as si
+        original = load_data("places")
+
+        def fake(postcodes):
+            return {"BS1 4DJ": (51.4545, -2.5879)}
+
+        try:
+            with mock.patch.object(si, "lookup_postcodes", fake):
+                response = self.client.post("/places/shop/add", data={
+                    "name": "Pin Lookup Shop",
+                    "city": "Bristol",
+                    "address": "27 Philpot Ln",
+                    "postcode": "bs1 4dj",
+                    "url": "",
+                    "phone": "",
+                    "lat": "",
+                    "lng": "",
+                })
+            self.assertEqual(response.status_code, 302)
+            shops = load_data("places")["shops"]
+            self.assertEqual(len(shops), len(original["shops"]) + 1)
+            self.assertEqual(shops[0], original["shops"][0])
+            added = shops[-1]
+            self.assertEqual(added["name"], "Pin Lookup Shop")
+            self.assertEqual(added["postcode"], "BS1 4DJ")
+            self.assertEqual((added["lat"], added["lng"]), (51.4545, -2.5879))
+            self.assertNotIn("highlight", added)
+
+            response = self.client.post("/places/shop/0/remove")
+            self.assertEqual(response.status_code, 302)
+            shops = load_data("places")["shops"]
+            self.assertEqual(shops[0], original["shops"][1])
+            self.assertEqual(shops[-1]["name"], "Pin Lookup Shop")
+        finally:
+            with app.app_context():
+                save_data("places", original)
 
 
 def _form_from_places(data):
