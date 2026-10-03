@@ -1162,6 +1162,182 @@ window.EB_PLACES = {
       "postcode": "SW13 9HR",
       "lat": 51.475377,
       "lng": -0.239806
+    },
+    {
+      "name": "Gudz",
+      "address": "Watford WD18 9SB",
+      "city": "Watford",
+      "postcode": "WD18 9SB",
+      "lat": 51.639804,
+      "lng": -0.433288
+    },
+    {
+      "name": "Andrews Online",
+      "address": "Keighley BD21 4LA",
+      "city": "Keighley",
+      "postcode": "BD21 4LA",
+      "lat": 53.870287,
+      "lng": -1.8931
+    },
+    {
+      "name": "The Deli Downstairs",
+      "address": "London E9 7JN",
+      "city": "London",
+      "postcode": "E9 7JN",
+      "lat": 51.538018,
+      "lng": -0.04605
+    },
+    {
+      "name": "Panzers Delicatessen",
+      "address": "London NW8 6PB",
+      "city": "London",
+      "postcode": "NW8 6PB",
+      "lat": 51.533434,
+      "lng": -0.172222
+    },
+    {
+      "name": "Herbivore Vegans Deli",
+      "address": "Bristol BS1 6ZA",
+      "city": "Bristol",
+      "postcode": "BS1 6ZA",
+      "lat": 51.447246,
+      "lng": -2.59859
+    },
+    {
+      "name": "Fairway Importers",
+      "address": "Chelmsford CM1 3SH",
+      "city": "Chelmsford",
+      "postcode": "CM1 3SH",
+      "lat": 51.730959,
+      "lng": 0.370561
+    },
+    {
+      "name": "Church of Scientology (The Refectory)",
+      "address": "East Grinstead RH19 4JY",
+      "city": "East Grinstead",
+      "postcode": "RH19 4JY",
+      "lat": 51.105967,
+      "lng": -0.02937
+    },
+    {
+      "name": "Offbeet Coffee Shop & Deli",
+      "address": "Southsea PO5 2SG",
+      "city": "Southsea",
+      "postcode": "PO5 2SG",
+      "lat": 50.787042,
+      "lng": -1.079217
+    },
+    {
+      "name": "Yellow Ladder",
+      "address": "London E1 1BY",
+      "city": "London",
+      "postcode": "E1 1BY",
+      "lat": 51.519554,
+      "lng": -0.059467
+    },
+    {
+      "name": "Fairway Importers",
+      "address": "Huntingdon PE29 1HU",
+      "city": "Huntingdon",
+      "postcode": "PE29 1HU",
+      "lat": 52.3324,
+      "lng": -0.181342
+    },
+    {
+      "name": "Stokeys Delicatessen",
+      "address": "London N16 0JL",
+      "city": "London",
+      "postcode": "N16 0JL",
+      "lat": 51.561672,
+      "lng": -0.082188
+    },
+    {
+      "name": "Wholefood Earth",
+      "address": "Ramsgate CT12 6UW",
+      "city": "Ramsgate",
+      "postcode": "CT12 6UW",
+      "lat": 51.353593,
+      "lng": 1.407097
+    },
+    {
+      "name": "Dolphin Fitness",
+      "address": "Shoreham-by-Sea BN43 6PB",
+      "city": "Shoreham-by-Sea",
+      "postcode": "BN43 6PB",
+      "lat": 50.833839,
+      "lng": -0.261135
+    },
+    {
+      "name": "Cups and Jars",
+      "address": "London E7 0EW",
+      "city": "London",
+      "postcode": "E7 0EW",
+      "lat": 51.550906,
+      "lng": 0.025441
+    },
+    {
+      "name": "Christopher Parker Fitness",
+      "address": "Chichester PO19 7BJ",
+      "city": "Chichester",
+      "postcode": "PO19 7BJ",
+      "lat": 50.842117,
+      "lng": -0.752123
+    },
+    {
+      "name": "Health Plus Living",
+      "address": "Harrow HA1 2SZ",
+      "city": "Harrow",
+      "postcode": "HA1 2SZ",
+      "lat": 51.587484,
+      "lng": -0.32948
+    },
+    {
+      "name": "The Broadway Deli and Grocery",
+      "address": "Woodford Green IG8 0HL",
+      "city": "Woodford Green",
+      "postcode": "IG8 0HL",
+      "lat": 51.607947,
+      "lng": 0.033177
+    },
+    {
+      "name": "Feel the Difference",
+      "address": "London EN5 5YL",
+      "city": "London",
+      "postcode": "EN5 5YL",
+      "lat": 51.654793,
+      "lng": -0.199409
+    },
+    {
+      "name": "Fodmarket",
+      "address": "Bromley BR1 3RB",
+      "city": "Bromley",
+      "postcode": "BR1 3RB",
+      "lat": 51.410821,
+      "lng": 0.011506
+    },
+    {
+      "name": "Katarzyna Migdal",
+      "address": "Southampton SO15 5NF",
+      "city": "Southampton",
+      "postcode": "SO15 5NF",
+      "lat": 50.921465,
+      "lng": -1.429701
+    },
+    {
+      "name": "Vraj RCH",
+      "address": "Bedford MK42 9TW",
+      "city": "Bedford",
+      "postcode": "MK42 9TW",
+      "lat": 52.119802,
+      "lng": -0.454213
+    },
+    {
+      "name": "Best Health Online",
+      "address": "Uckfield TN22 1AJ",
+      "city": "Uckfield",
+      "postcode": "TN22 1AJ",
+      "lat": 50.970584,
+      "lng": 0.09602
     }
   ],
   "footer": {
