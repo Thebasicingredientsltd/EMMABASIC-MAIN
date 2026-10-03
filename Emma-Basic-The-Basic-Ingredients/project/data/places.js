@@ -57,14 +57,16 @@ window.EB_PLACES = {
       "city": "London",
       "address": "400 Oxford St, London W1A 1AB",
       "lat": 51.5143,
-      "lng": -0.153
+      "lng": -0.153,
+      "highlight": true
     },
     {
       "name": "Harrods",
       "city": "London",
       "address": "87–135 Brompton Rd, London SW1X 7XL",
       "lat": 51.4994,
-      "lng": -0.1632
+      "lng": -0.1632,
+      "highlight": true
     },
     {
       "name": "Wholefoods",
@@ -141,7 +143,8 @@ window.EB_PLACES = {
       "city": "Manchester",
       "address": "60 The Trafford Centre, Stretford M17 8DA",
       "lat": 53.467,
-      "lng": -2.349
+      "lng": -2.349,
+      "highlight": true
     },
     {
       "name": "General Store",
