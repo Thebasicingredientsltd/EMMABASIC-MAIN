@@ -34,13 +34,14 @@
     <p class="field-help" style="font-size:13.5px;">Untick any shop you don't want on the website. Names have been tidied (for example “Ltd” and notes in brackets removed) — you can change any name afterwards on the Where to find our products page.</p>
     <div style="overflow-x:auto;">
     <table class="eb-import-table">
-      <thead><tr><th>Include</th><th>Shop</th><th>Town / postcode</th><th>Result</th></tr></thead>
+      <thead><tr><th>Include</th><th>Shop</th><th>Town / postcode</th><th>Highlight on the map</th><th>Result</th></tr></thead>
       <tbody>
       {% for item in preview["items"] if item.shop %}
         <tr class="{{ 'is-flagged' if item.flag }}">
           <td><input type="checkbox" name="include" value="{{ item.index }}"{{ ' checked' if item.include }} aria-label="Include {{ item.shop.name }}"/></td>
           <td>{{ item.shop.name }}</td>
           <td>{{ item.shop.city or '' }}{% if item.shop.postcode %} · {{ item.shop.postcode }}{% endif %}</td>
+          <td>{% if item.highlight %}Yes{% endif %}</td>
           <td>
             {% if item.status == 'new' %}New{% elif item.status == 'updated' %}Already on the website (details will be updated){% else %}Already on the website{% endif %}
             {% if item.flag %}<br/><span class="eb-flag">To check: {{ item.flag }}</span>{% endif %}

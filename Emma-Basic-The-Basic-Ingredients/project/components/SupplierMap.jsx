@@ -1,14 +1,18 @@
 /* ============================================================
    SupplierMap — "Where to find us. Stocked across the UK."
-   A UK map with a pin per stockist, plus a searchable list.
-   Heading comes from window.EB_PLACES.directory and the pins from
-   window.EB_PLACES.shops (CRM → Where to find our products).
-   Needs Leaflet (loaded in Places.html).
+   A UK map with a pin per stockist, plus one search.
+   Type a shop name to filter the list and pins. Type a UK
+   postcode, or a town the geocoder can place, and the map
+   moves to the nearest shops. Heading comes from
+   window.EB_PLACES.directory and the pins from
+   window.EB_PLACES.shops. A shop with highlight: true uses
+   a larger accent pin. Needs Leaflet (loaded in Places.html).
    ============================================================ */
 
 const SM_TILE_BASE = "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}";
 const SM_TILE_LABELS = "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}";
 const SM_UK_BOUNDS = [[49.9, -8.2], [58.7, 1.8]];
+const SM_NEAR_LIMIT = 5;
 
 function cmsCopy(prop, cmsVal, fallback) {
   if (prop !== undefined && prop !== null) return prop;
@@ -18,6 +22,10 @@ function cmsCopy(prop, cmsVal, fallback) {
 
 function smHasPin(s) {
   return typeof s.lat === "number" && typeof s.lng === "number";
+}
+
+function smHighlighted(s) {
+  return !!(s && s.highlight === true);
 }
 
 function smSafeUrl(url) {
@@ -41,9 +49,90 @@ function smAddressLine(s) {
   return address || s.city || "";
 }
 
-function smPopupNode(s) {
+function smHaversineKm(lat1, lng1, lat2, lng2) {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLng = (lng2 - lng1) * Math.PI / 180;
+  const a = Math.sin(dLat / 2) ** 2 +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+function smFmtKm(km) {
+  if (km < 1) return Math.round(km * 1000) + " m";
+  return (Math.round(km * 10) / 10).toFixed(1) + " km";
+}
+
+function smCompactPostcode(raw) {
+  return String(raw || "").trim().toUpperCase().replace(/\s+/g, "");
+}
+
+function smPostcodeKind(raw) {
+  const compact = smCompactPostcode(raw);
+  if (/^[A-Z]{1,2}\d[A-Z\d]?\d[A-Z]{2}$/.test(compact)) return "full";
+  if (/^[A-Z]{1,2}\d[A-Z\d]?$/.test(compact)) return "outcode";
+  return "";
+}
+
+function smPartialPostcode(raw) {
+  const compact = smCompactPostcode(raw);
+  if (!compact || smPostcodeKind(raw)) return false;
+  return /^[A-Z]{1,2}\d[A-Z0-9]*$/.test(compact) && compact.length < 7;
+}
+
+async function smGeocodePostcode(raw, kind) {
+  const compact = smCompactPostcode(raw);
+  const url = kind === "full"
+    ? "https://api.postcodes.io/postcodes/" + encodeURIComponent(compact)
+    : "https://api.postcodes.io/outcodes/" + encodeURIComponent(compact);
+  const res = await fetch(url);
+  const data = await res.json();
+  const result = data && data.result;
+  if (data && data.status === 200 && result && typeof result.latitude === "number" && typeof result.longitude === "number") {
+    return {
+      lat: result.latitude,
+      lng: result.longitude,
+      label: result.postcode || result.outcode || compact,
+    };
+  }
+  return null;
+}
+
+async function smGeocodePlace(raw) {
+  const q = String(raw || "").trim();
+  const res = await fetch("https://api.postcodes.io/places?q=" + encodeURIComponent(q) + "&limit=10");
+  const data = await res.json();
+  const places = (data && data.result) || [];
+  const norm = q.toLowerCase();
+  const hit = places.find(p => {
+    const name = String(p.name_1 || "").toLowerCase();
+    return name === norm || name.indexOf(norm) === 0 || norm.indexOf(name) === 0;
+  });
+  if (!hit || typeof hit.latitude !== "number" || typeof hit.longitude !== "number") return null;
+  return { lat: hit.latitude, lng: hit.longitude, label: hit.name_1 || q };
+}
+
+function smNearest(pinned, origin, limit) {
+  return pinned
+    .map(s => ({ ...s, km: smHaversineKm(origin.lat, origin.lng, s.lat, s.lng) }))
+    .sort((a, b) => a.km - b.km)
+    .slice(0, limit);
+}
+
+function smPinIcon(highlighted) {
+  const size = highlighted ? 22 : 18;
+  return L.divIcon({
+    html: "<span></span>",
+    className: "eb-sm-pin" + (highlighted ? " is-highlight" : ""),
+    iconSize: [size, size],
+    iconAnchor: [size / 2, size / 2],
+    popupAnchor: [0, -10],
+  });
+}
+
+function smPopupNode(s, km) {
   const root = document.createElement("div");
-  root.className = "eb-sm-popup";
+  root.className = "eb-sm-popup" + (smHighlighted(s) ? " is-highlight" : "");
   const add = (tag, cls, text) => {
     const el = document.createElement(tag);
     el.className = cls;
@@ -53,6 +142,7 @@ function smPopupNode(s) {
   };
   if (s.city) add("div", "eb-sm-popup-city", s.city);
   add("div", "eb-sm-popup-name", s.name);
+  if (typeof km === "number") add("div", "eb-sm-popup-dist", smFmtKm(km) + " away");
   const address = smAddressLine(s);
   if (address) add("div", "eb-sm-popup-address", address);
   if (s.phone) {
@@ -101,14 +191,31 @@ function SupplierMap({ heading, headingItalic, hideHeading }) {
   const [showAll, setShowAll] = React.useState(false);
   const [hint, setHint] = React.useState("");
   const [isNarrow, setIsNarrow] = React.useState(() => window.matchMedia("(max-width: 768px)").matches);
+  const [origin, setOrigin] = React.useState(null);
+  const [lookup, setLookup] = React.useState("idle");
   const mapEl = React.useRef(null);
   const wrapEl = React.useRef(null);
   const mapRef = React.useRef(null);
   const markersRef = React.useRef({});
   const hintTimer = React.useRef(null);
 
-  const visible = shops.filter(s => smMatches(s, query.trim()));
   const pinned = shops.filter(smHasPin);
+  const q = query.trim();
+  const postcodeKind = smPostcodeKind(q);
+  const partialPostcode = smPartialPostcode(q);
+  const textHits = shops.filter(s => smMatches(s, q));
+  const seekingPlace = !postcodeKind && !partialPostcode && q.length >= 3 && textHits.length === 0;
+  const originForQuery = origin && origin.q === q ? origin : null;
+  const useNear = !!(originForQuery && (postcodeKind || textHits.length === 0));
+  const nearest = useNear ? smNearest(pinned, originForQuery, SM_NEAR_LIMIT) : null;
+
+  let mode = "all";
+  if (!q) mode = "all";
+  else if (useNear) mode = "near";
+  else if ((postcodeKind || seekingPlace) && !originForQuery && lookup !== "miss") mode = "looking";
+  else mode = "text";
+
+  const visible = mode === "near" ? nearest : mode === "text" ? textHits : mode === "looking" ? [] : shops;
 
   React.useEffect(() => {
     const mq = window.matchMedia("(max-width: 768px)");
@@ -142,8 +249,14 @@ function SupplierMap({ heading, headingItalic, hideHeading }) {
     L.tileLayer(SM_TILE_LABELS, { maxNativeZoom: 16, maxZoom: 18 }).addTo(map);
 
     pinned.forEach(s => {
-      const icon = L.divIcon({ html: "<span></span>", className: "eb-sm-pin", iconSize: [18, 18], iconAnchor: [9, 9], popupAnchor: [0, -8] });
-      const marker = L.marker([s.lat, s.lng], { icon, title: s.name, alt: s.name, riseOnHover: true }).addTo(map);
+      const highlighted = smHighlighted(s);
+      const marker = L.marker([s.lat, s.lng], {
+        icon: smPinIcon(highlighted),
+        title: s.name,
+        alt: s.name,
+        riseOnHover: true,
+        zIndexOffset: highlighted ? 500 : 0,
+      }).addTo(map);
       marker.bindPopup(() => smPopupNode(s), { maxWidth: 280, minWidth: 200, closeButton: true, autoPanPadding: [24, 24] });
       marker.on("popupopen", () => setActiveId(s._id));
       marker.on("popupclose", () => setActiveId(id => (id === s._id ? null : id)));
@@ -176,23 +289,79 @@ function SupplierMap({ heading, headingItalic, hideHeading }) {
     };
   }, []);
 
-  // Show only the pins that match the search, and frame them.
+  React.useEffect(() => {
+    const text = query.trim();
+    if (!text) {
+      setOrigin(null);
+      setLookup("idle");
+      return undefined;
+    }
+    const kind = smPostcodeKind(text);
+    const hits = shops.filter(s => smMatches(s, text));
+    const partial = smPartialPostcode(text);
+    const seekPlace = !kind && !partial && text.length >= 3 && hits.length === 0;
+    if (!kind && !seekPlace) {
+      setOrigin(null);
+      setLookup("idle");
+      return undefined;
+    }
+    let cancelled = false;
+    setOrigin(null);
+    setLookup("looking");
+    const timer = window.setTimeout(async () => {
+      try {
+        const place = kind ? await smGeocodePostcode(text, kind) : await smGeocodePlace(text);
+        if (cancelled) return;
+        if (place) {
+          setOrigin({ lat: place.lat, lng: place.lng, label: place.label, q: text });
+          setLookup("idle");
+        } else {
+          setOrigin(null);
+          setLookup("miss");
+        }
+      } catch (err) {
+        if (cancelled) return;
+        setOrigin(null);
+        setLookup("miss");
+      }
+    }, 420);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timer);
+    };
+  }, [query, shops]);
+
   React.useEffect(() => {
     const map = mapRef.current;
-    if (!map) return;
-    const q = query.trim();
+    if (!map || mode === "looking") return;
+    const shown = mode === "all" ? pinned : (visible || []).filter(smHasPin);
+    const shownIds = {};
+    shown.forEach((s, i) => { shownIds[s._id] = { km: s.km, rank: i }; });
     const hits = [];
     pinned.forEach(s => {
       const marker = markersRef.current[s._id];
       if (!marker) return;
-      const match = smMatches(s, q);
+      const info = shownIds[s._id];
+      const match = !!info;
       if (match && !map.hasLayer(marker)) marker.addTo(map);
-      if (!match && map.hasLayer(marker)) map.removeLayer(marker);
+      if (!match && map.hasLayer(marker)) {
+        if (marker.isPopupOpen && marker.isPopupOpen()) marker.closePopup();
+        map.removeLayer(marker);
+      }
       if (match) hits.push([s.lat, s.lng]);
+      if (marker.getPopup()) marker.setPopupContent(smPopupNode(s, info && info.km));
+      const el = marker.getElement && marker.getElement();
+      if (el) {
+        el.classList.toggle("is-highlight", smHighlighted(s));
+        el.classList.toggle("is-near", mode === "near" && match);
+        el.classList.toggle("is-nearest", mode === "near" && match && info.rank === 0);
+      }
     });
-    if (q && hits.length) map.fitBounds(L.latLngBounds(hits), { padding: [48, 48], maxZoom: 13 });
-    else if (!q && hits.length) map.fitBounds(L.latLngBounds(hits), { padding: [36, 36], maxZoom: 9 });
-  }, [query]);
+    if (!hits.length) return;
+    const padding = mode === "all" ? [36, 36] : [48, 48];
+    const maxZoom = mode === "all" ? 9 : 13;
+    map.fitBounds(L.latLngBounds(hits), { padding: padding, maxZoom: maxZoom });
+  }, [query, origin, lookup]);
 
   React.useEffect(() => {
     Object.keys(markersRef.current).forEach(id => {
@@ -200,6 +369,11 @@ function SupplierMap({ heading, headingItalic, hideHeading }) {
       if (el) el.classList.toggle("is-active", String(activeId) === id);
     });
   }, [activeId]);
+
+  React.useEffect(() => {
+    if (activeId == null || mode === "looking") return;
+    if (!visible.some(s => s._id === activeId)) setActiveId(null);
+  }, [query, origin, lookup]);
 
   const focusShop = (s) => {
     const map = mapRef.current;
@@ -211,8 +385,18 @@ function SupplierMap({ heading, headingItalic, hideHeading }) {
     if (isNarrow && wrapEl.current) wrapEl.current.scrollIntoView({ behavior: "smooth", block: "center" });
   };
 
-  const listLimit = isNarrow && !showAll && !query.trim() ? 6 : visible.length;
+  const listLimit = isNarrow && !showAll && !q ? 6 : visible.length;
   const listed = visible.slice(0, listLimit);
+  let countText = shops.length + (shops.length === 1 ? " shop" : " shops");
+  if (mode === "looking") countText = "Looking up…";
+  else if (mode === "near") countText = nearest.length + " nearest to " + origin.label;
+  else if (q) countText = visible.length + " of " + shops.length + " shops";
+
+  let emptyText = "";
+  if (mode === "looking") emptyText = "Looking up that place…";
+  else if (q && !visible.length && partialPostcode) emptyText = "Keep typing the postcode.";
+  else if (q && !visible.length && lookup === "miss" && postcodeKind) emptyText = "We couldn't find that postcode. Check it and try again.";
+  else if (q && !visible.length) emptyText = "No shops match “" + q + "”. Try a shop name, town or postcode.";
 
   return (
     <section id="stockist-map" style={{
@@ -275,11 +459,11 @@ function SupplierMap({ heading, headingItalic, hideHeading }) {
               <input
                 id="eb-sm-q" type="search" value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Town, postcode or shop name"
+                placeholder="Search by shop, town or postcode"
                 autoComplete="off"
               />
               <div className="eb-sm-count" aria-live="polite">
-                {query.trim() ? `${visible.length} of ${shops.length} shops` : `${shops.length} shops`}
+                {countText}
               </div>
             </div>
             <ul className="eb-sm-items">
@@ -287,18 +471,21 @@ function SupplierMap({ heading, headingItalic, hideHeading }) {
                 <li key={s._id}>
                   <button
                     type="button"
-                    className={"eb-sm-item" + (activeId === s._id ? " is-active" : "")}
+                    className={"eb-sm-item" + (activeId === s._id ? " is-active" : "") + (smHighlighted(s) ? " is-highlight" : "")}
                     onClick={() => focusShop(s)}
                     disabled={!smHasPin(s)}
                   >
-                    <span className="eb-sm-item-name">{s.name}</span>
-                    <span className="eb-sm-item-city">{s.city}</span>
+                    <span className="eb-sm-item-name">
+                      {s.name}
+                      {smHighlighted(s) ? <span className="eb-sm-highlight-tag">Highlighted</span> : null}
+                    </span>
+                    <span className="eb-sm-item-city">{s.km != null ? smFmtKm(s.km) : s.city}</span>
                     <span className="eb-sm-item-address">{smAddressLine(s)}</span>
                   </button>
                 </li>
               ))}
-              {!visible.length ? (
-                <li className="eb-sm-empty">No shops match “{query}”. Try a town or the first part of a postcode.</li>
+              {emptyText ? (
+                <li className="eb-sm-empty">{emptyText}</li>
               ) : null}
             </ul>
             {listLimit < visible.length ? (
@@ -347,6 +534,14 @@ function SupplierMap({ heading, headingItalic, hideHeading }) {
           font-family: var(--f-display); font-size: 19px; letter-spacing: -0.015em; line-height: 1.2;
           font-variation-settings: "opsz" 144, "SOFT" 20;
         }
+        .eb-sm-item.is-highlight .eb-sm-item-name { color: #8A6A2F; }
+        .eb-sm-highlight-tag {
+          display: block; margin-top: 4px; font-family: var(--f-mono); font-size: 9px;
+          letter-spacing: 0.18em; text-transform: uppercase; color: #8A6A2F;
+          font-variation-settings: normal;
+        }
+        .eb-sm-item.is-active.is-highlight .eb-sm-item-name,
+        .eb-sm-item.is-active .eb-sm-highlight-tag { color: #E4C56A; }
         .eb-sm-item-city {
           font-family: var(--f-mono); font-size: 9.5px; letter-spacing: 0.18em; text-transform: uppercase;
           color: inherit; opacity: 0.55; align-self: center; white-space: nowrap;
@@ -374,8 +569,17 @@ function SupplierMap({ heading, headingItalic, hideHeading }) {
           background: #0A0A0A; border: 2px solid #fff; box-shadow: 0 1px 6px rgba(0,0,0,0.35);
           transition: transform 160ms var(--ease-out);
         }
-        .eb-sm-pin:hover span, .eb-sm-pin.is-active span { transform: scale(1.35); }
+        .eb-sm-pin.is-highlight span {
+          width: 18px; height: 18px; margin: 2px; background: #C4A15A;
+          box-shadow: 0 0 0 1.5px #0A0A0A, 0 2px 8px rgba(0,0,0,0.35);
+        }
+        .eb-sm-pin:hover span, .eb-sm-pin.is-active span, .eb-sm-pin.is-nearest span { transform: scale(1.35); }
         .eb-sm-pin.is-active span { background: #fff; border-color: #0A0A0A; }
+        .eb-sm-pin.is-highlight.is-active span,
+        .eb-sm-pin.is-highlight.is-nearest span,
+        .eb-sm-pin.is-highlight:hover span {
+          background: #C4A15A; border-color: #fff; transform: scale(1.2);
+        }
         .eb-sm-mapwrap .leaflet-container { font-family: var(--f-body); }
         .eb-sm-mapwrap .leaflet-control-zoom {
           border: 1px solid rgba(10,10,10,0.15) !important; box-shadow: 0 2px 12px rgba(0,0,0,0.12) !important; border-radius: 0 !important;
@@ -400,6 +604,11 @@ function SupplierMap({ heading, headingItalic, hideHeading }) {
         .eb-sm-popup-name {
           font-family: var(--f-display); font-size: 21px; line-height: 1.1; letter-spacing: -0.015em;
           color: #0A0A0A; margin-bottom: 6px;
+        }
+        .eb-sm-popup.is-highlight .eb-sm-popup-name { color: #8A6A2F; }
+        .eb-sm-popup-dist {
+          font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+          color: rgba(10,10,10,0.55); margin: -2px 0 8px;
         }
         .eb-sm-popup-address { font-family: var(--f-body); font-size: 12.5px; line-height: 1.5; color: rgba(10,10,10,0.7); }
         .eb-sm-popup-phone { display: block; margin-top: 4px; font-family: var(--f-body); font-size: 12.5px; color: #0A0A0A; }

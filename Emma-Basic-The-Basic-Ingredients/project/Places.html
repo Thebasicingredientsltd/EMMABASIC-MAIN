@@ -62,9 +62,8 @@
 <script type="text/babel" src="components/motion.jsx"></script>
 <script type="text/babel" src="components/TopNav.jsx?v=21"></script>
 <script type="text/babel" src="components/PageHero.jsx?v=5"></script>
-<script type="text/babel" src="components/SupplierMap.jsx?v=7"></script>
+<script type="text/babel" src="components/SupplierMap.jsx?v=8"></script>
 <script type="text/babel" src="components/StockistCarousel.jsx?v=9"></script>
-<script type="text/babel" src="components/NearestShopFinder.jsx?v=4"></script>
 <script type="text/babel" src="components/HowToOrder.jsx?v=4"></script>
 <script type="text/babel" src="components/Sections.jsx?v=6"></script>
 
@@ -205,7 +204,6 @@ function PlacesApp() {
         />
         <StockistCarousel />
         <SupplierMap />
-        <NearestShopFinder />
         {HowToOrderView ? <HowToOrderView /> : <HowToOrder />}
       </main>
       <SiteFooter visible={(window.EB_PLACES && window.EB_PLACES.footer || {}).visible} />

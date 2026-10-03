@@ -1392,6 +1392,10 @@ def places_save():
             prev["lng"] = lng
         else:
             prev.pop("lng", None)
+        if form_checkbox("shop%d_highlight" % i):
+            prev["highlight"] = True
+        else:
+            prev.pop("highlight", None)
         shops.append(prev)
     stockists_import.fill_missing_coordinates(shops)
     d["shops"] = shops

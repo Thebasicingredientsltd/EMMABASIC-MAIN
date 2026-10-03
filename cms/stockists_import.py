@@ -30,10 +30,10 @@ ADDRESS_LOOKUP_GAP = 1.1
 MAX_ROWS = 2000
 MAX_SALES_LINES = 100000
 
-TEMPLATE_COLUMNS = ["Name", "Address", "Town", "Postcode", "Region", "Website", "Phone"]
+TEMPLATE_COLUMNS = ["Name", "Address", "Town", "Postcode", "Region", "Website", "Phone", "Highlight"]
 TEMPLATE_EXAMPLE = [
     "Example Deli", "12 High Street", "Bristol", "BS1 4DJ", "South West",
-    "https://exampledeli.co.uk", "0117 000 0000",
+    "https://exampledeli.co.uk", "0117 000 0000", "",
 ]
 
 # Normalised header text (lowercase, punctuation -> single spaces) -> field.
@@ -60,6 +60,8 @@ HEADER_ALIASES = {
               "contact number", "mobile"],
     "lat": ["lat", "latitude"],
     "lng": ["lng", "lon", "long", "longitude"],
+    "highlight": ["highlight", "highlighted", "highlight on the map", "highlight on map",
+                  "map highlight", "featured"],
 }
 _ALIAS_LOOKUP = {alias: field for field, aliases in HEADER_ALIASES.items() for alias in aliases}
 
@@ -123,6 +125,24 @@ def _cell_text(value):
     if isinstance(value, float) and value.is_integer():
         value = int(value)
     return re.sub(r"\s+", " ", str(value)).strip()
+
+
+_HIGHLIGHT_YES = {"yes", "true", "1", "y", "on", "highlighted", "highlight"}
+_HIGHLIGHT_NO = {"no", "false", "0", "n", "off"}
+
+
+def parse_highlight(value):
+    """True, False, or None when the cell is blank (leave the shop as it is)."""
+    if isinstance(value, bool):
+        return value
+    text = _cell_text(value).lower()
+    if not text:
+        return None
+    if text in _HIGHLIGHT_YES:
+        return True
+    if text in _HIGHLIGHT_NO:
+        return False
+    return None
 
 
 def normalise_postcode(text):
@@ -399,6 +419,7 @@ def read_file(filename, data):
             "lat": _parse_coord(get("lat"), -90, 90),
             "lng": _parse_coord(get("lng"), -180, 180),
             "kind": get("kind"),
+            "highlight": parse_highlight(get("highlight")),
         }
         if sales:
             row["name"] = tidy_name(row["name"], note_words)
@@ -502,6 +523,10 @@ def _shop_from_row(row):
     shop["address"] = _compose_address(street, town, row["postcode"]) if street else ""
     for field in ("postcode", "region", "url", "phone"):
         shop[field] = row[field]
+    if row.get("highlight") is True:
+        shop["highlight"] = True
+    elif row.get("highlight") is False:
+        shop["highlight"] = False
     return shop
 
 
@@ -518,6 +543,10 @@ def _merge(existing, incoming):
         merged[field] = value
     if _has_coords(incoming):
         merged["lat"], merged["lng"] = incoming["lat"], incoming["lng"]
+    if incoming.get("highlight") is True:
+        merged["highlight"] = True
+    elif incoming.get("highlight") is False:
+        merged.pop("highlight", None)
     return merged
 
 
@@ -530,6 +559,8 @@ def _clean_new(shop):
     out.setdefault("address", "")
     if _has_coords(shop):
         out["lat"], out["lng"] = shop["lat"], shop["lng"]
+    if shop.get("highlight") is True:
+        out["highlight"] = True
     return out
 
 
@@ -571,6 +602,13 @@ def build_preview(existing_shops, rows, lookup_postcodes=None, lookup_address=No
         match = existing_by_key.get(key)
         item["match"] = match
         item["shop"] = shop
+        incoming_flag = shop.get("highlight", None)
+        if incoming_flag is True:
+            item["highlight"] = True
+        elif incoming_flag is False:
+            item["highlight"] = False
+        else:
+            item["highlight"] = bool(match and match.get("highlight") is True)
         if row["lat"] is not None and row["lng"] is not None:
             shop["lat"], shop["lng"] = _num(row["lat"]), _num(row["lng"])
         elif match and _has_coords(match):
@@ -672,6 +710,11 @@ def clean_payload_shop(raw):
     if lat is None or lng is None:
         return None
     shop["lat"], shop["lng"] = _num(lat), _num(lng)
+    flag = parse_highlight(raw.get("highlight"))
+    if flag is True:
+        shop["highlight"] = True
+    elif flag is False:
+        shop["highlight"] = False
     return shop
 
 
@@ -744,7 +787,7 @@ def template_workbook_bytes():
     ws.append(TEMPLATE_EXAMPLE)
     for cell in ws[1]:
         cell.font = Font(bold=True)
-    for letter, width in zip("ABCDEFG", (28, 32, 18, 12, 18, 34, 18)):
+    for letter, width in zip("ABCDEFGH", (28, 32, 18, 12, 18, 34, 18, 16)):
         ws.column_dimensions[letter].width = width
     ws.freeze_panes = "A2"
     buf = io.BytesIO()

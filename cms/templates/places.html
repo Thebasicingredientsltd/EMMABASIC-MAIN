@@ -12,7 +12,7 @@
   <h2 style="margin-top:0;">Upload stockists (Excel)</h2>
   <p class="field-help" style="font-size:13.5px;">Add lots of shops at once from a spreadsheet. Each shop is put on the map on the Find us page using its postcode.</p>
   <ol class="field-help" style="font-size:13.5px; padding-left:20px; line-height:1.7;">
-    <li>Your sheet needs a heading row. Only <strong>Name</strong> is required, but add a <strong>Postcode</strong> so the shop can go on the map. Address, Town, Region, Website and Phone are optional.</li>
+    <li>Your sheet needs a heading row. Only <strong>Name</strong> is required, but add a <strong>Postcode</strong> so the shop can go on the map. Address, Town, Region, Website and Phone are optional. A <strong>Highlight</strong> column (yes, true or 1) makes that shop stand out on the map. Leave it blank to keep the shop as it is.</li>
     <li>Choose the file and press <strong>Check my file</strong>. Nothing changes on the website yet — you'll see a preview of what will be added first.</li>
   </ol>
   <form method="post" action="{{ url_for('places_import_preview') }}" enctype="multipart/form-data" style="margin-top:12px;">
@@ -126,7 +126,7 @@
 
   <div class="card">
     <h2 style="margin-top:0;">All stockists <span class="pill">{{ (d.shops or [])|length }}</span></h2>
-    <p class="field-help">These shops appear as pins on the map on the Find us page and in the “find your nearest shop” tool. Add a postcode and leave latitude and longitude blank — the pin is found from the postcode when you save.</p>
+    <p class="field-help">These shops appear as pins on the map on the Find us page. The search on that map finds a shop by name, town or postcode. Add a postcode and leave latitude and longitude blank — the pin is found from the postcode when you save. Tick <strong>Highlight on the map</strong> for the shops you want to stand out. Leave it unticked for everyone else.</p>
     <div id="shops">
       {% for s in (d.shops or []) %}
       <div class="tile-editor" data-shop>
@@ -145,6 +145,9 @@
           <div><label>Latitude (optional)</label><input type="text" name="shop{{ loop.index0 }}_lat" value="{{ s.lat if s.lat is not none else '' }}"/></div>
           <div><label>Longitude (optional)</label><input type="text" name="shop{{ loop.index0 }}_lng" value="{{ s.lng if s.lng is not none else '' }}"/></div>
         </div>
+        <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:10px 0 0; font-weight:500;">
+          <input type="checkbox" name="shop{{ loop.index0 }}_highlight" value="on" style="width:auto;" {{ 'checked' if s.highlight }}/> Highlight on the map
+        </label>
         <div style="margin-top:10px;"><button type="button" class="btn danger small" onclick="this.closest('[data-shop]').remove()">Remove stockist</button></div>
       </div>
       {% endfor %}
@@ -204,6 +207,9 @@
       <div><label>Latitude (optional)</label><input type="text" name="shopIDX_lat" value=""/></div>
       <div><label>Longitude (optional)</label><input type="text" name="shopIDX_lng" value=""/></div>
     </div>
+    <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:10px 0 0; font-weight:500;">
+      <input type="checkbox" name="shopIDX_highlight" value="on" style="width:auto;"/> Highlight on the map
+    </label>
     <div style="margin-top:10px;"><button type="button" class="btn danger small" onclick="this.closest('[data-shop]').remove()">Remove stockist</button></div>
   </div>
 </template>

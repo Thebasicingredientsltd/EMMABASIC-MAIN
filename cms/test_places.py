@@ -173,6 +173,38 @@ class PlacesPageTests(unittest.TestCase):
             with app.app_context():
                 save_data("places", original)
 
+    def test_highlight_checkbox_sets_and_clears_without_losing_the_shop(self):
+        original = load_data("places")
+        try:
+            before = (original.get("shops") or [])[0]
+            payload = _form_from_places(original)
+            payload["shop0_highlight"] = "on"
+            response = self.client.post("/places/save", data=payload)
+            self.assertEqual(response.status_code, 302)
+            saved = load_data("places")["shops"][0]
+            self.assertIs(saved.get("highlight"), True)
+            self.assertEqual(saved.get("name"), before.get("name"))
+            self.assertEqual(saved.get("lat"), before.get("lat"))
+            self.assertEqual(saved.get("lng"), before.get("lng"))
+            self.assertEqual(saved.get("postcode"), before.get("postcode"))
+            form = self.client.get("/places").get_data(as_text=True)
+            self.assertIn("Highlight on the map", form)
+            self.assertIn("checked", _checkbox(form, "shop0_highlight"))
+
+            payload = _form_from_places(load_data("places"))
+            payload.pop("shop0_highlight", None)
+            response = self.client.post("/places/save", data=payload)
+            self.assertEqual(response.status_code, 302)
+            cleared = load_data("places")["shops"][0]
+            self.assertNotIn("highlight", cleared)
+            self.assertEqual(cleared.get("lat"), before.get("lat"))
+            self.assertEqual(cleared.get("lng"), before.get("lng"))
+            form = self.client.get("/places").get_data(as_text=True)
+            self.assertNotIn("checked", _checkbox(form, "shop0_highlight"))
+        finally:
+            with app.app_context():
+                save_data("places", original)
+
     def test_live_carousel_honours_empty_and_hide(self):
         root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         jsx = os.path.join(
@@ -218,10 +250,16 @@ class PlacesPageTests(unittest.TestCase):
         with open(os.path.join(project, "Places.html"), encoding="utf-8") as fh:
             places = fh.read()
         self.assertIn("leaflet", places.lower())
+        self.assertIn("postcodes.io", source)
+        self.assertIn("Search by shop, town or postcode", source)
+        self.assertIn("is-highlight", source)
+        self.assertIn("s.highlight", source)
         order = [places.index(tag) for tag in (
-            "<StockistCarousel", "<SupplierMap", "<NearestShopFinder", "<HowToOrder",
+            "<StockistCarousel", "<SupplierMap", "<HowToOrder",
         )]
         self.assertEqual(order, sorted(order))
+        self.assertNotIn("NearestShopFinder", places)
+        self.assertIn("SupplierMap.jsx?v=8", places)
         self.assertNotIn("SupplierMap.jsx?v=5", places)
 
     def test_hq_map_is_on_people_not_find_us(self):
@@ -283,6 +321,8 @@ def _form_from_places(data):
         payload["shop%d_address" % i] = item.get("address", "")
         payload["shop%d_lat" % i] = "" if item.get("lat") is None else str(item.get("lat"))
         payload["shop%d_lng" % i] = "" if item.get("lng") is None else str(item.get("lng"))
+        if item.get("highlight"):
+            payload["shop%d_highlight" % i] = "on"
     return payload
 
 

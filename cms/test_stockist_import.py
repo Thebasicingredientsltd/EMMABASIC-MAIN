@@ -386,7 +386,7 @@ class SalesExportTests(unittest.TestCase):
         for secret in ("12.34", "INV-77821", "XQ999", "2026-01-15", "Konjac", "07828737806", "Quantity"):
             self.assertNotIn(secret, dumped)
         allowed = {"row", "name", "address", "town", "postcode", "postcode_raw", "region",
-                   "url", "phone", "lat", "lng", "kind"}
+                   "url", "phone", "lat", "lng", "kind", "highlight"}
         for row in rows:
             self.assertLessEqual(set(row), allowed)
 
@@ -453,11 +453,62 @@ class SalesExportTests(unittest.TestCase):
         self.assertIn(items["NW9 8AU"]["status"], ("unchanged", "updated"))
 
 
+class HighlightImportTests(unittest.TestCase):
+    def test_yes_true_and_one_are_highlighted_and_blank_is_left_alone(self):
+        rows = si.read_rows("shops.csv", csv_bytes([
+            ["Name", "Town", "Postcode", "Highlight"],
+            ["Harvey Nichols", "Bristol", "BS1 4DJ", "yes"],
+            ["Valvona", "Edinburgh", "EH1 1YZ", "TRUE"],
+            ["General Store", "Manchester", "M1 1AE", "1"],
+            ["Harrods", "London", "SW1X 7XL", ""],
+            ["Selfridges", "London", "W1A 1AB", "no"],
+        ]))
+        flags = {row["name"]: row["highlight"] for row in rows}
+        self.assertIs(flags["Harvey Nichols"], True)
+        self.assertIs(flags["Valvona"], True)
+        self.assertIs(flags["General Store"], True)
+        self.assertIsNone(flags["Harrods"])
+        self.assertIs(flags["Selfridges"], False)
+
+    def test_blank_keeps_an_existing_highlight_and_no_clears_it(self):
+        existing = [{
+            "name": "Harrods", "city": "London",
+            "address": "87–135 Brompton Rd, London SW1X 7XL",
+            "postcode": "SW1X 7XL", "url": "https://keep.example",
+            "lat": 51.4994, "lng": -0.1632, "highlight": True,
+        }]
+        blank = [{"name": "Harrods", "city": "London", "address": "87–135 Brompton Rd",
+                  "postcode": "SW1X 7XL", "lat": 51.4994, "lng": -0.1632}]
+        kept, _ = si.apply_import(existing, blank, "merge")
+        self.assertIs(kept[0]["highlight"], True)
+        self.assertEqual(kept[0]["url"], "https://keep.example")
+        self.assertEqual(kept[0]["lat"], 51.4994)
+
+        cleared_in = [dict(blank[0], highlight=False)]
+        cleared, _ = si.apply_import(existing, cleared_in, "merge")
+        self.assertNotIn("highlight", cleared[0])
+        self.assertEqual(cleared[0]["url"], "https://keep.example")
+        self.assertEqual(cleared[0]["lng"], -0.1632)
+
+    def test_preview_marks_a_highlighted_shop(self):
+        rows = si.read_rows("shops.csv", csv_bytes([
+            ["Name", "Address", "Town", "Postcode", "Featured"],
+            ["Harvey Nichols", "27 Philpot Ln", "Bristol", "BS1 4DJ", "yes"],
+        ]))
+        result = si.build_preview([], rows, lookup_postcodes=fake_postcodes, lookup_address=no_address_lookup)
+        item = result["items"][0]
+        self.assertEqual(item["status"], "new")
+        self.assertIs(item["highlight"], True)
+        self.assertIs(item["shop"]["highlight"], True)
+        self.assertEqual(item["shop"]["postcode"], "BS1 4DJ")
+        self.assertEqual(item["shop"]["lat"], 51.4545)
+
+
 class TemplateTests(unittest.TestCase):
     def test_template_has_the_expected_columns(self):
         wb = openpyxl.load_workbook(io.BytesIO(si.template_workbook_bytes()))
         header = [c.value for c in wb.active[1]]
-        self.assertEqual(header, ["Name", "Address", "Town", "Postcode", "Region", "Website", "Phone"])
+        self.assertEqual(header, ["Name", "Address", "Town", "Postcode", "Region", "Website", "Phone", "Highlight"])
         rows = si.read_rows("template.xlsx", si.template_workbook_bytes())
         self.assertEqual(len(rows), 1)
 
