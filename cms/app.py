@@ -45,6 +45,7 @@ from werkzeug.utils import secure_filename
 
 import maintenance
 import seo
+import stockists_import
 import storage
 
 try:
@@ -1370,6 +1371,17 @@ def places_save():
             continue
         prev = dict(old_shops[i]) if i < len(old_shops) else {}
         prev.update({"name": name, "city": city, "address": address})
+        for field in ("postcode", "url", "phone"):
+            key = "shop%d_%s" % (i, field)
+            if key not in request.form:
+                continue
+            value = request.form.get(key, "").strip()
+            if field == "postcode":
+                value = stockists_import.normalise_postcode(value) or value.upper()
+            if value:
+                prev[field] = value
+            else:
+                prev.pop(field, None)
         lat = parse_num(request.form.get("shop%d_lat" % i, ""))
         lng = parse_num(request.form.get("shop%d_lng" % i, ""))
         if lat is not None:
@@ -1381,6 +1393,7 @@ def places_save():
         else:
             prev.pop("lng", None)
         shops.append(prev)
+    stockists_import.fill_missing_coordinates(shops)
     d["shops"] = shops
     _apply_seo_form(d)
 
@@ -1396,6 +1409,83 @@ def places_save():
         hq["lng"] = lng
     save_data("places", d)
     flash("Where to find our products content saved.", "ok")
+    return redirect(url_for("places"))
+
+
+STOCKIST_UPLOAD_MAX_BYTES = 4 * 1024 * 1024
+
+
+@app.route("/places/import/template")
+def places_import_template():
+    return Response(
+        stockists_import.template_workbook_bytes(),
+        mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        headers={"Content-Disposition": 'attachment; filename="emma-basic-stockists-template.xlsx"'},
+    )
+
+
+@app.route("/places/import/preview", methods=["POST"])
+def places_import_preview():
+    upload = request.files.get("file")
+    if not upload or not upload.filename:
+        flash("Please choose your Excel file first, then press Check my file.", "error")
+        return redirect(url_for("places") + "#upload-stockists")
+    data = upload.read(STOCKIST_UPLOAD_MAX_BYTES + 1)
+    if len(data) > STOCKIST_UPLOAD_MAX_BYTES:
+        flash("That file is too big (over 4 MB). Please remove extra sheets or pictures and try again.", "error")
+        return redirect(url_for("places") + "#upload-stockists")
+    try:
+        sheet = stockists_import.read_file(upload.filename, data)
+    except stockists_import.StockistFileError as exc:
+        flash(str(exc), "error")
+        return redirect(url_for("places") + "#upload-stockists")
+    if not sheet["rows"]:
+        flash("We couldn't find any shops under the headings in that file.", "error")
+        return redirect(url_for("places") + "#upload-stockists")
+    existing = load_data("places").get("shops") or []
+    preview = stockists_import.build_preview(
+        existing, sheet["rows"], address_fallback=not sheet["consolidated"])
+    ready = []
+    for item in preview["items"]:
+        if item["shop"]:
+            item["index"] = len(ready)
+            ready.append(item["shop"])
+    return render_template(
+        "places_import.html",
+        filename=upload.filename,
+        preview=preview,
+        sheet=sheet,
+        payload=json.dumps(ready, ensure_ascii=False),
+        existing_count=len(existing),
+    )
+
+
+@app.route("/places/import/confirm", methods=["POST"])
+def places_import_confirm():
+    try:
+        raw = json.loads(request.form.get("payload", ""))
+    except ValueError:
+        raw = None
+    included = {int(i) for i in request.form.getlist("include") if str(i).isdigit()}
+    shops = []
+    if isinstance(raw, list):
+        for idx, item in enumerate(raw):
+            shop = stockists_import.clean_payload_shop(item) if idx in included else None
+            if shop:
+                shops.append(shop)
+    if not shops:
+        flash("Nothing was saved — no shops were ticked. Please upload the file again and tick the shops to add.", "error")
+        return redirect(url_for("places") + "#upload-stockists")
+    mode = "replace" if request.form.get("mode") == "replace" else "merge"
+    d = load_data("places")
+    d["shops"], summary = stockists_import.apply_import(d.get("shops") or [], shops, mode)
+    save_data("places", d)
+    parts = ["%d new" % summary["new"], "%d updated" % summary["updated"]]
+    if summary["unchanged"]:
+        parts.append("%d already up to date" % summary["unchanged"])
+    if summary["removed"]:
+        parts.append("%d removed" % summary["removed"])
+    flash("Stockists saved: %s. The website map will update in a minute or two." % ", ".join(parts), "ok")
     return redirect(url_for("places"))
 
 

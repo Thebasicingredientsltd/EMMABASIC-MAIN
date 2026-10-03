@@ -8,6 +8,23 @@
 <h1>Where to find our products</h1>
 <p class="sub">Everything on the Find us page: shops first, then how to order (edited separately). The London HQ map is on the People page, not here.</p>
 
+<div class="card" id="upload-stockists">
+  <h2 style="margin-top:0;">Upload stockists (Excel)</h2>
+  <p class="field-help" style="font-size:13.5px;">Add lots of shops at once from a spreadsheet. Each shop is put on the map on the Find us page using its postcode.</p>
+  <ol class="field-help" style="font-size:13.5px; padding-left:20px; line-height:1.7;">
+    <li>Your sheet needs a heading row. Only <strong>Name</strong> is required, but add a <strong>Postcode</strong> so the shop can go on the map. Address, Town, Region, Website and Phone are optional.</li>
+    <li>Choose the file and press <strong>Check my file</strong>. Nothing changes on the website yet — you'll see a preview of what will be added first.</li>
+  </ol>
+  <form method="post" action="{{ url_for('places_import_preview') }}" enctype="multipart/form-data" style="margin-top:12px;">
+    <label for="stockist-file">Your spreadsheet (.xlsx or .csv)</label>
+    <input type="file" id="stockist-file" name="file" accept=".xlsx,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv" required/>
+    <div class="actions-bar" style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+      <button class="btn" type="submit">Check my file</button>
+      <a class="btn secondary" href="{{ url_for('places_import_template') }}">Download Excel template</a>
+    </div>
+  </form>
+</div>
+
 <form method="post" action="{{ url_for('places_save') }}" enctype="multipart/form-data">
 
   <div class="card">
@@ -90,7 +107,7 @@
 
   <div class="card">
     <h2 style="margin-top:0;">The heading above the shop list{% if directory.hideHeading %} <span class="pill">Hidden on site</span>{% endif %}</h2>
-    <p class="field-help">This is the large type above the numbered list of towns — for example “Where to find us. Stocked across the UK.” It is separate from the Opening headline and from the heading in the dark band of shop names.</p>
+    <p class="field-help">This is the large type above the map of stockists — for example “Where to find us. Stocked across the UK.” It is separate from the Opening headline and from the heading in the dark band of shop names.</p>
     <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
       <input type="checkbox" name="directory_hideHeading" value="on" style="width:auto;" {{ 'checked' if directory.hideHeading }}/> Hide this heading
     </label>
@@ -108,8 +125,8 @@
   </div>
 
   <div class="card">
-    <h2 style="margin-top:0;">All stockists</h2>
-    <p class="field-help">These shops appear in the regional list and the “find your nearest shop” tool. Latitude and longitude are optional — leave them blank if you don’t have them.</p>
+    <h2 style="margin-top:0;">All stockists <span class="pill">{{ (d.shops or [])|length }}</span></h2>
+    <p class="field-help">These shops appear as pins on the map on the Find us page and in the “find your nearest shop” tool. Add a postcode and leave latitude and longitude blank — the pin is found from the postcode when you save.</p>
     <div id="shops">
       {% for s in (d.shops or []) %}
       <div class="tile-editor" data-shop>
@@ -119,6 +136,11 @@
         </div>
         <label>Address</label>
         <input type="text" name="shop{{ loop.index0 }}_address" value="{{ s.address }}"/>
+        <div class="row">
+          <div><label>Postcode</label><input type="text" name="shop{{ loop.index0 }}_postcode" value="{{ s.postcode or '' }}"/></div>
+          <div><label>Website or map link (optional)</label><input type="text" name="shop{{ loop.index0 }}_url" value="{{ s.url or '' }}"/></div>
+          <div><label>Phone (optional)</label><input type="text" name="shop{{ loop.index0 }}_phone" value="{{ s.phone or '' }}"/></div>
+        </div>
         <div class="row">
           <div><label>Latitude (optional)</label><input type="text" name="shop{{ loop.index0 }}_lat" value="{{ s.lat if s.lat is not none else '' }}"/></div>
           <div><label>Longitude (optional)</label><input type="text" name="shop{{ loop.index0 }}_lng" value="{{ s.lng if s.lng is not none else '' }}"/></div>
@@ -173,6 +195,11 @@
     </div>
     <label>Address</label>
     <input type="text" name="shopIDX_address" value=""/>
+    <div class="row">
+      <div><label>Postcode</label><input type="text" name="shopIDX_postcode" value=""/></div>
+      <div><label>Website or map link (optional)</label><input type="text" name="shopIDX_url" value=""/></div>
+      <div><label>Phone (optional)</label><input type="text" name="shopIDX_phone" value=""/></div>
+    </div>
     <div class="row">
       <div><label>Latitude (optional)</label><input type="text" name="shopIDX_lat" value=""/></div>
       <div><label>Longitude (optional)</label><input type="text" name="shopIDX_lng" value=""/></div>

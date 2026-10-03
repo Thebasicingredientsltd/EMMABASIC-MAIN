@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% set active = "places" %}
+{% set c = preview.counts %}
+{% set ready = c.new + c.updated + c.unchanged %}
+{% block content %}
+<h1>Check your stockists before saving</h1>
+<p class="sub">From <strong>{{ filename }}</strong>. Nothing has changed on the website yet.</p>
+
+<div class="card">
+  <h2 style="margin-top:0;">What we found</h2>
+  {% if sheet.consolidated %}
+  <p class="field-help" style="font-size:13.5px;">This looks like a sales report, so we read {{ sheet.lines_read }} sales lines from your file and found {{ sheet.rows|length }} different shops (one per shop name and postcode). Only the shop name, town and postcode are used — no sales figures are saved or shown on the website.</p>
+  {% endif %}
+  <div class="eb-import-counts">
+    <div><strong>{{ c.new }}</strong> new</div>
+    <div><strong>{{ c.updated + c.unchanged }}</strong> already on the website</div>
+    <div class="{{ 'is-warn' if c.flagged }}"><strong>{{ c.flagged }}</strong> to check</div>
+    <div class="{{ 'is-bad' if c.failed }}"><strong>{{ c.failed }}</strong> could not be added</div>
+  </div>
+  {% if c.flagged %}
+  <p class="field-help" style="font-size:13.5px;"><strong>To check:</strong> these look like they might not be shops that customers can visit (for example online sellers, cafés, staff or distributors). They are <strong>not ticked</strong>, so they won't be added unless you tick them below.</p>
+  {% endif %}
+  {% if c.failed %}
+  <p class="field-help" style="font-size:13.5px;"><strong>Could not be added:</strong> listed at the bottom with the reason. You can fix them in your spreadsheet and upload it again, or add them by hand on the Where to find our products page.</p>
+  {% endif %}
+</div>
+
+{% if ready %}
+<form method="post" action="{{ url_for('places_import_confirm') }}">
+  <input type="hidden" name="payload" value="{{ payload }}"/>
+
+  <div class="card">
+    <h2 style="margin-top:0;">Shops in your file</h2>
+    <p class="field-help" style="font-size:13.5px;">Untick any shop you don't want on the website. Names have been tidied (for example “Ltd” and notes in brackets removed) — you can change any name afterwards on the Where to find our products page.</p>
+    <div style="overflow-x:auto;">
+    <table class="eb-import-table">
+      <thead><tr><th>Include</th><th>Shop</th><th>Town / postcode</th><th>Result</th></tr></thead>
+      <tbody>
+      {% for item in preview["items"] if item.shop %}
+        <tr class="{{ 'is-flagged' if item.flag }}">
+          <td><input type="checkbox" name="include" value="{{ item.index }}"{{ ' checked' if item.include }} aria-label="Include {{ item.shop.name }}"/></td>
+          <td>{{ item.shop.name }}</td>
+          <td>{{ item.shop.city or '' }}{% if item.shop.postcode %} · {{ item.shop.postcode }}{% endif %}</td>
+          <td>
+            {% if item.status == 'new' %}New{% elif item.status == 'updated' %}Already on the website (details will be updated){% else %}Already on the website{% endif %}
+            {% if item.flag %}<br/><span class="eb-flag">To check: {{ item.flag }}</span>{% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;">How should we save them?</h2>
+    <label class="eb-choice">
+      <input type="radio" name="mode" value="merge" checked/>
+      <span><strong>Add/update these stores</strong> (recommended)<br/>
+      <span class="field-help">Ticked shops that are new are added. Ticked shops already on the site (same name and postcode) are updated. All {{ existing_count }} shops already on the site stay.</span></span>
+    </label>
+    <label class="eb-choice">
+      <input type="radio" name="mode" value="replace"/>
+      <span><strong>Replace the whole list</strong><br/>
+      <span class="field-help">The site will show only the shops you've ticked above.
+      {% if preview.removed_if_replace %}These {{ preview.removed_if_replace|length }} shops on the site now are not in your file and would be removed: {{ preview.removed_if_replace|join(', ') }}.{% endif %}</span></span>
+    </label>
+    <div class="actions-bar" style="margin-top:16px; display:flex; gap:10px; flex-wrap:wrap;">
+      <button class="btn" type="submit">Save these stores to the website</button>
+      <a class="btn secondary" href="{{ url_for('places') }}#upload-stockists">Cancel</a>
+    </div>
+    <p class="field-help">After saving, the map on the Find us page updates in a minute or two.</p>
+  </div>
+</form>
+{% else %}
+<div class="card">
+  <p>None of the rows could be added, so there is nothing to save. Please check the reasons below, fix your spreadsheet and try again.</p>
+  <a class="btn secondary" href="{{ url_for('places') }}#upload-stockists">Back</a>
+</div>
+{% endif %}
+
+{% if c.failed %}
+<div class="card">
+  <h2 style="margin-top:0;">Could not be added</h2>
+  <div style="overflow-x:auto;">
+  <table class="eb-import-table">
+    <thead><tr><th>Row</th><th>Shop</th><th>Reason</th></tr></thead>
+    <tbody>
+    {% for item in preview["items"] if item.status == 'failed' %}
+      <tr class="is-failed">
+        <td>{{ item.row }}</td>
+        <td>{{ item.name or '(no name)' }}</td>
+        <td>{{ item.reason }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+{% endif %}
+
+<style>
+  .eb-import-counts { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 8px; }
+  .eb-import-counts > div { flex: 1; min-width: 130px; border: 1px solid var(--rule); border-radius: var(--r-md); padding: 12px 14px; background: var(--paper-bright); font-size: 14px; }
+  .eb-import-counts strong { display: block; font-size: 26px; font-weight: 600; }
+  .eb-import-counts .is-bad { border-color: var(--err-br); color: var(--err); }
+  .eb-import-counts .is-warn { border-color: var(--rule-strong); }
+  .eb-choice { display: flex; gap: 10px; align-items: flex-start; text-transform: none; letter-spacing: 0; font-weight: 400; margin: 10px 0; cursor: pointer; }
+  .eb-choice input { width: auto; margin-top: 4px; }
+  .eb-import-table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+  .eb-import-table th, .eb-import-table td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  .eb-import-table th { font-size: 12px; color: var(--ink-60); font-weight: 500; }
+  .eb-import-table input[type=checkbox] { width: 18px; height: 18px; }
+  .eb-import-table tr.is-failed td { color: var(--err); }
+  .eb-import-table tr.is-flagged td { background: var(--paper-shade); }
+  .eb-flag { font-size: 12.5px; color: var(--ink-60); }
+</style>
+{% endblock %}

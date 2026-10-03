@@ -10,6 +10,7 @@ Run with:  python test_deploy_bundle.py
 """
 
 import ast
+import fnmatch
 import json
 import os
 import unittest
@@ -84,6 +85,44 @@ class DeployBundleTests(unittest.TestCase):
         listed = include_files()
         self.assertIn("templates/**", listed)
         self.assertIn("static/**", listed)
+
+    def test_root_vercelignore_hides_secrets_but_not_what_the_cms_needs(self):
+        repo = os.path.dirname(CMS_DIR)
+        with open(os.path.join(repo, ".vercelignore"), encoding="utf-8") as fh:
+            patterns = [ln.strip() for ln in fh if ln.strip() and not ln.startswith("#")]
+
+        def ignored(relpath):
+            parts = relpath.split("/")
+            for pat in patterns:
+                pat = pat.rstrip("/")
+                if "/" in pat:
+                    if relpath == pat or relpath.startswith(pat + "/"):
+                        return True
+                elif any(fnmatch.fnmatch(part, pat) for part in parts):
+                    return True
+            return False
+
+        for secret in ("cms/.env", "cms/.env.local", ".env.local",
+                       "Product-nutritional-ingredients-data/a.xlsx",
+                       "the-basic-ingredients-page/How_to_Order.docx", "notes.xlsx"):
+            self.assertTrue(ignored(secret), secret)
+
+        needed = ["cms/vercel.json", "cms/requirements.txt", "cms/api/index.py"]
+        for entry in include_files():
+            base = entry.split("/")[0]
+            for root, _dirs, files in os.walk(os.path.join(CMS_DIR, base)):
+                for name in files:
+                    rel = os.path.relpath(os.path.join(root, name), repo).replace(os.sep, "/")
+                    if "__pycache__" not in rel:
+                        needed.append(rel)
+            if not entry.endswith("**"):
+                needed.append("cms/" + entry)
+        project = os.path.join(repo, "Emma-Basic-The-Basic-Ingredients", "project")
+        for root, _dirs, files in os.walk(project):
+            for name in files:
+                needed.append(os.path.relpath(os.path.join(root, name), repo).replace(os.sep, "/"))
+        for rel in needed:
+            self.assertFalse(ignored(rel), "%s would be left out of the deploy" % rel)
 
     def test_every_bundled_path_exists(self):
         for entry in include_files():

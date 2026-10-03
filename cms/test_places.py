@@ -206,6 +206,24 @@ class PlacesPageTests(unittest.TestCase):
         self.assertIn('Where to find us.', source)
         self.assertIn("Stocked across the UK.", source)
 
+    def test_live_directory_is_a_map_of_the_cms_stockists(self):
+        root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        project = os.path.join(root, "Emma-Basic-The-Basic-Ingredients", "project")
+        with open(os.path.join(project, "components", "SupplierMap.jsx"), encoding="utf-8") as fh:
+            source = fh.read()
+        self.assertIn("EB_PLACES.shops", source)
+        self.assertIn("L.map(", source)
+        self.assertIn("bindPopup", source)
+        self.assertNotIn("const STOCKISTS", source)
+        with open(os.path.join(project, "Places.html"), encoding="utf-8") as fh:
+            places = fh.read()
+        self.assertIn("leaflet", places.lower())
+        order = [places.index(tag) for tag in (
+            "<StockistCarousel", "<SupplierMap", "<NearestShopFinder", "<HowToOrder",
+        )]
+        self.assertEqual(order, sorted(order))
+        self.assertNotIn("SupplierMap.jsx?v=5", places)
+
     def test_hq_map_is_on_people_not_find_us(self):
         root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         project = os.path.join(root, "Emma-Basic-The-Basic-Ingredients", "project")

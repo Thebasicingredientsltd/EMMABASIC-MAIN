@@ -18,3 +18,9 @@ Thumbs.db
 # Editor scratch files
 *.swp
 *~
+
+# Vercel CLI link and env files (OIDC token, secrets)
+.vercel/
+.env
+.env.local
+.env*.local

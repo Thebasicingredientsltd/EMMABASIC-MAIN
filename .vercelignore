@@ -1,0 +1,9 @@
+# Files the Vercel CLI must never upload when deploying the CMS from the repo
+# root (secrets, and internal spreadsheets/documents the CMS doesn't use).
+.vercel
+.env*
+cms/.env
+Product-nutritional-ingredients-data/
+the-basic-ingredients-page/
+*.xlsx
+*.docx
