@@ -9,12 +9,14 @@ window.EB_HOME = {
       {
         "label": "FIND US",
         "href": "Places.html",
-        "primary": true
+        "primary": true,
+        "hide": true
       },
       {
         "label": "FOR SHOPKEEPERS",
         "href": "The%20Basic%20Ingredients.html",
-        "primary": false
+        "primary": false,
+        "hide": true
       }
     ],
     "visible": true
