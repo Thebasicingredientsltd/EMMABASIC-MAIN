@@ -2809,7 +2809,7 @@ window.EB_CATALOG = {
             "Unfilled by design — fill with whatever you've cooked for fresher, better results",
             "Steam for five minutes — no defrosting required",
             "Simple dough: flour, water, yeast, oil, salt, sugar — nothing else",
-            "Flexible filling — slow-cooked pork belly, crispy tofu, soft-shell crab",
+            "Flexible filling — slow-cooked pork belly, crispy tofu",
             "No additives",
             "Four buns per pack"
           ],
@@ -2834,7 +2834,7 @@ window.EB_CATALOG = {
               "Blank bao change the proposition. The bun itself — a simple dough of flour, water, yeast, oil, salt, and a small amount of sugar — can be made very well. Steam for five minutes, fill with whatever you've cooked, and the result is both fresher and more flexible."
             ]
           },
-          "updatedAt": "2026-09-28T16:32:37+00:00"
+          "updatedAt": "2026-10-05T09:18:06+00:00"
         },
         {
           "id": "smoked-salmon-100g",
