@@ -101,7 +101,7 @@ window.EB_PRODUCTS = [
   },
   {
     "id": "sushi-rice",
-    "name": "Sushi Rice",
+    "name": "Short Grain Rice",
     "origin": "",
     "lot": "SR-240501",
     "pill": null,
