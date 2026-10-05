@@ -115,8 +115,6 @@ def _form_from_homepage(data):
         "shelf_subtitle": shelf.get("subtitle", ""),
         "shelf_theirs": "\n".join(shelf.get("theirs") or []),
         "shelf_ours": "\n".join(shelf.get("ours") or []),
-        "shelf_closingLine1": shelf.get("closingLine1", ""),
-        "shelf_closingLine2": shelf.get("closingLine2", ""),
         "life_headingLine1": lifestyle.get("headingLine1", ""),
         "life_headingLine2": lifestyle.get("headingLine2", ""),
         "life_handle": lifestyle.get("handle", ""),

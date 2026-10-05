@@ -58,9 +58,7 @@ window.EB_HOME = {
       "Roasted nori seaweed",
       "Extra virgin olive oil",
       "Sea salt"
-    ],
-    "closingLine1": "If it's in the pack, it's on the label.",
-    "closingLine2": "That's the whole promise."
+    ]
   },
   "lifestyle": {
     "headingLine1": "The Grit /",

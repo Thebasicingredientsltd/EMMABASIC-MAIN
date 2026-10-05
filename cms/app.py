@@ -1024,8 +1024,8 @@ def homepage_save():
     shelf["subtitle"] = request.form.get("shelf_subtitle", "").strip()
     shelf["theirs"] = lines_to_list(request.form.get("shelf_theirs", ""))
     shelf["ours"] = lines_to_list(request.form.get("shelf_ours", ""))
-    shelf["closingLine1"] = request.form.get("shelf_closingLine1", "").strip()
-    shelf["closingLine2"] = request.form.get("shelf_closingLine2", "").strip()
+    shelf.pop("closingLine1", None)
+    shelf.pop("closingLine2", None)
 
     lifestyle = h.setdefault("lifestyle", {})
     lifestyle["headingLine1"] = request.form.get("life_headingLine1", "").strip()

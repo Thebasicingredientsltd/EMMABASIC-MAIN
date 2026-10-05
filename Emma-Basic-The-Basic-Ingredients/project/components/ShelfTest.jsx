@@ -8,8 +8,6 @@ function ShelfTest() {
   const headingLine1 = S.headingLine1 || "Flip the pack.";
   const headingLine2 = S.headingLine2 || "Read the jar.";
   const subtitle = S.subtitle || 'Two packs of crispy seaweed.<br/>Both in the "healthy snacks" aisle.';
-  const closingLine1 = S.closingLine1 || "If it's in the pack, it's on the label.";
-  const closingLine2 = S.closingLine2 || "That's the whole promise.";
   // Competitor: Yutaka Seasoned Seaweed Snack (widely sold in UK supermarkets)
   const supermarket = (Array.isArray(S.theirs) && S.theirs.length) ? S.theirs : [
     "Seaweed (70%)",
@@ -72,26 +70,6 @@ function ShelfTest() {
           <LabelCard kind="theirs" items={supermarket} />
           <LabelCard kind="ours" items={emma} />
         </div>
-
-        <Reveal delay={400}>
-          <div style={{
-            marginTop: "clamp(64px, 10vh, 112px)",
-            display: "flex", justifyContent: "center",
-          }}>
-            <p style={{
-              fontFamily: "var(--f-display)", fontStyle: "italic",
-              fontSize: "clamp(24px, 3vw, 42px)",
-              lineHeight: 1.25, margin: 0, textAlign: "center",
-              maxWidth: 720,
-              fontVariationSettings: '"opsz" 144, "SOFT" 80',
-            }}>
-              {closingLine1}<br/>
-              <span style={{ fontStyle: "normal", fontFamily: "var(--f-display)", fontVariationSettings: '"opsz" 144, "SOFT" 30' }}>
-                {closingLine2}
-              </span>
-            </p>
-          </div>
-        </Reveal>
       </div>
     </section>
   );
