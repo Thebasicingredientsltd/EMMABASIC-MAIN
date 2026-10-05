@@ -4,7 +4,6 @@
 
 const JOURNAL_DATA = (typeof window !== "undefined" && window.EB_JOURNAL) ? window.EB_JOURNAL : {};
 const JOURNAL_ARTICLES = JOURNAL_DATA.articles || {};
-const JOURNAL_POSTS = Array.isArray(JOURNAL_DATA.posts) ? JOURNAL_DATA.posts : [];
 
 /* ── Render helpers ─────────────────────────────────────────── */
 
@@ -40,8 +39,6 @@ function ArticleBlock({ block, index }) {
 function JournalPost() {
   const id = new URLSearchParams(window.location.search).get("id");
   const post = JOURNAL_ARTICLES[id];
-  const listing = JOURNAL_POSTS.find(p => p.id === id) || {};
-  const author = String((post && post.author) || listing.author || "").trim();
 
   if (!post) {
     return (
@@ -74,40 +71,7 @@ function JournalPost() {
         </div>
       )}
 
-      <div style={{ maxWidth: 1100, margin: "0 auto", padding: "clamp(56px, 8vh, 96px) var(--pad-x) clamp(96px, 14vh, 160px)" }}>
-
-        {/* Meta */}
-        <div style={{
-          display: "flex", gap: 24, alignItems: "center", flexWrap: "wrap",
-          marginBottom: "clamp(32px, 4vh, 48px)",
-          fontFamily: "var(--f-body)", fontSize: 10.5, letterSpacing: "0.22em",
-          textTransform: "uppercase", color: "var(--ink-60)",
-        }}>
-          {(() => {
-            const items = [
-              <a key="back" href="Journal.html" style={{
-                color: "var(--ink-60)", textDecoration: "none",
-                display: "inline-flex", alignItems: "center", gap: 8,
-                transition: "color 200ms var(--ease-out)",
-              }}
-                onMouseEnter={e => e.currentTarget.style.color = "var(--ink)"}
-                onMouseLeave={e => e.currentTarget.style.color = "var(--ink-60)"}
-              >
-                ← Journal
-              </a>,
-            ];
-            if (post.category) items.push(<span key="cat">{post.category}</span>);
-            if (post.date) items.push(<span key="date">{post.date}</span>);
-            if (author) items.push(<span key="author">{author}</span>);
-            if (post.readTime) items.push(<span key="rt">{post.readTime}</span>);
-            return items.map((el, i) => (
-              <React.Fragment key={el.key || i}>
-                {i > 0 ? <span style={{ opacity: 0.35 }}>·</span> : null}
-                {el}
-              </React.Fragment>
-            ));
-          })()}
-        </div>
+      <div style={{ maxWidth: 1100, margin: "0 auto", padding: "clamp(40px, 5vh, 64px) var(--pad-x) clamp(96px, 14vh, 160px)" }}>
 
         {/* Title */}
         <h1 style={{

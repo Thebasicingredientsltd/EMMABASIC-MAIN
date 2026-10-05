@@ -9,14 +9,6 @@ const JOURNAL_POSTS = (typeof window !== "undefined" && window.EB_JOURNAL && Arr
 const CATEGORIES = ["All", "Recipes", "Ingredient Stories", "Behind the Product", "The Grit"];
 const INSTAGRAM_TAB = "Instagram";
 
-function postByline(post, prefix) {
-  const parts = [];
-  if (prefix) parts.push(prefix);
-  if (post.date) parts.push(post.date);
-  if (post.author) parts.push(post.author);
-  return parts.join(" · ");
-}
-
 function JournalIndex() {
   const [active, setActive] = React.useState("All");
 
@@ -148,12 +140,6 @@ function FeaturedCard({ post }) {
 
       {/* Text */}
       <div style={{ display: "grid", gap: 24 }}>
-        <div style={{
-          fontFamily: "var(--f-body)", fontSize: 10.5, letterSpacing: "0.22em",
-          textTransform: "uppercase", color: "var(--ink-60)",
-        }}>
-          {postByline(post, "Featured")}
-        </div>
         <h2 style={{
           fontFamily: "var(--f-display)", fontWeight: 400,
           fontSize: "clamp(28px, 3.2vw, 48px)",
@@ -213,12 +199,6 @@ function PostCard({ post }) {
 
       {/* Text */}
       <div style={{ display: "grid", gap: 10 }}>
-        <div style={{
-          fontFamily: "var(--f-body)", fontSize: 10, letterSpacing: "0.22em",
-          textTransform: "uppercase", color: "var(--ink-60)",
-        }}>
-          {postByline(post)}
-        </div>
         <h3 style={{
           fontFamily: "var(--f-display)", fontWeight: 400,
           fontSize: "clamp(20px, 1.8vw, 26px)",
