@@ -195,7 +195,7 @@ window.EB_PRODUCTS = [
     "pill": "UNPASTEURISED",
     "tagline": "Raw, unpasteurised white miso. Fermented from soybeans, rice, and salt — nothing else.",
     "tone": "cool",
-    "image": "assets/products-original-backup/miso-homepage.png",
+    "image": "assets/uploads/C075_-_PT04-20261005-080857.jpg",
     "imagePosition": "",
     "imageZoom": null,
     "amazon": "https://www.amazon.co.uk/dp/B0DT7SL672",
