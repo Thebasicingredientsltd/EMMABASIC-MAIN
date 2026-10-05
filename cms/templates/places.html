@@ -6,7 +6,7 @@
 {% set hq = d.hq or {} %}
 {% block content %}
 <h1>Where to find our products</h1>
-<p class="sub">Everything on the Find us page: shops first, then how to order (edited separately). The London HQ map is on the People page, not here.</p>
+<p class="sub">Everything on the Find us page: shops first, then how to order (edited separately).</p>
 
 <div class="card" id="upload-stockists">
   <h2 style="margin-top:0;">Upload stockists (Excel)</h2>
@@ -125,8 +125,8 @@
     </div>
   </div>
   <div class="card">
-    <h2 style="margin-top:0;">London HQ map</h2>
-    <p class="field-help">This map is shown at the bottom of the People page, not on Find us. Change the label, address, or map pin here.</p>
+    <h2 style="margin-top:0;">London HQ address</h2>
+    <p class="field-help">This address is kept here. It is not shown as a map on the People page or on Find us.</p>
     <label>Label</label>
     <input type="text" name="hq_label" value="{{ hq.label or '' }}"/>
     <div class="row">
@@ -144,7 +144,7 @@
     <a class="btn secondary" href="{{ url_for('index') }}">Cancel</a>
     <a class="btn secondary" href="{{ url_for('visual_editor', page='places') }}">Open visual editor</a>
   </div>
-  <p class="field-help">This saves the headlines, carousel, search settings and London HQ map. To highlight shops, use <strong>Save highlights</strong> in the stockist list below.</p>
+  <p class="field-help">This saves the headlines, carousel, search settings and London HQ address. To highlight shops, use <strong>Save highlights</strong> in the stockist list below.</p>
 </form>
 
   <div class="card" id="shops">

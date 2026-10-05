@@ -271,19 +271,23 @@ class PlacesPageTests(unittest.TestCase):
         self.assertIn("SupplierMap.jsx?v=8", places)
         self.assertNotIn("SupplierMap.jsx?v=5", places)
 
-    def test_hq_map_is_on_people_not_find_us(self):
+    def test_hq_map_is_not_on_people_or_find_us(self):
         root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         project = os.path.join(root, "Emma-Basic-The-Basic-Ingredients", "project")
         with open(os.path.join(project, "Places.html"), encoding="utf-8") as fh:
             places = fh.read()
         with open(os.path.join(project, "People & Places.html"), encoding="utf-8") as fh:
             people = fh.read()
+        with open(os.path.join(project, "data", "places.js"), encoding="utf-8") as fh:
+            places_data = fh.read()
         self.assertNotIn("LocationMap.jsx", places)
         self.assertNotIn("<LocationMap", places)
-        self.assertIn("LocationMap.jsx", people)
-        self.assertIn("<LocationMap", people)
-        self.assertIn("data/places.js", people)
-        self.assertIn("leaflet", people.lower())
+        self.assertIn("SupplierMap", places)
+        self.assertNotIn("LocationMap.jsx", people)
+        self.assertNotIn("<LocationMap", people)
+        self.assertNotIn("leaflet", people.lower())
+        self.assertIn('"hq"', places_data)
+        self.assertIn("London HQ", places_data)
 
     def test_highlight_save_does_not_post_the_directory(self):
         original = load_data("places")
