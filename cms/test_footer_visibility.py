@@ -22,7 +22,6 @@ CMS_PAGES = (
     "/journal",
     "/story",
     "/places",
-    "/distributor",
     "/company",
     "/matcha",
 )

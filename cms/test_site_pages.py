@@ -18,8 +18,7 @@ EXPECTED = [
     ("/journal", "Field Notes"),
     ("/story", "Our Story"),
     ("/people", "People & Places"),
-    ("/places", "Where to find our products"),
-    ("/distributor", "Become a Distributor"),
+    ("/places", "Find us"),
     ("/company", "The Basic Ingredients Ltd"),
     ("/matcha", "Matcha Lab"),
 ]
@@ -50,12 +49,14 @@ class SitePagesSidebarTests(unittest.TestCase):
             "/matcha": "/matcha/save",
             "/company": "/company/save",
             "/places": "/places/save",
-            "/distributor": "/distributor/save",
         }
         for url, action in checks.items():
             response = self.client.get(url)
             self.assertEqual(response.status_code, 200, url)
             self.assertIn(action, response.get_data(as_text=True))
+        places = self.client.get("/places").get_data(as_text=True)
+        self.assertIn("/distributor/save", places)
+        self.assertIn('id="how-to-order"', places)
 
     def test_dashboard_cards_include_every_new_page(self):
         response = self.client.get("/")

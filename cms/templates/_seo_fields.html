@@ -3,6 +3,7 @@
 {% set seo_placeholder_canonical = seo_placeholder_canonical or 'https://emmabasic.co.uk/' %}
 {% set seo_default_og_type = seo_default_og_type or 'website' %}
 {% set seo_img = seo.image or '' %}
+{% set seo_field_id = (seo_id_prefix ~ '_') if seo_id_prefix else '' %}
 {% set seo_preview = url_for('site_assets', filename=seo_img[7:]) if seo_img.startswith('assets/') else seo_img %}
 <div class="card">
   <h2 style="margin-top:0;">Search &amp; sharing (SEO)</h2>
@@ -11,16 +12,16 @@
   <p class="field-help">{{ seo_extra_help }}</p>
   {% endif %}
 
-  <label for="seo_title">Title</label>
-  <input id="seo_title" type="text" name="seo_title" value="{{ seo.title or '' }}" placeholder="{{ seo_placeholder_title }}" maxlength="90"/>
+  <label for="{{ seo_field_id }}seo_title">Title</label>
+  <input id="{{ seo_field_id }}seo_title" type="text" name="seo_title" value="{{ seo.title or '' }}" placeholder="{{ seo_placeholder_title }}" maxlength="90"/>
   <p class="field-help">The name Google copies for search results and sitelinks, and the browser tab. Keep it short. If you leave this blank, we use “{{ seo_placeholder_title }}”.</p>
 
-  <label for="seo_description">Short description</label>
-  <textarea id="seo_description" name="seo_description" rows="3" maxlength="320" placeholder="One or two sentences about this page.">{{ seo.description or '' }}</textarea>
+  <label for="{{ seo_field_id }}seo_description">Short description</label>
+  <textarea id="{{ seo_field_id }}seo_description" name="seo_description" rows="3" maxlength="320" placeholder="One or two sentences about this page.">{{ seo.description or '' }}</textarea>
   <p class="field-help">One or two sentences. This sits under the title in search results and in the preview when the page is shared.</p>
 
-  <label for="seo_canonical">Official web address</label>
-  <input id="seo_canonical" type="url" name="seo_canonical" value="{{ seo.canonical or '' }}" placeholder="{{ seo_placeholder_canonical }}"/>
+  <label for="{{ seo_field_id }}seo_canonical">Official web address</label>
+  <input id="{{ seo_field_id }}seo_canonical" type="url" name="seo_canonical" value="{{ seo.canonical or '' }}" placeholder="{{ seo_placeholder_canonical }}"/>
   <p class="field-help">Leave blank to use {{ seo_placeholder_canonical }}</p>
 
   <label>Picture for sharing</label>
@@ -35,9 +36,9 @@
 
   <div class="row">
     <div>
-      <label for="seo_og_type">Type of page</label>
+      <label for="{{ seo_field_id }}seo_og_type">Type of page</label>
       {% set og_now = seo.ogType or seo_default_og_type %}
-      <select id="seo_og_type" name="seo_og_type">
+      <select id="{{ seo_field_id }}seo_og_type" name="seo_og_type">
         <option value="website" {{ 'selected' if og_now != 'article' }}>Website</option>
         <option value="article" {{ 'selected' if og_now == 'article' }}>Article</option>
       </select>

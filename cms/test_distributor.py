@@ -20,13 +20,21 @@ class DistributorPageTests(unittest.TestCase):
         app.config["TESTING"] = True
         self.client = app.test_client()
 
-    def test_distributor_page_is_in_the_sidebar_and_has_a_save_form(self):
+    def test_old_distributor_address_opens_how_to_order(self):
         response = self.client.get("/distributor")
+        self.assertEqual(response.status_code, 302)
+        location = response.headers["Location"]
+        self.assertIn("/places", location)
+        self.assertTrue(location.endswith("#how-to-order"))
+
+    def test_how_to_order_editor_is_on_find_us(self):
+        response = self.client.get("/places")
         self.assertEqual(response.status_code, 200)
         html = response.get_data(as_text=True)
-        self.assertIn("/distributor", html)
-        self.assertIn("Become a Distributor", html)
+        self.assertIn("Find us", html)
+        self.assertIn('id="how-to-order"', html)
         self.assertIn("/distributor/save", html)
+        self.assertIn("Save how to order", html)
         self.assertIn("How to Place Your First Order", html)
         self.assertIn("Open a Trade Account", html)
         self.assertIn("Other Ways to Receive Your Order", html)
@@ -34,13 +42,21 @@ class DistributorPageTests(unittest.TestCase):
         self.assertIn('name="hero_visible"', html)
         self.assertIn("Show this page header on the live site", html)
         self.assertIn("Show footer on this page", html)
+        self.assertNotIn('<span class="lbl">Become a Distributor</span>', html)
+        shops = html.split('id="how-to-order"', 1)[0]
+        order = html.split('id="how-to-order"', 1)[1]
+        self.assertIn("Save shops", shops)
+        self.assertIn("Upload stockists", shops)
+        self.assertIn("Save how to order", order)
 
-    def test_dashboard_links_to_distributor(self):
+    def test_dashboard_has_one_find_us_card(self):
         response = self.client.get("/")
         self.assertEqual(response.status_code, 200)
         html = response.get_data(as_text=True)
-        self.assertIn("/distributor", html)
-        self.assertIn("Become a Distributor", html)
+        self.assertIn("Find us", html)
+        self.assertIn("Shops, then how to order", html)
+        self.assertNotIn(">Become a Distributor<", html)
+        self.assertNotIn('href="/distributor"', html)
 
     def test_save_updates_banner_and_leaves_people_contact_alone(self):
         original = load_data("people")
@@ -81,8 +97,9 @@ class DistributorPageTests(unittest.TestCase):
             self.assertTrue(steps)
             self.assertIs(steps[0].get("visible"), False)
             self.assertIs(saved["distributor"]["otherWays"]["visible"], False)
-            html = self.client.get("/distributor").get_data(as_text=True)
-            self.assertNotIn('name="hero_visible" value="on" style="width:auto;" checked', html)
+            html = self.client.get("/places").get_data(as_text=True)
+            order = html.split('id="how-to-order"', 1)[1]
+            self.assertNotIn('name="hero_visible" value="on" style="width:auto;" checked', order)
         finally:
             with app.app_context():
                 save_data("people", original)

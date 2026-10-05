@@ -82,7 +82,7 @@ class SeoCmsTests(unittest.TestCase):
     def test_every_site_page_form_has_seo_section(self):
         urls = [
             "/homepage", "/catalog", "/journal", "/story", "/people",
-            "/places", "/distributor", "/company", "/matcha",
+            "/places", "/company", "/matcha",
         ]
         for url in urls:
             response = self.client.get(url)

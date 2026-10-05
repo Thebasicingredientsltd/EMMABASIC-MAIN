@@ -27,6 +27,7 @@ function StockistCarousel({ retailers, eyebrow, heading, headingItalic, hideHead
   const cms = (typeof window !== "undefined" && window.EB_PLACES && window.EB_PLACES.featured) || {};
   const list = retailers || (cms.retailers && cms.retailers.length ? cms.retailers.map((r, i) => ({ id: r.name || i, ...r })) : CAROUSEL_RETAILERS);
   const fromCms = heading === undefined;
+  const hideCarousel = fromCms && cms.hidden === true;
   const _hideHeading = hideHeading === true || (fromCms && cms.hideHeading === true);
   const _eyebrow = cmsCopy(eyebrow, cms.eyebrow, "Where to find us");
   const _heading = cmsCopy(heading, cms.heading, "Listed at a");
@@ -103,6 +104,8 @@ function StockistCarousel({ retailers, eyebrow, heading, headingItalic, hideHead
     const el = railRef.current; if (!el) return;
     el.scrollBy({ left: dir * el.clientWidth * 0.8, behavior: "smooth" });
   };
+
+  if (hideCarousel) return null;
 
   return (
     <section style={{

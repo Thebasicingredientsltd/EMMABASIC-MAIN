@@ -452,8 +452,7 @@ CMS_SITE_PAGES = [
     {"endpoint": "journal", "label": "Field Notes", "active": "journal"},
     {"endpoint": "story", "label": "Our Story", "active": "story"},
     {"endpoint": "people", "label": "People & Places", "active": "people"},
-    {"endpoint": "places", "label": "Where to find our products", "active": "places"},
-    {"endpoint": "distributor", "label": "Become a Distributor", "active": "distributor"},
+    {"endpoint": "places", "label": "Find us", "active": "places"},
     {"endpoint": "company", "label": "The Basic Ingredients Ltd", "active": "company"},
     {"endpoint": "matcha", "label": "Matcha Lab", "active": "matcha"},
 ]
@@ -1240,7 +1239,8 @@ def _apply_contact_form(contact):
 
 @app.route("/distributor")
 def distributor():
-    return render_template("distributor.html", d=load_data("people"))
+    """Old address. How to order now lives on Find us, under the shop list."""
+    return redirect(url_for("places") + "#how-to-order")
 
 
 @app.route("/distributor/save", methods=["POST"])
@@ -1292,8 +1292,8 @@ def distributor_save():
     _apply_footer_form(d, "distributorFooter")
     _apply_seo_form(d.setdefault("distributor", {}))
     save_data("people", d)
-    flash("Become a Distributor content saved.", "ok")
-    return redirect(url_for("distributor"))
+    flash("How to order saved.", "ok")
+    return redirect(url_for("places") + "#how-to-order")
 
 
 def _apply_hero_form(hero):
@@ -1321,7 +1321,11 @@ def _simple_page_save(key, flash_msg, redirect_endpoint):
 
 @app.route("/places")
 def places():
-    return render_template("places.html", d=load_data("places"))
+    return render_template(
+        "places.html",
+        d=load_data("places"),
+        order=load_data("people"),
+    )
 
 
 @app.route("/places/save", methods=["POST"])
@@ -1334,6 +1338,8 @@ def places_save():
     featured["heading"] = request.form.get("featured_heading", "").strip()
     featured["headingItalic"] = request.form.get("featured_headingItalic", "").strip()
     featured["hideHeading"] = form_checkbox("featured_hideHeading")
+    # Unchecked boxes are omitted from POST. Missing means show the carousel.
+    featured["hidden"] = form_checkbox("featured_hidden")
     old_retailers = featured.get("retailers") or []
     retailers = []
     count = int(request.form.get("retailer_count", "0"))
@@ -1378,7 +1384,7 @@ def places_save():
     if lng is not None:
         hq["lng"] = lng
     save_data("places", d)
-    flash("Where to find our products content saved.", "ok")
+    flash("Shops saved.", "ok")
     return redirect(url_for("places"))
 
 

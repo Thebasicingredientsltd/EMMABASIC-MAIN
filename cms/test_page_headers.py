@@ -76,7 +76,6 @@ class PageHeaderEditorTests(unittest.TestCase):
             "/homepage",
             "/story",
             "/places",
-            "/distributor",
             "/company",
             "/matcha",
         ):

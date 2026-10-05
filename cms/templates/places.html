@@ -5,8 +5,8 @@
 {% set directory = d.directory or {} %}
 {% set hq = d.hq or {} %}
 {% block content %}
-<h1>Where to find our products</h1>
-<p class="sub">Everything on the Find us page: shops first, then how to order (edited separately).</p>
+<h1>Find us</h1>
+<p class="sub">Shops and the map come first. How to order is on this same page, underneath.</p>
 
 <div class="card" id="upload-stockists">
   <h2 style="margin-top:0;">Upload stockists (Excel)</h2>
@@ -85,7 +85,11 @@
   </div>
 
   <div class="card">
-    <h2 style="margin-top:0;">Featured shops (carousel)</h2>
+    <h2 style="margin-top:0;">Featured shops (carousel){% if featured.hidden %} <span class="pill">Hidden on site</span>{% endif %}</h2>
+    <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
+      <input type="checkbox" name="featured_hidden" value="on" style="width:auto;" {{ 'checked' if featured.hidden }}/> Hide featured shops on the live site
+    </label>
+    <p class="field-help">Tick this to take the dark band of shop names off the Find us page. The names stay in the list below, so you can show them again by unticking and saving. Leave it unticked to keep the carousel on the website.</p>
     <label>Shops</label>
     <p class="field-help">Name, area, and an optional website or map link. These appear in the dark carousel near the top of the page.</p>
     <div id="retailers">
@@ -140,11 +144,11 @@
   </div>
 
   <div class="actions-bar save-bar">
-    <button class="btn secondary" type="submit">Save headings and page text</button>
+    <button class="btn secondary" type="submit">Save shops</button>
     <a class="btn secondary" href="{{ url_for('index') }}">Cancel</a>
     <a class="btn secondary" href="{{ url_for('visual_editor', page='places') }}">Open visual editor</a>
   </div>
-  <p class="field-help">This saves the headlines, carousel, search settings and London HQ address. To highlight shops, use <strong>Save highlights</strong> in the stockist list below.</p>
+  <p class="field-help">This saves the headlines, carousel, search settings and London HQ address. To highlight shops, use <strong>Save highlights</strong> in the stockist list below. How to order has its own save button further down this page.</p>
 </form>
 
   <div class="card" id="shops">
@@ -218,6 +222,8 @@
       </form>
     </details>
   </div>
+
+{% include "_how_to_order_form.html" %}
 
 <template id="retailer-template">
   <div class="tile-editor" data-retailer>

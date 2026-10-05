@@ -1,4 +1,4 @@
-"""Where to find our products must be a first-class CRM page.
+"""Find us is one CRM page: shops first, then how to order.
 
 Run with:  python test_places.py
 """
@@ -48,15 +48,24 @@ class PlacesPageTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         html = response.get_data(as_text=True)
         self.assertIn("/places", html)
-        self.assertIn("Where to find our products", html)
+        self.assertIn("Find us", html)
         self.assertIn("/places/save", html)
+        self.assertIn('id="how-to-order"', html)
+        self.assertIn("/distributor/save", html)
+        self.assertIn("Save shops", html)
+        self.assertIn("Save how to order", html)
+        self.assertNotIn('<span class="lbl">Where to find our products</span>', html)
+        self.assertNotIn('<span class="lbl">Become a Distributor</span>', html)
 
     def test_dashboard_links_to_places(self):
         response = self.client.get("/")
         self.assertEqual(response.status_code, 200)
         html = response.get_data(as_text=True)
         self.assertIn("/places", html)
-        self.assertIn("Where to find our products", html)
+        self.assertIn("Find us", html)
+        self.assertIn("Shops, then how to order", html)
+        self.assertNotIn(">Where to find our products<", html)
+        self.assertNotIn(">Become a Distributor<", html)
 
     def test_save_updates_hero_copy_then_restores(self):
         original = load_data("places")
@@ -91,7 +100,10 @@ class PlacesPageTests(unittest.TestCase):
             self.assertIn(featured["headingItalic"], html)
         box = _hide_heading_checkbox(html)
         self.assertTrue(box)
-        self.assertNotIn("checked", box)
+        if featured.get("hideHeading"):
+            self.assertIn("checked", box)
+        else:
+            self.assertNotIn("checked", box)
 
     def test_form_shows_shop_list_heading(self):
         html = self.client.get("/places").get_data(as_text=True)
@@ -214,6 +226,55 @@ class PlacesPageTests(unittest.TestCase):
             with app.app_context():
                 save_data("places", original)
 
+    def test_form_shows_hide_featured_carousel(self):
+        html = self.client.get("/places").get_data(as_text=True)
+        self.assertIn("Featured shops (carousel)", html)
+        self.assertIn("Hide featured shops on the live site", html)
+        self.assertIn("featured_hidden", html)
+        box = _checkbox(html, "featured_hidden")
+        self.assertTrue(box)
+        self.assertNotIn("checked", box)
+
+    def test_hide_featured_carousel_persists_and_untick_shows_it_again(self):
+        original = load_data("places")
+        names = [
+            item.get("name")
+            for item in ((original.get("featured") or {}).get("retailers") or [])
+        ]
+        self.assertTrue(names)
+        try:
+            payload = _form_from_places(original)
+            payload.pop("featured_hidden", None)
+            response = self.client.post("/places/save", data=payload)
+            self.assertEqual(response.status_code, 302)
+            saved = load_data("places")["featured"]
+            self.assertIs(saved.get("hidden"), False)
+            self.assertEqual([item.get("name") for item in saved["retailers"]], names)
+            form = self.client.get("/places").get_data(as_text=True)
+            self.assertNotIn("checked", _checkbox(form, "featured_hidden"))
+
+            payload["featured_hidden"] = "on"
+            response = self.client.post("/places/save", data=payload)
+            self.assertEqual(response.status_code, 302)
+            saved = load_data("places")["featured"]
+            self.assertIs(saved.get("hidden"), True)
+            self.assertEqual([item.get("name") for item in saved["retailers"]], names)
+            form = self.client.get("/places").get_data(as_text=True)
+            self.assertIn("checked", _checkbox(form, "featured_hidden"))
+            self.assertIn("Hidden on site", form)
+
+            payload.pop("featured_hidden", None)
+            response = self.client.post("/places/save", data=payload)
+            self.assertEqual(response.status_code, 302)
+            saved = load_data("places")["featured"]
+            self.assertIs(saved.get("hidden"), False)
+            self.assertEqual([item.get("name") for item in saved["retailers"]], names)
+            form = self.client.get("/places").get_data(as_text=True)
+            self.assertNotIn("checked", _checkbox(form, "featured_hidden"))
+        finally:
+            with app.app_context():
+                save_data("places", original)
+
     def test_live_carousel_honours_empty_and_hide(self):
         root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         jsx = os.path.join(
@@ -226,8 +287,16 @@ class PlacesPageTests(unittest.TestCase):
         with open(jsx, encoding="utf-8") as fh:
             source = fh.read()
         self.assertIn("cms.hideHeading", source)
+        self.assertIn("cms.hidden", source)
+        self.assertIn("if (hideCarousel) return null;", source)
         self.assertIn("cmsCopy", source)
         self.assertIn('!_hideHeading && (_heading || _headingItalic)', source)
+        with open(os.path.join(os.path.dirname(jsx), "..", "Places.html"), encoding="utf-8") as fh:
+            places = fh.read()
+        self.assertIn("StockistCarousel.jsx?v=10", places)
+        self.assertIn("<StockistCarousel", places)
+        self.assertIn("<SupplierMap", places)
+        self.assertIn("<HowToOrder", places)
 
     def test_live_directory_honours_empty_and_hide(self):
         root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -476,6 +545,8 @@ def _form_from_places(data):
         payload["footer_visible"] = "on"
     if featured.get("hideHeading"):
         payload["featured_hideHeading"] = "on"
+    if featured.get("hidden"):
+        payload["featured_hidden"] = "on"
     if directory.get("hideHeading"):
         payload["directory_hideHeading"] = "on"
     for i, item in enumerate(retailers):
