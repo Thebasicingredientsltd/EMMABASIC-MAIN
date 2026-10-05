@@ -4,7 +4,7 @@ window.EB_CATALOG = {
     "eyebrow": "Our Products — N°01 through N°07",
     "title": "Small shelf,",
     "titleItalic": "big intention.",
-    "subtitle": "Seven categories. No additives, no fillers, no shortcuts. The range is growing slowly — each product earns its place, or it doesn't ship.",
+    "subtitle": "Ten categories. No additives, no fillers, no shortcuts. The range is growing slowly — each product earns its place, or it doesn't ship.",
     "visible": true
   },
   "footer": {
@@ -12,7 +12,7 @@ window.EB_CATALOG = {
   },
   "seo": {
     "title": "Our products – Products with no E numbers",
-    "description": "Seven categories. No additives, no fillers, no shortcuts. The range is growing slowly — each product earns its place, or it doesn't ship.",
+    "description": "ten categories. No additives, no fillers, no shortcuts. The range is growing slowly — each product earns its place, or it doesn't ship.",
     "canonical": "",
     "image": "",
     "ogType": "website",
