@@ -20,285 +20,6 @@ window.EB_JOURNAL = {
   },
   "posts": [
     {
-      "id": "matcha-preparation",
-      "category": "Ingredient Stories",
-      "date": "14 Apr 2026",
-      "title": "How to prepare matcha properly — and why most people don't.",
-      "author": "Olivia",
-      "excerpt": "The temperature of the water, the direction of the whisk, the age of the powder. Small things with large consequences.",
-      "image": "assets/uploads/Matcha-journal-image-20260923-081404.jpg",
-      "tone": "warm",
-      "featured": false,
-      "seo": {
-        "title": "",
-        "description": "",
-        "canonical": "",
-        "image": "",
-        "ogType": "article",
-        "noindex": false
-      }
-    },
-    {
-      "id": "sushi-rice-ratio",
-      "category": "Recipes",
-      "date": "08 Apr 2026",
-      "title": "Koshihikari and the short-grain question. What the rice in your bowl actually is.",
-      "author": "Olivia",
-      "excerpt": "Most sushi rice in British kitchens is Italian. The difference between that and genuine short-grain Japonica is something you taste immediately — once you know what you're looking for.",
-      "image": "assets/uploads/Sushi-rice-journal-image-20260923-081451.avif",
-      "tone": "cool",
-      "featured": false,
-      "seo": {
-        "title": "",
-        "description": "",
-        "canonical": "",
-        "image": "",
-        "ogType": "article",
-        "noindex": false
-      }
-    },
-    {
-      "id": "binchotan-kitchen",
-      "category": "Behind the Product",
-      "date": "01 Apr 2026",
-      "title": "Binchotan: 300 years of Japanese charcoal production.",
-      "excerpt": "We spent a day with a Wakayama producer. Here's what we learned about a process that hasn't changed since the Edo period.",
-      "image": "assets/uploads/Binochtan-water-filter-journal-20260923-081519.jpg",
-      "tone": "ink",
-      "featured": false
-    },
-    {
-      "id": "cold-run-furikake",
-      "category": "The Grit",
-      "date": "24 Mar 2026",
-      "title": "What we eat after a long run.",
-      "excerpt": "The rice goes on before the run. By the time you're back, it's waiting. Furikake, a soft egg, sesame oil. That's it.",
-      "image": "assets/uploads/Nori-furikake-journal-20260923-081544.jpg",
-      "tone": "ink",
-      "featured": false
-    },
-    {
-      "id": "tamari-vs-soy",
-      "category": "Ingredient Stories",
-      "date": "17 Mar 2026",
-      "title": "Tamari vs soy sauce. They are not the same thing.",
-      "excerpt": "One uses wheat. One doesn't. The difference in flavour is real, and once you know it, you can't un-taste it.",
-      "image": "assets/uploads/Soy-sauce-image-20260923-081605.jpg",
-      "tone": "warm",
-      "featured": false
-    },
-    {
-      "id": "gyoza-technique",
-      "category": "Recipes",
-      "date": "10 Mar 2026",
-      "title": "The yaki-gyoza method. Steam-fry, not fry.",
-      "excerpt": "Hot oil, golden base, then water and a lid. Two minutes of steam finishes what the pan starts. Order matters.",
-      "image": "assets/uploads/Chicken-gyoza-journal-20260923-081628.jpg",
-      "tone": "warm",
-      "featured": false
-    },
-    {
-      "id": "sesame-oil-press",
-      "category": "Behind the Product",
-      "date": "03 Mar 2026",
-      "title": "Why we only use physically pressed sesame oil.",
-      "excerpt": "Most sesame oil is solvent-extracted. Ours isn't. The process takes longer, costs more, and the difference is unmistakeable.",
-      "image": "assets/uploads/Sesame-oil-journal-20260923-081656.jpg",
-      "tone": "warm",
-      "featured": false
-    },
-    {
-      "id": "trail-noodles",
-      "category": "The Grit",
-      "date": "24 Feb 2026",
-      "title": "24 miles. Cold. What you eat matters more than you think.",
-      "excerpt": "Long run nutrition doesn't have to be complicated. Soba, dashi, sesame. The body wants simple things, done well.",
-      "image": "assets/uploads/soba-dashi-journal-20260923-081715.jpg",
-      "tone": "ink",
-      "featured": false
-    },
-    {
-      "id": "wakame-guide",
-      "category": "Ingredient Stories",
-      "date": "17 Feb 2026",
-      "title": "Wakame: the seaweed worth knowing.",
-      "excerpt": "It's not nori. It's not kelp. Wakame is its own thing — silky, mild, nutritionally serious, and underused in Western kitchens.",
-      "image": "assets/uploads/wakame-50g-journal-20260923-081738.jpg",
-      "tone": "warm",
-      "featured": false
-    },
-    {
-      "id": "irresistibly-snackable",
-      "category": "Ingredient Stories",
-      "date": "12 Apr 2025",
-      "title": "Irresistibly snackable.",
-      "author": "Emma",
-      "excerpt": "I purchased this kimchi furikake on a whim, and I’m so glad I did! The flavour is great—sweet, slightly spicy, and full of pleasant savouriness that pairs perfectly with so many dishes. The Panko is a nice touch, which provide a…",
-      "image": "assets/uploads/EmmaBasic-Dishes_SandyWood_118_W_edited-20260927-115012-13.png",
-      "tone": "warm",
-      "featured": false,
-      "seo": {
-        "title": "Irresistibly snackable.",
-        "description": "I purchased this kimchi furikake on a whim, and I’m so glad I did! The flavour is great—sweet, slightly spicy, and full of pleasant savouriness that pairs perfectly with so many dishes. The Panko is a nice touch, which provide a…",
-        "canonical": "https://emmabasic.co.uk/journal-post.html?id=irresistibly-snackable",
-        "image": "assets/uploads/EmmaBasic-Dishes_SandyWood_118_W_edited-20260927-115012-13.png",
-        "ogType": "article",
-        "noindex": false
-      }
-    },
-    {
-      "id": "whats-shichimi",
-      "category": "Ingredient Stories",
-      "date": "10 Mar 2025",
-      "title": "Shichimi : 7 Spices",
-      "author": "Angus",
-      "excerpt": "In a Japanese restaurant, you might have noticed a small shaker of red seasoning sitting innocently on the table. This is shichimi.",
-      "image": "assets/uploads/EmmaBasic-Dishes_SandyWood_71_W_edited-20260927-115010-10.jpg",
-      "tone": "warm",
-      "featured": false,
-      "seo": {
-        "title": "Shichimi : 7 Spices",
-        "description": "In a Japanese restaurant, you might have noticed a small shaker of red seasoning sitting innocently on the table. This is shichimi.",
-        "canonical": "https://emmabasic.co.uk/journal-post.html?id=whats-shichimi",
-        "image": "assets/uploads/EmmaBasic-Dishes_SandyWood_71_W_edited-20260927-115010-10.jpg",
-        "ogType": "article",
-        "noindex": false
-      }
-    },
-    {
-      "id": "what-is-vermicelli",
-      "category": "Ingredient Stories",
-      "date": "02 June 2024",
-      "title": "What is vermicelli?",
-      "author": "Emma",
-      "excerpt": "The Cambridge dictionary says: A type of pasta made in long, thin threads.",
-      "image": "assets/uploads/EmmaBasic-January_SandyWood_102_edited-20260927-115006-04.jpg",
-      "tone": "warm",
-      "featured": false,
-      "seo": {
-        "title": "What is vermicelli?",
-        "description": "The Cambridge dictionary says: A type of pasta made in long, thin threads.",
-        "canonical": "https://emmabasic.co.uk/journal-post.html?id=what-is-vermicelli",
-        "image": "assets/uploads/EmmaBasic-January_SandyWood_102_edited-20260927-115006-04.jpg",
-        "ogType": "article",
-        "noindex": false
-      }
-    },
-    {
-      "id": "angus-asked-me-what-are-glass-noodles",
-      "category": "Ingredient Stories",
-      "date": "01 Feb 2025",
-      "title": "Angus asked me: ‘what are glass noodles?’",
-      "author": "Emma",
-      "excerpt": "Well, one thing is certain—it must be a translucent type of noodle after cooking!",
-      "image": "assets/uploads/EmmaBasic-January_SandyWood_112_edited-20260927-115011-12.jpg",
-      "tone": "warm",
-      "featured": false,
-      "seo": {
-        "title": "Angus asked me: ‘what are glass noodles?’",
-        "description": "Well, one thing is certain—it must be a translucent type of noodle after cooking!",
-        "canonical": "https://emmabasic.co.uk/journal-post.html?id=angus-asked-me-what-are-glass-noodles",
-        "image": "assets/uploads/EmmaBasic-January_SandyWood_112_edited-20260927-115011-12.jpg",
-        "ogType": "article",
-        "noindex": false
-      }
-    },
-    {
-      "id": "what-is-furikake",
-      "category": "Ingredient Stories",
-      "date": "01 Nov 2024",
-      "title": "What is furikake?",
-      "author": "Emma",
-      "excerpt": "The word \"furikake\" is a fun mix of two Japanese verbs: \"furi,\" which means \"shake,\" and \"kake,\" meaning \"sprinkle.\" It's all about shaking and sprinkling.",
-      "image": "assets/uploads/image-20260927-115014-16.png",
-      "tone": "warm",
-      "featured": false,
-      "seo": {
-        "title": "What is furikake?",
-        "description": "The word \"furikake\" is a fun mix of two Japanese verbs: \"furi,\" which means \"shake,\" and \"kake,\" meaning \"sprinkle.\" It's all about shaking and sprinkling.",
-        "canonical": "https://emmabasic.co.uk/journal-post.html?id=what-is-furikake",
-        "image": "assets/uploads/image-20260927-115014-16.png",
-        "ogType": "article",
-        "noindex": false
-      }
-    },
-    {
-      "id": "daily-fibre-intake",
-      "category": "Ingredient Stories",
-      "date": "20 May 2024",
-      "title": "Daily Fibre intake",
-      "author": "Emma",
-      "excerpt": "The NHS suggests that a daily Fibre intake of 30g helps to reduce the risk of type 2 diabetes, bowel cancer and constipation",
-      "image": "assets/uploads/Fibre-20260927-115007-06.png",
-      "tone": "warm",
-      "featured": false,
-      "seo": {
-        "title": "Daily Fibre intake",
-        "description": "The NHS suggests that a daily Fibre intake of 30g helps to reduce the risk of type 2 diabetes, bowel cancer and constipation",
-        "canonical": "https://emmabasic.co.uk/journal-post.html?id=daily-fibre-intake",
-        "image": "assets/uploads/Fibre-20260927-115007-06.png",
-        "ogType": "article",
-        "noindex": false
-      }
-    },
-    {
-      "id": "the-ugly-truth-about-refined-oil",
-      "category": "Ingredient Stories",
-      "date": "06 Feb 2024",
-      "title": "The ugly truth about refined oil",
-      "author": "Emma",
-      "excerpt": "The ugly truth about refined oil",
-      "image": "assets/uploads/G017_-_Hero_2-20260927-115009-09.jpg",
-      "tone": "warm",
-      "featured": false,
-      "seo": {
-        "title": "The ugly truth about refined oil",
-        "description": "The ugly truth about refined oil",
-        "canonical": "https://emmabasic.co.uk/journal-post.html?id=the-ugly-truth-about-refined-oil",
-        "image": "assets/uploads/G017_-_Hero_2-20260927-115009-09.jpg",
-        "ogType": "article",
-        "noindex": false
-      }
-    },
-    {
-      "id": "clean-label",
-      "category": "Ingredient Stories",
-      "date": "07 Jul 2022",
-      "title": "Talk about clean label",
-      "author": "Emma",
-      "excerpt": "Clean Label, often called Clean Dec (decoration) in UK food manufacturers, is not a familiar phrase to consumers. Neither is it a government regulated term such as organic.",
-      "image": "assets/uploads/Post_Image_480x480-20260927-115006-03.webp",
-      "tone": "warm",
-      "featured": false,
-      "seo": {
-        "title": "Talk about clean label",
-        "description": "Clean Label, often called Clean Dec (decoration) in UK food manufacturers, is not a familiar phrase to consumers. Neither is it a government regulated term such as organic.",
-        "canonical": "https://emmabasic.co.uk/journal-post.html?id=clean-label",
-        "image": "assets/uploads/Post_Image_480x480-20260927-115006-03.webp",
-        "ogType": "article",
-        "noindex": false
-      }
-    },
-    {
-      "id": "ochazuk",
-      "category": "Ingredient Stories",
-      "date": "27 Nov 2021",
-      "title": "Ochazuke/お茶漬け/茶泡饭",
-      "author": "Emma",
-      "excerpt": "Steamed rice + Seasoning topping + Green tea",
-      "image": "assets/uploads/G009_Ochazuke_by_James_35d5c7ed-e0a1-4a80-b556-eb929377df0d_600x600-20260927-115013-15.webp",
-      "tone": "warm",
-      "featured": false,
-      "seo": {
-        "title": "Ochazuke/お茶漬け/茶泡饭",
-        "description": "Steamed rice + Seasoning topping + Green tea",
-        "canonical": "https://emmabasic.co.uk/journal-post.html?id=ochazuk",
-        "image": "assets/uploads/G009_Ochazuke_by_James_35d5c7ed-e0a1-4a80-b556-eb929377df0d_600x600-20260927-115013-15.webp",
-        "ogType": "article",
-        "noindex": false
-      }
-    },
-    {
       "id": "what-is-clean-label",
       "category": "Ingredient Stories",
       "date": "02 June 2018",
@@ -313,25 +34,6 @@ window.EB_JOURNAL = {
         "description": "Do you read labels?",
         "canonical": "https://emmabasic.co.uk/journal-post.html?id=what-is-clean-label",
         "image": "assets/uploads/NL_photo_1-20260927-115005-02.jpg",
-        "ogType": "article",
-        "noindex": false
-      }
-    },
-    {
-      "id": "small-change-big-difference",
-      "category": "Ingredient Stories",
-      "date": "05 Nov 2021",
-      "title": "Small change, big difference",
-      "author": "Emma",
-      "excerpt": "Japanese curry is often misunderstood as:Katsu curry.",
-      "image": "assets/uploads/AC041_-_Hero_3-20260927-115004-01.jpg",
-      "tone": "warm",
-      "featured": false,
-      "seo": {
-        "title": "Small change, big difference",
-        "description": "Japanese curry is often misunderstood as:Katsu curry.",
-        "canonical": "https://emmabasic.co.uk/journal-post.html?id=small-change-big-difference",
-        "image": "assets/uploads/AC041_-_Hero_3-20260927-115004-01.jpg",
         "ogType": "article",
         "noindex": false
       }
@@ -370,6 +72,304 @@ window.EB_JOURNAL = {
         "description": "Sesame seeds are encased within a seed capsule.There are 8 rows of seeds and about 70 seeds per capsule.The capsules split open when once they are ripe, and that is believed to be the origin of the phrase \"Open Sesame\", meaning…",
         "canonical": "https://emmabasic.co.uk/journal-post.html?id=why-is-ali-babas-spell-open-sesame",
         "image": "assets/uploads/G017_-_Hero_4-20260927-115008-08.jpg",
+        "ogType": "article",
+        "noindex": false
+      }
+    },
+    {
+      "id": "small-change-big-difference",
+      "category": "Ingredient Stories",
+      "date": "05 Nov 2021",
+      "title": "Small change, big difference",
+      "author": "Emma",
+      "excerpt": "Japanese curry is often misunderstood as:Katsu curry.",
+      "image": "assets/uploads/AC041_-_Hero_3-20260927-115004-01.jpg",
+      "tone": "warm",
+      "featured": false,
+      "seo": {
+        "title": "Small change, big difference",
+        "description": "Japanese curry is often misunderstood as:Katsu curry.",
+        "canonical": "https://emmabasic.co.uk/journal-post.html?id=small-change-big-difference",
+        "image": "assets/uploads/AC041_-_Hero_3-20260927-115004-01.jpg",
+        "ogType": "article",
+        "noindex": false
+      }
+    },
+    {
+      "id": "ochazuk",
+      "category": "Ingredient Stories",
+      "date": "27 Nov 2021",
+      "title": "Ochazuke/お茶漬け/茶泡饭",
+      "author": "Emma",
+      "excerpt": "Steamed rice + Seasoning topping + Green tea",
+      "image": "assets/uploads/G009_Ochazuke_by_James_35d5c7ed-e0a1-4a80-b556-eb929377df0d_600x600-20260927-115013-15.webp",
+      "tone": "warm",
+      "featured": false,
+      "seo": {
+        "title": "Ochazuke/お茶漬け/茶泡饭",
+        "description": "Steamed rice + Seasoning topping + Green tea",
+        "canonical": "https://emmabasic.co.uk/journal-post.html?id=ochazuk",
+        "image": "assets/uploads/G009_Ochazuke_by_James_35d5c7ed-e0a1-4a80-b556-eb929377df0d_600x600-20260927-115013-15.webp",
+        "ogType": "article",
+        "noindex": false
+      }
+    },
+    {
+      "id": "clean-label",
+      "category": "Ingredient Stories",
+      "date": "07 Jul 2022",
+      "title": "Talk about clean label",
+      "author": "Emma",
+      "excerpt": "Clean Label, often called Clean Dec (decoration) in UK food manufacturers, is not a familiar phrase to consumers. Neither is it a government regulated term such as organic.",
+      "image": "assets/uploads/Post_Image_480x480-20260927-115006-03.webp",
+      "tone": "warm",
+      "featured": false,
+      "seo": {
+        "title": "Talk about clean label",
+        "description": "Clean Label, often called Clean Dec (decoration) in UK food manufacturers, is not a familiar phrase to consumers. Neither is it a government regulated term such as organic.",
+        "canonical": "https://emmabasic.co.uk/journal-post.html?id=clean-label",
+        "image": "assets/uploads/Post_Image_480x480-20260927-115006-03.webp",
+        "ogType": "article",
+        "noindex": false
+      }
+    },
+    {
+      "id": "the-ugly-truth-about-refined-oil",
+      "category": "Ingredient Stories",
+      "date": "06 Feb 2024",
+      "title": "The ugly truth about refined oil",
+      "author": "Emma",
+      "excerpt": "The ugly truth about refined oil",
+      "image": "assets/uploads/G017_-_Hero_2-20260927-115009-09.jpg",
+      "tone": "warm",
+      "featured": false,
+      "seo": {
+        "title": "The ugly truth about refined oil",
+        "description": "The ugly truth about refined oil",
+        "canonical": "https://emmabasic.co.uk/journal-post.html?id=the-ugly-truth-about-refined-oil",
+        "image": "assets/uploads/G017_-_Hero_2-20260927-115009-09.jpg",
+        "ogType": "article",
+        "noindex": false
+      }
+    },
+    {
+      "id": "daily-fibre-intake",
+      "category": "Ingredient Stories",
+      "date": "20 May 2024",
+      "title": "Daily Fibre intake",
+      "author": "Emma",
+      "excerpt": "The NHS suggests that a daily Fibre intake of 30g helps to reduce the risk of type 2 diabetes, bowel cancer and constipation",
+      "image": "assets/uploads/Fibre-20260927-115007-06.png",
+      "tone": "warm",
+      "featured": false,
+      "seo": {
+        "title": "Daily Fibre intake",
+        "description": "The NHS suggests that a daily Fibre intake of 30g helps to reduce the risk of type 2 diabetes, bowel cancer and constipation",
+        "canonical": "https://emmabasic.co.uk/journal-post.html?id=daily-fibre-intake",
+        "image": "assets/uploads/Fibre-20260927-115007-06.png",
+        "ogType": "article",
+        "noindex": false
+      }
+    },
+    {
+      "id": "what-is-vermicelli",
+      "category": "Ingredient Stories",
+      "date": "02 June 2024",
+      "title": "What is vermicelli?",
+      "author": "Emma",
+      "excerpt": "The Cambridge dictionary says: A type of pasta made in long, thin threads.",
+      "image": "assets/uploads/EmmaBasic-January_SandyWood_102_edited-20260927-115006-04.jpg",
+      "tone": "warm",
+      "featured": false,
+      "seo": {
+        "title": "What is vermicelli?",
+        "description": "The Cambridge dictionary says: A type of pasta made in long, thin threads.",
+        "canonical": "https://emmabasic.co.uk/journal-post.html?id=what-is-vermicelli",
+        "image": "assets/uploads/EmmaBasic-January_SandyWood_102_edited-20260927-115006-04.jpg",
+        "ogType": "article",
+        "noindex": false
+      }
+    },
+    {
+      "id": "what-is-furikake",
+      "category": "Ingredient Stories",
+      "date": "01 Nov 2024",
+      "title": "What is furikake?",
+      "author": "Emma",
+      "excerpt": "The word \"furikake\" is a fun mix of two Japanese verbs: \"furi,\" which means \"shake,\" and \"kake,\" meaning \"sprinkle.\" It's all about shaking and sprinkling.",
+      "image": "assets/uploads/image-20260927-115014-16.png",
+      "tone": "warm",
+      "featured": false,
+      "seo": {
+        "title": "What is furikake?",
+        "description": "The word \"furikake\" is a fun mix of two Japanese verbs: \"furi,\" which means \"shake,\" and \"kake,\" meaning \"sprinkle.\" It's all about shaking and sprinkling.",
+        "canonical": "https://emmabasic.co.uk/journal-post.html?id=what-is-furikake",
+        "image": "assets/uploads/image-20260927-115014-16.png",
+        "ogType": "article",
+        "noindex": false
+      }
+    },
+    {
+      "id": "angus-asked-me-what-are-glass-noodles",
+      "category": "Ingredient Stories",
+      "date": "01 Feb 2025",
+      "title": "Angus asked me: ‘what are glass noodles?’",
+      "author": "Emma",
+      "excerpt": "Well, one thing is certain—it must be a translucent type of noodle after cooking!",
+      "image": "assets/uploads/EmmaBasic-January_SandyWood_112_edited-20260927-115011-12.jpg",
+      "tone": "warm",
+      "featured": false,
+      "seo": {
+        "title": "Angus asked me: ‘what are glass noodles?’",
+        "description": "Well, one thing is certain—it must be a translucent type of noodle after cooking!",
+        "canonical": "https://emmabasic.co.uk/journal-post.html?id=angus-asked-me-what-are-glass-noodles",
+        "image": "assets/uploads/EmmaBasic-January_SandyWood_112_edited-20260927-115011-12.jpg",
+        "ogType": "article",
+        "noindex": false
+      }
+    },
+    {
+      "id": "whats-shichimi",
+      "category": "Ingredient Stories",
+      "date": "10 Mar 2025",
+      "title": "Shichimi : 7 Spices",
+      "author": "Angus",
+      "excerpt": "In a Japanese restaurant, you might have noticed a small shaker of red seasoning sitting innocently on the table. This is shichimi.",
+      "image": "assets/uploads/EmmaBasic-Dishes_SandyWood_71_W_edited-20260927-115010-10.jpg",
+      "tone": "warm",
+      "featured": false,
+      "seo": {
+        "title": "Shichimi : 7 Spices",
+        "description": "In a Japanese restaurant, you might have noticed a small shaker of red seasoning sitting innocently on the table. This is shichimi.",
+        "canonical": "https://emmabasic.co.uk/journal-post.html?id=whats-shichimi",
+        "image": "assets/uploads/EmmaBasic-Dishes_SandyWood_71_W_edited-20260927-115010-10.jpg",
+        "ogType": "article",
+        "noindex": false
+      }
+    },
+    {
+      "id": "irresistibly-snackable",
+      "category": "Ingredient Stories",
+      "date": "12 Apr 2025",
+      "title": "Irresistibly snackable.",
+      "author": "Emma",
+      "excerpt": "I purchased this kimchi furikake on a whim, and I’m so glad I did! The flavour is great—sweet, slightly spicy, and full of pleasant savouriness that pairs perfectly with so many dishes. The Panko is a nice touch, which provide a…",
+      "image": "assets/uploads/EmmaBasic-Dishes_SandyWood_118_W_edited-20260927-115012-13.png",
+      "tone": "warm",
+      "featured": false,
+      "seo": {
+        "title": "Irresistibly snackable.",
+        "description": "I purchased this kimchi furikake on a whim, and I’m so glad I did! The flavour is great—sweet, slightly spicy, and full of pleasant savouriness that pairs perfectly with so many dishes. The Panko is a nice touch, which provide a…",
+        "canonical": "https://emmabasic.co.uk/journal-post.html?id=irresistibly-snackable",
+        "image": "assets/uploads/EmmaBasic-Dishes_SandyWood_118_W_edited-20260927-115012-13.png",
+        "ogType": "article",
+        "noindex": false
+      }
+    },
+    {
+      "id": "wakame-guide",
+      "category": "Ingredient Stories",
+      "date": "17 Feb 2026",
+      "title": "Wakame: the seaweed worth knowing.",
+      "excerpt": "It's not nori. It's not kelp. Wakame is its own thing — silky, mild, nutritionally serious, and underused in Western kitchens.",
+      "image": "assets/uploads/wakame-50g-journal-20260923-081738.jpg",
+      "tone": "warm",
+      "featured": false
+    },
+    {
+      "id": "trail-noodles",
+      "category": "The Grit",
+      "date": "24 Feb 2026",
+      "title": "24 miles. Cold. What you eat matters more than you think.",
+      "excerpt": "Long run nutrition doesn't have to be complicated. Soba, dashi, sesame. The body wants simple things, done well.",
+      "image": "assets/uploads/soba-dashi-journal-20260923-081715.jpg",
+      "tone": "ink",
+      "featured": false
+    },
+    {
+      "id": "sesame-oil-press",
+      "category": "Behind the Product",
+      "date": "03 Mar 2026",
+      "title": "Why we only use physically pressed sesame oil.",
+      "excerpt": "Most sesame oil is solvent-extracted. Ours isn't. The process takes longer, costs more, and the difference is unmistakeable.",
+      "image": "assets/uploads/Sesame-oil-journal-20260923-081656.jpg",
+      "tone": "warm",
+      "featured": false
+    },
+    {
+      "id": "gyoza-technique",
+      "category": "Recipes",
+      "date": "10 Mar 2026",
+      "title": "The yaki-gyoza method. Steam-fry, not fry.",
+      "excerpt": "Hot oil, golden base, then water and a lid. Two minutes of steam finishes what the pan starts. Order matters.",
+      "image": "assets/uploads/Chicken-gyoza-journal-20260923-081628.jpg",
+      "tone": "warm",
+      "featured": false
+    },
+    {
+      "id": "tamari-vs-soy",
+      "category": "Ingredient Stories",
+      "date": "17 Mar 2026",
+      "title": "Tamari vs soy sauce. They are not the same thing.",
+      "excerpt": "One uses wheat. One doesn't. The difference in flavour is real, and once you know it, you can't un-taste it.",
+      "image": "assets/uploads/Soy-sauce-image-20260923-081605.jpg",
+      "tone": "warm",
+      "featured": false
+    },
+    {
+      "id": "cold-run-furikake",
+      "category": "The Grit",
+      "date": "24 Mar 2026",
+      "title": "What we eat after a long run.",
+      "excerpt": "The rice goes on before the run. By the time you're back, it's waiting. Furikake, a soft egg, sesame oil. That's it.",
+      "image": "assets/uploads/Nori-furikake-journal-20260923-081544.jpg",
+      "tone": "ink",
+      "featured": false
+    },
+    {
+      "id": "binchotan-kitchen",
+      "category": "Behind the Product",
+      "date": "01 Apr 2026",
+      "title": "Binchotan: 300 years of Japanese charcoal production.",
+      "excerpt": "We spent a day with a Wakayama producer. Here's what we learned about a process that hasn't changed since the Edo period.",
+      "image": "assets/uploads/Binochtan-water-filter-journal-20260923-081519.jpg",
+      "tone": "ink",
+      "featured": false
+    },
+    {
+      "id": "sushi-rice-ratio",
+      "category": "Recipes",
+      "date": "08 Apr 2026",
+      "title": "Koshihikari and the short-grain question. What the rice in your bowl actually is.",
+      "author": "Olivia",
+      "excerpt": "Most sushi rice in British kitchens is Italian. The difference between that and genuine short-grain Japonica is something you taste immediately — once you know what you're looking for.",
+      "image": "assets/uploads/Sushi-rice-journal-image-20260923-081451.avif",
+      "tone": "cool",
+      "featured": false,
+      "seo": {
+        "title": "",
+        "description": "",
+        "canonical": "",
+        "image": "",
+        "ogType": "article",
+        "noindex": false
+      }
+    },
+    {
+      "id": "matcha-preparation",
+      "category": "Ingredient Stories",
+      "date": "14 Apr 2026",
+      "title": "How to prepare matcha properly — and why most people don't.",
+      "author": "Olivia",
+      "excerpt": "The temperature of the water, the direction of the whisk, the age of the powder. Small things with large consequences.",
+      "image": "assets/uploads/Matcha-journal-image-20260923-081404.jpg",
+      "tone": "warm",
+      "featured": false,
+      "seo": {
+        "title": "",
+        "description": "",
+        "canonical": "",
+        "image": "",
         "ogType": "article",
         "noindex": false
       }

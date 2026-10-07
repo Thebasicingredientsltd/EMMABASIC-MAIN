@@ -959,7 +959,7 @@ def journal_save():
             p["featured"] = False
 
     if is_new:
-        posts.append(post)
+        insert_post_by_date(posts, post)
     else:
         posts[index] = post
         # id may have changed — drop the old article key
@@ -985,6 +985,22 @@ def journal_delete(index):
         save_data("journal", data)
         flash("Deleted post: %s" % removed.get("title", ""), "ok")
     return redirect(url_for("journal"))
+
+
+@app.route("/journal/reorder", methods=["POST"])
+def journal_reorder():
+    """Persist a drag-and-drop reorder of Field Notes posts."""
+    payload = request.get_json(silent=True) or {}
+    order = payload.get("order")
+    data = load_data("journal")
+    posts = data.get("posts") or []
+    try:
+        data["posts"] = reorder_by_index(posts, order)
+    except ValueError as exc:
+        return {"ok": False, "error": str(exc)}, 400
+    save_data("journal", data)
+    flash("Reordered Field Notes.", "ok")
+    return {"ok": True}
 
 
 # ---------------------------------------------------------------------------
@@ -2145,6 +2161,34 @@ def reorder_by_index(items, order):
     if sorted(order) != list(range(len(items))):
         raise ValueError("order must be a permutation of the current items")
     return [items[i] for i in order]
+
+
+def parse_journal_date(value):
+    """Parse a Field Notes display date so posts can be sorted earliest first."""
+    text = (value or "").strip()
+    if not text:
+        return datetime.max.replace(tzinfo=timezone.utc)
+    for fmt in ("%d %b %Y", "%d %B %Y", "%d/%m/%Y", "%Y-%m-%d"):
+        try:
+            return datetime.strptime(text, fmt).replace(tzinfo=timezone.utc)
+        except ValueError:
+            continue
+    return datetime.max.replace(tzinfo=timezone.utc)
+
+
+def sort_posts_earliest_first(posts):
+    """Return posts oldest-date-first. Unreadable dates sort last."""
+    return sorted(posts, key=lambda p: parse_journal_date(p.get("date") or ""))
+
+
+def insert_post_by_date(posts, post):
+    """Insert `post` so the list stays in earliest-date-first order."""
+    key = parse_journal_date(post.get("date") or "")
+    index = 0
+    while index < len(posts) and parse_journal_date(posts[index].get("date") or "") <= key:
+        index += 1
+    posts.insert(index, post)
+    return posts
 
 
 @app.route("/catalog/reorder", methods=["POST"])
