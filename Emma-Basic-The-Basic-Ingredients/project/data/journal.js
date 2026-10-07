@@ -373,6 +373,25 @@ window.EB_JOURNAL = {
         "ogType": "article",
         "noindex": false
       }
+    },
+    {
+      "id": "V001Y-ginger-Secret",
+      "category": "Behind the Product",
+      "date": "08 July 2026",
+      "title": "The Sushi Ginger Secret. Nobody's Talking About It.",
+      "author": "Emma",
+      "excerpt": "",
+      "image": "assets/uploads/V001Y_-_PT02-20261007-075952.jpg",
+      "tone": "cool",
+      "featured": false,
+      "seo": {
+        "title": "",
+        "description": "",
+        "canonical": "",
+        "image": "",
+        "ogType": "article",
+        "noindex": false
+      }
     }
   ],
   "articles": {
@@ -1244,6 +1263,34 @@ window.EB_JOURNAL = {
         {
           "type": "p",
           "text": "On rice, on avocado, on noodles, on everything, elevate any dish. With one shake and sprinkle, you can turn a cooking failure into a flavourful success with that signature “kimchi kick”."
+        }
+      ],
+      "author": "Emma"
+    },
+    "V001Y-ginger-Secret": {
+      "category": "Behind the Product",
+      "date": "08 July 2026",
+      "readTime": "5 Min Read",
+      "title": "The Sushi Ginger Secret.",
+      "image": "assets/uploads/V001Y_-_PT02-20261007-080126.jpg",
+      "imagePosition": "",
+      "intro": "Nobody's Talking About It.",
+      "body": [
+        {
+          "type": "p",
+          "text": "Did you know most sushi ginger uses a legal loophole?\nReal sugar costs money. Artificial sweeteners are cheap and hundreds of times sweeter than sugar, gram for gram. That's why many manufacturers reach for sweeteners instead of real sugar.\nFood regulation sets an individual maximum permitted level for each sweetener."
+        },
+        {
+          "type": "p",
+          "text": "•\tE951 Aspartame — 300 mg/kg\n•\tE955 Sucralose — 180 mg/kg\n•\tE954 Saccharin — 160 mg/kg\n•\tE950 Acesulfame K — 200 mg/kg"
+        },
+        {
+          "type": "p",
+          "text": "Here's the gap: each sweetener has its own limit, but nobody checks what happens when they're used together. So one jar can hold several sweeteners, each close to its own limit. Each is within the rules on its own. Add them up, and the jar is sweeter than any single sweetener could legally make it.\nThe result is a flavour many times more intense than anything real sugar alone could give you.\nNobody's breaking the law. Every ingredient on that label is individually authorised. But is anyone accounting for what your body takes in when a product uses multiple sweeteners at once instead of one, at a sensible dose? You can judge that one for yourself.\nAt Emma Basic, we started from a simpler place: if we wouldn't feed something to our own families, we won't make it and sell it to yours. Our sushi ginger is 100% additive-free — no chemical sweeteners, no colourings, no preservatives, no E numbers. Just ginger, sugar, corn vinegar, salt and water. Clean, the way it should be.\nNext time you pick up a jar of sushi ginger, please flip the pack, and read the label. That's really all we're asking."
+        },
+        {
+          "type": "p",
+          "text": "*(EC) No 1333/2008 on food additives (retained in UK law), Annex II, Part E, food category 04.2.2 (“Fruit and vegetables in vinegar, oil or brine” → sub-category “sweet-sour preserves of fruit and vegetables,” which is what pickled/sushi ginger falls under)"
         }
       ],
       "author": "Emma"
