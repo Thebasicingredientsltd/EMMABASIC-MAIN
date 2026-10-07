@@ -380,7 +380,7 @@ window.EB_JOURNAL = {
       "date": "08 July 2026",
       "title": "The Sushi Ginger Secret. Nobody's Talking About It.",
       "author": "Emma",
-      "excerpt": "",
+      "excerpt": "Did you know most sushi ginger uses a legal loophole?",
       "image": "assets/uploads/V001Y_-_PT02-20261007-075952.jpg",
       "tone": "cool",
       "featured": false,
