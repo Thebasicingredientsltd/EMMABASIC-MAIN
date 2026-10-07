@@ -392,6 +392,25 @@ window.EB_JOURNAL = {
         "ogType": "article",
         "noindex": false
       }
+    },
+    {
+      "id": "Category Masters",
+      "category": "The Grit",
+      "date": "25 Sep 2026",
+      "title": "Category Masters",
+      "author": "Emma",
+      "excerpt": "Shopping isn't always a pleasure. Even shopping for holidays.",
+      "image": "assets/uploads/Emma_Basic_white_solid_background-20261007-082113.png",
+      "tone": "cool",
+      "featured": false,
+      "seo": {
+        "title": "",
+        "description": "",
+        "canonical": "",
+        "image": "",
+        "ogType": "article",
+        "noindex": false
+      }
     }
   ],
   "articles": {
@@ -1291,6 +1310,38 @@ window.EB_JOURNAL = {
         {
           "type": "p",
           "text": "*(EC) No 1333/2008 on food additives (retained in UK law), Annex II, Part E, food category 04.2.2 (“Fruit and vegetables in vinegar, oil or brine” → sub-category “sweet-sour preserves of fruit and vegetables,” which is what pickled/sushi ginger falls under)"
+        }
+      ],
+      "author": "Emma"
+    },
+    "Category Masters": {
+      "category": "The Grit",
+      "date": "25 Sep 2026",
+      "readTime": "5 Min read",
+      "title": "Category Masters",
+      "image": "assets/uploads/Emma_Basic_300dpi-20261007-082457.jpg",
+      "imagePosition": "",
+      "intro": "Shopping isn't always a pleasure. Even shopping for holidays.",
+      "body": [
+        {
+          "type": "p",
+          "text": "I've given up on vacations after hours of scrolling, unable to find a hotel that felt interesting enough to leave behind my comfortable bed at home, for a few nights. Shopping for food shouldn't be hard work, but it often is."
+        },
+        {
+          "type": "p",
+          "text": "At Emma Basic, alongside our category buyers and inventory buyers, we have voluntary category masters. External training, supplier visits, trade shows and networking: all means of learning are provided to support the journey to mastery, to enable category masters to become the best in their chosen field. It takes years, and that's the point. There's no shortcut to knowing a category inside out."
+        },
+        {
+          "type": "p",
+          "text": "Before anything carries our name, Emma Basic, a category master has:"
+        },
+        {
+          "type": "p",
+          "text": "1.\tResearched the whole field and countless options.\n2.\tTested it by cooking with it, the way you would at home.\n3.\tVerified the manufacturer's food safety and sustainability.\n4.\tCompared prices, so good ingredients don't cost more than they should."
+        },
+        {
+          "type": "p",
+          "text": "Our buyers and category masters have put in 10,000 hours of learning to curate only the best items before they reach you. We do the meticulous work, so you can relax, pick up a pack of ours and simply cook."
         }
       ],
       "author": "Emma"
