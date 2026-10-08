@@ -20,6 +20,25 @@ window.EB_JOURNAL = {
   },
   "posts": [
     {
+      "id": "V001Y-ginger-Secret",
+      "category": "Behind the Product",
+      "date": "08 July 2026",
+      "title": "The Sushi Ginger Secret. Nobody's Talking About It.",
+      "author": "Emma",
+      "excerpt": "Did you know most sushi ginger uses a legal loophole?",
+      "image": "assets/uploads/V001Y_-_PT02-20261007-075952.jpg",
+      "tone": "cool",
+      "featured": false,
+      "seo": {
+        "title": "",
+        "description": "",
+        "canonical": "",
+        "image": "",
+        "ogType": "article",
+        "noindex": false
+      }
+    },
+    {
       "id": "what-is-clean-label",
       "category": "Ingredient Stories",
       "date": "02 June 2018",
@@ -186,25 +205,6 @@ window.EB_JOURNAL = {
         "description": "The Cambridge dictionary says: A type of pasta made in long, thin threads.",
         "canonical": "https://emmabasic.co.uk/journal-post.html?id=what-is-vermicelli",
         "image": "assets/uploads/EmmaBasic-January_SandyWood_102_edited-20260927-115006-04.jpg",
-        "ogType": "article",
-        "noindex": false
-      }
-    },
-    {
-      "id": "V001Y-ginger-Secret",
-      "category": "Behind the Product",
-      "date": "08 July 2026",
-      "title": "The Sushi Ginger Secret. Nobody's Talking About It.",
-      "author": "Emma",
-      "excerpt": "Did you know most sushi ginger uses a legal loophole?",
-      "image": "assets/uploads/V001Y_-_PT02-20261007-075952.jpg",
-      "tone": "cool",
-      "featured": false,
-      "seo": {
-        "title": "",
-        "description": "",
-        "canonical": "",
-        "image": "",
         "ogType": "article",
         "noindex": false
       }
