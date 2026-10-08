@@ -39,25 +39,6 @@ window.EB_JOURNAL = {
       }
     },
     {
-      "id": "Category Masters",
-      "category": "The Grit",
-      "date": "25 Sep 2026",
-      "title": "Category Masters",
-      "author": "Emma",
-      "excerpt": "Shopping isn't always a pleasure. Even shopping for holidays.",
-      "image": "assets/uploads/Emma_Basic_white_solid_background-20261007-082113.png",
-      "tone": "cool",
-      "featured": false,
-      "seo": {
-        "title": "",
-        "description": "",
-        "canonical": "",
-        "image": "",
-        "ogType": "article",
-        "noindex": false
-      }
-    },
-    {
       "id": "what-is-clean-label",
       "category": "Ingredient Stories",
       "date": "02 June 2018",
@@ -224,6 +205,25 @@ window.EB_JOURNAL = {
         "description": "The Cambridge dictionary says: A type of pasta made in long, thin threads.",
         "canonical": "https://emmabasic.co.uk/journal-post.html?id=what-is-vermicelli",
         "image": "assets/uploads/EmmaBasic-January_SandyWood_102_edited-20260927-115006-04.jpg",
+        "ogType": "article",
+        "noindex": false
+      }
+    },
+    {
+      "id": "Category Masters",
+      "category": "The Grit",
+      "date": "25 Sep 2026",
+      "title": "Category Masters",
+      "author": "Emma",
+      "excerpt": "Shopping isn't always a pleasure. Even shopping for holidays.",
+      "image": "assets/uploads/Emma_Basic_white_solid_background-20261007-082113.png",
+      "tone": "cool",
+      "featured": false,
+      "seo": {
+        "title": "",
+        "description": "",
+        "canonical": "",
+        "image": "",
         "ogType": "article",
         "noindex": false
       }
