@@ -210,6 +210,25 @@ window.EB_JOURNAL = {
       }
     },
     {
+      "id": "Category Masters",
+      "category": "The Grit",
+      "date": "25 Sep 2026",
+      "title": "Category Masters",
+      "author": "Emma",
+      "excerpt": "Shopping isn't always a pleasure. Even shopping for holidays.",
+      "image": "assets/uploads/Emma_Basic_white_solid_background-20261007-082113.png",
+      "tone": "cool",
+      "featured": false,
+      "seo": {
+        "title": "",
+        "description": "",
+        "canonical": "",
+        "image": "",
+        "ogType": "article",
+        "noindex": false
+      }
+    },
+    {
       "id": "what-is-furikake",
       "category": "Ingredient Stories",
       "date": "01 Nov 2024",
@@ -383,25 +402,6 @@ window.EB_JOURNAL = {
       "excerpt": "The temperature of the water, the direction of the whisk, the age of the powder. Small things with large consequences.",
       "image": "assets/uploads/Matcha-journal-image-20260923-081404.jpg",
       "tone": "warm",
-      "featured": false,
-      "seo": {
-        "title": "",
-        "description": "",
-        "canonical": "",
-        "image": "",
-        "ogType": "article",
-        "noindex": false
-      }
-    },
-    {
-      "id": "Category Masters",
-      "category": "The Grit",
-      "date": "25 Sep 2026",
-      "title": "Category Masters",
-      "author": "Emma",
-      "excerpt": "Shopping isn't always a pleasure. Even shopping for holidays.",
-      "image": "assets/uploads/Emma_Basic_white_solid_background-20261007-082113.png",
-      "tone": "cool",
       "featured": false,
       "seo": {
         "title": "",
