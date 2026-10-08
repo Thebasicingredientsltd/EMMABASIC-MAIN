@@ -191,6 +191,25 @@ window.EB_JOURNAL = {
       }
     },
     {
+      "id": "V001Y-ginger-Secret",
+      "category": "Behind the Product",
+      "date": "08 July 2026",
+      "title": "The Sushi Ginger Secret. Nobody's Talking About It.",
+      "author": "Emma",
+      "excerpt": "Did you know most sushi ginger uses a legal loophole?",
+      "image": "assets/uploads/V001Y_-_PT02-20261007-075952.jpg",
+      "tone": "cool",
+      "featured": false,
+      "seo": {
+        "title": "",
+        "description": "",
+        "canonical": "",
+        "image": "",
+        "ogType": "article",
+        "noindex": false
+      }
+    },
+    {
       "id": "what-is-furikake",
       "category": "Ingredient Stories",
       "date": "01 Nov 2024",
@@ -364,25 +383,6 @@ window.EB_JOURNAL = {
       "excerpt": "The temperature of the water, the direction of the whisk, the age of the powder. Small things with large consequences.",
       "image": "assets/uploads/Matcha-journal-image-20260923-081404.jpg",
       "tone": "warm",
-      "featured": false,
-      "seo": {
-        "title": "",
-        "description": "",
-        "canonical": "",
-        "image": "",
-        "ogType": "article",
-        "noindex": false
-      }
-    },
-    {
-      "id": "V001Y-ginger-Secret",
-      "category": "Behind the Product",
-      "date": "08 July 2026",
-      "title": "The Sushi Ginger Secret. Nobody's Talking About It.",
-      "author": "Emma",
-      "excerpt": "Did you know most sushi ginger uses a legal loophole?",
-      "image": "assets/uploads/V001Y_-_PT02-20261007-075952.jpg",
-      "tone": "cool",
       "featured": false,
       "seo": {
         "title": "",
