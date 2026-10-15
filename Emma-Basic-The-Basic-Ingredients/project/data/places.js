@@ -1382,6 +1382,20 @@ window.EB_PLACES = {
       {
         "image": "assets/places-gallery/stockist-visit.jpg",
         "caption": "Stockist visit"
+      },
+      {
+        "image": "assets/uploads/20260401_113757000_iOS-20261015-172926.jpg",
+        "caption": "Selfridges Food Court"
+      },
+      {
+        "image": "assets/uploads/20241207_153409341_iOS-20261015-172948.jpg",
+        "caption": "Stands out on the shelf"
+      },
+      {
+        "image": "assets/uploads/20251016_191551000_iOS-20261015-172954.jpg"
+      },
+      {
+        "image": "assets/uploads/20251016_191633000_iOS-20261015-173004.jpg"
       }
     ]
   },
