@@ -335,16 +335,6 @@ window.EB_JOURNAL = {
       "featured": false
     },
     {
-      "id": "gyoza-technique",
-      "category": "Recipes",
-      "date": "10 Mar 2026",
-      "title": "The yaki-gyoza method. Steam-fry, not fry.",
-      "excerpt": "Hot oil, golden base, then water and a lid. Two minutes of steam finishes what the pan starts. Order matters.",
-      "image": "assets/uploads/Chicken-gyoza-journal-20260923-081628.jpg",
-      "tone": "warm",
-      "featured": false
-    },
-    {
       "id": "tamari-vs-soy",
       "category": "Ingredient Stories",
       "date": "17 Mar 2026",
@@ -462,16 +452,6 @@ window.EB_JOURNAL = {
       "readTime": "4 min read",
       "title": "Tamari vs. soy sauce. They are not the same thing.",
       "image": "assets/uploads/Soy-sauce-image-20260923-081610.jpg",
-      "imagePosition": "",
-      "intro": "",
-      "body": []
-    },
-    "gyoza-technique": {
-      "category": "Recipes",
-      "date": "10 Mar 2026",
-      "readTime": "4 min read",
-      "title": "The yaki-gyoza method. Steam-fry, not fry.",
-      "image": "assets/uploads/Chicken-gyoza-journal-20260923-081640.jpg",
       "imagePosition": "",
       "intro": "",
       "body": []
