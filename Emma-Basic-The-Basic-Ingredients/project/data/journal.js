@@ -362,39 +362,9 @@ window.EB_JOURNAL = {
         "ogType": "article",
         "noindex": false
       }
-    },
-    {
-      "id": "matcha-preparation",
-      "category": "Ingredient Stories",
-      "date": "14 Apr 2026",
-      "title": "How to prepare matcha properly — and why most people don't.",
-      "author": "Olivia",
-      "excerpt": "The temperature of the water, the direction of the whisk, the age of the powder. Small things with large consequences.",
-      "image": "assets/uploads/Matcha-journal-image-20260923-081404.jpg",
-      "tone": "warm",
-      "featured": false,
-      "seo": {
-        "title": "",
-        "description": "",
-        "canonical": "",
-        "image": "",
-        "ogType": "article",
-        "noindex": false
-      }
     }
   ],
   "articles": {
-    "matcha-preparation": {
-      "category": "Ingredient Stories",
-      "date": "14 Apr 2026",
-      "readTime": "5 min read",
-      "title": "How to prepare matcha properly — and why it's worth the extra minute.",
-      "image": "assets/uploads/Matcha-journal-image-20260923-081431.jpg",
-      "imagePosition": "center 35%",
-      "intro": "",
-      "body": [],
-      "author": "Olivia"
-    },
     "sushi-rice-ratio": {
       "category": "Recipes",
       "date": "08 Apr 2026",
