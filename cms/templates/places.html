@@ -4,6 +4,8 @@
 {% set featured = d.featured or {} %}
 {% set directory = d.directory or {} %}
 {% set hq = d.hq or {} %}
+{% set gallery = d.gallery or {} %}
+{% macro imgsrc(path) %}{{ url_for('site_assets', filename=path[7:]) if path and path.startswith('assets/') else (path or '') }}{% endmacro %}
 {% block content %}
 <h1>Find us</h1>
 <p class="sub">Shops and the map come first. How to order is on this same page, underneath.</p>
@@ -143,12 +145,51 @@
     </div>
   </div>
 
+  <div class="card" id="gallery">
+    <h2 style="margin-top:0;">Photo gallery{% if not is_section_visible(gallery) %} <span class="pill">Hidden on site</span>{% endif %}</h2>
+    <p class="field-help">The photos at the very bottom of the Find us page — markets, trade shows, shop floors. Visitors click a photo to see it full size.</p>
+    <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
+      <input type="checkbox" name="gallery_visible" value="on" style="width:auto;" {{ 'checked' if is_section_visible(gallery) }}/> Show the photo gallery on the live site
+    </label>
+    <p class="field-help">Untick to take the gallery off the website without deleting the photos.</p>
+    <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:14px 0 6px; font-weight:500;">
+      <input type="checkbox" name="gallery_hideHeading" value="on" style="width:auto;" {{ 'checked' if gallery.hideHeading }}/> Hide the heading above the photos
+    </label>
+    <div class="row">
+      <div><label>Line one</label><input type="text" name="gallery_heading" value="{{ gallery.heading or '' }}"/></div>
+      <div><label>Line two (italic)</label><input type="text" name="gallery_headingItalic" value="{{ gallery.headingItalic or '' }}"/></div>
+    </div>
+    <label>Short paragraph beside the heading</label>
+    <textarea name="gallery_intro" rows="2">{{ gallery.intro or '' }}</textarea>
+
+    <label>Photos</label>
+    <p class="field-help">Drag a photo onto any box (or click to browse) — new images are optimized automatically. The caption shows when someone hovers the photo, and under it when the photo is open.</p>
+    <div id="photos">
+      {% for p in (gallery.photos or []) %}
+      <div class="tile-editor" data-photo>
+        <div class="img-field">
+          <img class="preview" src="{{ imgsrc(p.image) }}" alt="preview"/>
+          <div class="grow">
+            <input type="text" name="photo{{ loop.index0 }}_image" value="{{ p.image }}"/>
+            <input type="file" name="photo{{ loop.index0 }}_image_file" accept="image/*" style="margin-top:8px;"/>
+          </div>
+        </div>
+        <label>Caption</label>
+        <input type="text" name="photo{{ loop.index0 }}_caption" value="{{ p.caption or '' }}"/>
+        <div style="margin-top:10px;"><button type="button" class="btn danger small" onclick="this.closest('[data-photo]').remove()">Remove photo</button></div>
+      </div>
+      {% endfor %}
+    </div>
+    <input type="hidden" name="gallery_photo_count" id="gallery_photo_count" value="{{ (gallery.photos or [])|length }}"/>
+    <button type="button" class="btn secondary small" id="add-photo">+ Add photo</button>
+  </div>
+
   <div class="actions-bar save-bar">
     <button class="btn secondary" type="submit">Save shops</button>
     <a class="btn secondary" href="{{ url_for('index') }}">Cancel</a>
     <a class="btn secondary" href="{{ url_for('visual_editor', page='places') }}">Open visual editor</a>
   </div>
-  <p class="field-help">This saves the headlines, carousel, search settings and London HQ address. To highlight shops, use <strong>Save highlights</strong> in the stockist list below. How to order has its own save button further down this page.</p>
+  <p class="field-help">This saves the headlines, carousel, search settings, London HQ address and photo gallery. To highlight shops, use <strong>Save highlights</strong> in the stockist list below. How to order has its own save button further down this page.</p>
 </form>
 
   <div class="card" id="shops">
@@ -237,6 +278,21 @@
     <div style="margin-top:10px;"><button type="button" class="btn danger small" onclick="this.closest('[data-retailer]').remove()">Remove shop</button></div>
   </div>
 </template>
+
+<template id="photo-template">
+  <div class="tile-editor" data-photo>
+    <div class="img-field">
+      <img class="preview" src="" alt="preview"/>
+      <div class="grow">
+        <input type="text" name="photoIDX_image" value=""/>
+        <input type="file" name="photoIDX_image_file" accept="image/*" style="margin-top:8px;"/>
+      </div>
+    </div>
+    <label>Caption</label>
+    <input type="text" name="photoIDX_caption" value=""/>
+    <div style="margin-top:10px;"><button type="button" class="btn danger small" onclick="this.closest('[data-photo]').remove()">Remove photo</button></div>
+  </div>
+</template>
 {% endblock %}
 
 {% block scripts %}
@@ -248,8 +304,13 @@
       var tpl = document.getElementById(templateId).innerHTML.replace(/IDX/g, count);
       var wrap = document.createElement('div');
       wrap.innerHTML = tpl.trim();
-      document.getElementById(containerId).appendChild(wrap.firstChild);
+      var node = wrap.firstChild;
+      document.getElementById(containerId).appendChild(node);
       counter.value = count + 1;
+      // A fresh row needs its own drag-and-drop uploader.
+      if (window.ebInitImgField) {
+        node.querySelectorAll('.img-field').forEach(window.ebInitImgField);
+      }
     });
   }
   function ebCopyHighlight(form) {
@@ -262,5 +323,6 @@
     return true;
   }
   ebAddIndexed('add-retailer', 'retailers', 'retailer-template', 'retailer_count');
+  ebAddIndexed('add-photo', 'photos', 'photo-template', 'gallery_photo_count');
 </script>
 {% endblock %}

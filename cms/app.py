@@ -1387,6 +1387,10 @@ def places_save():
     # they are.
     if "shop_count" in request.form:
         _apply_legacy_shop_list(d)
+    # Same idea for the photo gallery: only a form that carries its fields
+    # may rewrite the album.
+    if "gallery_photo_count" in request.form:
+        _apply_gallery_form(d)
     _apply_seo_form(d)
 
     hq = d.setdefault("hq", {})
@@ -1402,6 +1406,37 @@ def places_save():
     save_data("places", d)
     flash("Shops saved.", "ok")
     return redirect(url_for("places"))
+
+
+def _apply_gallery_form(d):
+    """Photo gallery at the foot of the Find us page.
+
+    A photo is "present" only if its fields were submitted; removed photos
+    have no fields in the form and are skipped entirely.
+    """
+    gallery = d.setdefault("gallery", {})
+    gallery["heading"] = request.form.get("gallery_heading", "").strip()
+    gallery["headingItalic"] = request.form.get("gallery_headingItalic", "").strip()
+    gallery["intro"] = request.form.get("gallery_intro", "").strip()
+    gallery["hideHeading"] = form_checkbox("gallery_hideHeading")
+    gallery["visible"] = form_checkbox("gallery_visible")
+
+    photos = []
+    count = int(request.form.get("gallery_photo_count", "0") or "0")
+    for i in range(count):
+        text_key = "photo%d_image" % i
+        upload = request.files.get(text_key + "_file")
+        if text_key not in request.form and not (upload and upload.filename):
+            continue
+        image = resolve_image(text_key, "")
+        if not image:
+            continue
+        photo = {"image": image}
+        caption = request.form.get("photo%d_caption" % i, "").strip()
+        if caption:
+            photo["caption"] = caption
+        photos.append(photo)
+    gallery["photos"] = photos
 
 
 def _apply_legacy_shop_list(d):

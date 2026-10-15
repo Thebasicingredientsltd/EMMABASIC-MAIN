@@ -53,7 +53,7 @@
 <div id="root"></div>
 
 <!-- CMS-managed content -->
-<script src="data/places.js?v=20261005195336632"></script>
+<script src="data/places.js?v=20261015162730479"></script>
 <script src="data/people.js?v=20261001091746360"></script>
 <script src="data/nav.js?v=20260927115716150"></script>
 <script src="components/seo.js" data-eb-seo="places"></script>
@@ -65,6 +65,7 @@
 <script type="text/babel" src="components/SupplierMap.jsx?v=8"></script>
 <script type="text/babel" src="components/StockistCarousel.jsx?v=10"></script>
 <script type="text/babel" src="components/HowToOrder.jsx?v=4"></script>
+<script type="text/babel" src="components/PlacesGallery.jsx?v=1"></script>
 <script type="text/babel" src="components/Sections.jsx?v=6"></script>
 
 <script type="text/babel">
@@ -205,6 +206,7 @@ function PlacesApp() {
         <StockistCarousel />
         <SupplierMap />
         {HowToOrderView ? <HowToOrderView /> : <HowToOrder />}
+        <PlacesGallery />
       </main>
       <SiteFooter visible={(window.EB_PLACES && window.EB_PLACES.footer || {}).visible} />
     </>

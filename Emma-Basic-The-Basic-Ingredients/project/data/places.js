@@ -1344,6 +1344,47 @@ window.EB_PLACES = {
       "lng": 0.09602
     }
   ],
+  "gallery": {
+    "heading": "Out in the",
+    "headingItalic": "wild.",
+    "intro": "Markets, trade shows and shop floors — where our shelves and our jars actually meet people.",
+    "hideHeading": false,
+    "visible": true,
+    "photos": [
+      {
+        "image": "assets/places-gallery/tasting-stand.jpg",
+        "caption": "Tasting — trade show"
+      },
+      {
+        "image": "assets/places-gallery/market-shelves.jpg",
+        "caption": "Market stall — the range"
+      },
+      {
+        "image": "assets/places-gallery/stand-build.jpg",
+        "caption": "Setting up — trade show"
+      },
+      {
+        "image": "assets/places-gallery/showroom-table.jpg",
+        "caption": "Showroom — tasting table"
+      },
+      {
+        "image": "assets/places-gallery/festival-sampling.jpg",
+        "caption": "Festival — sampling"
+      },
+      {
+        "image": "assets/places-gallery/trade-show-shelves.jpg",
+        "caption": "Trade show — shelves"
+      },
+      {
+        "image": "assets/places-gallery/sampling-counter.jpg",
+        "caption": "Sampling counter"
+      },
+      {
+        "image": "assets/places-gallery/stockist-visit.jpg",
+        "caption": "Stockist visit"
+      }
+    ]
+  },
   "footer": {
     "visible": false
   },
