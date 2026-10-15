@@ -474,6 +474,151 @@ class PlacesPageTests(unittest.TestCase):
             with app.app_context():
                 save_data("places", original)
 
+    def test_form_shows_the_photo_gallery_editor(self):
+        html = self.client.get("/places").get_data(as_text=True)
+        self.assertIn("Photo gallery", html)
+        self.assertIn("Show the photo gallery on the live site", html)
+        self.assertIn("Hide the heading above the photos", html)
+        self.assertIn('name="gallery_heading"', html)
+        self.assertIn('name="gallery_headingItalic"', html)
+        self.assertIn('name="gallery_intro"', html)
+        self.assertIn('name="gallery_photo_count"', html)
+        self.assertIn("+ Add photo", html)
+        gallery = load_data("places").get("gallery") or {}
+        photos = gallery.get("photos") or []
+        self.assertTrue(photos)
+        self.assertIn('name="photo0_image"', html)
+        self.assertIn(photos[0]["image"], html)
+        if photos[0].get("caption"):
+            self.assertIn(photos[0]["caption"], html)
+        self.assertIn("checked", _checkbox(html, "gallery_visible"))
+
+    def test_saving_rewrites_the_gallery_photos_and_captions(self):
+        original = load_data("places")
+        try:
+            payload = _form_from_places(original)
+            payload["gallery_photo_count"] = "2"
+            payload["photo0_image"] = "assets/places-gallery/market-shelves.jpg"
+            payload["photo0_caption"] = "Saturday market"
+            payload["photo1_image"] = "assets/places-gallery/tasting-stand.jpg"
+            payload["photo1_caption"] = ""
+            for key in list(payload):
+                if key.startswith("photo") and key not in (
+                    "photo0_image", "photo0_caption", "photo1_image", "photo1_caption",
+                ):
+                    payload.pop(key)
+            response = self.client.post("/places/save", data=payload)
+            self.assertEqual(response.status_code, 302)
+            photos = load_data("places")["gallery"]["photos"]
+            self.assertEqual(photos, [
+                {"image": "assets/places-gallery/market-shelves.jpg", "caption": "Saturday market"},
+                {"image": "assets/places-gallery/tasting-stand.jpg"},
+            ])
+
+            # A removed photo posts no fields at all, so it drops out.
+            payload.pop("photo0_image")
+            payload.pop("photo0_caption")
+            response = self.client.post("/places/save", data=payload)
+            self.assertEqual(response.status_code, 302)
+            photos = load_data("places")["gallery"]["photos"]
+            self.assertEqual(photos, [{"image": "assets/places-gallery/tasting-stand.jpg"}])
+        finally:
+            with app.app_context():
+                save_data("places", original)
+
+    def test_hiding_the_gallery_keeps_the_photos(self):
+        original = load_data("places")
+        photos = (original.get("gallery") or {}).get("photos") or []
+        self.assertTrue(photos)
+        try:
+            payload = _form_from_places(original)
+            payload.pop("gallery_visible", None)
+            response = self.client.post("/places/save", data=payload)
+            self.assertEqual(response.status_code, 302)
+            gallery = load_data("places")["gallery"]
+            self.assertIs(gallery.get("visible"), False)
+            self.assertEqual(gallery.get("photos"), photos)
+            form = self.client.get("/places").get_data(as_text=True)
+            self.assertNotIn("checked", _checkbox(form, "gallery_visible"))
+            self.assertIn("Hidden on site", form)
+
+            payload["gallery_visible"] = "on"
+            response = self.client.post("/places/save", data=payload)
+            self.assertEqual(response.status_code, 302)
+            gallery = load_data("places")["gallery"]
+            self.assertIs(gallery.get("visible"), True)
+            self.assertEqual(gallery.get("photos"), photos)
+            form = self.client.get("/places").get_data(as_text=True)
+            self.assertIn("checked", _checkbox(form, "gallery_visible"))
+        finally:
+            with app.app_context():
+                save_data("places", original)
+
+    def test_clearing_gallery_heading_saves_empty_not_fallback(self):
+        original = load_data("places")
+        try:
+            payload = _form_from_places(original)
+            payload["gallery_heading"] = ""
+            payload["gallery_headingItalic"] = ""
+            response = self.client.post("/places/save", data=payload)
+            self.assertEqual(response.status_code, 302)
+            gallery = load_data("places")["gallery"]
+            self.assertEqual(gallery.get("heading"), "")
+            self.assertEqual(gallery.get("headingItalic"), "")
+        finally:
+            with app.app_context():
+                save_data("places", original)
+
+    def test_page_save_without_gallery_fields_keeps_the_album(self):
+        original = load_data("places")
+        try:
+            payload = _form_from_places(original)
+            for key in list(payload):
+                if key.startswith("gallery_") or key.startswith("photo"):
+                    payload.pop(key)
+            self.assertNotIn("gallery_photo_count", payload)
+            response = self.client.post("/places/save", data=payload)
+            self.assertEqual(response.status_code, 302)
+            self.assertEqual(load_data("places").get("gallery"), original.get("gallery"))
+        finally:
+            with app.app_context():
+                save_data("places", original)
+
+    def test_live_gallery_sits_at_the_bottom_of_find_us(self):
+        root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        project = os.path.join(root, "Emma-Basic-The-Basic-Ingredients", "project")
+        with open(os.path.join(project, "Places.html"), encoding="utf-8") as fh:
+            places = fh.read()
+        self.assertIn("PlacesGallery.jsx", places)
+        self.assertIn("<PlacesGallery", places)
+        order = [places.index(tag) for tag in (
+            "<SupplierMap", "<HowToOrder", "<PlacesGallery", "<SiteFooter",
+        )]
+        self.assertEqual(order, sorted(order))
+
+        with open(os.path.join(project, "components", "PlacesGallery.jsx"), encoding="utf-8") as fh:
+            source = fh.read()
+        self.assertIn("EB_PLACES.gallery", source)
+        self.assertIn("cms.visible === false", source)
+        self.assertIn("cms.hideHeading", source)
+        self.assertIn("cms.photos", source)
+        self.assertIn('!_hideHeading && (_heading || _headingItalic)', source)
+        self.assertIn("PlacesGalleryLightbox", source)
+
+        gallery = load_data("places").get("gallery") or {}
+        for photo in gallery.get("photos") or []:
+            path = photo["image"].split("/")
+            self.assertTrue(
+                os.path.exists(os.path.join(project, *path)),
+                "missing gallery photo: %s" % photo["image"],
+            )
+
+    def test_visual_editor_can_hide_the_gallery(self):
+        import visual
+        page = visual.page_by_id("places")
+        paths = [section["path"] for section in page["sections"]]
+        self.assertIn("gallery.visible", paths)
+
     def test_add_and_remove_shop_touch_only_that_row(self):
         from unittest import mock
         import stockists_import as si
@@ -521,6 +666,8 @@ def _form_from_places(data):
     retailers = featured.get("retailers") or []
     shops = data.get("shops") or []
     hq = data.get("hq") or {}
+    gallery = data.get("gallery") or {}
+    photos = gallery.get("photos") or []
     payload = {
         "hero_eyebrow": hero.get("eyebrow", ""),
         "hero_title": hero.get("title", ""),
@@ -538,11 +685,22 @@ def _form_from_places(data):
         "hq_addressLine2": hq.get("addressLine2", ""),
         "hq_lat": "" if hq.get("lat") is None else str(hq.get("lat")),
         "hq_lng": "" if hq.get("lng") is None else str(hq.get("lng")),
+        "gallery_heading": gallery.get("heading", ""),
+        "gallery_headingItalic": gallery.get("headingItalic", ""),
+        "gallery_intro": gallery.get("intro", ""),
+        "gallery_photo_count": str(len(photos)),
     }
     if hero.get("visible") is not False:
         payload["hero_visible"] = "on"
     if (data.get("footer") or {}).get("visible") is not False:
         payload["footer_visible"] = "on"
+    if gallery.get("visible") is not False:
+        payload["gallery_visible"] = "on"
+    if gallery.get("hideHeading"):
+        payload["gallery_hideHeading"] = "on"
+    for i, item in enumerate(photos):
+        payload["photo%d_image" % i] = item.get("image", "")
+        payload["photo%d_caption" % i] = item.get("caption", "")
     if featured.get("hideHeading"):
         payload["featured_hideHeading"] = "on"
     if featured.get("hidden"):

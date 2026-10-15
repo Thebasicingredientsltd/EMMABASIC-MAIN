@@ -82,6 +82,7 @@ SITE_PAGES = [
         "data_key": "places",
         "sections": [
             {"id": "hero", "path": "hero.visible", "label": "Page header"},
+            {"id": "gallery", "path": "gallery.visible", "label": "Photo gallery"},
             {"id": "footer", "path": "footer.visible", "label": "Page footer"},
         ],
     },
