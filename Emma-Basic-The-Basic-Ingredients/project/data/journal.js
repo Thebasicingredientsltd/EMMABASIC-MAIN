@@ -343,39 +343,9 @@ window.EB_JOURNAL = {
       "image": "assets/uploads/Nori-furikake-journal-20260923-081544.jpg",
       "tone": "ink",
       "featured": false
-    },
-    {
-      "id": "sushi-rice-ratio",
-      "category": "Recipes",
-      "date": "08 Apr 2026",
-      "title": "Koshihikari and the short-grain question. What the rice in your bowl actually is.",
-      "author": "Olivia",
-      "excerpt": "Most sushi rice in British kitchens is Italian. The difference between that and genuine short-grain Japonica is something you taste immediately — once you know what you're looking for.",
-      "image": "assets/uploads/Sushi-rice-journal-image-20260923-081451.avif",
-      "tone": "cool",
-      "featured": false,
-      "seo": {
-        "title": "",
-        "description": "",
-        "canonical": "",
-        "image": "",
-        "ogType": "article",
-        "noindex": false
-      }
     }
   ],
   "articles": {
-    "sushi-rice-ratio": {
-      "category": "Recipes",
-      "date": "08 Apr 2026",
-      "readTime": "6 min read",
-      "title": "Koshihikari and the short-grain question. What the rice in your bowl actually is.",
-      "image": "assets/uploads/Sushi-rice-journal-image-20260923-081503.avif",
-      "imagePosition": "",
-      "intro": "",
-      "body": [],
-      "author": "Olivia"
-    },
     "cold-run-furikake": {
       "category": "The Grit",
       "date": "24 Mar 2026",
