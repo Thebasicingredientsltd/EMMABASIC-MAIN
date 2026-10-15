@@ -12,7 +12,7 @@ window.EB_STORY = {
     "headingItalic": "in the wild."
   },
   "footer": {
-    "visible": true
+    "visible": false
   },
   "seo": {
     "title": "",
