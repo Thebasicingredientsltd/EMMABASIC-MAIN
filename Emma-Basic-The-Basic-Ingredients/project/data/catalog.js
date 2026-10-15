@@ -1876,9 +1876,10 @@ window.EB_CATALOG = {
           "ingredients": "Tapioca Starch, Rice, Salt",
           "allergens": "",
           "images": [
-            "assets/uploads/v099_primary_back_2-20261015-102643.png"
+            "assets/uploads/V099_-_Hero_01-20261015-103012.jpg",
+            "assets/uploads/v099_primary_back_2-20261015-103023.png"
           ],
-          "updatedAt": "2026-10-15T10:28:22+00:00"
+          "updatedAt": "2026-10-15T10:30:39+00:00"
         }
       ]
     },
