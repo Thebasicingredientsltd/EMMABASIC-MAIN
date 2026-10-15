@@ -20,6 +20,6 @@ window.EB_STORY = {
     "canonical": "",
     "image": "",
     "ogType": "website",
-    "noindex": false
+    "noindex": true
   }
 };
