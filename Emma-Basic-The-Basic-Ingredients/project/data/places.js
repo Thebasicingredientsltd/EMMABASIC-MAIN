@@ -1396,6 +1396,10 @@ window.EB_PLACES = {
       },
       {
         "image": "assets/uploads/20251016_191633000_iOS-20261015-173004.jpg"
+      },
+      {
+        "image": "assets/uploads/133DSC08623-20261015-174347.jpg",
+        "caption": "Lunch 2026"
       }
     ]
   },
