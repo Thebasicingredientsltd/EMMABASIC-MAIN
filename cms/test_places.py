@@ -11,7 +11,12 @@ from urllib.parse import urlencode
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from app import app, load_data, save_data  # noqa: E402
+from app import CMS_SITE_PAGES, app, load_data, save_data  # noqa: E402
+
+
+def _places_summary():
+    """What the dashboard card for Find us says the page holds."""
+    return next(p["summary"] for p in CMS_SITE_PAGES if p["endpoint"] == "places")
 
 
 def _checkbox(html, name):
@@ -63,7 +68,7 @@ class PlacesPageTests(unittest.TestCase):
         html = response.get_data(as_text=True)
         self.assertIn("/places", html)
         self.assertIn("Find us", html)
-        self.assertIn("Shops, then how to order", html)
+        self.assertIn(_places_summary(), html)
         self.assertNotIn(">Where to find our products<", html)
         self.assertNotIn(">Become a Distributor<", html)
 

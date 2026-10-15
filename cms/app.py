@@ -444,19 +444,90 @@ def is_section_visible(section):
 
 app.jinja_env.globals["is_section_visible"] = is_section_visible
 
-# Public website pages shown in the CRM sidebar. Tools (dashboard, home rail,
-# visual editor) stay outside this list.
+# Public website pages shown in the CRM sidebar, ordered the way a visitor
+# meets them: first the links in the site's own menu, then the pages reached
+# from the footer or from links inside other pages. Tools (dashboard, homepage
+# rail, visual editor, under construction) stay outside this list.
+#
+# `menu_label` is the wording the live menu uses, which is not always the CRM's
+# name for the page — test_cms_nav keeps the two in step with data/nav.js so
+# the CRM cannot drift from the site. `file` is the page it edits, `summary`
+# the content that lives on it.
 CMS_SITE_PAGES = [
-    {"endpoint": "homepage", "label": "Homepage", "active": "homepage"},
-    {"endpoint": "catalog", "label": "Our Products", "active": "catalog"},
-    {"endpoint": "journal", "label": "Field Notes", "active": "journal"},
-    {"endpoint": "story", "label": "Our Story", "active": "story"},
-    {"endpoint": "people", "label": "People & Places", "active": "people"},
-    {"endpoint": "places", "label": "Find us", "active": "places"},
-    {"endpoint": "company", "label": "The Basic Ingredients Ltd", "active": "company"},
-    {"endpoint": "matcha", "label": "Matcha Lab", "active": "matcha"},
+    {
+        "endpoint": "catalog", "label": "Our Products", "active": "catalog",
+        "menu_label": "Products Without E-Numbers", "icon": "products",
+        "file": "Our Products.html",
+        "summary": "Every product, its label and nutrition data, and the page header",
+    },
+    {
+        "endpoint": "journal", "label": "Field Notes", "active": "journal",
+        "menu_label": "Field Notes", "icon": "journal",
+        "file": "Journal.html",
+        "summary": "Blog posts, their covers and the page header",
+    },
+    {
+        "endpoint": "people", "label": "People & Places", "active": "people",
+        "menu_label": "People", "icon": "people",
+        "file": "People & Places.html",
+        "summary": "Founder letter, the team, who we are, what we offer, contact",
+    },
+    {
+        "endpoint": "places", "label": "Find us", "active": "places",
+        "menu_label": "Find us", "icon": "places",
+        "file": "Places.html",
+        "summary": "Featured shops, the stockist map, how to order, photo gallery",
+    },
+    {
+        "endpoint": "homepage", "label": "Homepage", "active": "homepage",
+        "icon": "home",
+        "file": "Emma Basic Homepage.html",
+        "summary": "Hero, additive-free banner, founder story, pack comparison, photo grid, social",
+    },
+    {
+        "endpoint": "story", "label": "Our Story", "active": "story",
+        "icon": "story",
+        "file": "Our Story.html",
+        "summary": "Page header and the heading above the team photo gallery",
+    },
+    {
+        "endpoint": "company", "label": "The Basic Ingredients Ltd", "active": "company",
+        "icon": "company",
+        "file": "The Basic Ingredients.html",
+        "summary": "Opening headline, about, contact",
+    },
+    {
+        "endpoint": "matcha", "label": "Matcha Lab", "active": "matcha",
+        "icon": "matcha",
+        "file": "Matcha Lab.html",
+        "summary": "Page header for the Matcha Lab",
+    },
 ]
 app.jinja_env.globals["cms_site_pages"] = CMS_SITE_PAGES
+
+
+def cms_page_groups():
+    """Split the page list the way the website is laid out.
+
+    The site's menu carries four links; everything else is reached from the
+    footer or from a link inside another page. Grouping the CRM the same way
+    means a page here can be matched to a page there without guesswork.
+    """
+    return [
+        {
+            "label": "Main menu",
+            "hint": "The links visitors see at the top of every page",
+            "pages": [p for p in CMS_SITE_PAGES if p.get("menu_label")],
+        },
+        {
+            "label": "Other pages",
+            "hint": "Reached from the footer and from links inside other pages",
+            "pages": [p for p in CMS_SITE_PAGES if not p.get("menu_label")],
+        },
+    ]
+
+
+app.jinja_env.globals["cms_page_groups"] = cms_page_groups
 
 
 # Scalar text fields exposed by the bulk table editor (catalog_table.html).

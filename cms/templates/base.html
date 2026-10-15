@@ -1,4 +1,5 @@
 <!doctype html>
+{% from "_page_icons.html" import page_icon %}
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
@@ -95,6 +96,46 @@
   }
   .sidebar-nav a svg { width: 18px; height: 18px; flex-shrink: 0; opacity: 0.85; transition: transform var(--dur) var(--ease-out); }
   .sidebar-nav a:active { transform: scale(0.98); }
+  /* Two-line item: what the website's menu calls the page, then the CRM's
+     own name for it when the two differ. */
+  .sidebar-nav a .lbl { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; }
+  .sidebar-nav a .lbl .sub {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.01em;
+    color: var(--ink-40); margin-top: 1px;
+  }
+  .sidebar-nav a.active .lbl .sub { color: var(--ink-60); }
+
+  /* "On this page" — one chip per card, built from the page itself. It sticks
+     to the top so the editor forms, which run long, keep their index and the
+     highlight can follow you down the page. */
+  .page-index {
+    position: sticky; top: 0; z-index: 5;
+    margin: 0 0 20px; padding: 10px 0;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+    background: var(--paper); border-bottom: 1px solid var(--rule);
+  }
+  .page-index .page-index-label {
+    font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--ink-40); margin-right: 4px;
+  }
+  .page-index a {
+    display: inline-block; padding: 5px 11px; border-radius: 999px;
+    border: 1px solid var(--rule); background: var(--paper-bright);
+    font-size: 12.5px; font-weight: 500; color: var(--ink-60); text-decoration: none;
+    transition: background var(--dur) var(--ease-out), color var(--dur) var(--ease-out), border-color var(--dur) var(--ease-out);
+  }
+  .page-index a.current { color: var(--ink); border-color: var(--rule-strong); background: var(--paper-shade); font-weight: 600; }
+  @media (hover: hover) and (pointer: fine) {
+    .page-index a:hover { color: var(--ink); border-color: var(--rule-strong); }
+  }
+  /* Whatever the index jumps to gets a moment of the accent so the eye lands
+     on the right block. */
+  .eb-jumped { box-shadow: 0 0 0 2px var(--accent-soft), var(--shadow-sm); }
+  .card { scroll-margin-top: 20px; }
+  @media (max-width: 900px) {
+    /* Park below the phone header, which is sticky at the top of the page. */
+    .page-index { top: 56px; }
+  }
   .sidebar-nav a.active {
     background: var(--paper-bright); color: var(--ink);
     font-weight: 600; box-shadow: var(--shadow-sm);
@@ -370,27 +411,32 @@
   <nav class="sidebar-nav">
     <div class="nav-label">CRM</div>
     <a href="{{ url_for('index') }}" class="{{ 'active' if active=='home' }}">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+      {{ page_icon('dashboard') }}
       <span class="lbl">Dashboard</span>
     </a>
-    <div class="nav-label">Website pages</div>
-    {% for p in cms_site_pages %}
-    <a href="{{ url_for(p.endpoint) }}" class="{{ 'active' if active==p.active }}">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/><path d="M14 3v5h5"/></svg>
-      <span class="lbl">{{ p.label }}</span>
+    {% for group in cms_page_groups() %}
+    <div class="nav-label" title="{{ group.hint }}">{{ group.label }}</div>
+    {% for p in group.pages %}
+    <a href="{{ url_for(p.endpoint) }}" class="{{ 'active' if active==p.active }}" title="{{ p.summary }}">
+      {{ page_icon(p.icon) }}
+      <span class="lbl">
+        {{ p.menu_label or p.label }}
+        {% if p.menu_label and p.menu_label != p.label %}<span class="sub">{{ p.label }}</span>{% endif %}
+      </span>
     </a>
     {% endfor %}
+    {% endfor %}
     <div class="nav-label">Tools</div>
-    <a href="{{ url_for('products') }}" class="{{ 'active' if active=='products' }}">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="4" height="12" rx="1"/><rect x="10" y="6" width="4" height="12" rx="1"/><rect x="17" y="6" width="4" height="12" rx="1"/></svg>
-      <span class="lbl">Home Rail</span>
+    <a href="{{ url_for('products') }}" class="{{ 'active' if active=='products' }}" title="The featured product rail on the homepage">
+      {{ page_icon('rail') }}
+      <span class="lbl">Homepage rail</span>
     </a>
-    <a href="{{ url_for('visual_editor') }}" class="{{ 'active' if active=='visual' }}">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>
+    <a href="{{ url_for('visual_editor') }}" class="{{ 'active' if active=='visual' }}" title="Edit the website by clicking straight on the page">
+      {{ page_icon('visual') }}
       <span class="lbl">Visual editor</span>
     </a>
-    <a href="{{ url_for('maintenance_page') }}" class="{{ 'active' if active=='maintenance' }}">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18"/><path d="M10.6 5.2A8.9 8.9 0 0 1 12 5c5 0 9 4.5 9 7 0 .8-.5 1.9-1.4 3"/><path d="M6.2 7.4C3.9 8.9 3 10.9 3 12c0 2.5 4 7 9 7 1.6 0 3-.4 4.2-1.1"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>
+    <a href="{{ url_for('maintenance_page') }}" class="{{ 'active' if active=='maintenance' }}" title="Hide the website behind a holding page">
+      {{ page_icon('maintenance') }}
       <span class="lbl">Under construction</span>
       {% if site_maintenance and site_maintenance.enabled %}<span class="nav-dot" aria-hidden="true"></span>{% endif %}
     </a>
@@ -617,6 +663,108 @@
   }
 
   function ebHintHTML() { return "Drag image here<br/>or click to browse"; }
+
+  // "On this page": every editor page lists its own cards as jump links, so
+  // you can see what data a page holds before scrolling it. Built from the
+  // page itself rather than a hand-kept list, so it can never fall behind the
+  // template. Cards that already carry an id (places.html) keep it.
+  (function () {
+    var inner = document.querySelector(".content-inner");
+    if (!inner) return;
+
+    // Each card on the page, plus any <section> that gathers a run of cards
+    // under its own heading (Find us does this for "How to order"), taken in
+    // the order they appear. A section is indexed as one entry rather than
+    // listing its cards, which would repeat names like "Page footer".
+    var blocks = [];
+    function collect(parent) {
+      Array.prototype.forEach.call(parent.children, function (child) {
+        if (child.classList.contains("card") || child.tagName === "SECTION") blocks.push(child);
+        else if (child.tagName === "FORM") collect(child);
+      });
+    }
+    collect(inner);
+    if (blocks.length < 3) return;
+
+    function slug(text) {
+      return text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    }
+
+    var used = {};
+    var items = [];
+    blocks.forEach(function (card) {
+      // First heading in the block names it — on the product catalog that is
+      // the category title, which sits a couple of divs in.
+      var h = card.querySelector("h2");
+      if (!h) return;
+      var copy = h.cloneNode(true);
+      copy.querySelectorAll(".pill").forEach(function (p) { p.remove(); });
+      var full = (copy.textContent || "").replace(/\s+/g, " ").trim();
+      if (!full) return;
+      // "Page header — “Small shelf, big intention.”" reads as "Page header".
+      var short = full.split(" — ")[0].trim() || full;
+      if (!card.id) {
+        var base = slug(short) || "section";
+        var id = base;
+        var n = 2;
+        while (used[id] || document.getElementById(id)) { id = base + "-" + n++; }
+        card.id = id;
+      }
+      used[card.id] = true;
+      items.push({ id: card.id, label: short, title: full, card: card });
+    });
+    if (items.length < 3) return;
+
+    var nav = document.createElement("nav");
+    nav.className = "page-index";
+    nav.setAttribute("aria-label", "On this page");
+    var label = document.createElement("span");
+    label.className = "page-index-label";
+    label.textContent = "On this page";
+    nav.appendChild(label);
+
+    items.forEach(function (item) {
+      var a = document.createElement("a");
+      a.href = "#" + item.id;
+      a.textContent = item.label;
+      if (item.title !== item.label) a.title = item.title;
+      a.addEventListener("click", function (e) {
+        e.preventDefault();
+        history.replaceState(null, "", "#" + item.id);
+        item.card.scrollIntoView({ behavior: "smooth", block: "start" });
+        item.card.classList.add("eb-jumped");
+        setTimeout(function () { item.card.classList.remove("eb-jumped"); }, 1400);
+      });
+      nav.appendChild(a);
+    });
+
+    var anchor = inner.querySelector(":scope > .sub") || inner.querySelector(":scope > h1");
+    if (anchor && anchor.nextSibling) inner.insertBefore(nav, anchor.nextSibling);
+    else inner.insertBefore(nav, inner.firstChild);
+
+    // Keep jumps clear of the sticky index, however many rows it wraps to.
+    function setJumpOffset() {
+      var clear = nav.offsetHeight + 16 + "px";
+      items.forEach(function (item) { item.card.style.scrollMarginTop = clear; });
+    }
+    setJumpOffset();
+    window.addEventListener("resize", setJumpOffset);
+
+    // Highlight whichever card is nearest the top of the viewport.
+    if (!window.IntersectionObserver) return;
+    var links = {};
+    items.forEach(function (item) { links[item.id] = nav.querySelector('a[href="#' + item.id + '"]'); });
+    var seen = {};
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) { seen[entry.target.id] = entry.isIntersecting; });
+      var current = null;
+      items.forEach(function (item) { if (!current && seen[item.id]) current = item.id; });
+      items.forEach(function (item) {
+        if (links[item.id]) links[item.id].classList.toggle("current", item.id === current);
+      });
+    }, { rootMargin: "-10% 0px -70% 0px" });
+    items.forEach(function (item) { observer.observe(item.card); });
+  })();
 
   window.ebInitImgField = function (field) {
     if (!field || field.dataset.dzReady) return;
