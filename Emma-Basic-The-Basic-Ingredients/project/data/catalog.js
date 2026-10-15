@@ -1858,6 +1858,27 @@ window.EB_CATALOG = {
             ]
           },
           "updatedAt": "2026-09-28T16:32:37+00:00"
+        },
+        {
+          "id": "V099",
+          "name": "Rice Paper",
+          "japanese": "",
+          "origin": "",
+          "tone": "warm",
+          "tagline": "",
+          "amazon": "",
+          "image": "assets/uploads/V099_-_Hero_01-20261015-102626.jpg",
+          "badges": [
+            "Comming Soon"
+          ],
+          "pairings": [],
+          "sellingPoints": [],
+          "ingredients": "Tapioca Starch, Rice, Salt",
+          "allergens": "",
+          "images": [
+            "assets/uploads/v099_primary_back_2-20261015-102643.png"
+          ],
+          "updatedAt": "2026-10-15T10:28:22+00:00"
         }
       ]
     },
