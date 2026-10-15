@@ -345,16 +345,6 @@ window.EB_JOURNAL = {
       "featured": false
     },
     {
-      "id": "binchotan-kitchen",
-      "category": "Behind the Product",
-      "date": "01 Apr 2026",
-      "title": "Binchotan: 300 years of Japanese charcoal production.",
-      "excerpt": "We spent a day with a Wakayama producer. Here's what we learned about a process that hasn't changed since the Edo period.",
-      "image": "assets/uploads/Binochtan-water-filter-journal-20260923-081519.jpg",
-      "tone": "ink",
-      "featured": false
-    },
-    {
       "id": "sushi-rice-ratio",
       "category": "Recipes",
       "date": "08 Apr 2026",
@@ -415,16 +405,6 @@ window.EB_JOURNAL = {
       "intro": "",
       "body": [],
       "author": "Olivia"
-    },
-    "binchotan-kitchen": {
-      "category": "Behind the Product",
-      "date": "01 Apr 2026",
-      "readTime": "6 min read",
-      "title": "Binchotan: 300 years of Japanese charcoal production.",
-      "image": "assets/uploads/Binochtan-water-filter-journal-20260923-081525.jpg",
-      "imagePosition": "",
-      "intro": "",
-      "body": []
     },
     "cold-run-furikake": {
       "category": "The Grit",
