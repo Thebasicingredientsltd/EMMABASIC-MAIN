@@ -335,16 +335,6 @@ window.EB_JOURNAL = {
       "featured": false
     },
     {
-      "id": "tamari-vs-soy",
-      "category": "Ingredient Stories",
-      "date": "17 Mar 2026",
-      "title": "Tamari vs soy sauce. They are not the same thing.",
-      "excerpt": "One uses wheat. One doesn't. The difference in flavour is real, and once you know it, you can't un-taste it.",
-      "image": "assets/uploads/Soy-sauce-image-20260923-081605.jpg",
-      "tone": "warm",
-      "featured": false
-    },
-    {
       "id": "cold-run-furikake",
       "category": "The Grit",
       "date": "24 Mar 2026",
@@ -442,16 +432,6 @@ window.EB_JOURNAL = {
       "readTime": "3 min read",
       "title": "What we eat after a long run.",
       "image": "assets/uploads/Nori-furikake-journal-20260923-081548.jpg",
-      "imagePosition": "",
-      "intro": "",
-      "body": []
-    },
-    "tamari-vs-soy": {
-      "category": "Ingredient Stories",
-      "date": "17 Mar 2026",
-      "readTime": "4 min read",
-      "title": "Tamari vs. soy sauce. They are not the same thing.",
-      "image": "assets/uploads/Soy-sauce-image-20260923-081610.jpg",
       "imagePosition": "",
       "intro": "",
       "body": []
