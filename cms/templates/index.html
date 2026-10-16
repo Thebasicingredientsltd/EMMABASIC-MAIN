@@ -1,79 +1,48 @@
 {% extends "base.html" %}
+{% from "_page_icons.html" import page_icon %}
 {% set active = "home" %}
 {% block content %}
 <h1>Dashboard</h1>
-<p class="sub">Edit your website content, then publish to GitHub when you're ready.</p>
+<p class="sub">Every page of the website, grouped the way visitors meet it. Open a page to see the content it holds.</p>
 
+{% for group in cms_page_groups() %}
+<h2 class="group-head">{{ group.label }}</h2>
+<p class="group-hint">{{ group.hint }}.</p>
 <div class="dash-cards">
-  <a href="{{ url_for('catalog') }}"><div class="card">
-    <div class="dash-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M4 5v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V5M9 10h6"/></svg>
-    </div>
-    <div class="dash-title">Our Products</div>
-    <div class="muted">The full product catalog</div>
+  {% for p in group.pages %}
+  <a href="{{ url_for(p.endpoint) }}"><div class="card">
+    <div class="dash-icon">{{ page_icon(p.icon) }}</div>
+    <div class="dash-title">{{ p.menu_label or p.label }}</div>
+    {% if p.menu_label and p.menu_label != p.label %}
+    <div class="dash-alias">Called {{ p.label }} here</div>
+    {% endif %}
+    <div class="muted">{{ p.summary }}</div>
+    <div class="dash-file">{{ p.file }}</div>
   </div></a>
+  {% endfor %}
+</div>
+{% endfor %}
+
+<h2 class="group-head">Tools</h2>
+<p class="group-hint">Not pages of their own — they change part of a page, or the whole site at once.</p>
+<div class="dash-cards">
   <a href="{{ url_for('products') }}"><div class="card">
-    <div class="dash-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="4" height="12" rx="1"/><rect x="10" y="6" width="4" height="12" rx="1"/><rect x="17" y="6" width="4" height="12" rx="1"/></svg>
-    </div>
+    <div class="dash-icon">{{ page_icon('rail') }}</div>
     <div class="dash-title">Homepage rail</div>
-    <div class="muted">Featured products on the home page</div>
+    <div class="muted">The featured products carousel on the homepage</div>
+    <div class="dash-file">Emma Basic Homepage.html</div>
   </div></a>
-  <a href="{{ url_for('journal') }}"><div class="card">
-    <div class="dash-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
-    </div>
-    <div class="dash-title">Field Notes</div>
-    <div class="muted">Field Notes / Journal</div>
-  </div></a>
-  <a href="{{ url_for('homepage') }}"><div class="card">
-    <div class="dash-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11 12 4l8 7"/><path d="M6 10v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-9"/></svg>
-    </div>
-    <div class="dash-title">Homepage</div>
-    <div class="muted">Hero, founder, lifestyle</div>
-  </div></a>
-  <a href="{{ url_for('people') }}"><div class="card">
-    <div class="dash-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0"/><path d="M16 5.2a3.2 3.2 0 0 1 0 6.1M17.5 14.4A5.5 5.5 0 0 1 20.5 20"/></svg>
-    </div>
-    <div class="dash-title">People &amp; Places</div>
-    <div class="muted">Hero, founder, team, contact</div>
-  </div></a>
-  <a href="{{ url_for('places') }}"><div class="card">
-    <div class="dash-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.2"/></svg>
-    </div>
-    <div class="dash-title">Find us</div>
-    <div class="muted">Shops, then how to order</div>
-  </div></a>
-  <a href="{{ url_for('story') }}"><div class="card">
-    <div class="dash-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a1 1 0 0 1 1-1h10l5 5v10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M15 4v5h5"/></svg>
-    </div>
-    <div class="dash-title">Our Story</div>
-    <div class="muted">Headline for the story page</div>
-  </div></a>
-  <a href="{{ url_for('company') }}"><div class="card">
-    <div class="dash-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M6 21V8l6-4 6 4v13"/><path d="M10 21v-6h4v6"/></svg>
-    </div>
-    <div class="dash-title">The Basic Ingredients Ltd</div>
-    <div class="muted">Company about and contact</div>
-  </div></a>
-  <a href="{{ url_for('matcha') }}"><div class="card">
-    <div class="dash-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 10c0 4 4 8 4 8s4-4 4-8a4 4 0 1 0-8 0z"/><path d="M12 3v3"/></svg>
-    </div>
-    <div class="dash-title">Matcha Lab</div>
-    <div class="muted">Matcha Lab landing page</div>
+  <a href="{{ url_for('visual_editor') }}"><div class="card">
+    <div class="dash-icon">{{ page_icon('visual') }}</div>
+    <div class="dash-title">Visual editor</div>
+    <div class="muted">Edit wording and photos by clicking straight on the page</div>
+    <div class="dash-file">Every page</div>
   </div></a>
   <a href="{{ url_for('maintenance_page') }}"><div class="card">
-    <div class="dash-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18"/><path d="M10.6 5.2A8.9 8.9 0 0 1 12 5c5 0 9 4.5 9 7 0 .8-.5 1.9-1.4 3"/><path d="M6.2 7.4C3.9 8.9 3 10.9 3 12c0 2.5 4 7 9 7 1.6 0 3-.4 4.2-1.1"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>
-    </div>
+    <div class="dash-icon">{{ page_icon('maintenance') }}</div>
     <div class="dash-title">Under construction</div>
-    <div class="muted">{{ 'Website hidden from visitors' if site_maintenance.enabled else 'Hide the site while you edit' }}</div>
+    <div class="muted">{{ 'Website hidden from visitors' if site_maintenance.enabled else 'Hide the site behind a holding page while you edit' }}</div>
+    <div class="dash-file">Whole site</div>
   </div></a>
 </div>
 
@@ -136,6 +105,14 @@
   .dash-icon svg { width: 21px; height: 21px; }
   .dash-cards a:hover .dash-icon { background: var(--accent); color: var(--paper-bright); transform: scale(1.06) rotate(-4deg); }
   .dash-title { font-weight: 600; margin-top: 4px; }
+  .dash-alias { font-size: 12px; color: var(--ink-40); margin-bottom: 2px; }
+  .dash-file {
+    margin-top: 10px; font-size: 11px; letter-spacing: 0.04em;
+    color: var(--ink-40); font-family: ui-monospace, Menlo, monospace;
+  }
+  .group-head { font-size: 19px; margin: 32px 0 2px; }
+  .group-head:first-of-type { margin-top: 8px; }
+  .group-hint { color: var(--ink-60); font-size: 13.5px; margin: 0 0 14px; }
   .change-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); margin-right: 8px; vertical-align: middle; animation: eb-pulse 2s var(--ease-in-out) infinite; }
 </style>
 {% endblock %}
