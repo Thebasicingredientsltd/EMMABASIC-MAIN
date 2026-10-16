@@ -7,7 +7,7 @@ function ShelfTest() {
   const S = (typeof window !== "undefined" && window.EB_HOME && window.EB_HOME.shelfTest) || {};
   const headingLine1 = S.headingLine1 || "Flip the pack.";
   const headingLine2 = S.headingLine2 || "Read the jar.";
-  const subtitle = S.subtitle || 'Two packs of crispy seaweed.<br/>Both in the "healthy snacks" aisle.';
+  const subtitle = String(S.subtitle || "").trim();
   const theirsLabel = S.theirsLabel || "Other Brands";
   const oursLabel = S.oursLabel || "Emma Basic";
   // Competitor: Yutaka Seasoned Seaweed Snack (widely sold in UK supermarkets)
@@ -39,7 +39,7 @@ function ShelfTest() {
       <div style={{ maxWidth: 1320, margin: "0 auto" }}>
 
         <div className="eb-shelftest-header" style={{
-          display: "grid", gridTemplateColumns: "1fr auto", alignItems: "end",
+          display: "grid", gridTemplateColumns: subtitle ? "1fr auto" : "1fr", alignItems: "end",
           gap: 32, marginBottom: "clamp(56px, 8vh, 96px)",
         }}>
           <Reveal>
@@ -55,13 +55,15 @@ function ShelfTest() {
               </em>
             </h2>
           </Reveal>
-          <Reveal delay={180}>
-            <p className="eb-shelftest-subtitle" style={{
-              fontFamily: "var(--f-body)", fontSize: 15, lineHeight: 1.6,
-              maxWidth: 320, margin: 0, color: "var(--ink-90)",
-              textAlign: "right", paddingBottom: 12,
-            }} dangerouslySetInnerHTML={{ __html: subtitle }} />
-          </Reveal>
+          {subtitle && (
+            <Reveal delay={180}>
+              <p className="eb-shelftest-subtitle" style={{
+                fontFamily: "var(--f-body)", fontSize: 15, lineHeight: 1.6,
+                maxWidth: 320, margin: 0, color: "var(--ink-90)",
+                textAlign: "right", paddingBottom: 12,
+              }} dangerouslySetInnerHTML={{ __html: subtitle }} />
+            </Reveal>
+          )}
         </div>
 
         <div className="eb-shelftest-grid" style={{
@@ -69,15 +71,15 @@ function ShelfTest() {
           gap: "clamp(16px, 2.4vw, 40px)",
           alignItems: "stretch",
         }}>
-          <LabelCard kind="theirs" items={supermarket} label={theirsLabel} />
-          <LabelCard kind="ours" items={emma} label={oursLabel} />
+          <LabelCard kind="theirs" items={supermarket} label={theirsLabel} tag={S.theirsTag} />
+          <LabelCard kind="ours" items={emma} label={oursLabel} tag={S.oursTag} signoff={S.oursSignoff} />
         </div>
       </div>
     </section>
   );
 }
 
-function LabelCard({ kind, items, label }) {
+function LabelCard({ kind, items, label, tag, signoff }) {
   const [ref, visible] = useReveal(0.15);
   const isOurs = kind === "ours";
   const brandLabel = label || (isOurs ? "Emma Basic" : "Other Brands");
@@ -150,7 +152,7 @@ function LabelCard({ kind, items, label }) {
           fontFamily: "var(--f-body)", fontSize: 10, letterSpacing: "0.22em",
           textTransform: "uppercase", color: isOurs ? "var(--ink)" : "var(--ink-60)",
         }}>
-          {isOurs ? "Nothing else." : "Incl. MSG & flavour enhancers"}
+          {isOurs ? (tag || "Nothing else.") : (tag || "Incl. MSG & flavour enhancers")}
         </span>
         {isOurs && (
           <span style={{
@@ -158,7 +160,7 @@ function LabelCard({ kind, items, label }) {
             fontSize: 20, color: "var(--ink)",
             fontVariationSettings: '"opsz" 24, "SOFT" 100',
           }}>
-            — Emma
+            {signoff || "— Emma"}
           </span>
         )}
       </div>

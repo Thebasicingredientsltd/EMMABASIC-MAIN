@@ -236,6 +236,13 @@
     width: auto; min-width: 148px; max-width: 220px;
     padding: 6px 8px; font-size: 12px;
   }
+  /* Show-on-site sits with the heading so sparse cards (Page footer) are
+     not an empty title when the rest of the card is collapsed. */
+  .card-section > summary.card-section-summary > label.section-vis {
+    flex: 1 0 100%;
+    margin: 6px 0 0;
+    cursor: default;
+  }
   .card-section > summary .eb-drag-handle {
     flex-shrink: 0; width: 28px; height: 36px; margin: 0; padding: 0;
     display: inline-flex; align-items: center; justify-content: center;
@@ -866,10 +873,17 @@
       while (el.firstChild) details.appendChild(el.firstChild);
       el.parentNode.replaceChild(details, el);
       addCardHomeControl(details);
+      ebLiftShowOnSite(details, summary);
       summary.querySelectorAll("a, button, form, select, label").forEach(function (ctl) {
         ctl.addEventListener("click", function (e) { e.stopPropagation(); });
       });
       return details;
+    }
+
+    function ebLiftShowOnSite(details, summary) {
+      var vis = details.querySelector(":scope > label.section-vis");
+      if (!vis) return;
+      summary.appendChild(vis);
     }
 
     function isFollowOnSection(child) {

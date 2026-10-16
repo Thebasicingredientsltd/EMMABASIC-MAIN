@@ -272,6 +272,16 @@ def rewrite_preview_html(html, page_file):
     # The under-construction gate would bounce this preview away from the page
     # being edited — which is exactly when the owner needs to see it.
     html = maintenance.strip_gate(html)
+    # strip_gate also removes data/site.js. Put it back (without the redirect
+    # script) so SiteFooter and other window.EB_SITE copy still load.
+    if "data/site.js" not in html:
+        html = re.sub(
+            r"(<head\b[^>]*>)",
+            r"\1\n<script src=\"data/site.js\"></script>",
+            html,
+            count=1,
+            flags=re.IGNORECASE,
+        )
     html = REL_ATTR.sub(r"\1/preview-static/\2\3", html)
     inject = (
         '<script>window.__CMS_VISUAL=true;window.__CMS_PAGE_FILE=%s;</script>'

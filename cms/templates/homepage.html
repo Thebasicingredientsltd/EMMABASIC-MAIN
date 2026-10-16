@@ -5,6 +5,39 @@
 <h1>Homepage content</h1>
 <p class="sub">Everything on the homepage. <code>&lt;br/&gt;</code> forces a line break where allowed.</p>
 
+{% set nav = nav or {} %}
+{% set nav_left = nav.left or [] %}
+{% set nav_right = nav.right or [] %}
+<form method="post" action="{{ url_for('nav_save') }}">
+  <div class="card" data-cms-card="homepage.menu">
+    <h2 style="margin-top:0;">Top menu</h2>
+    <p class="field-help">The public header on every page. Footer Browse / Company links are edited in Page footer.</p>
+    <label>Wordmark</label>
+    <input type="text" name="nav_wordmark" value="{{ nav.wordmark or 'Emma Basic' }}"/>
+    <h3>Left</h3>
+    {% set left_n = [3, nav_left|length]|max %}
+    {% for i in range(left_n) %}
+    {% set item = nav_left[i] if nav_left|length > i else {} %}
+    <div class="row">
+      <div><label>Link {{ i + 1 }} label</label><input type="text" name="nav_left{{ i }}_label" value="{{ item.label or '' }}"/></div>
+      <div><label>Link {{ i + 1 }}</label><input type="text" name="nav_left{{ i }}_href" value="{{ item.href or '' }}"/></div>
+    </div>
+    {% endfor %}
+    <h3>Right</h3>
+    {% set right_n = [4, nav_right|length]|max %}
+    {% for i in range(right_n) %}
+    {% set item = nav_right[i] if nav_right|length > i else {} %}
+    <div class="row">
+      <div><label>Link {{ i + 1 }} label</label><input type="text" name="nav_right{{ i }}_label" value="{{ item.label or '' }}"/></div>
+      <div><label>Link {{ i + 1 }}</label><input type="text" name="nav_right{{ i }}_href" value="{{ item.href or '' }}"/></div>
+    </div>
+    {% endfor %}
+    <div class="actions-bar" style="margin-top:16px;">
+      <button class="btn secondary small" type="submit">Save top menu</button>
+    </div>
+  </div>
+</form>
+
 <form method="post" action="{{ url_for('homepage_save') }}" enctype="multipart/form-data">
 
   <div class="card" data-cms-card="homepage.hero">
@@ -58,7 +91,8 @@
     <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
       <input type="checkbox" name="footer_visible" value="on" style="width:auto;" {{ 'checked' if is_section_visible(h.footer) }}/> Show footer on this page
     </label>
-    <p class="field-help">The site footer at the bottom of the homepage only. Other pages keep theirs.</p>
+    <p class="field-help">Showing or hiding the footer here only affects the homepage. The copy below is the shared site footer used on every page.</p>
+    {% include '_site_footer_fields.html' %}
   </div>
 
   {% set seo = h.seo or {} %}
@@ -109,6 +143,18 @@
         <input type="text" name="shelf_oursLabel" value="{{ h.shelfTest.oursLabel or 'Emma Basic' }}"/>
       </div>
     </div>
+    <div class="row">
+      <div>
+        <label>Other Brands bottom tag</label>
+        <input type="text" name="shelf_theirsTag" value="{{ h.shelfTest.theirsTag or 'Incl. MSG & flavour enhancers' }}"/>
+      </div>
+      <div>
+        <label>Emma Basic bottom tag</label>
+        <input type="text" name="shelf_oursTag" value="{{ h.shelfTest.oursTag or 'Nothing else.' }}"/>
+      </div>
+    </div>
+    <label>Emma Basic sign-off</label>
+    <input type="text" name="shelf_oursSignoff" value="{{ h.shelfTest.oursSignoff or '— Emma' }}"/>
     <div class="row">
       <div>
         <label>Competitor ingredients — one per line</label>

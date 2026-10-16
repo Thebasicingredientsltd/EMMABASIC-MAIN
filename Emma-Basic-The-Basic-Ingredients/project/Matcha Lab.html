@@ -6,7 +6,7 @@
 
 <meta charset="utf-8"/>
 <!--cms-gate-start-->
-<script src="data/site.js?v=20260929091821024"></script>
+<script src="data/site.js?v=20261016181153467"></script>
 <script src="components/maintenance.js?v=1"></script>
 <!--cms-gate-end-->
 
@@ -86,7 +86,7 @@ const TWEAK_DEFAULTS = { "serif": "fraunces", "paper": "warm" };
 
 <div id="root"></div>
 
-<script src="data/matcha.js?v=20261005100458703"></script>
+<script src="data/matcha.js?v=20261016181249442"></script>
 <script src="components/seo.js" data-eb-seo="matcha"></script>
 
 <script type="text/babel" src="components/Placeholder.jsx"></script>
@@ -115,7 +115,11 @@ const TWEAK_DEFAULTS = { "serif": "fraunces", "paper": "warm" };
 
 
 
-const MATCHA_USPS = [
+function matchaPage() {
+  return (typeof window !== "undefined" && window.EB_MATCHA) ? window.EB_MATCHA : {};
+}
+
+const MATCHA_USPS_FALLBACK = [
 
   {
 
@@ -169,9 +173,9 @@ const MATCHA_USPS = [
 
 ];
 
+const MATCHA_USPS = (matchaPage().usps && Array.isArray(matchaPage().usps.items) && matchaPage().usps.items.length) ? matchaPage().usps.items : MATCHA_USPS_FALLBACK;
 
-
-const NUTRITION = [
+const NUTRITION_FALLBACK = [
 
   { label: "Energy", value: "382 kcal / 1596 kJ" },
 
@@ -190,6 +194,8 @@ const NUTRITION = [
   { label: "Salt", value: "0g" },
 
 ];
+
+const NUTRITION = (matchaPage().nutrition && Array.isArray(matchaPage().nutrition.rows) && matchaPage().nutrition.rows.length) ? matchaPage().nutrition.rows : NUTRITION_FALLBACK;
 
 
 
@@ -398,11 +404,11 @@ function MatchaIntro() {
 
             }}>
 
-              What's in<br/>
+              {(matchaPage().pouch && matchaPage().pouch.heading) || "What's in"}<br/>
 
               <em style={{ fontStyle: "normal", fontFamily: "var(--f-body)", fontWeight: 400, letterSpacing: "-0.02em" }}>
 
-                the pouch.
+                {(matchaPage().pouch && matchaPage().pouch.headingItalic) || "the pouch."}
 
               </em>
 
@@ -520,11 +526,11 @@ function MatchaUSPs() {
 
             }}>
 
-              Why this matcha.<br/>
+              {(matchaPage().usps && matchaPage().usps.heading) || "Why this matcha."}<br/>
 
               <em style={{ fontStyle: "normal", fontFamily: "var(--f-body)", fontWeight: 400, letterSpacing: "-0.02em" }}>
 
-                Five things to know.
+                {(matchaPage().usps && matchaPage().usps.headingItalic) || "Five things to know."}
 
               </em>
 
@@ -536,7 +542,7 @@ function MatchaUSPs() {
 
               textTransform: "uppercase", color: "rgba(246,246,246,0.4)",
 
-            }}>M002</span>
+            }}>{(matchaPage().usps && matchaPage().usps.code) || "M002"}</span>
 
           </div>
 
@@ -704,11 +710,11 @@ function MatchaTesting() {
 
               }}>
 
-                Every batch.<br/>
+                {(matchaPage().testing && matchaPage().testing.heading) || "Every batch."}<br/>
 
                 <em style={{ fontStyle: "normal", fontFamily: "var(--f-body)", fontWeight: 400, letterSpacing: "-0.02em" }}>
 
-                  No exceptions.
+                  {(matchaPage().testing && matchaPage().testing.headingItalic) || "No exceptions."}
 
                 </em>
 
@@ -754,7 +760,7 @@ function MatchaTesting() {
 
             }}>
 
-              {[
+              {((matchaPage().testing && matchaPage().testing.rows && matchaPage().testing.rows.length) ? matchaPage().testing.rows : [
 
                 { label: "Pesticide residues", result: "Tested every batch" },
 
@@ -768,7 +774,7 @@ function MatchaTesting() {
 
                 { label: "Fillers", result: "None" },
 
-              ].map((row, i) => (
+              ]).map((row, i) => (
 
                 <div key={i} style={{
 
@@ -820,7 +826,13 @@ function MatchaTesting() {
 
 function MatchaHowTo() {
 
-  const METHODS = [
+  const storedMethods = (matchaPage().howTo && matchaPage().howTo.methods) || [];
+  const METHODS = storedMethods.length ? storedMethods.map(function (m) {
+    return {
+      label: m.label,
+      steps: Array.isArray(m.steps) ? m.steps : String(m.steps || "").split(/\r?\n/).map(function (s) { return s.trim(); }).filter(Boolean),
+    };
+  }) : [
 
     {
 
@@ -878,11 +890,11 @@ function MatchaHowTo() {
 
           }}>
 
-            How to use it.<br/>
+            {(matchaPage().howTo && matchaPage().howTo.heading) || "How to use it."}<br/>
 
             <em style={{ fontStyle: "normal", fontFamily: "var(--f-body)", fontWeight: 400, letterSpacing: "-0.02em" }}>
 
-              Three ways.
+              {(matchaPage().howTo && matchaPage().howTo.headingItalic) || "Three ways."}
 
             </em>
 

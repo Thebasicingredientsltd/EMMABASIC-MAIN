@@ -6,7 +6,10 @@
 
 const JOURNAL_POSTS = (typeof window !== "undefined" && window.EB_JOURNAL && Array.isArray(window.EB_JOURNAL.posts)) ? window.EB_JOURNAL.posts : [];
 
-const CATEGORIES = ["All", "Recipes", "Ingredient Stories", "Behind the Product", "The Grit"];
+const CATEGORIES = ["All"].concat(
+  JOURNAL_POSTS.map(function (p) { return p && p.category; }).filter(Boolean)
+    .filter(function (cat, i, all) { return all.indexOf(cat) === i; })
+);
 const INSTAGRAM_TAB = "Instagram";
 
 function JournalIndex() {

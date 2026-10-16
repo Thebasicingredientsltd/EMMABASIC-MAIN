@@ -128,24 +128,84 @@ function LifestyleTile({ tile, index, span }) {
   );
 }
 
+function pickFooterText(value, fallback) {
+  return (typeof value === "string" && value.trim()) ? value : fallback;
+}
+
+function pickFooterLines(value, fallback) {
+  if (Array.isArray(value)) {
+    const lines = value.map(function (line) {
+      return String(line == null ? "" : line).trim();
+    }).filter(Boolean);
+    if (lines.length) return lines;
+  }
+  if (typeof value === "string" && value.trim()) {
+    const lines = value.split(/\r?\n/).map(function (line) { return line.trim(); }).filter(Boolean);
+    if (lines.length) return lines;
+  }
+  return fallback;
+}
+
+function pickFooterLinks(value, fallback) {
+  if (Array.isArray(value) && value.length) {
+    const links = value.filter(function (item) { return item && (item.label || item.href); });
+    if (links.length) return links;
+  }
+  return fallback;
+}
+
+function FooterLines({ lines }) {
+  return lines.map(function (line, i) {
+    return (
+      <React.Fragment key={i}>{i > 0 ? <br/> : null}{line}</React.Fragment>
+    );
+  });
+}
+
 function SiteFooter({ visible }) {
   if (visible === false) {
     return null;
   }
+  const F = (typeof window !== "undefined" && window.EB_SITE && window.EB_SITE.footer) || {};
+  const contactHeading = pickFooterText(F.contactHeading, "Get in touch");
+  const contactBody = pickFooterText(
+    F.contactBody,
+    "If any Emma Basic product does not live up to your expectations, reach out and we will make every effort to arrange a replacement or refund."
+  );
+  const emailLabel = pickFooterText(F.emailLabel, "Email");
+  const email = pickFooterText(F.email, "Boris@thebasicingredients.com");
+  const londonHeading = pickFooterText(F.londonHeading, "London");
+  const londonLines = pickFooterLines(F.londonLines, [
+    "The Basic Ingredients Ltd",
+    "4 New Concordia Wharf",
+    "Mill Street",
+    "London SE1 2BB",
+  ]);
+  const rotterdamHeading = pickFooterText(F.rotterdamHeading, "Rotterdam");
+  const rotterdamLines = pickFooterLines(F.rotterdamLines, [
+    "The Basic Ingredients B.V.",
+    "Westplein 12–14",
+    "3016BM Rotterdam",
+    "The Netherlands",
+  ]);
+  const wordmarkLines = pickFooterLines(F.wordmark, ["Emma", "Basic."]);
   const cols = [
-    ["Browse", [
+    [pickFooterText(F.browseHeading, "Browse"), pickFooterLinks(F.browseLinks, [
       { label: "Matcha", href: "Our Products.html#cat-matcha" },
       { label: "Oils", href: "Our Products.html#cat-oils" },
       { label: "Pantry", href: "Our Products.html#cat-pantry" },
       { label: "Full Collection", href: "Our Products.html" },
-    ]],
-    ["Company", [
+    ])],
+    [pickFooterText(F.companyHeading, "Company"), pickFooterLinks(F.companyLinks, [
       { label: "Our Story", href: "Our Story.html" },
       { label: "People & Places", href: "People%20%26%20Places.html" },
       { label: "Find us", href: "Places.html" },
       { label: "Journal", href: "Journal.html" },
-    ]],
+    ])],
   ];
+  const legalLeft = pickFooterText(F.legalLeft, "© The Basic Ingredients Ltd · MMXXVI");
+  const legalCenter = pickFooterText(F.legalCenter, "No Additives. Ever.");
+  const legalRight = pickFooterText(F.legalRight, "London · Rotterdam");
 
   return (
     <footer style={{ background: "var(--paper)", borderTop: "1px solid var(--rule)" }}>
@@ -164,7 +224,7 @@ function SiteFooter({ visible }) {
             <div style={{
               fontFamily: "var(--f-body)", fontSize: 10, letterSpacing: "0.22em",
               textTransform: "uppercase", color: "var(--ink-60)", marginBottom: 16,
-            }}>Get in touch</div>
+            }}>{contactHeading}</div>
             <p style={{
               fontFamily: "var(--f-body)",
               fontSize: "clamp(18px, 1.8vw, 26px)", lineHeight: 1.35,
@@ -172,16 +232,16 @@ function SiteFooter({ visible }) {
               fontWeight: 400,
               maxWidth: 480,
             }}>
-              If any Emma Basic product does not live up to your expectations, reach out and we will make every effort to arrange a replacement or refund.
+              {contactBody}
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              <a href="mailto:Boris@thebasicingredients.com" style={{
+              <a href={"mailto:" + email} style={{
                 fontFamily: "var(--f-body)", fontSize: 16, letterSpacing: "0.14em",
                 color: "var(--ink)", textDecoration: "none",
                 display: "inline-flex", alignItems: "center", gap: 10,
               }}>
-                <span style={{ opacity: 0.45, fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase" }}>Email</span>
-                Boris@thebasicingredients.com
+                <span style={{ opacity: 0.45, fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase" }}>{emailLabel}</span>
+                {email}
               </a>
             </div>
           </div>
@@ -192,34 +252,28 @@ function SiteFooter({ visible }) {
               <div style={{
                 fontFamily: "var(--f-body)", fontSize: 9.5, letterSpacing: "0.22em",
                 textTransform: "uppercase", color: "var(--ink-60)", marginBottom: 14,
-              }}>London</div>
+              }}>{londonHeading}</div>
               <address style={{
                 fontStyle: "normal",
                 fontFamily: "var(--f-display)", fontSize: 14, lineHeight: 1.75,
                 fontVariationSettings: '"opsz" 14, "SOFT" 20',
                 color: "var(--ink)",
               }}>
-                The Basic Ingredients Ltd<br/>
-                4 New Concordia Wharf<br/>
-                Mill Street<br/>
-                London SE1 2BB
+                <FooterLines lines={londonLines} />
               </address>
             </div>
             <div>
               <div style={{
                 fontFamily: "var(--f-body)", fontSize: 9.5, letterSpacing: "0.22em",
                 textTransform: "uppercase", color: "var(--ink-60)", marginBottom: 14,
-              }}>Rotterdam</div>
+              }}>{rotterdamHeading}</div>
               <address style={{
                 fontStyle: "normal",
                 fontFamily: "var(--f-display)", fontSize: 14, lineHeight: 1.75,
                 fontVariationSettings: '"opsz" 14, "SOFT" 20',
                 color: "var(--ink)",
               }}>
-                The Basic Ingredients B.V.<br/>
-                Westplein 12–14<br/>
-                3016BM Rotterdam<br/>
-                The Netherlands
+                <FooterLines lines={rotterdamLines} />
               </address>
             </div>
           </div>
@@ -237,7 +291,7 @@ function SiteFooter({ visible }) {
               letterSpacing: "-0.02em", lineHeight: 0.9,
               fontVariationSettings: '"opsz" 144, "SOFT" 20',
             }}>
-              Emma<br/>Basic.
+              <FooterLines lines={wordmarkLines} />
             </div>
           </div>
           {cols.map(([h, items]) => (
@@ -262,9 +316,9 @@ function SiteFooter({ visible }) {
           fontFamily: "var(--f-body)", fontSize: 10.5, letterSpacing: "0.22em",
           textTransform: "uppercase", color: "var(--ink-60)",
         }}>
-          <span>© The Basic Ingredients Ltd · MMXXVI</span>
-          <span>No Additives. Ever.</span>
-          <span>London · Rotterdam</span>
+          <span>{legalLeft}</span>
+          <span>{legalCenter}</span>
+          <span>{legalRight}</span>
         </div>
       </div>
     </footer>

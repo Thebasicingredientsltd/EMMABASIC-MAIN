@@ -10,6 +10,18 @@ window.EB_MATCHA = {
   "footer": {
     "visible": true
   },
+  "usps": {
+    "heading": "Why this matcha.",
+    "headingItalic": "Five things to know.",
+    "code": "M002",
+    "items": [
+      {
+        "number": "01",
+        "heading": "100% Pure Matcha",
+        "body": "Matcha made from Tencha. No additives. No fillers. No added extract. Every batch is tested by accredited laboratories for pesticides and heavy metals."
+      }
+    ]
+  },
   "seo": {
     "title": "",
     "description": "Shade-grown for 25 days. 100% pure Tencha leaf. Every batch tested by accredited laboratories.",

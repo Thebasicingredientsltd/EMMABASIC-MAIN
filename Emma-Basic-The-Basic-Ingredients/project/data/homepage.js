@@ -42,9 +42,12 @@ window.EB_HOME = {
   "shelfTest": {
     "headingLine1": "Flip the pack.",
     "headingLine2": "Read the Label.",
-    "subtitle": "Two packs of crispy seaweed.<br/>Both in the \"healthy snacks\" aisle.",
+    "subtitle": "",
     "theirsLabel": "Other Brands",
     "oursLabel": "Emma Basic",
+    "theirsTag": "Incl. MSG & flavour enhancers",
+    "oursTag": "Nothing else.",
+    "oursSignoff": "— Emma",
     "theirs": [
       "Seaweed (70%)",
       "Soybean oil",

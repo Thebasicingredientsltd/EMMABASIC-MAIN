@@ -502,7 +502,7 @@ CMS_SITE_PAGES = [
         "endpoint": "matcha", "label": "Matcha Lab", "active": "matcha",
         "icon": "matcha",
         "file": "Matcha Lab.html",
-        "summary": "Page header for the Matcha Lab",
+        "summary": "Page header, pouch, USPs, testing, how-to and nutrition",
     },
 ]
 CMS_TOOL_PAGES = [
@@ -1579,7 +1579,21 @@ def api_upload():
 # ---------------------------------------------------------------------------
 @app.route("/products")
 def products():
-    return render_template("products.html", products=load_data("products"))
+    home = load_data("homepage")
+    return render_template(
+        "products.html",
+        products=load_data("products"),
+        rail=(home.get("productRail") or {}),
+    )
+
+
+@app.route("/products/rail/save", methods=["POST"])
+def product_rail_save():
+    h = load_data("homepage")
+    h.setdefault("productRail", {})["heading"] = request.form.get("rail_heading", "").strip()
+    save_data("homepage", h)
+    flash("Homepage rail heading saved.", "ok")
+    return redirect(url_for("products"))
 
 
 @app.route("/products/new")
@@ -1820,7 +1834,12 @@ def journal_reorder():
 # ---------------------------------------------------------------------------
 @app.route("/homepage")
 def homepage():
-    return render_template("homepage.html", h=load_data("homepage"))
+    return render_template(
+        "homepage.html",
+        h=load_data("homepage"),
+        site_footer=site_footer_for_editor(),
+        nav=load_data("nav"),
+    )
 
 
 @app.route("/homepage/save", methods=["POST"])
@@ -1853,6 +1872,12 @@ def homepage_save():
     shelf["oursLabel"] = (request.form.get("shelf_oursLabel", "").strip() or "Emma Basic")
     shelf["theirs"] = lines_to_list(request.form.get("shelf_theirs", ""))
     shelf["ours"] = lines_to_list(request.form.get("shelf_ours", ""))
+    if "shelf_theirsTag" in request.form:
+        shelf["theirsTag"] = request.form.get("shelf_theirsTag", "").strip()
+    if "shelf_oursTag" in request.form:
+        shelf["oursTag"] = request.form.get("shelf_oursTag", "").strip()
+    if "shelf_oursSignoff" in request.form:
+        shelf["oursSignoff"] = request.form.get("shelf_oursSignoff", "").strip()
     shelf.pop("closingLine1", None)
     shelf.pop("closingLine2", None)
 
@@ -1913,7 +1938,21 @@ def homepage_save():
 
     _apply_seo_form(h)
     save_data("homepage", h)
+    site = load_site()
+    if _apply_site_footer_form(site):
+        save_data("site", site)
     flash("Homepage content saved.", "ok")
+    return redirect(url_for("homepage"))
+
+
+@app.route("/nav/save", methods=["POST"])
+def nav_save():
+    nav = load_data("nav")
+    nav["wordmark"] = request.form.get("nav_wordmark", "").strip() or "Emma Basic"
+    nav["left"] = _collect_site_footer_links("nav_left")
+    nav["right"] = _collect_site_footer_links("nav_right")
+    save_data("nav", nav)
+    flash("Top menu saved.", "ok")
     return redirect(url_for("homepage"))
 
 
@@ -2134,9 +2173,324 @@ def _apply_hero_form(hero):
     hero["visible"] = form_checkbox("hero_visible")
 
 
+SITE_FOOTER_DEFAULTS = {
+    "contactHeading": "Get in touch",
+    "contactBody": (
+        "If any Emma Basic product does not live up to your expectations, "
+        "reach out and we will make every effort to arrange a replacement or refund."
+    ),
+    "emailLabel": "Email",
+    "email": "Boris@thebasicingredients.com",
+    "londonHeading": "London",
+    "londonLines": [
+        "The Basic Ingredients Ltd",
+        "4 New Concordia Wharf",
+        "Mill Street",
+        "London SE1 2BB",
+    ],
+    "rotterdamHeading": "Rotterdam",
+    "rotterdamLines": [
+        "The Basic Ingredients B.V.",
+        "Westplein 12–14",
+        "3016BM Rotterdam",
+        "The Netherlands",
+    ],
+    "wordmark": "Emma\nBasic.",
+    "browseHeading": "Browse",
+    "browseLinks": [
+        {"label": "Matcha", "href": "Our Products.html#cat-matcha"},
+        {"label": "Oils", "href": "Our Products.html#cat-oils"},
+        {"label": "Pantry", "href": "Our Products.html#cat-pantry"},
+        {"label": "Full Collection", "href": "Our Products.html"},
+    ],
+    "companyHeading": "Company",
+    "companyLinks": [
+        {"label": "Our Story", "href": "Our Story.html"},
+        {"label": "People & Places", "href": "People%20%26%20Places.html"},
+        {"label": "Find us", "href": "Places.html"},
+        {"label": "Journal", "href": "Journal.html"},
+    ],
+    "legalLeft": "© The Basic Ingredients Ltd · MMXXVI",
+    "legalCenter": "No Additives. Ever.",
+    "legalRight": "London · Rotterdam",
+}
+
+
+def site_footer_for_editor(site=None):
+    """Shared footer copy for the CMS card, filled in from the live defaults."""
+    if site is None:
+        site = load_site()
+    stored = (site or {}).get("footer") if isinstance(site, dict) else None
+    merged = json.loads(json.dumps(SITE_FOOTER_DEFAULTS))
+    if not isinstance(stored, dict):
+        return merged
+    for key in SITE_FOOTER_DEFAULTS:
+        value = stored.get(key)
+        if value in (None, "", []):
+            continue
+        merged[key] = value
+    return merged
+
+
+def _collect_site_footer_links(prefix):
+    items = []
+    for i in range(24):
+        label_key = "%s%d_label" % (prefix, i)
+        href_key = "%s%d_href" % (prefix, i)
+        if label_key not in request.form and href_key not in request.form:
+            break
+        label = request.form.get(label_key, "").strip()
+        href = request.form.get(href_key, "").strip()
+        if label or href:
+            items.append({"label": label, "href": href})
+    return items
+
+
+def _apply_site_footer_form(site):
+    """Write shared footer copy from the homepage Page footer card into site.js.
+
+    Older homepage saves omit these fields and must not blank the live footer.
+    """
+    if (
+        "site_footer_contact_body" not in request.form
+        and "site_footer_email" not in request.form
+    ):
+        return False
+    wordmark = (request.form.get("site_footer_wordmark", "") or "").replace("\r\n", "\n")
+    site["footer"] = {
+        "contactHeading": request.form.get("site_footer_contact_heading", "").strip(),
+        "contactBody": request.form.get("site_footer_contact_body", "").strip(),
+        "emailLabel": request.form.get("site_footer_email_label", "").strip(),
+        "email": request.form.get("site_footer_email", "").strip(),
+        "londonHeading": request.form.get("site_footer_london_heading", "").strip(),
+        "londonLines": _form_lines("site_footer_london_lines"),
+        "rotterdamHeading": request.form.get("site_footer_rotterdam_heading", "").strip(),
+        "rotterdamLines": _form_lines("site_footer_rotterdam_lines"),
+        "wordmark": wordmark.strip(),
+        "browseHeading": request.form.get("site_footer_browse_heading", "").strip(),
+        "browseLinks": _collect_site_footer_links("site_footer_browse"),
+        "companyHeading": request.form.get("site_footer_company_heading", "").strip(),
+        "companyLinks": _collect_site_footer_links("site_footer_company"),
+        "legalLeft": request.form.get("site_footer_legal_left", "").strip(),
+        "legalCenter": request.form.get("site_footer_legal_center", "").strip(),
+        "legalRight": request.form.get("site_footer_legal_right", "").strip(),
+    }
+    return True
+
+
 def _apply_footer_form(data, key="footer"):
     """Per-page footer visibility. Unchecked box is omitted from POST → False."""
     data.setdefault(key, {})["visible"] = form_checkbox("footer_visible")
+
+
+MATCHA_COPY_DEFAULTS = {
+    "pouch": {
+        "heading": "What's in",
+        "headingItalic": "the pouch.",
+        "body": (
+            "One ingredient: Tencha (green tea). Shade-grown for 25 days before "
+            "hand-picking to develop natural sweetness, vibrant green colour and "
+            "umami depth. Nothing added before or after milling.\n\n"
+            "Longjin 43 and Yabukita cultivars — two varieties selected for their "
+            "distinct characters: one brings brightness, the other depth. Together "
+            "they make a matcha that works whisked in water, in a latte, or stirred "
+            "into baking."
+        ),
+        "note": "Ingredients — Tencha (green tea). Shade-grown for 25 days prior to harvest.",
+    },
+    "usps": {
+        "heading": "Why this matcha.",
+        "headingItalic": "Five things to know.",
+        "code": "M002",
+        "items": [
+            {
+                "number": "01",
+                "heading": "100% Pure Matcha",
+                "body": "Matcha made from Tencha. No additives. No fillers. No added extract. Every batch is tested by accredited laboratories for pesticides and heavy metals.",
+            },
+            {
+                "number": "02",
+                "heading": "Made for Lattes and Beyond",
+                "body": "Sieve 1–2g of matcha into a cup. Add 40ml warm water (75°C) and whisk until smooth. Enjoy hot or iced with your choice of milk for a latte. Although designed for lattes, it's premium enough to sip neat as a traditional matcha short. Or — if you feel like indulging — use in baking for cakes, cookies, bread and matcha desserts.",
+            },
+            {
+                "number": "03",
+                "heading": "25 Days Shaded Pre-Harvest",
+                "body": "Made from Longjin 43 and Yabukita tea leaves, carefully shaded for 25 days before hand-picking to develop natural sweetness, vibrant green colour and umami depth.",
+            },
+            {
+                "number": "04",
+                "heading": "Sealed for Freshness, Generous Value",
+                "body": "Supplied in a multi-layer PET/AL/PE foil pouch — resealable and light-protected to preserve the vibrant green colour, delicate aroma and fresh flavour. 100g delivers approximately 50–100 cups — ideal for daily matcha drinkers.",
+            },
+            {
+                "number": "05",
+                "heading": "Naturally Occurring Compounds",
+                "body": "Matcha is produced from the leaves of Camellia sinensis and naturally contains catechins (tea polyphenols) and L-theanine, a naturally occurring amino acid.",
+            },
+        ],
+    },
+    "testing": {
+        "eyebrow": "Batch Testing",
+        "heading": "Every batch.",
+        "headingItalic": "No exceptions.",
+        "body": (
+            "Every batch of our matcha is tested by accredited laboratories for "
+            "pesticides and heavy metals before it ships. We don't self-certify. "
+            "Results are on file and available on request.\n\n"
+            "This is the standard we hold ourselves to because it's the standard "
+            "we'd want if we were buying."
+        ),
+        "rows": [
+            {"label": "Pesticide residues", "result": "Tested every batch"},
+            {"label": "Heavy metals (Pb, Cd, As, Hg)", "result": "Tested every batch"},
+            {"label": "Testing standard", "result": "Accredited laboratory"},
+            {"label": "Results available", "result": "On request"},
+            {"label": "Additives", "result": "None"},
+            {"label": "Fillers", "result": "None"},
+        ],
+    },
+    "howTo": {
+        "heading": "How to use it.",
+        "headingItalic": "Three ways.",
+        "methods": [
+            {
+                "label": "Traditional Short",
+                "steps": "Sieve 1–2g matcha into a chawan or small bowl\nAdd 40ml water at 75°C\nWhisk in a W motion until frothy\nDrink immediately",
+            },
+            {
+                "label": "Latte",
+                "steps": "Sieve 1–2g matcha into a cup\nAdd 40ml water at 75°C, whisk until smooth\nTop with steamed or cold milk of choice\nIced: pour over ice after whisking",
+            },
+            {
+                "label": "Baking",
+                "steps": "Sieve directly into dry ingredients\n1 tsp (2g) per serving for clear colour and flavour\nWorks in cakes, cookies, bread, energy balls\nDoes not require pre-dissolving",
+            },
+        ],
+    },
+    "nutrition": {
+        "per": "Per 100g",
+        "intro": "Matcha is a concentrated whole-leaf powder. A typical serving is 1–2g, making the per-100g figures higher than most food labels. The numbers below are accurate.",
+        "allergensLabel": "Allergens",
+        "allergens": "Free from all major allergens.",
+        "rows": [
+            {"label": "Energy", "value": "382 kcal / 1596 kJ"},
+            {"label": "Fat", "value": "3.2g"},
+            {"label": "of which saturates", "value": "0.8g", "sub": True},
+            {"label": "Carbohydrate", "value": "59.8g"},
+            {"label": "of which sugars", "value": "2.0g", "sub": True},
+            {"label": "Fibre", "value": "35.3g"},
+            {"label": "Protein", "value": "27.1g"},
+            {"label": "Salt", "value": "0g"},
+        ],
+    },
+}
+
+
+def matcha_for_editor(data=None):
+    """Fill Matcha Lab editor fields from stored JSON, then live defaults."""
+    if data is None:
+        data = load_data("matcha")
+    merged = dict(data or {})
+    defaults = json.loads(json.dumps(MATCHA_COPY_DEFAULTS))
+    for key, fallback in defaults.items():
+        stored = merged.get(key)
+        if not isinstance(stored, dict):
+            merged[key] = fallback
+            continue
+        filled = dict(fallback)
+        filled.update({k: v for k, v in stored.items() if v not in (None, "", [])})
+        merged[key] = filled
+    how = merged.get("howTo") or {}
+    methods = []
+    for method in how.get("methods") or []:
+        item = dict(method)
+        steps = item.get("steps")
+        if isinstance(steps, list):
+            item["steps"] = "\n".join(steps)
+        methods.append(item)
+    if methods:
+        how = dict(how)
+        how["methods"] = methods
+        merged["howTo"] = how
+    return merged
+
+
+def _apply_matcha_copy_form(data):
+    """Write Matcha Lab body copy. Older saves omit these fields and must not wipe them."""
+    if "pouch_heading" not in request.form and "usp0_heading" not in request.form:
+        return
+    pouch = data.setdefault("pouch", {})
+    pouch["heading"] = request.form.get("pouch_heading", "").strip()
+    pouch["headingItalic"] = request.form.get("pouch_headingItalic", "").strip()
+    pouch["body"] = request.form.get("pouch_body", "").strip()
+    pouch["note"] = request.form.get("pouch_note", "").strip()
+
+    usps = data.setdefault("usps", {})
+    usps["heading"] = request.form.get("usps_heading", "").strip()
+    usps["headingItalic"] = request.form.get("usps_headingItalic", "").strip()
+    usps["code"] = request.form.get("usps_code", "").strip()
+    items = []
+    for i in range(12):
+        heading_key = "usp%d_heading" % i
+        if heading_key not in request.form and ("usp%d_body" % i) not in request.form:
+            break
+        heading = request.form.get(heading_key, "").strip()
+        body = request.form.get("usp%d_body" % i, "").strip()
+        number = request.form.get("usp%d_number" % i, "").strip()
+        if heading or body:
+            items.append({"number": number, "heading": heading, "body": body})
+    usps["items"] = items
+
+    testing = data.setdefault("testing", {})
+    testing["eyebrow"] = request.form.get("testing_eyebrow", "").strip()
+    testing["heading"] = request.form.get("testing_heading", "").strip()
+    testing["headingItalic"] = request.form.get("testing_headingItalic", "").strip()
+    testing["body"] = request.form.get("testing_body", "").strip()
+    rows = []
+    for i in range(16):
+        label_key = "testing%d_label" % i
+        if label_key not in request.form and ("testing%d_result" % i) not in request.form:
+            break
+        label = request.form.get(label_key, "").strip()
+        result = request.form.get("testing%d_result" % i, "").strip()
+        if label or result:
+            rows.append({"label": label, "result": result})
+    testing["rows"] = rows
+
+    how = data.setdefault("howTo", {})
+    how["heading"] = request.form.get("howto_heading", "").strip()
+    how["headingItalic"] = request.form.get("howto_headingItalic", "").strip()
+    methods = []
+    for i in range(8):
+        label_key = "method%d_label" % i
+        if label_key not in request.form and ("method%d_steps" % i) not in request.form:
+            break
+        label = request.form.get(label_key, "").strip()
+        steps = request.form.get("method%d_steps" % i, "").strip()
+        if label or steps:
+            methods.append({"label": label, "steps": lines_to_list(steps)})
+    how["methods"] = methods
+
+    nutrition = data.setdefault("nutrition", {})
+    nutrition["per"] = request.form.get("nutrition_per", "").strip()
+    nutrition["intro"] = request.form.get("nutrition_intro", "").strip()
+    nutrition["allergensLabel"] = request.form.get("nutrition_allergens_label", "").strip()
+    nutrition["allergens"] = request.form.get("nutrition_allergens", "").strip()
+    nrows = []
+    for i in range(16):
+        label_key = "nutrition%d_label" % i
+        if label_key not in request.form and ("nutrition%d_value" % i) not in request.form:
+            break
+        label = request.form.get(label_key, "").strip()
+        value = request.form.get("nutrition%d_value" % i, "").strip()
+        if label or value:
+            nrows.append({
+                "label": label,
+                "value": value,
+                "sub": form_checkbox("nutrition%d_sub" % i),
+            })
+    nutrition["rows"] = nrows
 
 
 def _simple_page_save(key, flash_msg, redirect_endpoint):
@@ -2576,12 +2930,12 @@ def _category_underlink(cat):
 def matcha():
     matcha_cat = _category_by_id("matcha")
     return render_template(
-        "simple_page.html",
+        "matcha.html",
         page_title="Matcha Lab",
         save_endpoint="matcha_save",
         visual_page="matcha",
         active="matcha",
-        d=load_data("matcha"),
+        d=matcha_for_editor(),
         extra="This is the Matcha Lab landing page (M002). Product details live in Our Products. The link under Matcha on that page is the box below — or edit it on the Matcha product in Our Products.",
         show_category_underlink=True,
         underlink=_category_underlink(matcha_cat),
@@ -2596,6 +2950,7 @@ def matcha_save():
     _apply_hero_form(data.setdefault("hero", {}))
     _apply_footer_form(data)
     _apply_seo_form(data)
+    _apply_matcha_copy_form(data)
     save_data("matcha", data)
     if "link_label" in request.form or "link_href" in request.form:
         bundle = load_catalog_bundle()

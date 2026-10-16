@@ -10,7 +10,7 @@ import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from app import app, load_data, save_data  # noqa: E402
+from app import _find_cms_cards, app, load_data, save_data  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT = os.path.join(ROOT, "Emma-Basic-The-Basic-Ingredients", "project")
@@ -42,6 +42,24 @@ class FooterVisibilityTests(unittest.TestCase):
             html = self.client.get(path).get_data(as_text=True)
             self.assertIn("footer_visible", html, path)
             self.assertIn("Show footer on this page", html, path)
+
+    def test_homepage_footer_card_contains_visibility_fields(self):
+        """The Homepage Page footer card must keep its show-on-site box.
+
+        Collapse wrapping turns this card into a <details class="card-section">.
+        If the checkbox is left outside that card (or never rendered), opening
+        Page footer looks empty even though Journal still has the same control.
+        """
+        html = self.client.get("/homepage").get_data(as_text=True)
+        hits = {
+            card_id: html[start:end]
+            for card_id, start, end in _find_cms_cards(html)
+        }
+        card = hits.get("homepage.footer") or ""
+        self.assertIn('data-cms-card="homepage.footer"', card)
+        self.assertIn('name="footer_visible"', card)
+        self.assertIn("Show footer on this page", card)
+        self.assertIn("field-help", card)
 
     def test_people_uncheck_stays_off_and_homepage_keeps_footer(self):
         from test_people_founder import _form_from_people

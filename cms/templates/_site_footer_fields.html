@@ -1,0 +1,72 @@
+{% set sf = site_footer or {} %}
+{% set browse_links = sf.browseLinks or [] %}
+{% set company_links = sf.companyLinks or [] %}
+{% set browse_n = [6, browse_links|length]|max %}
+{% set company_n = [6, company_links|length]|max %}
+
+<h3>Get in touch</h3>
+<div class="row">
+  <div>
+    <label>Small label</label>
+    <input type="text" name="site_footer_contact_heading" value="{{ sf.contactHeading or '' }}"/>
+  </div>
+  <div>
+    <label>Email label</label>
+    <input type="text" name="site_footer_email_label" value="{{ sf.emailLabel or '' }}"/>
+  </div>
+</div>
+<label>Body</label>
+<textarea name="site_footer_contact_body" rows="4">{{ sf.contactBody or '' }}</textarea>
+<label>Email</label>
+<input type="text" name="site_footer_email" value="{{ sf.email or '' }}"/>
+
+<h3>Addresses</h3>
+<div class="row">
+  <div>
+    <label>London heading</label>
+    <input type="text" name="site_footer_london_heading" value="{{ sf.londonHeading or '' }}"/>
+    <label>London address (one line per row)</label>
+    <textarea name="site_footer_london_lines" rows="5">{{ (sf.londonLines or []) | join('\n') }}</textarea>
+  </div>
+  <div>
+    <label>Rotterdam heading</label>
+    <input type="text" name="site_footer_rotterdam_heading" value="{{ sf.rotterdamHeading or '' }}"/>
+    <label>Rotterdam address (one line per row)</label>
+    <textarea name="site_footer_rotterdam_lines" rows="5">{{ (sf.rotterdamLines or []) | join('\n') }}</textarea>
+  </div>
+</div>
+
+<h3>Wordmark</h3>
+<label>Large name (line break = new line)</label>
+<textarea name="site_footer_wordmark" rows="2">{{ sf.wordmark or '' }}</textarea>
+
+<h3>Browse</h3>
+<p class="field-help">Footer column, not the top menu. Empty rows are ignored.</p>
+<label>Column heading</label>
+<input type="text" name="site_footer_browse_heading" value="{{ sf.browseHeading or '' }}"/>
+{% for i in range(browse_n) %}
+{% set item = browse_links[i] if browse_links|length > i else {} %}
+<div class="row">
+  <div><label>Link {{ i + 1 }} label</label><input type="text" name="site_footer_browse{{ i }}_label" value="{{ item.label or '' }}"/></div>
+  <div><label>Link {{ i + 1 }}</label><input type="text" name="site_footer_browse{{ i }}_href" value="{{ item.href or '' }}"/></div>
+</div>
+{% endfor %}
+
+<h3>Company</h3>
+<p class="field-help">Footer column, not the top menu. Empty rows are ignored.</p>
+<label>Column heading</label>
+<input type="text" name="site_footer_company_heading" value="{{ sf.companyHeading or '' }}"/>
+{% for i in range(company_n) %}
+{% set item = company_links[i] if company_links|length > i else {} %}
+<div class="row">
+  <div><label>Link {{ i + 1 }} label</label><input type="text" name="site_footer_company{{ i }}_label" value="{{ item.label or '' }}"/></div>
+  <div><label>Link {{ i + 1 }}</label><input type="text" name="site_footer_company{{ i }}_href" value="{{ item.href or '' }}"/></div>
+</div>
+{% endfor %}
+
+<h3>Legal line</h3>
+<div class="row">
+  <div><label>Left</label><input type="text" name="site_footer_legal_left" value="{{ sf.legalLeft or '' }}"/></div>
+  <div><label>Centre</label><input type="text" name="site_footer_legal_center" value="{{ sf.legalCenter or '' }}"/></div>
+  <div><label>Right</label><input type="text" name="site_footer_legal_right" value="{{ sf.legalRight or '' }}"/></div>
+</div>

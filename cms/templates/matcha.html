@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% set hero = d.hero or {} %}
+{% set pouch = d.pouch or {} %}
+{% set usps = d.usps or {} %}
+{% set usp_items = usps['items'] or [] %}
+{% set testing = d.testing or {} %}
+{% set test_rows = testing.rows or [] %}
+{% set howto = d.howTo or {} %}
+{% set methods = howto.methods or [] %}
+{% set nutrition = d.nutrition or {} %}
+{% set nutrition_rows = nutrition.rows or [] %}
+{% block content %}
+<h1>{{ page_title }}</h1>
+<p class="sub">Opening headline for this page. Save to update the website (publish when you want it live).{% if extra %} {{ extra }}{% endif %}</p>
+
+<form method="post" action="{{ url_for(save_endpoint) }}" enctype="multipart/form-data">
+  <div class="card" data-cms-card="{{ active }}.header">
+    <h2 style="margin-top:0;">Page header — “{{ hero.title or page_title }}{% if hero.titleItalic %} {{ hero.titleItalic }}{% endif %}”{% if not is_section_visible(hero) %} <span class="pill">Hidden on site</span>{% endif %}</h2>
+    <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
+      <input type="checkbox" name="hero_visible" value="on" style="width:auto;" {{ 'checked' if is_section_visible(hero) }}/> Show this page header on the live site
+    </label>
+    <p class="field-help">Uncheck to hide the headline on the website without deleting it. The large headline sits at the top of this page.</p>
+    <label>Eyebrow (small label above the line)</label>
+    <input type="text" name="hero_eyebrow" value="{{ hero.eyebrow or '' }}"/>
+    <div class="row">
+      <div>
+        <label>First line</label>
+        <input type="text" name="hero_title" value="{{ hero.title or '' }}"/>
+      </div>
+      <div>
+        <label>Second line (italic)</label>
+        <input type="text" name="hero_titleItalic" value="{{ hero.titleItalic or '' }}"/>
+      </div>
+    </div>
+    <label>Subtitle</label>
+    <textarea name="hero_subtitle" rows="3">{{ hero.subtitle or '' }}</textarea>
+  </div>
+  <div class="card" data-cms-card="{{ active }}.footer">
+    <h2 style="margin-top:0;">Page footer{% if not is_section_visible(d.footer) %} <span class="pill">Hidden on site</span>{% endif %}</h2>
+    <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
+      <input type="checkbox" name="footer_visible" value="on" style="width:auto;" {{ 'checked' if is_section_visible(d.footer) }}/> Show footer on this page
+    </label>
+    <p class="field-help">The site footer at the bottom of this page only. Other pages keep theirs.</p>
+  </div>
+  {% set seo = d.seo or {} %}
+  {% set seo_placeholder_title = page_title ~ ' — Emma Basic' %}
+  {% set seo_placeholder_canonical = 'https://emmabasic.co.uk/Matcha%20Lab.html' %}
+  {% set seo_card_id = active ~ '.seo' %}
+  {% include '_seo_fields.html' %}
+  {% if show_category_underlink|default(false) %}
+  {% include '_underlink_fields.html' %}
+  {% endif %}
+
+  <div class="card" data-cms-card="matcha.pouch">
+    <h2 style="margin-top:0;">What's in the pouch</h2>
+    <div class="row">
+      <div><label>Heading</label><input type="text" name="pouch_heading" value="{{ pouch.heading or '' }}"/></div>
+      <div><label>Heading (italic)</label><input type="text" name="pouch_headingItalic" value="{{ pouch.headingItalic or '' }}"/></div>
+    </div>
+    <label>Body (blank line between paragraphs)</label>
+    <textarea name="pouch_body" rows="6">{{ pouch.body or '' }}</textarea>
+    <label>Ingredients note</label>
+    <input type="text" name="pouch_note" value="{{ pouch.note or '' }}"/>
+  </div>
+
+  <div class="card" data-cms-card="matcha.usps">
+    <h2 style="margin-top:0;">Why this matcha</h2>
+    <div class="row">
+      <div><label>Heading</label><input type="text" name="usps_heading" value="{{ usps.heading or '' }}"/></div>
+      <div><label>Heading (italic)</label><input type="text" name="usps_headingItalic" value="{{ usps.headingItalic or '' }}"/></div>
+    </div>
+    <label>Small code</label>
+    <input type="text" name="usps_code" value="{{ usps.code or '' }}"/>
+    {% set usp_n = [5, usp_items|length]|max %}
+    {% for i in range(usp_n) %}
+    {% set item = usp_items[i] if usp_items|length > i else {} %}
+    <h3>Point {{ i + 1 }}</h3>
+    <div class="row">
+      <div><label>Number</label><input type="text" name="usp{{ i }}_number" value="{{ item.number or '' }}"/></div>
+      <div><label>Heading</label><input type="text" name="usp{{ i }}_heading" value="{{ item.heading or '' }}"/></div>
+    </div>
+    <label>Body</label>
+    <textarea name="usp{{ i }}_body" rows="3">{{ item.body or '' }}</textarea>
+    {% endfor %}
+  </div>
+
+  <div class="card" data-cms-card="matcha.testing">
+    <h2 style="margin-top:0;">Batch testing</h2>
+    <label>Small label</label>
+    <input type="text" name="testing_eyebrow" value="{{ testing.eyebrow or '' }}"/>
+    <div class="row">
+      <div><label>Heading</label><input type="text" name="testing_heading" value="{{ testing.heading or '' }}"/></div>
+      <div><label>Heading (italic)</label><input type="text" name="testing_headingItalic" value="{{ testing.headingItalic or '' }}"/></div>
+    </div>
+    <label>Body (blank line between paragraphs)</label>
+    <textarea name="testing_body" rows="5">{{ testing.body or '' }}</textarea>
+    {% set test_n = [6, test_rows|length]|max %}
+    {% for i in range(test_n) %}
+    {% set row = test_rows[i] if test_rows|length > i else {} %}
+    <div class="row">
+      <div><label>Row {{ i + 1 }} label</label><input type="text" name="testing{{ i }}_label" value="{{ row.label or '' }}"/></div>
+      <div><label>Row {{ i + 1 }} result</label><input type="text" name="testing{{ i }}_result" value="{{ row.result or '' }}"/></div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="card" data-cms-card="matcha.howto">
+    <h2 style="margin-top:0;">How to use it</h2>
+    <div class="row">
+      <div><label>Heading</label><input type="text" name="howto_heading" value="{{ howto.heading or '' }}"/></div>
+      <div><label>Heading (italic)</label><input type="text" name="howto_headingItalic" value="{{ howto.headingItalic or '' }}"/></div>
+    </div>
+    {% set method_n = [3, methods|length]|max %}
+    {% for i in range(method_n) %}
+    {% set method = methods[i] if methods|length > i else {} %}
+    <h3>Method {{ i + 1 }}</h3>
+    <label>Label</label>
+    <input type="text" name="method{{ i }}_label" value="{{ method.label or '' }}"/>
+    <label>Steps (one per line)</label>
+    <textarea name="method{{ i }}_steps" rows="4">{{ method.steps or '' }}</textarea>
+    {% endfor %}
+  </div>
+
+  <div class="card" data-cms-card="matcha.nutrition">
+    <h2 style="margin-top:0;">Nutrition</h2>
+    <label>Per</label>
+    <input type="text" name="nutrition_per" value="{{ nutrition.per or '' }}"/>
+    <label>Intro</label>
+    <textarea name="nutrition_intro" rows="3">{{ nutrition.intro or '' }}</textarea>
+    <div class="row">
+      <div><label>Allergens label</label><input type="text" name="nutrition_allergens_label" value="{{ nutrition.allergensLabel or '' }}"/></div>
+      <div><label>Allergens</label><input type="text" name="nutrition_allergens" value="{{ nutrition.allergens or '' }}"/></div>
+    </div>
+    {% set n_n = [8, nutrition_rows|length]|max %}
+    {% for i in range(n_n) %}
+    {% set row = nutrition_rows[i] if nutrition_rows|length > i else {} %}
+    <div class="row">
+      <div><label>Row {{ i + 1 }}</label><input type="text" name="nutrition{{ i }}_label" value="{{ row.label or '' }}"/></div>
+      <div><label>Value</label><input type="text" name="nutrition{{ i }}_value" value="{{ row.value or '' }}"/></div>
+    </div>
+    <label style="display:flex;align-items:center;gap:8px;">
+      <input type="checkbox" name="nutrition{{ i }}_sub" style="width:auto;" {{ 'checked' if row.sub }}/> Indented sub-row
+    </label>
+    {% endfor %}
+  </div>
+
+  <div class="actions-bar save-bar">
+    <button class="btn" type="submit">Save {{ page_title }}</button>
+    <a class="btn secondary" href="{{ url_for('index') }}">Cancel</a>
+    {% if visual_page %}
+    <a class="btn secondary" href="{{ url_for('visual_editor', page=visual_page) }}">Open visual editor</a>
+    {% endif %}
+  </div>
+</form>
+{% endblock %}

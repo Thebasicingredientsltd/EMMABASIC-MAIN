@@ -11,6 +11,13 @@
 
 <div class="card" data-cms-card="products.rail">
   <h2 style="margin-top:0;">Homepage rail</h2>
+  <form method="post" action="{{ url_for('product_rail_save') }}" style="margin-bottom:20px;">
+    <label>Heading</label>
+    {% set rail_heading = (rail.heading if rail is defined and rail.heading else "Our team's staples.") %}
+    <input type="text" name="rail_heading" value="{{ rail_heading }}"/>
+    <p class="field-help">The large line above the product bottles on the homepage.</p>
+    <button class="btn secondary small" type="submit">Save heading</button>
+  </form>
   {% for p in products %}
   <div class="list-item">
     {% if p.image %}

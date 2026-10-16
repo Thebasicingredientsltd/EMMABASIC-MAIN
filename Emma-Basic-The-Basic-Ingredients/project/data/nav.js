@@ -1,5 +1,6 @@
 /* Emma Basic — site navigation (CMS-managed). The payload below is strict JSON. */
 window.EB_NAV = {
+  "wordmark": "Emma Basic",
   "left": [
     {
       "label": "Products Without E-Numbers",

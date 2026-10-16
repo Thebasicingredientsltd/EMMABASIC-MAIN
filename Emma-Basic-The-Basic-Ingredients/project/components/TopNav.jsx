@@ -29,6 +29,7 @@ function TopNav({ hasHero = false }) {
     : "rgba(246,246,246,0.92)";
 
   const nav = (typeof window !== "undefined" && window.EB_NAV) || {};
+  const wordmark = nav.wordmark || "Emma Basic";
   const leftLinks = (Array.isArray(nav.left) && nav.left.length) ? nav.left : [
     { label: "Products Without E-Numbers", href: "Our Products.html" },
   ];
@@ -114,7 +115,7 @@ function TopNav({ hasHero = false }) {
           transition: "color 260ms var(--ease-out)",
           textAlign: "center",
         }}>
-          Emma Basic
+          {wordmark}
         </a>
         <nav className="eb-nav-desktop" style={{ display: "flex", gap: 32, alignItems: "center", justifyContent: "flex-end" }}>
           {rightLinks.map(l => (

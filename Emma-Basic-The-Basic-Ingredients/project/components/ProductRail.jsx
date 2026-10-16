@@ -4,6 +4,8 @@
    Click opens the Label Decoder drawer.
    ============================================================ */
 function ProductRail({ onOpen }) {
+  const R = (typeof window !== "undefined" && window.EB_HOME && window.EB_HOME.productRail) || {};
+  const railHeading = R.heading || "Our team's staples.";
   const railRef = React.useRef(null);
   const [canL, setCanL] = React.useState(false);
   const [canR, setCanR] = React.useState(true);
@@ -75,7 +77,7 @@ function ProductRail({ onOpen }) {
             fontSize: "clamp(52px, 8vw, 132px)",
             lineHeight: 0.9, letterSpacing: "-0.02em", margin: 0,
           }}>
-            Our team's staples.
+            {railHeading}
           </h2>
         </Reveal>
       </div>

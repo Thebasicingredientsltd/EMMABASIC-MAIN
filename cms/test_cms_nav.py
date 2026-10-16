@@ -188,6 +188,19 @@ class CollapsedEditorSectionsTests(unittest.TestCase):
         self.assertIn('classList.add("card-section")', body)
         self.assertIn('summary.className = "card-section-summary"', body)
 
+    def test_collapse_keeps_show_on_site_with_the_heading(self):
+        """Page footer only has a visibility checkbox. If wrapAsDetails leaves
+        that box in the closed details body, the collapsed card looks empty.
+        Lift the card's own show-on-site label into the summary next to the h2.
+        """
+        body = self.client.get("/homepage").get_data(as_text=True)
+        wrap = body.split("function wrapAsDetails", 1)[1].split(
+            "function isFollowOnSection", 1
+        )[0]
+        self.assertIn("function ebLiftShowOnSite", wrap)
+        self.assertIn('label.section-vis', wrap)
+        self.assertIn("summary.appendChild(vis)", wrap)
+
     def test_page_index_jump_opens_the_collapsed_section(self):
         body = self.client.get("/places").get_data(as_text=True)
         self.assertIn("item.card.open = true", body)
