@@ -118,21 +118,6 @@ function ProductRail({ onOpen }) {
         {PRODUCTS.map((p, i) => (
           <ShelfTile key={p.id} p={p} index={i} onOpen={() => { if (!dragRef.current.moved) onOpen(p.id); }} />
         ))}
-        {/* Terminal tile */}
-        <div style={{
-          scrollSnapAlign: "start",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          minWidth: 280,
-        }}>
-          <a href="#" style={{
-            fontFamily: "var(--f-body)", fontSize: 11, letterSpacing: "0.22em",
-            textTransform: "uppercase", color: "var(--ink)",
-            textDecoration: "none", borderBottom: "1px solid var(--ink)",
-            paddingBottom: 2, whiteSpace: "nowrap",
-          }}>
-            The Full Collection →
-          </a>
-        </div>
       </div>
 
       <style>{`
