@@ -39,25 +39,6 @@ window.EB_JOURNAL = {
       }
     },
     {
-      "id": "what-is-clean-label",
-      "category": "Ingredient Stories",
-      "date": "02 June 2018",
-      "title": "What is clean label?",
-      "author": "Emma",
-      "excerpt": "Do you read labels?",
-      "image": "assets/uploads/NL_photo_1-20260927-115005-02.jpg",
-      "tone": "warm",
-      "featured": false,
-      "seo": {
-        "title": "What is clean label?",
-        "description": "Do you read labels?",
-        "canonical": "https://emmabasic.co.uk/journal-post.html?id=what-is-clean-label",
-        "image": "assets/uploads/NL_photo_1-20260927-115005-02.jpg",
-        "ogType": "article",
-        "noindex": false
-      }
-    },
-    {
       "id": "what-makes-a-good-soy-sauce",
       "category": "Ingredient Stories",
       "date": "02 June 2019",
@@ -490,34 +471,6 @@ window.EB_JOURNAL = {
         {
           "type": "p",
           "text": "The PLASTIC tray you usually seeIn other brandsIs gone.Yes, we removed it.It wasn’t an easy job!We all know the fact:PLASTIC is heavily used in food packaging.Humans are drowning in PLASTIC.We are determined to useLess PLASTIC in our products.How to remove the PLASTIC tray?We created a metal mold to form the shape.There may some breakage in the curry blocks.It won’t affect the taste.We are working to improve the appearance.Imperfectly perfect.Small change,Big difference,In reduce food wastage and PLASTIC."
-        }
-      ],
-      "author": "Emma"
-    },
-    "what-is-clean-label": {
-      "category": "Ingredient Stories",
-      "date": "02 June 2018",
-      "readTime": "",
-      "title": "What is clean label?",
-      "image": "assets/uploads/NL_photo_1-20260927-115005-02.jpg",
-      "imagePosition": "",
-      "intro": "",
-      "body": [
-        {
-          "type": "p",
-          "text": "Clean Label, often called “Clean Dec” (decoration) by UK food manufacturers, is not a phrase familiar to consumers. Nor is it a government-regulated term like “organic”.\nThe definition of Clean Label varies from brand to brand. The purpose behind it is to provide safe, healthy food that supports our wellbeing. So what do we, the Emma Basic team, do to practise Clean Label?\n•\tRemove additives. Legally permitted additives each have a unique code starting with E. The Emma Basic brand is determined to remove E numbers from its ingredient lists. When formulating the recipe for a new product, we use fewer ingredients and permit no additives.\n•\tRemove highly processed ingredients. This is a frequently overlooked area.\nFor instance, we replace refined oils with simple ingredients from natural sources, produced mechanically."
-        },
-        {
-          "type": "p",
-          "text": "Emma Basic Curry is a typical example of a Clean Label product. With Clean Label, it is not what is added but what is removed that counts.\n1.\tSugar: the benchmark contains 15.1g sugar per 100g, vs 10g per 100g in Emma Basic Curry.\n2.\tAdditives: the benchmark contains:\n3 flavour enhancers: E621 (MSG), E631 and E627.\n3 emulsifiers: E473, E322 and E471, to make the curry thicker.\nAcidity regulator: malic acid (E296), which is commonly used in curry.\n1 colouring: E150a. Emma Basic Curry is brighter without using any colourings. Why on earth does the benchmark use one, when its colour is still so dull?"
-        },
-        {
-          "type": "p",
-          "text": "What do we do for single-ingredient products, where there are no additives to remove? We focus on the level of harmful contaminants. Checking and verifying chemistry, microbiology and genetic testing results is our daily practice. For instance, sesame products carry four potential risks:"
-        },
-        {
-          "type": "p",
-          "text": "1.\tPesticides (chlorpyrifos). Sesame seeds and oil from India have repeatedly been rejected by Port Health at various EU ports, typically in the Netherlands, Denmark and Germany.\n2.\tMicro: Salmonella in sesame seeds.\n3.\t3-MCPD and glycidyl esters in sesame seed oil.\n4.\tEthylene oxide. Ethylene oxide is used in India to sterilise sesame seeds. Long-term exposure to ethylene oxide increases the risk of white blood cell cancers such as leukaemia and increases the risk of breast cancer. Sesame seeds and oil from India have repeatedly been inspected and rejected by Port Health at various EU ports, typically in the Netherlands, Denmark, Germany, Norway and Poland.\n5.\tAflatoxin B1. Aflatoxin B1 can cause poisoning and increases the risk of liver cancer. Aflatoxin often occurs in nuts and their oils, rice and other foods, and is carcinogenic, meaning it has the potential to cause cancer. I often heard about aflatoxin B1 in my childhood. Every time I eat food made from peanuts, I worry about the risk of consuming aflatoxin. Few can resist the yummy taste of peanut butter, yet I have deliberately walked a little faster past the peanut butter shelf when shopping with our daughter."
         }
       ],
       "author": "Emma"
