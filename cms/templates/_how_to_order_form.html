@@ -20,7 +20,7 @@
 
 <form method="post" action="{{ url_for('distributor_save') }}" enctype="multipart/form-data">
 
-  <div class="card">
+  <div class="card" data-cms-card="places.howto-title">
     <h2 style="margin-top:0;">Title bar{{ hidden_pill(dstr) }}</h2>
     {{ show_on_site('hero', dstr, 'Show this page header on the live site') }}
     <p class="field-help">The dark gray bar at the top of the sheet: the title and the order email.</p>
@@ -30,17 +30,17 @@
     <input type="text" name="banner_email" value="{{ dstr.email or '' }}"/>
   </div>
 
-  <div class="card">
+  <div class="card" data-cms-card="places.howto-footer">
     <h2 style="margin-top:0;">Page footer{{ hidden_pill(order_footer) }}</h2>
     {{ show_on_site('footer', order_footer, 'Show footer on this page') }}
     <p class="field-help">The live Find us page uses the footer setting in the shops section above. This box is kept so you can still hide or show a footer if needed in the visual editor.</p>
   </div>
 
-  {% with seo=dstr.seo or {}, seo_placeholder_title='Become a Distributor — Emma Basic', seo_placeholder_canonical='https://emmabasic.co.uk/Places.html', seo_id_prefix='howto' %}
+  {% with seo=dstr.seo or {}, seo_placeholder_title='Become a Distributor — Emma Basic', seo_placeholder_canonical='https://emmabasic.co.uk/Places.html', seo_id_prefix='howto', seo_card_id='places.howto-seo' %}
   {% include '_seo_fields.html' %}
   {% endwith %}
 
-  <div class="card">
+  <div class="card" data-cms-card="places.howto-steps">
     <h2 style="margin-top:0;">Numbered steps</h2>
     <p class="field-help">Each step is a gray number on the left and the instructions on the right. One bullet per line.</p>
     <div id="steps">
@@ -63,7 +63,7 @@
     <button type="button" class="btn secondary small" id="add-step">+ Add step</button>
   </div>
 
-  <div class="card">
+  <div class="card" data-cms-card="places.howto-other">
     <h2 style="margin-top:0;">Other ways to receive your order{{ hidden_pill(other) }}</h2>
     {{ show_on_site('other', other, 'Show this section on the live site') }}
     <label>Section heading</label>
@@ -84,7 +84,7 @@
     </div>
   </div>
 
-  <div class="card">
+  <div class="card" data-cms-card="places.howto-sheet">
     <h2 style="margin-top:0;">Small line under the sheet{{ hidden_pill(sheet) }}</h2>
     {{ show_on_site('sheet_footer', sheet, 'Show this line on the live site') }}
     <p class="field-help">The grey line at the bottom of the How to Order sheet (not the site footer).</p>

@@ -203,6 +203,60 @@
     border-radius: var(--r-md); padding: 22px 24px; margin-bottom: 16px;
     box-shadow: var(--shadow-sm);
   }
+  /* Editor sections start collapsed — open one heading to edit. */
+  .card-section > summary.card-section-summary {
+    list-style: none;
+    display: flex; align-items: center; gap: 10px;
+    cursor: pointer; user-select: none;
+    margin: -6px 0;
+  }
+  .card-section > summary.card-section-summary::-webkit-details-marker { display: none; }
+  .card-section > summary.card-section-summary::marker { content: ""; }
+  .card-section[open] > summary.card-section-summary {
+    margin: -6px 0 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .card-section > summary.card-section-summary h2 { margin: 0; flex: 1; min-width: 0; }
+  .card-section > summary.card-section-summary { flex-wrap: wrap; }
+  .card-home {
+    margin: 0 0 0 auto;
+    display: flex;
+    align-items: center;
+    flex: 0 1 auto;
+    max-width: 100%;
+  }
+  .card-home label {
+    display: flex; align-items: center; gap: 8px;
+    margin: 0; text-transform: none; letter-spacing: 0;
+    font-size: 11px; font-weight: 600; color: var(--ink-60);
+    white-space: nowrap;
+  }
+  .card-home select {
+    width: auto; min-width: 148px; max-width: 220px;
+    padding: 6px 8px; font-size: 12px;
+  }
+  .card-section-chevron {
+    width: 22px; height: 22px; flex-shrink: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    color: var(--ink-40);
+    transition: transform var(--dur) var(--ease-out), color var(--dur) var(--ease-out);
+  }
+  .card-section[open] > summary .card-section-chevron { transform: rotate(90deg); color: var(--ink); }
+  details.card-section:not(.card) {
+    margin: 0 0 16px;
+  }
+  details.card-section:not(.card) > summary.card-section-summary {
+    background: var(--paper-bright); border: 1px solid var(--rule);
+    border-radius: var(--r-md); padding: 16px 20px; margin: 0;
+    box-shadow: var(--shadow-sm);
+  }
+  details.card-section:not(.card)[open] > summary.card-section-summary {
+    margin-bottom: 16px;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .card-section > summary.card-section-summary:hover .card-section-chevron { color: var(--ink); }
+  }
   /* Clickable cards (dashboard) lift on hover */
   .dash-cards a { text-decoration: none; display: block; }
   .dash-cards a .card { margin-bottom: 0; height: 100%; transition: transform var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out), border-color var(--dur) var(--ease-out); }
@@ -389,7 +443,7 @@
   .dash-cards > a:nth-child(4) { animation-delay: 180ms; }
   .dash-cards > a:nth-child(5) { animation-delay: 220ms; }
 
-  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, .dropzone:focus-visible {
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, .dropzone:focus-visible, summary:focus-visible {
     outline: 2px solid var(--accent); outline-offset: 2px;
   }
 
@@ -711,13 +765,140 @@
 
   function ebHintHTML() { return "Drag image here<br/>or click to browse"; }
 
-  // "On this page": every editor page lists its own cards as jump links, so
-  // you can see what data a page holds before scrolling it. Built from the
-  // page itself rather than a hand-kept list, so it can never fall behind the
-  // template. Cards that already carry an id (places.html) keep it.
+  // Editor cards start collapsed so you open one section at a time instead of
+  // scrolling a long form. "On this page" is built from the same headings.
+  window.EB_CMS_CARDS = {
+    menus: {{ cms_card_menus|default([])|tojson }},
+    homes: {{ cms_card_homes|default({})|tojson }},
+    saveUrl: {{ url_for('cms_card_home_save')|tojson }}
+  };
   (function () {
     var inner = document.querySelector(".content-inner");
     if (!inner) return;
+
+    function addCardHomeControl(details) {
+      var cardId = details.getAttribute("data-cms-card");
+      var cfg = window.EB_CMS_CARDS;
+      if (!cardId || !cfg || !cfg.menus || !cfg.saveUrl) return;
+      var origin = cardId.split(".")[0];
+      var home = (cfg.homes && cfg.homes[cardId]) || origin;
+      var form = document.createElement("form");
+      form.className = "card-home";
+      form.method = "post";
+      form.action = cfg.saveUrl;
+      form.addEventListener("click", function (e) { e.stopPropagation(); });
+      form.addEventListener("mousedown", function (e) { e.stopPropagation(); });
+      var hidden = document.createElement("input");
+      hidden.type = "hidden";
+      hidden.name = "card";
+      hidden.value = cardId;
+      var label = document.createElement("label");
+      label.appendChild(document.createTextNode("Show under"));
+      var select = document.createElement("select");
+      select.name = "parent";
+      cfg.menus.forEach(function (item) {
+        var opt = document.createElement("option");
+        opt.value = item.endpoint;
+        opt.textContent = item.label;
+        if (item.endpoint === home) opt.selected = true;
+        select.appendChild(opt);
+      });
+      select.addEventListener("change", function () { form.submit(); });
+      label.appendChild(select);
+      form.appendChild(hidden);
+      form.appendChild(label);
+      var summary = details.querySelector(":scope > summary");
+      if (summary) summary.appendChild(form);
+    }
+
+    function wrapAsDetails(el) {
+      if (!el || el.classList.contains("card-section")) return el;
+      var heading = el.querySelector("h2");
+      if (!heading) return el;
+      var details = document.createElement("details");
+      details.className = el.className;
+      details.classList.add("card-section");
+      Array.prototype.forEach.call(el.attributes, function (attr) {
+        if (attr.name === "class" || attr.name === "open") return;
+        details.setAttribute(attr.name, attr.value);
+      });
+      var summary = document.createElement("summary");
+      summary.className = "card-section-summary";
+      var chevron = document.createElement("span");
+      chevron.className = "card-section-chevron";
+      chevron.setAttribute("aria-hidden", "true");
+      chevron.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
+      summary.appendChild(chevron);
+      heading.parentNode.removeChild(heading);
+      summary.appendChild(heading);
+      details.appendChild(summary);
+      while (el.firstChild) details.appendChild(el.firstChild);
+      el.parentNode.replaceChild(details, el);
+      addCardHomeControl(details);
+      summary.querySelectorAll("a, button, form, select, label").forEach(function (ctl) {
+        ctl.addEventListener("click", function (e) { e.stopPropagation(); });
+      });
+      return details;
+    }
+
+    function isFollowOnSection(child) {
+      if (child.tagName === "H2") return true;
+      if (!child.querySelector) return false;
+      if (!child.querySelector("h2")) return false;
+      return /border-top/.test(child.getAttribute("style") || "");
+    }
+
+    function splitCard(card) {
+      var children = Array.prototype.slice.call(card.children);
+      var groups = [];
+      var bucket = [];
+      children.forEach(function (child) {
+        if (bucket.length && isFollowOnSection(child)) {
+          groups.push(bucket);
+          bucket = [];
+        }
+        bucket.push(child);
+      });
+      if (bucket.length) groups.push(bucket);
+      if (groups.length <= 1) return [card];
+      var parent = card.parentNode;
+      var marker = document.createComment("split");
+      parent.insertBefore(marker, card.nextSibling);
+      var parts = [];
+      groups.forEach(function (nodes, i) {
+        var wrap = i === 0 ? card : document.createElement("div");
+        if (i > 0) {
+          wrap.className = "card";
+          parent.insertBefore(wrap, marker);
+          nodes.forEach(function (node) { wrap.appendChild(node); });
+        }
+        parts.push(wrap);
+      });
+      parent.removeChild(marker);
+      return parts;
+    }
+
+    function ebCollapseEditorSections(inner) {
+      var cards = Array.prototype.slice.call(inner.querySelectorAll(".card"));
+      cards.forEach(function (card) {
+        if (card.closest(".dash-cards")) return;
+        if (card.classList.contains("publish-card")) return;
+        if (card.classList.contains("card-section")) return;
+        if (!card.querySelector("h2")) return;
+        splitCard(card).forEach(wrapAsDetails);
+      });
+      Array.prototype.slice.call(inner.querySelectorAll("section")).forEach(function (section) {
+        if (section.classList.contains("card-section")) return;
+        if (!section.querySelector("h2")) return;
+        wrapAsDetails(section);
+      });
+    }
+    ebCollapseEditorSections(inner);
+
+    if (location.hash) {
+      var jump = document.getElementById(location.hash.slice(1));
+      if (jump && jump.tagName === "DETAILS") jump.open = true;
+    }
 
     // Each card on the page, plus any <section> that gathers a run of cards
     // under its own heading (Find us does this for "How to order"), taken in
@@ -726,7 +907,7 @@
     var blocks = [];
     function collect(parent) {
       Array.prototype.forEach.call(parent.children, function (child) {
-        if (child.classList.contains("card") || child.tagName === "SECTION") blocks.push(child);
+        if (child.classList.contains("card") || child.classList.contains("card-section") || child.tagName === "SECTION") blocks.push(child);
         else if (child.tagName === "FORM") collect(child);
       });
     }
@@ -778,6 +959,7 @@
       a.addEventListener("click", function (e) {
         e.preventDefault();
         history.replaceState(null, "", "#" + item.id);
+        item.card.open = true;
         item.card.scrollIntoView({ behavior: "smooth", block: "start" });
         item.card.classList.add("eb-jumped");
         setTimeout(function () { item.card.classList.remove("eb-jumped"); }, 1400);
@@ -785,8 +967,14 @@
       nav.appendChild(a);
     });
 
-    var anchor = inner.querySelector(":scope > .sub") || inner.querySelector(":scope > h1");
-    if (anchor && anchor.nextSibling) inner.insertBefore(nav, anchor.nextSibling);
+    var heading = inner.querySelector("h1");
+    var headingBlock = heading;
+    while (headingBlock && headingBlock.parentNode && headingBlock.parentNode !== inner) {
+      headingBlock = headingBlock.parentNode;
+    }
+    var after = headingBlock || inner.querySelector(":scope > .sub");
+    if (after && after.nextSibling) inner.insertBefore(nav, after.nextSibling);
+    else if (after) inner.appendChild(nav);
     else inner.insertBefore(nav, inner.firstChild);
 
     // Keep jumps clear of the sticky index, however many rows it wraps to.

@@ -5,7 +5,7 @@
 <p class="sub">Opening headline for this page. Save to update the website (publish when you want it live).{% if extra %} {{ extra }}{% endif %}</p>
 
 <form method="post" action="{{ url_for(save_endpoint) }}" enctype="multipart/form-data">
-  <div class="card">
+  <div class="card" data-cms-card="{{ active }}.header">
     <h2 style="margin-top:0;">Page header — “{{ hero.title or page_title }}{% if hero.titleItalic %} {{ hero.titleItalic }}{% endif %}”{% if not is_section_visible(hero) %} <span class="pill">Hidden on site</span>{% endif %}</h2>
     <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
       <input type="checkbox" name="hero_visible" value="on" style="width:auto;" {{ 'checked' if is_section_visible(hero) }}/> Show this page header on the live site
@@ -26,7 +26,7 @@
     <label>Subtitle</label>
     <textarea name="hero_subtitle" rows="3">{{ hero.subtitle or '' }}</textarea>
   </div>
-  <div class="card">
+  <div class="card" data-cms-card="{{ active }}.footer">
     <h2 style="margin-top:0;">Page footer{% if not is_section_visible(d.footer) %} <span class="pill">Hidden on site</span>{% endif %}</h2>
     <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
       <input type="checkbox" name="footer_visible" value="on" style="width:auto;" {{ 'checked' if is_section_visible(d.footer) }}/> Show footer on this page
@@ -36,13 +36,14 @@
   {% set seo = d.seo or {} %}
   {% set seo_placeholder_title = page_title ~ ' — Emma Basic' %}
   {% set seo_placeholder_canonical = 'https://emmabasic.co.uk/Our%20Story.html' if active == 'story' else 'https://emmabasic.co.uk/Matcha%20Lab.html' %}
+  {% set seo_card_id = active ~ '.seo' %}
   {% include '_seo_fields.html' %}
   {% if show_category_underlink|default(false) %}
   {% include '_underlink_fields.html' %}
   {% endif %}
   {% set gallery = d.gallery or none %}
   {% if gallery %}
-  <div class="card">
+  <div class="card" data-cms-card="{{ active }}.gallery-heading">
     <h2 style="margin-top:0;">Photo gallery heading</h2>
     <p class="field-help">The heading above the team photo gallery on Our Story.</p>
     <div class="row">
@@ -50,7 +51,7 @@
       <div><label>Second line (italic)</label><input type="text" name="gallery_headingItalic" value="{{ gallery.headingItalic or '' }}"/></div>
     </div>
   </div>
-  <div class="card" id="in-the-wild">
+  <div class="card" id="in-the-wild" data-cms-card="{{ active }}.gallery">
     <h2 style="margin-top:0;">Photos — in the wild</h2>
     <p class="field-help">These are the photos at the bottom of Our Story. Drag a photo onto a box (or click it) to replace it. Add or remove as many as you like, then save.</p>
     {% set gallery_photos = gallery_photos if gallery_photos is defined else [] %}

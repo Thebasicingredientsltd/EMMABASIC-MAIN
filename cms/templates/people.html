@@ -17,7 +17,7 @@
 
 <form method="post" action="{{ url_for('people_save') }}" enctype="multipart/form-data">
 
-  <div class="card">
+  <div class="card" data-cms-card="people.header">
     <h2 style="margin-top:0;">Page header — “{{ hero.title or 'A small operation,' }} {{ hero.titleItalic or 'by design.' }}”{{ hidden_pill(hero) }}</h2>
     {{ show_on_site('hero', hero, 'Show this page header on the live site') }}
     <p class="field-help">This is the large headline at the very top of the People page, above the founder photo. It is two lines: roman, then italic.</p>
@@ -37,7 +37,7 @@
     <textarea name="hero_subtitle" rows="2">{{ hero.subtitle or '' }}</textarea>
   </div>
 
-  <div class="card">
+  <div class="card" data-cms-card="people.footer">
     <h2 style="margin-top:0;">Page footer{{ hidden_pill(footer) }}</h2>
     {{ show_on_site('footer', footer, 'Show footer on this page') }}
     <p class="field-help">The site footer at the bottom of the People page only. Other pages keep theirs. Uncheck to hide it without deleting the copy.</p>
@@ -46,9 +46,10 @@
   {% set seo = d.seo or {} %}
   {% set seo_placeholder_title = 'People — Emma Basic' %}
   {% set seo_placeholder_canonical = 'https://emmabasic.co.uk/People%20%26%20Places.html' %}
+  {% set seo_card_id = 'people.seo' %}
   {% include '_seo_fields.html' %}
 
-  <div class="card">
+  <div class="card" data-cms-card="people.founder">
     <h2 style="margin-top:0;">Founder photo &amp; story{{ hidden_pill(d.founder) }}</h2>
     {{ show_on_site('founder', d.founder) }}
     <p class="field-help">The photo and letter at the top of the People page, just under the headline. This is separate from the founder story on the Homepage.</p>
@@ -66,7 +67,7 @@
     <textarea name="founder_paragraphs" rows="10">{{ (founder.paragraphs or []) | join('\n\n') }}</textarea>
   </div>
 
-  <div class="card">
+  <div class="card" data-cms-card="people.team">
     <h2 style="margin-top:0;">Team{{ hidden_pill(d.team) }}</h2>
     {{ show_on_site('team', d.team) }}
     <div class="row">
@@ -148,7 +149,7 @@
     <button type="button" class="btn secondary small" id="add-member">+ Add member</button>
   </div>
 
-  <div class="card">
+  <div class="card" data-cms-card="people.intro">
     <h2 style="margin-top:0;">"Who we are" intro{{ hidden_pill(d.intro) }}</h2>
     {{ show_on_site('intro', d.intro) }}
     <div class="row">
@@ -159,7 +160,7 @@
     <textarea name="intro_paragraphs" rows="10">{{ (d.intro.paragraphs or []) | join('\n\n') }}</textarea>
   </div>
 
-  <div class="card">
+  <div class="card" data-cms-card="people.services">
     <h2 style="margin-top:0;">Services ("What we offer"){{ hidden_pill(d.services) }}</h2>
     {{ show_on_site('services', d.services) }}
     <div class="row">
@@ -186,13 +187,13 @@
     <textarea name="services_closing" rows="3">{{ d.services.closing }}</textarea>
   </div>
 
-  <div class="card">
+  <div class="card" data-cms-card="people.howto-link">
     <h2 style="margin-top:0;">How to Place Your First Order</h2>
     <p class="field-help">How to order appears on the Find us page, underneath the shop list. Edit it there so the wording stays in one place.</p>
     <a class="btn secondary small" href="{{ url_for('places') }}#how-to-order">Edit how to order</a>
   </div>
 
-  <div class="card">
+  <div class="card" data-cms-card="people.contact">
     <h2 style="margin-top:0;">Contact{{ hidden_pill(d.contact) }}</h2>
     {{ show_on_site('contact', d.contact) }}
     <div class="row">
@@ -213,7 +214,7 @@
     <textarea name="contact_note" rows="2">{{ d.contact.note }}</textarea>
   </div>
 
-  <div class="card">
+  <div class="card" data-cms-card="people.hq-link">
     <h2 style="margin-top:0;">London HQ</h2>
     <p class="field-help">The London HQ map is not shown on the People page. The address is still kept under Find us.</p>
     <a class="btn secondary small" href="{{ url_for('places') }}">Edit London HQ address</a>

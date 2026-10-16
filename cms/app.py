@@ -26,6 +26,8 @@ import os
 import re
 import subprocess
 from datetime import datetime, timezone
+from html import escape as html_escape
+from html.parser import HTMLParser
 
 from flask import (
     Flask,
@@ -626,6 +628,424 @@ def cms_sidebar_tree(active=None):
 
 app.jinja_env.globals["cms_page_groups"] = cms_page_groups
 app.jinja_env.globals["cms_sidebar_tree"] = cms_sidebar_tree
+
+
+def _cms_menu_blob():
+    data = load_site()
+    menu = data.get("cmsMenu") if isinstance(data.get("cmsMenu"), dict) else {}
+    return data, menu
+
+
+def _cms_card_homes():
+    """Overrides of where an editor card is shown. Missing means its origin page."""
+    _data, menu = _cms_menu_blob()
+    raw = menu.get("cards") if isinstance(menu.get("cards"), dict) else {}
+    valid = {item["endpoint"] for item in cms_assignable_items()}
+    homes = {}
+    for key, val in raw.items():
+        card_id = str(key).strip()
+        parent = str(val).strip()
+        origin = _cms_card_origin(card_id)
+        if not origin or parent not in valid or parent == origin:
+            continue
+        homes[card_id] = parent
+    return homes
+
+
+def _cms_card_origin(card_id):
+    if not card_id or "." not in card_id:
+        return ""
+    prefix = str(card_id).split(".", 1)[0]
+    valid = {item["endpoint"] for item in cms_assignable_items()}
+    return prefix if prefix in valid else ""
+
+
+def _cms_card_host_endpoints():
+    return {item["endpoint"] for item in cms_assignable_items()}
+
+
+def _cleaned_card_home(card_id, parent):
+    """Return the endpoint to store, '' to restore the default, or None if invalid."""
+    origin = _cms_card_origin(card_id)
+    if not origin:
+        return None
+    valid = _cms_card_host_endpoints()
+    parent = (parent or "").strip()
+    if not parent or parent == origin:
+        return ""
+    if parent not in valid:
+        return None
+    return parent
+
+
+def _cms_menu_payload(parents=None, cards=None):
+    _data, menu = _cms_menu_blob()
+    if parents is None:
+        raw = menu.get("parents") if isinstance(menu.get("parents"), dict) else {}
+        parents = {str(k): str(v) for k, v in raw.items() if k and v}
+    if cards is None:
+        cards = _cms_card_homes()
+    payload = {"parents": parents}
+    if cards:
+        payload["cards"] = cards
+    return payload
+
+
+_CARD_ATTR_RE = re.compile(r'\sdata-cms-card="([^"]*)"')
+_CONTENT_INNER_RE = re.compile(
+    r'<div\s[^>]*class="[^"]*\bcontent-inner\b[^"]*"[^>]*>', re.I
+)
+_FORM_OPEN_RE = re.compile(r"<form\b", re.I)
+
+
+def _tag_gt(html, i):
+    """Index of '>' closing this start tag, skipping quoted attribute values."""
+    n = len(html)
+    quote = ""
+    while i < n:
+        ch = html[i]
+        if quote:
+            if ch == quote:
+                quote = ""
+            i += 1
+            continue
+        if ch in "\"'":
+            quote = ch
+            i += 1
+            continue
+        if ch == ">":
+            return i
+        i += 1
+    return -1
+
+
+def _element_span(html, start):
+    """Byte span of the element whose start tag begins at `start`."""
+    if start < 0 or start >= len(html) or html[start] != "<":
+        return None
+    m = re.match(r"<(/)?([A-Za-z][A-Za-z0-9:-]*)", html[start:])
+    if not m or m.group(1):
+        return None
+    tag = m.group(2)
+    gt = _tag_gt(html, start + m.end())
+    if gt < 0:
+        return None
+    if html[gt - 1] == "/" or tag.lower() in {
+        "area", "base", "br", "col", "embed", "hr", "img", "input",
+        "link", "meta", "param", "source", "track", "wbr",
+    }:
+        return (start, gt + 1)
+    tag_l = tag.lower()
+    open_l = "<" + tag_l
+    close_l = "</" + tag_l
+    depth = 1
+    i = gt + 1
+    n = len(html)
+    while i < n and depth:
+        if html.startswith("<!--", i):
+            endc = html.find("-->", i + 4)
+            i = n if endc < 0 else endc + 3
+            continue
+        chunk = html[i:i + len(close_l) + 8].lower()
+        if chunk.startswith(close_l) and (
+            i + len(close_l) >= n or html[i + len(close_l)] in " \t\r\n/>"
+        ):
+            end_gt = html.find(">", i)
+            if end_gt < 0:
+                break
+            depth -= 1
+            i = end_gt + 1
+            if depth == 0:
+                return (start, i)
+            continue
+        if chunk.startswith(open_l) and (
+            i + len(open_l) < n and html[i + len(open_l)] in " \t\r\n/>"
+        ):
+            inner_gt = _tag_gt(html, i + len(open_l))
+            if inner_gt < 0:
+                break
+            if html[inner_gt - 1] != "/":
+                depth += 1
+            i = inner_gt + 1
+            continue
+        i += 1
+    return (start, n)
+
+
+def _find_cms_cards(html):
+    hits = []
+    for match in _CARD_ATTR_RE.finditer(html):
+        card_id = (match.group(1) or "").strip()
+        if not card_id:
+            continue
+        start = html.rfind("<", 0, match.start())
+        span = _element_span(html, start)
+        if span:
+            hits.append((card_id, span[0], span[1]))
+    return hits
+
+
+def _content_inner_span(html):
+    match = _CONTENT_INNER_RE.search(html)
+    if not match:
+        return None
+    return _element_span(html, match.start())
+
+
+def _enclosing_form_span(html, start, end):
+    pos = start
+    while True:
+        found = None
+        for match in _FORM_OPEN_RE.finditer(html[:pos]):
+            found = match
+        if not found:
+            return None
+        span = _element_span(html, found.start())
+        if span and span[0] <= start and span[1] >= end:
+            return span
+        pos = found.start()
+        if pos <= 0:
+            return None
+
+
+def _start_tag_attrs(html, start):
+    gt = html.find(">", start)
+    if gt < 0:
+        return {}
+    parser = HTMLParser()
+    attrs = {}
+
+    def grab(tag, tag_attrs):
+        attrs.update(tag_attrs)
+
+    parser.handle_starttag = grab
+    parser.feed(html[start:gt + 1])
+    return dict(attrs)
+
+
+class _FieldParser(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.fields = []
+        self._textarea = None
+        self._select = None
+        self._option = None
+
+    def handle_starttag(self, tag, attrs):
+        data = dict(attrs)
+        name = data.get("name")
+        if tag == "input" and name:
+            typ = (data.get("type") or "text").lower()
+            if typ in ("file", "submit", "button", "image", "reset"):
+                return
+            if typ in ("checkbox", "radio") and "checked" not in data:
+                return
+            value = data.get("value")
+            if value is None:
+                value = "on" if typ in ("checkbox", "radio") else ""
+            self.fields.append((name, value))
+        elif tag == "textarea" and name:
+            self._textarea = [name, ""]
+        elif tag == "select" and name:
+            self._select = [name, None, []]
+        elif tag == "option" and self._select is not None:
+            self._option = [data.get("value"), "selected" in data, ""]
+
+    def handle_data(self, text):
+        if self._textarea is not None:
+            self._textarea[1] += text
+        elif self._option is not None:
+            self._option[2] += text
+
+    def handle_endtag(self, tag):
+        if tag == "textarea" and self._textarea is not None:
+            self.fields.append((self._textarea[0], self._textarea[1]))
+            self._textarea = None
+        elif tag == "option" and self._option is not None and self._select is not None:
+            value, selected, label = self._option
+            if value is None:
+                value = label
+            self._select[2].append((value, selected))
+            if selected:
+                self._select[1] = value
+            self._option = None
+        elif tag == "select" and self._select is not None:
+            name, chosen, options = self._select
+            if chosen is None and options:
+                chosen = options[0][0]
+            if chosen is not None:
+                self.fields.append((name, chosen))
+            self._select = None
+
+
+def _named_fields(fragment):
+    parser = _FieldParser()
+    try:
+        parser.feed(fragment)
+        parser.close()
+    except Exception:
+        return []
+    return parser.fields
+
+
+def _hidden_fields_html(fields):
+    parts = []
+    for name, value in fields:
+        parts.append(
+            '<input type="hidden" name="%s" value="%s"/>'
+            % (html_escape(name, quote=True), html_escape(value or "", quote=True))
+        )
+    return "".join(parts)
+
+
+def _ensure_card_dom_id(card_html, card_id):
+    gt = card_html.find(">")
+    if gt < 0:
+        return card_html
+    head = card_html[:gt]
+    if re.search(r"\sid=", head):
+        return card_html
+    slug = card_id.replace(".", "-")
+    return head + ' id="%s"' % html_escape(slug, quote=True) + card_html[gt:]
+
+
+def _form_save_label(form_html, card_start, card_end):
+    outside = form_html[:card_start] + form_html[card_end:]
+    match = re.search(
+        r'<div[^>]*class="[^"]*\bsave-bar\b[^"]*"[^>]*>.*?<button[^>]*>(.*?)</button>',
+        outside,
+        re.I | re.S,
+    )
+    if not match:
+        return "Save"
+    label = re.sub(r"<[^>]+>", "", match.group(1))
+    label = re.sub(r"\s+", " ", label).strip()
+    return label or "Save"
+
+
+def _wrap_guest_card(origin_html, card_id, card_start, card_end):
+    card_html = _ensure_card_dom_id(origin_html[card_start:card_end], card_id)
+    if re.search(r"<form\b", card_html, re.I):
+        return card_html
+    form_span = _enclosing_form_span(origin_html, card_start, card_end)
+    if not form_span:
+        return card_html
+    form_html = origin_html[form_span[0]:form_span[1]]
+    rel_start = card_start - form_span[0]
+    rel_end = card_end - form_span[0]
+    attrs = _start_tag_attrs(origin_html, form_span[0])
+    method = html_escape(attrs.get("method") or "post", quote=True)
+    action = html_escape(attrs.get("action") or "", quote=True)
+    enctype = attrs.get("enctype") or ""
+    extra = ' enctype="%s"' % html_escape(enctype, quote=True) if enctype else ""
+    siblings = _named_fields(form_html[:rel_start] + form_html[rel_end:])
+    label = html_escape(_form_save_label(form_html, rel_start, rel_end))
+    return (
+        '<form method="%s" action="%s"%s class="cms-guest-card">'
+        "%s%s"
+        '<div class="actions-bar save-bar">'
+        '<button class="btn" type="submit">%s</button>'
+        "</div></form>"
+        % (method, action, extra, card_html, _hidden_fields_html(siblings), label)
+    )
+
+
+def _render_origin_html(endpoint):
+    cache = getattr(g, "_cms_origin_html", None)
+    if cache is None:
+        cache = {}
+        g._cms_origin_html = cache
+    if endpoint in cache:
+        return cache[endpoint]
+    view = app.view_functions.get(endpoint)
+    if view is None:
+        cache[endpoint] = ""
+        return ""
+    try:
+        result = view()
+    except Exception:
+        cache[endpoint] = ""
+        return ""
+    if isinstance(result, Response):
+        html = result.get_data(as_text=True)
+    elif isinstance(result, str):
+        html = result
+    else:
+        html = ""
+    cache[endpoint] = html
+    return html
+
+
+def _guest_card_html(origin, card_id):
+    origin_html = _render_origin_html(origin)
+    if not origin_html:
+        return ""
+    for found_id, start, end in _find_cms_cards(origin_html):
+        if found_id == card_id:
+            return _wrap_guest_card(origin_html, card_id, start, end)
+    return ""
+
+
+def _relocate_cms_cards_html(html, endpoint, homes):
+    inner = _content_inner_span(html)
+    if not inner:
+        return html
+    start, end = inner
+    body = html[start:end]
+    for card_id, c_start, c_end in reversed(_find_cms_cards(body)):
+        origin = _cms_card_origin(card_id)
+        home = homes.get(card_id) or origin
+        if home == endpoint:
+            continue
+        hidden = _hidden_fields_html(_named_fields(body[c_start:c_end]))
+        body = body[:c_start] + hidden + body[c_end:]
+    guests = []
+    for card_id, home in homes.items():
+        if home != endpoint:
+            continue
+        origin = _cms_card_origin(card_id)
+        if not origin or origin == endpoint:
+            continue
+        guest = _guest_card_html(origin, card_id)
+        if guest:
+            guests.append(guest)
+    if guests:
+        close = body.rfind("</div>")
+        if close >= 0:
+            body = body[:close] + "\n".join(guests) + "\n" + body[close:]
+    return html[:start] + body + html[end:]
+
+
+@app.after_request
+def _relocate_editor_cards(response):
+    if request.method != "GET":
+        return response
+    endpoint = request.endpoint
+    if not endpoint or endpoint not in _cms_card_host_endpoints():
+        return response
+    if "html" not in (response.content_type or ""):
+        return response
+    homes = _cms_card_homes()
+    if not homes:
+        return response
+    html = response.get_data(as_text=True)
+    relocated = _relocate_cms_cards_html(html, endpoint, homes)
+    if relocated != html:
+        response.set_data(relocated)
+    return response
+
+
+@app.context_processor
+def _inject_cms_card_ui():
+    if _auth_required() and not session.get("cms_auth"):
+        return {"cms_card_menus": [], "cms_card_homes": {}}
+    return {
+        "cms_card_menus": [
+            {"endpoint": item["endpoint"], "label": item["label"]}
+            for item in cms_assignable_items()
+        ],
+        "cms_card_homes": _cms_card_homes(),
+    }
 
 
 # Scalar text fields exposed by the bulk table editor (catalog_table.html).
@@ -2079,10 +2499,40 @@ def cms_menu_save():
     data = load_site()
     if not isinstance(data, dict):
         data = {}
-    data["cmsMenu"] = {"parents": _cleaned_cms_parents(request.form)}
+    data["cmsMenu"] = _cms_menu_payload(parents=_cleaned_cms_parents(request.form))
     save_data("site", data)
     flash("CMS menu saved. Nested pages are collapsed until you open them.", "ok")
     return redirect(url_for("cms_menu"))
+
+
+@app.route("/cms-menu/cards/save", methods=["POST"])
+def cms_card_home_save():
+    card_id = (request.form.get("card") or "").strip()
+    parent = (request.form.get("parent") or "").strip()
+    cleaned = _cleaned_card_home(card_id, parent)
+    dest = _cms_card_origin(card_id) or "index"
+    data = load_site()
+    if not isinstance(data, dict):
+        data = {}
+    cards = dict(_cms_card_homes())
+    if cleaned is None:
+        flash("That card could not be moved.", "error")
+    else:
+        if cleaned:
+            cards[card_id] = cleaned
+            dest = cleaned
+        else:
+            cards.pop(card_id, None)
+        data["cmsMenu"] = _cms_menu_payload(cards=cards)
+        save_data("site", data)
+        if cleaned:
+            flash("Card moved. It now lives on that CRM page.", "ok")
+        else:
+            flash("Card moved back to its own page.", "ok")
+    if dest not in _cms_card_host_endpoints() and dest != "index":
+        dest = "index"
+    suffix = "#" + card_id.replace(".", "-") if card_id else ""
+    return redirect(url_for(dest) + suffix)
 
 
 # ---------------------------------------------------------------------------

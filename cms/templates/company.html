@@ -8,7 +8,7 @@
 <p class="sub">Company page for The Basic Ingredients Ltd — headline, about copy, and contact details.</p>
 
 <form method="post" action="{{ url_for('company_save') }}" enctype="multipart/form-data">
-  <div class="card">
+  <div class="card" data-cms-card="company.headline">
     <h2 style="margin-top:0;">Opening headline{% if not is_section_visible(hero) %} <span class="pill">Hidden on site</span>{% endif %}</h2>
     <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
       <input type="checkbox" name="hero_visible" value="on" style="width:auto;" {{ 'checked' if is_section_visible(hero) }}/> Show this page header on the live site
@@ -30,7 +30,7 @@
     <textarea name="hero_subtitle" rows="2">{{ hero.subtitle or '' }}</textarea>
   </div>
 
-  <div class="card">
+  <div class="card" data-cms-card="company.footer">
     <h2 style="margin-top:0;">Page footer{% if not is_section_visible(d.footer) %} <span class="pill">Hidden on site</span>{% endif %}</h2>
     <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
       <input type="checkbox" name="footer_visible" value="on" style="width:auto;" {{ 'checked' if is_section_visible(d.footer) }}/> Show footer on this page
@@ -42,9 +42,10 @@
   {% set seo_placeholder_title = 'The Basic Ingredients Ltd' %}
   {% set seo_placeholder_canonical = 'https://emmabasic.co.uk/The%20Basic%20Ingredients.html' %}
   {% set seo_extra_help = 'Google copies this title for the extra links under your homepage in search. Keep it short so the legal name is not cut off. Google updates those links on its own — often days or weeks after you save.' %}
+  {% set seo_card_id = 'company.seo' %}
   {% include '_seo_fields.html' %}
 
-  <div class="card">
+  <div class="card" data-cms-card="company.about">
     <h2 style="margin-top:0;">About</h2>
     <div class="row">
       <div><label>Heading</label><input type="text" name="about_heading" value="{{ about.heading or '' }}"/></div>
@@ -58,7 +59,7 @@
     </div>
   </div>
 
-  <div class="card">
+  <div class="card" data-cms-card="company.contact">
     <h2 style="margin-top:0;">Contact</h2>
     <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
       <input type="checkbox" name="contact_visible" style="width:auto;" {{ 'checked' if is_section_visible(contact) }}/> Show this section on the live site

@@ -10,7 +10,7 @@
 <h1>Find us</h1>
 <p class="sub">Shops and the map come first. How to order is on this same page, underneath.</p>
 
-<div class="card" id="upload-stockists">
+<div class="card" id="upload-stockists" data-cms-card="places.upload">
   <h2 style="margin-top:0;">Upload stockists (Excel)</h2>
   <p class="field-help" style="font-size:13.5px;">Add lots of shops at once from a spreadsheet. Each shop is put on the map on the Find us page using its postcode.</p>
   <ol class="field-help" style="font-size:13.5px; padding-left:20px; line-height:1.7;">
@@ -30,7 +30,7 @@
 <form id="places-highlights" method="post" action="{{ url_for('places_highlights_save') }}"></form>
 <form id="places-page" method="post" action="{{ url_for('places_save') }}" enctype="multipart/form-data">
 
-  <div class="card">
+  <div class="card" data-cms-card="places.headline">
     <h2 style="margin-top:0;">Opening headline{% if not is_section_visible(hero) %} <span class="pill">Hidden on site</span>{% endif %}</h2>
     <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
       <input type="checkbox" name="hero_visible" value="on" style="width:auto;" {{ 'checked' if is_section_visible(hero) }}/> Show this page header on the live site
@@ -52,7 +52,7 @@
     <textarea name="hero_subtitle" rows="3">{{ hero.subtitle or '' }}</textarea>
   </div>
 
-  <div class="card">
+  <div class="card" data-cms-card="places.footer">
     <h2 style="margin-top:0;">Page footer{% if not is_section_visible(d.footer) %} <span class="pill">Hidden on site</span>{% endif %}</h2>
     <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
       <input type="checkbox" name="footer_visible" value="on" style="width:auto;" {{ 'checked' if is_section_visible(d.footer) }}/> Show footer on this page
@@ -63,9 +63,10 @@
   {% set seo = d.seo or {} %}
   {% set seo_placeholder_title = 'Places — Emma Basic' %}
   {% set seo_placeholder_canonical = 'https://emmabasic.co.uk/Places.html' %}
+  {% set seo_card_id = 'places.seo' %}
   {% include '_seo_fields.html' %}
 
-  <div class="card">
+  <div class="card" data-cms-card="places.find-us-heading">
     <h2 style="margin-top:0;">The heading on the Find Us page{% if featured.hideHeading %} <span class="pill">Hidden on site</span>{% endif %}</h2>
     <p class="field-help">This is the large type in the dark band of shop names — for example “Listed at a few good places.” It is separate from the Opening headline above.</p>
     <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
@@ -86,7 +87,7 @@
     </div>
   </div>
 
-  <div class="card">
+  <div class="card" data-cms-card="places.featured">
     <h2 style="margin-top:0;">Featured shops (carousel){% if featured.hidden %} <span class="pill">Hidden on site</span>{% endif %}</h2>
     <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
       <input type="checkbox" name="featured_hidden" value="on" style="width:auto;" {{ 'checked' if featured.hidden }}/> Hide featured shops on the live site
@@ -112,7 +113,7 @@
     <button type="button" class="btn secondary small" id="add-retailer">+ Add featured shop</button>
   </div>
 
-  <div class="card">
+  <div class="card" data-cms-card="places.directory-heading">
     <h2 style="margin-top:0;">The heading above the shop list{% if directory.hideHeading %} <span class="pill">Hidden on site</span>{% endif %}</h2>
     <p class="field-help">This is the large type above the map of stockists — for example “Where to find us. Stocked across the UK.” It is separate from the Opening headline and from the heading in the dark band of shop names.</p>
     <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
@@ -130,7 +131,7 @@
       </div>
     </div>
   </div>
-  <div class="card">
+  <div class="card" data-cms-card="places.hq">
     <h2 style="margin-top:0;">London HQ address</h2>
     <p class="field-help">This address is kept here. It is not shown as a map on the People page or on Find us.</p>
     <label>Label</label>
@@ -145,7 +146,7 @@
     </div>
   </div>
 
-  <div class="card" id="gallery">
+  <div class="card" id="gallery" data-cms-card="places.gallery">
     <h2 style="margin-top:0;">Photo gallery{% if not is_section_visible(gallery) %} <span class="pill">Hidden on site</span>{% endif %}</h2>
     <p class="field-help">The photos at the very bottom of the Find us page — markets, trade shows, shop floors. Visitors click a photo to see it full size.</p>
     <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
@@ -192,7 +193,7 @@
   <p class="field-help">This saves the headlines, carousel, search settings, London HQ address and photo gallery. To highlight shops, use <strong>Save highlights</strong> in the stockist list below. How to order has its own save button further down this page.</p>
 </form>
 
-  <div class="card" id="shops">
+  <div class="card" id="shops" data-cms-card="places.stockists">
     <h2 style="margin-top:0;">All stockists <span class="pill">{{ (d.shops or [])|length }}</span></h2>
     <p class="field-help">These shops are the pins on the Find us map. Tick <strong>Highlight on the map</strong> for every shop that should stand out, then press <strong>Save highlights</strong>. You can tick several at once. That button only sends the ticks, not every address.</p>
     <p class="field-help">To change a name, town, postcode or link, open <strong>Edit this shop</strong> and press <strong>Save this shop</strong>. Leave latitude and longitude blank and the pin is found from the postcode.</p>

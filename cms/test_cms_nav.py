@@ -174,5 +174,73 @@ class PageIndexTests(unittest.TestCase):
         self.assertIn(".page-index a.current", body)
 
 
+class CollapsedEditorSectionsTests(unittest.TestCase):
+    """Editor cards start collapsed so you open one section instead of scrolling."""
+
+    def setUp(self):
+        app.config["TESTING"] = True
+        self.client = app.test_client()
+
+    def test_shared_layout_collapses_h2_cards_by_default(self):
+        body = self.client.get("/journal").get_data(as_text=True)
+        self.assertIn("function ebCollapseEditorSections", body)
+        self.assertIn("ebCollapseEditorSections(inner)", body)
+        self.assertIn('classList.add("card-section")', body)
+        self.assertIn('summary.className = "card-section-summary"', body)
+
+    def test_page_index_jump_opens_the_collapsed_section(self):
+        body = self.client.get("/places").get_data(as_text=True)
+        self.assertIn("item.card.open = true", body)
+
+    def test_journal_posts_list_has_a_heading_so_it_can_collapse(self):
+        html = self.client.get("/journal").get_data(as_text=True)
+        content = html.split('<div class="content-inner">', 1)[-1]
+        self.assertRegex(content, r"<h2[^>]*>\s*Posts\s*<")
+
+    def test_save_bars_stay_outside_cards(self):
+        from html.parser import HTMLParser
+
+        void = {
+            "area", "base", "br", "col", "embed", "hr", "img", "input",
+            "link", "meta", "param", "source", "track", "wbr",
+        }
+
+        class Nesting(HTMLParser):
+            def __init__(self):
+                super().__init__()
+                self.stack = []
+                self.card_depth = 0
+                self.save_inside = False
+                self.save_outside = False
+
+            def handle_starttag(self, tag, attrs):
+                classes = dict(attrs).get("class", "").split()
+                is_card = "card" in classes
+                if "save-bar" in classes:
+                    if self.card_depth:
+                        self.save_inside = True
+                    else:
+                        self.save_outside = True
+                if tag in void:
+                    return
+                self.stack.append(is_card)
+                if is_card:
+                    self.card_depth += 1
+
+            def handle_endtag(self, tag):
+                if tag in void or not self.stack:
+                    return
+                if self.stack.pop():
+                    self.card_depth -= 1
+
+        for url in ("/journal", "/places", "/homepage"):
+            html = self.client.get(url).get_data(as_text=True)
+            content = html.split('<div class="content-inner">', 1)[-1]
+            parser = Nesting()
+            parser.feed(content)
+            self.assertTrue(parser.save_outside, "%s has no save bar outside cards" % url)
+            self.assertFalse(parser.save_inside, "%s traps a save bar inside a card" % url)
+
+
 if __name__ == "__main__":
     unittest.main()

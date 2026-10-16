@@ -7,7 +7,7 @@
 
 <form method="post" action="{{ url_for('homepage_save') }}" enctype="multipart/form-data">
 
-  <div class="card">
+  <div class="card" data-cms-card="homepage.hero">
     <h2 style="margin-top:0;">Hero{% if not is_section_visible(h.hero) %} <span class="pill">Hidden on site</span>{% endif %}</h2>
     <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
       <input type="checkbox" name="hero_visible" value="on" style="width:auto;" {{ 'checked' if is_section_visible(h.hero) }}/> Show this page header on the live site
@@ -53,7 +53,7 @@
     </div>
   </div>
 
-  <div class="card">
+  <div class="card" data-cms-card="homepage.footer">
     <h2 style="margin-top:0;">Page footer{% if not is_section_visible(h.footer) %} <span class="pill">Hidden on site</span>{% endif %}</h2>
     <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
       <input type="checkbox" name="footer_visible" value="on" style="width:auto;" {{ 'checked' if is_section_visible(h.footer) }}/> Show footer on this page
@@ -64,9 +64,10 @@
   {% set seo = h.seo or {} %}
   {% set seo_placeholder_title = 'Emma Basic' %}
   {% set seo_placeholder_canonical = 'https://emmabasic.co.uk/' %}
+  {% set seo_card_id = 'homepage.seo' %}
   {% include '_seo_fields.html' %}
 
-  <div class="card">
+  <div class="card" data-cms-card="homepage.banner">
     <h2 style="margin-top:0;">Additive-free banner</h2>
     <label>Statement</label>
     <textarea name="banner_text" rows="2">{{ h.banner.text }}</textarea>
@@ -74,7 +75,7 @@
     <input type="text" name="banner_tag" value="{{ h.banner.tag }}"/>
   </div>
 
-  <div class="card">
+  <div class="card" data-cms-card="homepage.founder">
     <h2 style="margin-top:0;">Founder narrative</h2>
     <label>Founder image</label>
     <div class="img-field">
@@ -90,7 +91,7 @@
     <textarea name="founder_paragraphs" rows="10">{{ h.founder.paragraphs | join('\n\n') }}</textarea>
   </div>
 
-  <div class="card">
+  <div class="card" data-cms-card="homepage.comparison">
     <h2 style="margin-top:0;">"Flip the pack" comparison</h2>
     <div class="row">
       <div><label>Heading line 1</label><input type="text" name="shelf_headingLine1" value="{{ h.shelfTest.headingLine1 }}"/></div>
@@ -110,7 +111,7 @@
     </div>
   </div>
 
-  <div class="card">
+  <div class="card" data-cms-card="homepage.lifestyle">
     <h2 style="margin-top:0;">Lifestyle grid</h2>
     <div class="row">
       <div><label>Heading line 1</label><input type="text" name="life_headingLine1" value="{{ h.lifestyle.headingLine1 }}"/></div>
@@ -165,7 +166,7 @@
   {% set li = s.linkedin or {} %}
   {% set fb = s.facebook or {} %}
   {% set x = s.x or {} %}
-  <div class="card">
+  <div class="card" data-cms-card="homepage.social">
     <h2 style="margin-top:0;">Social media</h2>
     <p class="sub" style="margin-top:0;">This sits under The Grit on the homepage. Instagram, Facebook, and X can show a live public feed. LinkedIn does not allow a full company feed on other websites — paste individual post links instead.</p>
     <label style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">

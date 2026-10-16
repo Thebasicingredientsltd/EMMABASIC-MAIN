@@ -1,5 +1,5 @@
 {% set underlink = underlink or {} %}
-<div class="card">
+<div class="card" data-cms-card="{{ active }}.underlink">
   <h2 style="margin-top:0;">{{ underlink_heading }}{% if underlink.hide %} <span class="pill">Hidden on site</span>{% endif %}</h2>
   <p class="field-help">{{ underlink_help }}</p>
   <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">

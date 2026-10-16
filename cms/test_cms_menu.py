@@ -1,18 +1,25 @@
 """CMS sidebar groups: pick which page sits under which menu.
 
-Nested groups start collapsed. The group that contains the page you are
-on opens so you can still see where you are.
+Nested page groups start collapsed. The group that contains the page you
+are on opens so you can still see where you are. Section headers (Main
+menu, Other pages, Tools) stay expanded so every page is one click away.
 
 Run with:  python test_cms_menu.py
 """
 
 import os
+import re
 import sys
 import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from app import app, cms_sidebar_tree, load_site, save_data  # noqa: E402
+
+
+def _sidebar(html):
+    match = re.search(r'<nav class="sidebar-nav">(.*?)</nav>', html, re.S)
+    return match.group(1) if match else html
 
 
 class CmsMenuTests(unittest.TestCase):
@@ -91,3 +98,39 @@ class CmsMenuTests(unittest.TestCase):
         self.assertEqual([c["endpoint"] for c in catalog["children"]], ["matcha"])
         self.assertFalse(catalog["open"])
         self.assertFalse(any(n["endpoint"] == "story" for n in tree["pages"]))
+
+    def test_sidebar_lists_pages_without_collapsing_menu_groups(self):
+        html = self.client.get("/journal").get_data(as_text=True)
+        sidebar = _sidebar(html)
+        self.assertNotIn('class="nav-section"', sidebar)
+        self.assertIn("Field Notes", sidebar)
+        self.assertIn("Our Products", sidebar)
+        self.assertIn("Find us", sidebar)
+        self.assertIn(">Main menu<", sidebar)
+        self.assertIn(">Other pages<", sidebar)
+        self.assertIn(">Tools<", sidebar)
+
+    def test_nested_group_stays_collapsed_when_another_page_is_open(self):
+        with app.app_context():
+            data = dict(load_site())
+            data["cmsMenu"] = {"parents": {"story": "people"}}
+            save_data("site", data)
+
+        html = self.client.get("/catalog").get_data(as_text=True)
+        self.assertIn('class="nav-group"', html)
+        self.assertNotIn('class="nav-group" open', html)
+
+    def test_nested_page_opens_its_parent_group(self):
+        with app.app_context():
+            data = dict(load_site())
+            data["cmsMenu"] = {"parents": {"story": "people"}}
+            save_data("site", data)
+
+        html = self.client.get("/story").get_data(as_text=True)
+        self.assertIn('class="nav-group" open', html)
+        self.assertNotIn('class="nav-section"', _sidebar(html))
+
+    def test_phone_hamburger_collapses_nested_page_groups_only(self):
+        html = self.client.get("/").get_data(as_text=True)
+        self.assertIn('querySelectorAll("details.nav-group")', html)
+        self.assertNotIn("details.nav-section", html)

@@ -12,7 +12,7 @@
 {% set hero = hero or {} %}
 {% set footer = footer or {} %}
 <form method="post" action="{{ url_for('journal_hero_save') }}" enctype="multipart/form-data" style="margin-bottom:28px;">
-  <div class="card">
+  <div class="card" data-cms-card="journal.header">
     <h2 style="margin-top:0;">Page header — Field Notes{% if not is_section_visible(hero) %} <span class="pill">Hidden on site</span>{% endif %}</h2>
     <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
       <input type="checkbox" name="hero_visible" value="on" style="width:auto;" {{ 'checked' if is_section_visible(hero) }}/> Show this page header on the live site
@@ -32,24 +32,26 @@
     </div>
     <label>Subtitle</label>
     <textarea name="hero_subtitle" rows="2">{{ hero.subtitle or '' }}</textarea>
-    <div style="margin-top:18px; padding-top:16px; border-top:1px solid var(--rule);">
-      <h2 style="margin:0 0 8px;">Page footer{% if not is_section_visible(footer) %} <span class="pill">Hidden on site</span>{% endif %}</h2>
-      <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
-        <input type="checkbox" name="footer_visible" value="on" style="width:auto;" {{ 'checked' if is_section_visible(footer) }}/> Show footer on this page
-      </label>
-      <p class="field-help">The site footer at the bottom of Field Notes only. Other pages keep theirs.</p>
-    </div>
+  </div>
+  <div class="card" data-cms-card="journal.footer">
+    <h2 style="margin-top:0;">Page footer{% if not is_section_visible(footer) %} <span class="pill">Hidden on site</span>{% endif %}</h2>
+    <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
+      <input type="checkbox" name="footer_visible" value="on" style="width:auto;" {{ 'checked' if is_section_visible(footer) }}/> Show footer on this page
+    </label>
+    <p class="field-help">The site footer at the bottom of Field Notes only. Other pages keep theirs.</p>
   </div>
   {% set seo = page_seo or {} %}
   {% set seo_placeholder_title = 'Field Notes — Emma Basic' %}
   {% set seo_placeholder_canonical = 'https://emmabasic.co.uk/Journal.html' %}
+  {% set seo_card_id = 'journal.seo' %}
   {% include '_seo_fields.html' %}
   <div class="actions-bar save-bar">
     <button class="btn" type="submit">Save Field Notes headline</button>
   </div>
 </form>
 
-<div class="card">
+<div class="card" data-cms-card="journal.posts">
+  <h2 style="margin-top:0;">Posts</h2>
   {% if posts %}
   <p class="field-help" style="margin:0 0 10px;">Drag the <span aria-hidden="true">⠿</span> handle to change which article appears first on Field Notes. The page updates as soon as you drop. New posts land in date order (earliest first) unless you move them.</p>
   <div class="eb-sortable" data-kind="posts" data-url="{{ url_for('journal_reorder') }}">

@@ -5,7 +5,7 @@
 {% set seo_img = seo.image or '' %}
 {% set seo_field_id = (seo_id_prefix ~ '_') if seo_id_prefix else '' %}
 {% set seo_preview = url_for('site_assets', filename=seo_img[7:]) if seo_img.startswith('assets/') else seo_img %}
-<div class="card">
+<div class="card"{% if seo_card_id %} data-cms-card="{{ seo_card_id }}"{% endif %}>
   <h2 style="margin-top:0;">Search &amp; sharing (SEO)</h2>
   <p class="field-help">This is what Google and WhatsApp/Facebook show when someone finds or shares this page — including the extra links under your homepage in Google (sitelinks). Leave a field blank to use the usual page headline and web address.</p>
   {% if seo_extra_help %}

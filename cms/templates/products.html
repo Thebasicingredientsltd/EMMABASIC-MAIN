@@ -9,7 +9,8 @@
   <a class="btn" href="{{ url_for('product_new') }}">+ New product</a>
 </div>
 
-<div class="card">
+<div class="card" data-cms-card="products.rail">
+  <h2 style="margin-top:0;">Homepage rail</h2>
   {% for p in products %}
   <div class="list-item">
     {% if p.image %}
