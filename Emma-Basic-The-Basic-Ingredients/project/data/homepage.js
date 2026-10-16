@@ -162,7 +162,7 @@ window.EB_HOME = {
     }
   },
   "footer": {
-    "visible": false
+    "visible": true
   },
   "seo": {
     "title": "Emma Basic",
