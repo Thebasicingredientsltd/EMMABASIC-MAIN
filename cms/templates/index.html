@@ -5,6 +5,13 @@
 <p class="sub">Edit your website content, then publish to GitHub when you're ready.</p>
 
 <div class="dash-cards">
+  <a href="{{ url_for('homepage') }}"><div class="card">
+    <div class="dash-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11 12 4l8 7"/><path d="M6 10v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-9"/></svg>
+    </div>
+    <div class="dash-title">Homepage</div>
+    <div class="muted">Hero, founder, lifestyle</div>
+  </div></a>
   <a href="{{ url_for('catalog') }}"><div class="card">
     <div class="dash-icon">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M4 5v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V5M9 10h6"/></svg>
@@ -12,26 +19,12 @@
     <div class="dash-title">Our Products</div>
     <div class="muted">The full product catalog</div>
   </div></a>
-  <a href="{{ url_for('products') }}"><div class="card">
-    <div class="dash-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="4" height="12" rx="1"/><rect x="10" y="6" width="4" height="12" rx="1"/><rect x="17" y="6" width="4" height="12" rx="1"/></svg>
-    </div>
-    <div class="dash-title">Homepage rail</div>
-    <div class="muted">Featured products on the home page</div>
-  </div></a>
   <a href="{{ url_for('journal') }}"><div class="card">
     <div class="dash-icon">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
     </div>
     <div class="dash-title">Field Notes</div>
     <div class="muted">Field Notes / Journal</div>
-  </div></a>
-  <a href="{{ url_for('homepage') }}"><div class="card">
-    <div class="dash-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11 12 4l8 7"/><path d="M6 10v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-9"/></svg>
-    </div>
-    <div class="dash-title">Homepage</div>
-    <div class="muted">Hero, founder, lifestyle</div>
   </div></a>
   <a href="{{ url_for('people') }}"><div class="card">
     <div class="dash-icon">
@@ -52,7 +45,7 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a1 1 0 0 1 1-1h10l5 5v10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M15 4v5h5"/></svg>
     </div>
     <div class="dash-title">Our Story</div>
-    <div class="muted">Headline for the story page</div>
+    <div class="muted">Headline and in-the-wild photos</div>
   </div></a>
   <a href="{{ url_for('company') }}"><div class="card">
     <div class="dash-icon">
@@ -67,6 +60,20 @@
     </div>
     <div class="dash-title">Matcha Lab</div>
     <div class="muted">Matcha Lab landing page</div>
+  </div></a>
+  <a href="{{ url_for('products') }}"><div class="card">
+    <div class="dash-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="4" height="12" rx="1"/><rect x="10" y="6" width="4" height="12" rx="1"/><rect x="17" y="6" width="4" height="12" rx="1"/></svg>
+    </div>
+    <div class="dash-title">Homepage rail</div>
+    <div class="muted">Featured products on the home page</div>
+  </div></a>
+  <a href="{{ url_for('cms_menu') }}"><div class="card">
+    <div class="dash-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+    </div>
+    <div class="dash-title">CMS menu</div>
+    <div class="muted">Choose which pages sit under which menu</div>
   </div></a>
   <a href="{{ url_for('maintenance_page') }}"><div class="card">
     <div class="dash-icon">

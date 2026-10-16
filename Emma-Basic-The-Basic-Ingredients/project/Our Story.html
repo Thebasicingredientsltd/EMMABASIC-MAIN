@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <!--cms-gate-start-->
-<script src="data/site.js?v=20260929091821024"></script>
+<script src="data/site.js?v=20261016100851612"></script>
 <script src="components/maintenance.js?v=1"></script>
 <!--cms-gate-end-->
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -54,7 +54,7 @@
 
 <!-- CMS-managed content -->
 <script src="data/homepage.js?v=20261007084032027"></script>
-<script src="data/story.js?v=20261005100458668"></script>
+<script src="data/story.js?v=20261016100851989"></script>
 <script src="components/seo.js" data-eb-seo="story"></script>
 
 <script type="text/babel" src="components/Placeholder.jsx"></script>
@@ -226,6 +226,7 @@ function TeamPhotoGallery() {
   const gallery = (window.EB_STORY && window.EB_STORY.gallery) || {};
   const heading = gallery.heading || "The team,";
   const headingItalic = gallery.headingItalic || "in the wild.";
+  const photos = Array.isArray(gallery.photos) ? gallery.photos.filter(Boolean) : TEAM_PHOTOS;
   return (
     <section style={{
       background: "var(--paper)",
@@ -253,8 +254,8 @@ function TeamPhotoGallery() {
         <div style={{
           columns: "3 280px", columnGap: "clamp(10px, 1.2vw, 16px)",
         }} className="eb-team-gallery">
-          {TEAM_PHOTOS.map((src, i) => (
-            <GalleryThumb key={src} src={src} index={i} />
+          {photos.map((src, i) => (
+            <GalleryThumb key={src + "-" + i} src={src} index={i} />
           ))}
         </div>
       </div>
@@ -285,6 +286,9 @@ function GalleryThumb({ src, index }) {
     >
       <img
         src={src}
+        alt=""
+        data-cms-key="story"
+        data-cms-path={"gallery.photos[" + index + "]"}
         style={{ width: "100%", display: "block" }}
       />
     </div>

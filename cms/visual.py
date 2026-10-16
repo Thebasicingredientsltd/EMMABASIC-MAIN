@@ -29,21 +29,6 @@ SITE_PAGES = [
         ],
     },
     {
-        "id": "people",
-        "file": "People & Places.html",
-        "label": "People & Places",
-        "data_key": "people",
-        "sections": [
-            {"id": "hero", "path": "hero.visible", "label": "Page header"},
-            {"id": "footer", "path": "footer.visible", "label": "Page footer"},
-            {"id": "founder", "path": "founder.visible", "label": "Founder photo & story"},
-            {"id": "team", "path": "team.visible", "label": "Team"},
-            {"id": "intro", "path": "intro.visible", "label": "Who we are"},
-            {"id": "services", "path": "services.visible", "label": "What we offer"},
-            {"id": "contact", "path": "contact.visible", "label": "Contact"},
-        ],
-    },
-    {
         "id": "products",
         "file": "Our Products.html",
         "label": "Our Products",
@@ -64,6 +49,31 @@ SITE_PAGES = [
         ],
     },
     {
+        "id": "people",
+        "file": "People & Places.html",
+        "label": "People & Places",
+        "data_key": "people",
+        "sections": [
+            {"id": "hero", "path": "hero.visible", "label": "Page header"},
+            {"id": "footer", "path": "footer.visible", "label": "Page footer"},
+            {"id": "founder", "path": "founder.visible", "label": "Founder photo & story"},
+            {"id": "team", "path": "team.visible", "label": "Team"},
+            {"id": "intro", "path": "intro.visible", "label": "Who we are"},
+            {"id": "services", "path": "services.visible", "label": "What we offer"},
+            {"id": "contact", "path": "contact.visible", "label": "Contact"},
+        ],
+    },
+    {
+        "id": "places",
+        "file": "Places.html",
+        "label": "Find us",
+        "data_key": "places",
+        "sections": [
+            {"id": "hero", "path": "hero.visible", "label": "Page header"},
+            {"id": "footer", "path": "footer.visible", "label": "Page footer"},
+        ],
+    },
+    {
         "id": "distributor",
         "file": "Places.html",
         "label": "Become a Distributor",
@@ -73,16 +83,6 @@ SITE_PAGES = [
             {"id": "otherWays", "path": "distributor.otherWays.visible", "label": "Other ways to receive"},
             {"id": "sheetFooter", "path": "distributor.sheetFooter.visible", "label": "Guide footer line"},
             {"id": "footer", "path": "distributorFooter.visible", "label": "Page footer"},
-        ],
-    },
-    {
-        "id": "places",
-        "file": "Places.html",
-        "label": "Where to find our products",
-        "data_key": "places",
-        "sections": [
-            {"id": "hero", "path": "hero.visible", "label": "Page header"},
-            {"id": "footer", "path": "footer.visible", "label": "Page footer"},
         ],
     },
     {

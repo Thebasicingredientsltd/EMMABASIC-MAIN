@@ -450,13 +450,91 @@ CMS_SITE_PAGES = [
     {"endpoint": "homepage", "label": "Homepage", "active": "homepage"},
     {"endpoint": "catalog", "label": "Our Products", "active": "catalog"},
     {"endpoint": "journal", "label": "Field Notes", "active": "journal"},
-    {"endpoint": "story", "label": "Our Story", "active": "story"},
     {"endpoint": "people", "label": "People & Places", "active": "people"},
     {"endpoint": "places", "label": "Find us", "active": "places"},
+    {"endpoint": "story", "label": "Our Story", "active": "story"},
     {"endpoint": "company", "label": "The Basic Ingredients Ltd", "active": "company"},
     {"endpoint": "matcha", "label": "Matcha Lab", "active": "matcha"},
 ]
+CMS_TOOL_PAGES = [
+    {"endpoint": "products", "label": "Homepage rail", "active": "products"},
+    {"endpoint": "visual_editor", "label": "Visual editor", "active": "visual"},
+    {"endpoint": "maintenance_page", "label": "Under construction", "active": "maintenance"},
+]
 app.jinja_env.globals["cms_site_pages"] = CMS_SITE_PAGES
+
+
+def cms_assignable_items():
+    """Website pages and tools that can sit at the top of the CMS menu or under another page."""
+    return list(CMS_SITE_PAGES) + list(CMS_TOOL_PAGES)
+
+
+def _cms_menu_parents():
+    data = load_site()
+    menu = data.get("cmsMenu") if isinstance(data.get("cmsMenu"), dict) else {}
+    raw = menu.get("parents") if isinstance(menu.get("parents"), dict) else {}
+    return {str(key): str(val) for key, val in raw.items() if key and val}
+
+
+def _cleaned_cms_parents(form):
+    """One level of nesting only: a page sits at the top, or directly under a top-level menu."""
+    valid = {item["endpoint"] for item in cms_assignable_items()}
+    raw = {}
+    for item in cms_assignable_items():
+        endpoint = item["endpoint"]
+        parent = (form.get("parent_" + endpoint) or "").strip()
+        if parent in valid and parent != endpoint:
+            raw[endpoint] = parent
+    nested = set(raw)
+    cleaned = {}
+    for child, parent in raw.items():
+        if parent in nested:
+            continue
+        cleaned[child] = parent
+    return cleaned
+
+
+def cms_sidebar_tree(active=None):
+    """Build the CMS sidebar: top-level menus with optional nested pages.
+
+    Nested groups start collapsed. The group that contains the current screen
+    is opened so you can still see where you are.
+    """
+    items = cms_assignable_items()
+    valid = {item["endpoint"] for item in items}
+    raw = _cms_menu_parents()
+    nested = set()
+    children_of = {endpoint: [] for endpoint in valid}
+    for item in items:
+        endpoint = item["endpoint"]
+        parent = raw.get(endpoint)
+        if parent not in valid or parent == endpoint:
+            continue
+        if raw.get(parent) in valid:
+            continue
+        children_of[parent].append(item)
+        nested.add(endpoint)
+
+    def nodes_from(source):
+        nodes = []
+        for item in source:
+            if item["endpoint"] in nested:
+                continue
+            kids = children_of.get(item["endpoint"]) or []
+            node = dict(item)
+            node["children"] = kids
+            acts = [item["active"]] + [kid["active"] for kid in kids]
+            node["open"] = bool(active) and active in acts and bool(kids)
+            nodes.append(node)
+        return nodes
+
+    return {
+        "pages": nodes_from(CMS_SITE_PAGES),
+        "tools": nodes_from(CMS_TOOL_PAGES),
+    }
+
+
+app.jinja_env.globals["cms_sidebar_tree"] = cms_sidebar_tree
 
 
 # Scalar text fields exposed by the bulk table editor (catalog_table.html).
@@ -1652,14 +1730,17 @@ def places_import_confirm():
 
 @app.route("/story")
 def story():
+    d = load_data("story")
+    photos = ((d.get("gallery") or {}).get("photos") or [])
     return render_template(
         "simple_page.html",
         page_title="Our Story",
         save_endpoint="story_save",
         visual_page="story",
         active="story",
-        d=load_data("story"),
-        extra="The founder story below the headline is edited on the Homepage. The photo gallery heading is on this page.",
+        d=d,
+        gallery_photos=gallery_with_sizes({"images": photos}),
+        extra="The founder story below the headline is edited on the Homepage. The photo gallery (The team, in the wild) is further down this page — heading and photos.",
     )
 
 
@@ -1671,6 +1752,10 @@ def story_save():
     gallery = data.setdefault("gallery", {})
     gallery["heading"] = request.form.get("gallery_heading", "").strip()
     gallery["headingItalic"] = request.form.get("gallery_headingItalic", "").strip()
+    if request.form.get("gallery_photos_editor"):
+        gallery["photos"] = [
+            pth.strip() for pth in request.form.getlist("gallery_path") if pth.strip()
+        ]
     _apply_seo_form(data)
     save_data("story", data)
     flash("Our Story content saved.", "ok")
@@ -1853,6 +1938,25 @@ def maintenance_off():
     save_data("site", data)
     flash("The website is open to visitors again.", "ok")
     return redirect(request.referrer or url_for("index"))
+
+
+@app.route("/cms-menu")
+def cms_menu():
+    parents = _cms_menu_parents()
+    items = cms_assignable_items()
+    rows = [{"item": item, "parent": parents.get(item["endpoint"], "")} for item in items]
+    return render_template("cms_menu.html", rows=rows, items=items)
+
+
+@app.route("/cms-menu/save", methods=["POST"])
+def cms_menu_save():
+    data = load_site()
+    if not isinstance(data, dict):
+        data = {}
+    data["cmsMenu"] = {"parents": _cleaned_cms_parents(request.form)}
+    save_data("site", data)
+    flash("CMS menu saved. Nested pages are collapsed until you open them.", "ok")
+    return redirect(url_for("cms_menu"))
 
 
 # ---------------------------------------------------------------------------

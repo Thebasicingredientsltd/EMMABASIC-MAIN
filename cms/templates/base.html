@@ -85,6 +85,28 @@
 
   .sidebar-nav { display: flex; flex-direction: column; gap: 2px; overflow-y: auto; }
   .nav-label { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-40); padding: 12px 12px 6px; }
+  .nav-group { margin: 0; }
+  .nav-group > summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    cursor: pointer;
+    border-radius: var(--r-sm);
+  }
+  .nav-group > summary::-webkit-details-marker { display: none; }
+  .nav-group > summary::marker { content: ""; }
+  .nav-group > summary:hover { background: var(--paper-shade); }
+  .nav-chevron {
+    width: 22px; height: 28px; flex-shrink: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    color: var(--ink-40);
+    transition: transform var(--dur) var(--ease-out), color var(--dur) var(--ease-out);
+  }
+  .nav-group[open] > summary .nav-chevron { transform: rotate(90deg); color: var(--ink); }
+  .nav-group > summary > a { flex: 1; min-width: 0; }
+  .nav-group-items { display: flex; flex-direction: column; gap: 2px; padding: 2px 0 6px 18px; }
+  .sidebar-nav a.nav-child { font-size: 13px; padding: 7px 12px; }
   .sidebar-nav a {
     position: relative;
     display: flex; align-items: center; gap: 11px;
@@ -367,6 +389,36 @@
       <span class="brand-sub">CMS</span>
     </span>
   </a>
+  {% set nav_tree = cms_sidebar_tree(active|default(none)) %}
+  {% macro nav_page_svg() %}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/><path d="M14 3v5h5"/></svg>
+  {% endmacro %}
+  {% macro nav_item_link(item, extra='') %}
+    <a href="{{ url_for(item.endpoint) }}" class="{{ extra }} {{ 'active' if active==item.active }}">
+      {{ nav_page_svg() }}
+      <span class="lbl">{{ item.label }}</span>
+      {% if item.active == 'maintenance' and site_maintenance and site_maintenance.enabled %}<span class="nav-dot" aria-hidden="true"></span>{% endif %}
+    </a>
+  {% endmacro %}
+  {% macro nav_branch(node) %}
+    {% if node.children %}
+    <details class="nav-group"{% if node.open %} open{% endif %}>
+      <summary>
+        <span class="nav-chevron" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+        </span>
+        {{ nav_item_link(node) }}
+      </summary>
+      <div class="nav-group-items">
+        {% for child in node.children %}
+        {{ nav_item_link(child, 'nav-child') }}
+        {% endfor %}
+      </div>
+    </details>
+    {% else %}
+    {{ nav_item_link(node) }}
+    {% endif %}
+  {% endmacro %}
   <nav class="sidebar-nav">
     <div class="nav-label">CRM</div>
     <a href="{{ url_for('index') }}" class="{{ 'active' if active=='home' }}">
@@ -374,25 +426,16 @@
       <span class="lbl">Dashboard</span>
     </a>
     <div class="nav-label">Website pages</div>
-    {% for p in cms_site_pages %}
-    <a href="{{ url_for(p.endpoint) }}" class="{{ 'active' if active==p.active }}">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/><path d="M14 3v5h5"/></svg>
-      <span class="lbl">{{ p.label }}</span>
-    </a>
+    {% for node in nav_tree.pages %}
+    {{ nav_branch(node) }}
     {% endfor %}
     <div class="nav-label">Tools</div>
-    <a href="{{ url_for('products') }}" class="{{ 'active' if active=='products' }}">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="4" height="12" rx="1"/><rect x="10" y="6" width="4" height="12" rx="1"/><rect x="17" y="6" width="4" height="12" rx="1"/></svg>
-      <span class="lbl">Home Rail</span>
-    </a>
-    <a href="{{ url_for('visual_editor') }}" class="{{ 'active' if active=='visual' }}">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>
-      <span class="lbl">Visual editor</span>
-    </a>
-    <a href="{{ url_for('maintenance_page') }}" class="{{ 'active' if active=='maintenance' }}">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18"/><path d="M10.6 5.2A8.9 8.9 0 0 1 12 5c5 0 9 4.5 9 7 0 .8-.5 1.9-1.4 3"/><path d="M6.2 7.4C3.9 8.9 3 10.9 3 12c0 2.5 4 7 9 7 1.6 0 3-.4 4.2-1.1"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>
-      <span class="lbl">Under construction</span>
-      {% if site_maintenance and site_maintenance.enabled %}<span class="nav-dot" aria-hidden="true"></span>{% endif %}
+    {% for node in nav_tree.tools %}
+    {{ nav_branch(node) }}
+    {% endfor %}
+    <a href="{{ url_for('cms_menu') }}" class="{{ 'active' if active=='cms_menu' }}">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+      <span class="lbl">CMS menu</span>
     </a>
   </nav>
   <div class="sidebar-foot">
@@ -447,8 +490,15 @@
       return window.matchMedia && window.matchMedia("(max-width: 900px)").matches;
     }
 
+    function collapseNavGroups() {
+      sidebar.querySelectorAll("details.nav-group").forEach(function (el) {
+        el.open = false;
+      });
+    }
+
     function setOpen(open) {
       if (!isPhone()) open = false;
+      if (open) collapseNavGroups();
       document.body.classList.toggle("cms-nav-open", open);
       btn.setAttribute("aria-expanded", open ? "true" : "false");
       btn.setAttribute("aria-label", open ? "Close menu" : "Open menu");

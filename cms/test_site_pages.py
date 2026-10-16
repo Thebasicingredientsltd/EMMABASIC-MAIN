@@ -16,9 +16,9 @@ EXPECTED = [
     ("/homepage", "Homepage"),
     ("/catalog", "Our Products"),
     ("/journal", "Field Notes"),
-    ("/story", "Our Story"),
     ("/people", "People & Places"),
     ("/places", "Find us"),
+    ("/story", "Our Story"),
     ("/company", "The Basic Ingredients Ltd"),
     ("/matcha", "Matcha Lab"),
 ]
@@ -31,8 +31,7 @@ class SitePagesSidebarTests(unittest.TestCase):
 
     def test_registry_covers_every_public_page(self):
         labels = [p["label"] for p in CMS_SITE_PAGES]
-        for _url, label in EXPECTED:
-            self.assertIn(label, labels)
+        self.assertEqual(labels, [label for _url, label in EXPECTED])
 
     def test_each_page_loads_and_appears_in_the_sidebar(self):
         for url, label in EXPECTED:

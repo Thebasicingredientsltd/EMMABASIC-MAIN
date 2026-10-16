@@ -50,6 +50,12 @@
       <div><label>Second line (italic)</label><input type="text" name="gallery_headingItalic" value="{{ gallery.headingItalic or '' }}"/></div>
     </div>
   </div>
+  <div class="card" id="in-the-wild">
+    <h2 style="margin-top:0;">Photos — in the wild</h2>
+    <p class="field-help">These are the photos at the bottom of Our Story. Drag a photo onto a box (or click it) to replace it. Add or remove as many as you like, then save.</p>
+    {% set gallery_photos = gallery_photos if gallery_photos is defined else [] %}
+    {% include '_gallery_editor.html' %}
+  </div>
   {% endif %}
   <div class="actions-bar save-bar">
     <button class="btn" type="submit">Save {{ page_title }}</button>
