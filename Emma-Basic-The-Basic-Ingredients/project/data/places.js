@@ -1352,38 +1352,6 @@ window.EB_PLACES = {
     "visible": true,
     "photos": [
       {
-        "image": "assets/places-gallery/tasting-stand.jpg",
-        "caption": "Tasting — trade show"
-      },
-      {
-        "image": "assets/places-gallery/market-shelves.jpg",
-        "caption": "Market stall — the range"
-      },
-      {
-        "image": "assets/places-gallery/stand-build.jpg",
-        "caption": "Setting up — trade show"
-      },
-      {
-        "image": "assets/places-gallery/showroom-table.jpg",
-        "caption": "Showroom — tasting table"
-      },
-      {
-        "image": "assets/places-gallery/festival-sampling.jpg",
-        "caption": "Festival — sampling"
-      },
-      {
-        "image": "assets/places-gallery/trade-show-shelves.jpg",
-        "caption": "Trade show — shelves"
-      },
-      {
-        "image": "assets/places-gallery/sampling-counter.jpg",
-        "caption": "Sampling counter"
-      },
-      {
-        "image": "assets/places-gallery/stockist-visit.jpg",
-        "caption": "Stockist visit"
-      },
-      {
         "image": "assets/uploads/20260401_113757000_iOS-20261015-172926.jpg",
         "caption": "Selfridges Food Court"
       },
@@ -1398,8 +1366,16 @@ window.EB_PLACES = {
         "image": "assets/uploads/20251016_191633000_iOS-20261015-173004.jpg"
       },
       {
-        "image": "assets/uploads/133DSC08623-20261015-174347.jpg",
-        "caption": "Lunch 2026"
+        "image": "assets/uploads/20251016_191449000_iOS-20261016-084333.jpg"
+      },
+      {
+        "image": "assets/uploads/20251016_191458000_iOS-20261016-084340.jpg"
+      },
+      {
+        "image": "assets/uploads/20251214_124840019_iOS-20261016-084353.jpg"
+      },
+      {
+        "image": "assets/uploads/20240110_142905324_iOS-20261016-084512.jpg"
       }
     ]
   },
