@@ -36,7 +36,7 @@ window.EB_STORY = {
     ]
   },
   "footer": {
-    "visible": true
+    "visible": false
   },
   "seo": {
     "title": "",
@@ -44,6 +44,6 @@ window.EB_STORY = {
     "canonical": "",
     "image": "",
     "ogType": "website",
-    "noindex": false
+    "noindex": true
   }
 };

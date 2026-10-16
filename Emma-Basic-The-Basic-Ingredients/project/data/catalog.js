@@ -1324,6 +1324,47 @@ window.EB_CATALOG = {
             ]
           },
           "updatedAt": "2026-09-28T16:32:37+00:00"
+        },
+        {
+          "id": "W003",
+          "name": "Wasabi Powder 1kg",
+          "japanese": "",
+          "origin": "",
+          "tone": "warm",
+          "tagline": "20% Real wasabi",
+          "amazon": "https://www.amazon.co.uk/dp/B08NMR6C6S",
+          "image": "assets/uploads/W003_-_Hero_01-20261015-103644.jpg",
+          "badges": [
+            "20% Real wasabi",
+            "quick to prepare"
+          ],
+          "pairings": [],
+          "sellingPoints": [
+            "20% WASABI JAPONICA: The real wasabi. Wasabi Japonica grows in naural flowing stream beds. Wasabi is a rare and precious root plant. Emma Basic Wasabi contains 20% Wasabi Japonica, much higher than most other choices in the market.",
+            "100% NATURAL: No colouring or additives. Emma Basic guarantees no additives.",
+            "PUNGENT : Classic with sashimi & fish, beautiful with beef.",
+            "QUICK TO PREPARE: Simply mix with water to create wasabi paste. Can also add into your salad dressing.",
+            "SERVE WITH SOBA : Wasabi is commonly served with soba (Bucket Wheat Noodle) in Japan."
+          ],
+          "ingredients": "Horseradish, Wasabi Japonica (20%), MUSTARD, Spirulina, Turmeric",
+          "allergens": "MUSTARD",
+          "images": [
+            "assets/uploads/W003_-_Hero_01-20261015-103651.jpg",
+            "assets/uploads/B08NMR6C6S.PT01-20261015-103701.jpg",
+            "assets/uploads/B08NMR6C6S.PT02-20261015-103709.jpg"
+          ],
+          "nutrition": {
+            "serving": "per 100g",
+            "energy_kj": 1416,
+            "energy_kcal": 338,
+            "fat": 6,
+            "saturates": 0.6,
+            "carbohydrate": 58,
+            "sugars": 24,
+            "protein": 13,
+            "salt": 0.06
+          },
+          "updatedAt": "2026-10-15T10:42:24+00:00"
         }
       ]
     },
@@ -1858,6 +1899,28 @@ window.EB_CATALOG = {
             ]
           },
           "updatedAt": "2026-09-28T16:32:37+00:00"
+        },
+        {
+          "id": "V099",
+          "name": "Rice Paper",
+          "japanese": "",
+          "origin": "",
+          "tone": "warm",
+          "tagline": "",
+          "amazon": "",
+          "image": "assets/uploads/V099_-_Hero_01-20261015-102626.jpg",
+          "badges": [
+            "Comming Soon"
+          ],
+          "pairings": [],
+          "sellingPoints": [],
+          "ingredients": "Tapioca Starch, Rice, Salt",
+          "allergens": "",
+          "images": [
+            "assets/uploads/V099_-_Hero_01-20261015-103012.jpg",
+            "assets/uploads/v099_primary_back_2-20261015-103023.png"
+          ],
+          "updatedAt": "2026-10-15T10:30:39+00:00"
         }
       ]
     },

@@ -444,22 +444,78 @@ def is_section_visible(section):
 
 app.jinja_env.globals["is_section_visible"] = is_section_visible
 
-# Public website pages shown in the CRM sidebar. Tools (dashboard, home rail,
-# visual editor) stay outside this list.
+# Public website pages shown in the CRM sidebar, ordered the way a visitor
+# meets them: first the links in the site's own menu, then the pages reached
+# from the footer or from links inside other pages. Tools (dashboard, homepage
+# rail, visual editor, under construction) stay outside this list.
+#
+# `menu_label` is the wording the live menu uses, which is not always the CRM's
+# name for the page — test_cms_nav keeps the two in step with data/nav.js so
+# the CRM cannot drift from the site. `file` is the page it edits, `summary`
+# the content that lives on it.
 CMS_SITE_PAGES = [
-    {"endpoint": "homepage", "label": "Homepage", "active": "homepage"},
-    {"endpoint": "catalog", "label": "Our Products", "active": "catalog"},
-    {"endpoint": "journal", "label": "Field Notes", "active": "journal"},
-    {"endpoint": "people", "label": "People & Places", "active": "people"},
-    {"endpoint": "places", "label": "Find us", "active": "places"},
-    {"endpoint": "story", "label": "Our Story", "active": "story"},
-    {"endpoint": "company", "label": "The Basic Ingredients Ltd", "active": "company"},
-    {"endpoint": "matcha", "label": "Matcha Lab", "active": "matcha"},
+    {
+        "endpoint": "homepage", "label": "Homepage", "active": "homepage",
+        "icon": "home",
+        "file": "Emma Basic Homepage.html",
+        "summary": "Hero, additive-free banner, founder story, pack comparison, photo grid, social",
+    },
+    {
+        "endpoint": "catalog", "label": "Our Products", "active": "catalog",
+        "menu_label": "Products Without E-Numbers", "icon": "products",
+        "file": "Our Products.html",
+        "summary": "Every product, its label and nutrition data, and the page header",
+    },
+    {
+        "endpoint": "journal", "label": "Field Notes", "active": "journal",
+        "menu_label": "Field Notes", "icon": "journal",
+        "file": "Journal.html",
+        "summary": "Blog posts, their covers and the page header",
+    },
+    {
+        "endpoint": "people", "label": "People & Places", "active": "people",
+        "menu_label": "People", "icon": "people",
+        "file": "People & Places.html",
+        "summary": "Founder letter, the team, who we are, what we offer, contact",
+    },
+    {
+        "endpoint": "places", "label": "Find us", "active": "places",
+        "menu_label": "Find us", "icon": "places",
+        "file": "Places.html",
+        "summary": "Featured shops, the stockist map, how to order, photo gallery",
+    },
+    {
+        "endpoint": "story", "label": "Our Story", "active": "story",
+        "icon": "story",
+        "file": "Our Story.html",
+        "summary": "Headline and in-the-wild photos",
+    },
+    {
+        "endpoint": "company", "label": "The Basic Ingredients Ltd", "active": "company",
+        "icon": "company",
+        "file": "The Basic Ingredients.html",
+        "summary": "Opening headline, about, contact",
+    },
+    {
+        "endpoint": "matcha", "label": "Matcha Lab", "active": "matcha",
+        "icon": "matcha",
+        "file": "Matcha Lab.html",
+        "summary": "Page header for the Matcha Lab",
+    },
 ]
 CMS_TOOL_PAGES = [
-    {"endpoint": "products", "label": "Homepage rail", "active": "products"},
-    {"endpoint": "visual_editor", "label": "Visual editor", "active": "visual"},
-    {"endpoint": "maintenance_page", "label": "Under construction", "active": "maintenance"},
+    {
+        "endpoint": "products", "label": "Homepage rail", "active": "products",
+        "icon": "rail", "summary": "The featured product rail on the homepage",
+    },
+    {
+        "endpoint": "visual_editor", "label": "Visual editor", "active": "visual",
+        "icon": "visual", "summary": "Edit the website by clicking straight on the page",
+    },
+    {
+        "endpoint": "maintenance_page", "label": "Under construction", "active": "maintenance",
+        "icon": "maintenance", "summary": "Hide the website behind a holding page",
+    },
 ]
 app.jinja_env.globals["cms_site_pages"] = CMS_SITE_PAGES
 
@@ -492,6 +548,27 @@ def _cleaned_cms_parents(form):
             continue
         cleaned[child] = parent
     return cleaned
+
+
+def cms_page_groups():
+    """Split the page list the way the website is laid out.
+
+    The site's menu carries four links; everything else is reached from the
+    footer or from a link inside another page. Grouping the CRM the same way
+    means a page here can be matched to a page there without guesswork.
+    """
+    return [
+        {
+            "label": "Main menu",
+            "hint": "The links visitors see at the top of every page",
+            "pages": [p for p in CMS_SITE_PAGES if p.get("menu_label")],
+        },
+        {
+            "label": "Other pages",
+            "hint": "Reached from the footer and from links inside other pages",
+            "pages": [p for p in CMS_SITE_PAGES if not p.get("menu_label")],
+        },
+    ]
 
 
 def cms_sidebar_tree(active=None):
@@ -528,12 +605,26 @@ def cms_sidebar_tree(active=None):
             nodes.append(node)
         return nodes
 
+    page_nodes = nodes_from(CMS_SITE_PAGES)
+    by_endpoint = {node["endpoint"]: node for node in page_nodes}
+    groups = []
+    for group in cms_page_groups():
+        entry = dict(group)
+        entry["nodes"] = [
+            by_endpoint[page["endpoint"]]
+            for page in group["pages"]
+            if page["endpoint"] in by_endpoint
+        ]
+        groups.append(entry)
+
     return {
-        "pages": nodes_from(CMS_SITE_PAGES),
+        "pages": page_nodes,
         "tools": nodes_from(CMS_TOOL_PAGES),
+        "groups": groups,
     }
 
 
+app.jinja_env.globals["cms_page_groups"] = cms_page_groups
 app.jinja_env.globals["cms_sidebar_tree"] = cms_sidebar_tree
 
 
@@ -1465,6 +1556,10 @@ def places_save():
     # they are.
     if "shop_count" in request.form:
         _apply_legacy_shop_list(d)
+    # Same idea for the photo gallery: only a form that carries its fields
+    # may rewrite the album.
+    if "gallery_photo_count" in request.form:
+        _apply_gallery_form(d)
     _apply_seo_form(d)
 
     hq = d.setdefault("hq", {})
@@ -1480,6 +1575,37 @@ def places_save():
     save_data("places", d)
     flash("Shops saved.", "ok")
     return redirect(url_for("places"))
+
+
+def _apply_gallery_form(d):
+    """Photo gallery at the foot of the Find us page.
+
+    A photo is "present" only if its fields were submitted; removed photos
+    have no fields in the form and are skipped entirely.
+    """
+    gallery = d.setdefault("gallery", {})
+    gallery["heading"] = request.form.get("gallery_heading", "").strip()
+    gallery["headingItalic"] = request.form.get("gallery_headingItalic", "").strip()
+    gallery["intro"] = request.form.get("gallery_intro", "").strip()
+    gallery["hideHeading"] = form_checkbox("gallery_hideHeading")
+    gallery["visible"] = form_checkbox("gallery_visible")
+
+    photos = []
+    count = int(request.form.get("gallery_photo_count", "0") or "0")
+    for i in range(count):
+        text_key = "photo%d_image" % i
+        upload = request.files.get(text_key + "_file")
+        if text_key not in request.form and not (upload and upload.filename):
+            continue
+        image = resolve_image(text_key, "")
+        if not image:
+            continue
+        photo = {"image": image}
+        caption = request.form.get("photo%d_caption" % i, "").strip()
+        if caption:
+            photo["caption"] = caption
+        photos.append(photo)
+    gallery["photos"] = photos
 
 
 def _apply_legacy_shop_list(d):

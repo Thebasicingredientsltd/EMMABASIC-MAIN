@@ -1344,6 +1344,41 @@ window.EB_PLACES = {
       "lng": 0.09602
     }
   ],
+  "gallery": {
+    "heading": "Out in the",
+    "headingItalic": "wild.",
+    "intro": "Markets, trade shows and shop floors — where our shelves and our jars actually meet people.",
+    "hideHeading": false,
+    "visible": true,
+    "photos": [
+      {
+        "image": "assets/uploads/20260401_113757000_iOS-20261015-172926.jpg",
+        "caption": "Selfridges Food Court"
+      },
+      {
+        "image": "assets/uploads/20241207_153409341_iOS-20261015-172948.jpg",
+        "caption": "Stands out on the shelf"
+      },
+      {
+        "image": "assets/uploads/20251016_191551000_iOS-20261015-172954.jpg"
+      },
+      {
+        "image": "assets/uploads/20251016_191633000_iOS-20261015-173004.jpg"
+      },
+      {
+        "image": "assets/uploads/20251016_191449000_iOS-20261016-084333.jpg"
+      },
+      {
+        "image": "assets/uploads/20251016_191458000_iOS-20261016-084340.jpg"
+      },
+      {
+        "image": "assets/uploads/20251214_124840019_iOS-20261016-084353.jpg"
+      },
+      {
+        "image": "assets/uploads/20240110_142905324_iOS-20261016-084512.jpg"
+      }
+    ]
+  },
   "footer": {
     "visible": false
   },

@@ -129,22 +129,6 @@ window.EB_HOME = {
         "kind": "purity",
         "span": "tall",
         "position": "center center"
-      },
-      {
-        "image": "assets/homepage/gallery-1.jpg",
-        "label": "EMMA BASIC",
-        "tone": "warm",
-        "kind": "purity",
-        "span": "",
-        "position": "center center"
-      },
-      {
-        "image": "assets/homepage/gallery-2.jpg",
-        "label": "EMMA BASIC",
-        "tone": "warm",
-        "kind": "purity",
-        "span": "",
-        "position": "center center"
       }
     ]
   },

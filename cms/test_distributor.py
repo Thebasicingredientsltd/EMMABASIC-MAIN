@@ -9,10 +9,15 @@ import unittest
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from app import app, load_data, save_data  # noqa: E402
+from app import CMS_SITE_PAGES, app, load_data, save_data  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT = os.path.join(ROOT, "Emma-Basic-The-Basic-Ingredients", "project")
+
+
+def _places_summary():
+    """What the dashboard says the Find us card holds (one card, not two)."""
+    return next(p["summary"] for p in CMS_SITE_PAGES if p["endpoint"] == "places")
 
 
 class DistributorPageTests(unittest.TestCase):
@@ -54,7 +59,7 @@ class DistributorPageTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         html = response.get_data(as_text=True)
         self.assertIn("Find us", html)
-        self.assertIn("Shops, then how to order", html)
+        self.assertIn(_places_summary(), html)
         self.assertNotIn(">Become a Distributor<", html)
         self.assertNotIn('href="/distributor"', html)
 

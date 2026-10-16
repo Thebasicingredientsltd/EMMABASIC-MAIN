@@ -20,6 +20,25 @@ window.EB_JOURNAL = {
   },
   "posts": [
     {
+      "id": "V001Y-ginger-Secret",
+      "category": "Behind the Product",
+      "date": "08 July 2026",
+      "title": "The Sushi Ginger Secret. Nobody's Talking About It.",
+      "author": "Emma",
+      "excerpt": "Did you know most sushi ginger uses a legal loophole?",
+      "image": "assets/uploads/V001Y_-_PT02-20261007-075952.jpg",
+      "tone": "cool",
+      "featured": false,
+      "seo": {
+        "title": "",
+        "description": "",
+        "canonical": "",
+        "image": "",
+        "ogType": "article",
+        "noindex": false
+      }
+    },
+    {
       "id": "what-is-clean-label",
       "category": "Ingredient Stories",
       "date": "02 June 2018",
@@ -191,6 +210,25 @@ window.EB_JOURNAL = {
       }
     },
     {
+      "id": "Category Masters",
+      "category": "The Grit",
+      "date": "25 Sep 2026",
+      "title": "Category Masters",
+      "author": "Emma",
+      "excerpt": "Shopping isn't always a pleasure. Even shopping for holidays.",
+      "image": "assets/uploads/Emma_Basic_white_solid_background-20261007-082113.png",
+      "tone": "cool",
+      "featured": false,
+      "seo": {
+        "title": "",
+        "description": "",
+        "canonical": "",
+        "image": "",
+        "ogType": "article",
+        "noindex": false
+      }
+    },
+    {
       "id": "what-is-furikake",
       "category": "Ingredient Stories",
       "date": "01 Nov 2024",
@@ -297,26 +335,6 @@ window.EB_JOURNAL = {
       "featured": false
     },
     {
-      "id": "gyoza-technique",
-      "category": "Recipes",
-      "date": "10 Mar 2026",
-      "title": "The yaki-gyoza method. Steam-fry, not fry.",
-      "excerpt": "Hot oil, golden base, then water and a lid. Two minutes of steam finishes what the pan starts. Order matters.",
-      "image": "assets/uploads/Chicken-gyoza-journal-20260923-081628.jpg",
-      "tone": "warm",
-      "featured": false
-    },
-    {
-      "id": "tamari-vs-soy",
-      "category": "Ingredient Stories",
-      "date": "17 Mar 2026",
-      "title": "Tamari vs soy sauce. They are not the same thing.",
-      "excerpt": "One uses wheat. One doesn't. The difference in flavour is real, and once you know it, you can't un-taste it.",
-      "image": "assets/uploads/Soy-sauce-image-20260923-081605.jpg",
-      "tone": "warm",
-      "featured": false
-    },
-    {
       "id": "cold-run-furikake",
       "category": "The Grit",
       "date": "24 Mar 2026",
@@ -325,153 +343,15 @@ window.EB_JOURNAL = {
       "image": "assets/uploads/Nori-furikake-journal-20260923-081544.jpg",
       "tone": "ink",
       "featured": false
-    },
-    {
-      "id": "binchotan-kitchen",
-      "category": "Behind the Product",
-      "date": "01 Apr 2026",
-      "title": "Binchotan: 300 years of Japanese charcoal production.",
-      "excerpt": "We spent a day with a Wakayama producer. Here's what we learned about a process that hasn't changed since the Edo period.",
-      "image": "assets/uploads/Binochtan-water-filter-journal-20260923-081519.jpg",
-      "tone": "ink",
-      "featured": false
-    },
-    {
-      "id": "sushi-rice-ratio",
-      "category": "Recipes",
-      "date": "08 Apr 2026",
-      "title": "Koshihikari and the short-grain question. What the rice in your bowl actually is.",
-      "author": "Olivia",
-      "excerpt": "Most sushi rice in British kitchens is Italian. The difference between that and genuine short-grain Japonica is something you taste immediately — once you know what you're looking for.",
-      "image": "assets/uploads/Sushi-rice-journal-image-20260923-081451.avif",
-      "tone": "cool",
-      "featured": false,
-      "seo": {
-        "title": "",
-        "description": "",
-        "canonical": "",
-        "image": "",
-        "ogType": "article",
-        "noindex": false
-      }
-    },
-    {
-      "id": "matcha-preparation",
-      "category": "Ingredient Stories",
-      "date": "14 Apr 2026",
-      "title": "How to prepare matcha properly — and why most people don't.",
-      "author": "Olivia",
-      "excerpt": "The temperature of the water, the direction of the whisk, the age of the powder. Small things with large consequences.",
-      "image": "assets/uploads/Matcha-journal-image-20260923-081404.jpg",
-      "tone": "warm",
-      "featured": false,
-      "seo": {
-        "title": "",
-        "description": "",
-        "canonical": "",
-        "image": "",
-        "ogType": "article",
-        "noindex": false
-      }
-    },
-    {
-      "id": "V001Y-ginger-Secret",
-      "category": "Behind the Product",
-      "date": "08 July 2026",
-      "title": "The Sushi Ginger Secret. Nobody's Talking About It.",
-      "author": "Emma",
-      "excerpt": "Did you know most sushi ginger uses a legal loophole?",
-      "image": "assets/uploads/V001Y_-_PT02-20261007-075952.jpg",
-      "tone": "cool",
-      "featured": false,
-      "seo": {
-        "title": "",
-        "description": "",
-        "canonical": "",
-        "image": "",
-        "ogType": "article",
-        "noindex": false
-      }
-    },
-    {
-      "id": "Category Masters",
-      "category": "The Grit",
-      "date": "25 Sep 2026",
-      "title": "Category Masters",
-      "author": "Emma",
-      "excerpt": "Shopping isn't always a pleasure. Even shopping for holidays.",
-      "image": "assets/uploads/Emma_Basic_white_solid_background-20261007-082113.png",
-      "tone": "cool",
-      "featured": false,
-      "seo": {
-        "title": "",
-        "description": "",
-        "canonical": "",
-        "image": "",
-        "ogType": "article",
-        "noindex": false
-      }
     }
   ],
   "articles": {
-    "matcha-preparation": {
-      "category": "Ingredient Stories",
-      "date": "14 Apr 2026",
-      "readTime": "5 min read",
-      "title": "How to prepare matcha properly — and why it's worth the extra minute.",
-      "image": "assets/uploads/Matcha-journal-image-20260923-081431.jpg",
-      "imagePosition": "center 35%",
-      "intro": "",
-      "body": [],
-      "author": "Olivia"
-    },
-    "sushi-rice-ratio": {
-      "category": "Recipes",
-      "date": "08 Apr 2026",
-      "readTime": "6 min read",
-      "title": "Koshihikari and the short-grain question. What the rice in your bowl actually is.",
-      "image": "assets/uploads/Sushi-rice-journal-image-20260923-081503.avif",
-      "imagePosition": "",
-      "intro": "",
-      "body": [],
-      "author": "Olivia"
-    },
-    "binchotan-kitchen": {
-      "category": "Behind the Product",
-      "date": "01 Apr 2026",
-      "readTime": "6 min read",
-      "title": "Binchotan: 300 years of Japanese charcoal production.",
-      "image": "assets/uploads/Binochtan-water-filter-journal-20260923-081525.jpg",
-      "imagePosition": "",
-      "intro": "",
-      "body": []
-    },
     "cold-run-furikake": {
       "category": "The Grit",
       "date": "24 Mar 2026",
       "readTime": "3 min read",
       "title": "What we eat after a long run.",
       "image": "assets/uploads/Nori-furikake-journal-20260923-081548.jpg",
-      "imagePosition": "",
-      "intro": "",
-      "body": []
-    },
-    "tamari-vs-soy": {
-      "category": "Ingredient Stories",
-      "date": "17 Mar 2026",
-      "readTime": "4 min read",
-      "title": "Tamari vs. soy sauce. They are not the same thing.",
-      "image": "assets/uploads/Soy-sauce-image-20260923-081610.jpg",
-      "imagePosition": "",
-      "intro": "",
-      "body": []
-    },
-    "gyoza-technique": {
-      "category": "Recipes",
-      "date": "10 Mar 2026",
-      "readTime": "4 min read",
-      "title": "The yaki-gyoza method. Steam-fry, not fry.",
-      "image": "assets/uploads/Chicken-gyoza-journal-20260923-081640.jpg",
       "imagePosition": "",
       "intro": "",
       "body": []
