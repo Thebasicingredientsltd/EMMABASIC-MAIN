@@ -678,16 +678,67 @@ def _cleaned_card_home(card_id, parent):
     return parent
 
 
-def _cms_menu_payload(parents=None, cards=None):
+def _cleaned_card_order_list(ids):
+    """Drop blanks, duplicates, and ids that are not card ids (page.section)."""
+    if not isinstance(ids, list):
+        return []
+    seen = set()
+    cleaned = []
+    for item in ids:
+        card_id = str(item).strip()
+        if not card_id or card_id in seen:
+            continue
+        if not _cms_card_origin(card_id):
+            continue
+        seen.add(card_id)
+        cleaned.append(card_id)
+    return cleaned
+
+
+def _cms_card_orders():
+    """Per-page editor-card order. Missing page means the template order."""
+    _data, menu = _cms_menu_blob()
+    raw = menu.get("cardOrder") if isinstance(menu.get("cardOrder"), dict) else {}
+    valid = _cms_card_host_endpoints()
+    orders = {}
+    for key, val in raw.items():
+        page = str(key).strip()
+        if page not in valid:
+            continue
+        cleaned = _cleaned_card_order_list(val)
+        if cleaned:
+            orders[page] = cleaned
+    return orders
+
+
+def _apply_card_order(current_ids, saved_order):
+    """Saved ids first (skipping unknown); anything else keeps its relative place at the end."""
+    current_ids = list(current_ids)
+    if not saved_order:
+        return current_ids
+    present = set(current_ids)
+    ordered = [card_id for card_id in saved_order if card_id in present]
+    if not ordered:
+        return current_ids
+    used = set(ordered)
+    rest = [card_id for card_id in current_ids if card_id not in used]
+    return ordered + rest
+
+
+def _cms_menu_payload(parents=None, cards=None, card_order=None):
     _data, menu = _cms_menu_blob()
     if parents is None:
         raw = menu.get("parents") if isinstance(menu.get("parents"), dict) else {}
         parents = {str(k): str(v) for k, v in raw.items() if k and v}
     if cards is None:
         cards = _cms_card_homes()
+    if card_order is None:
+        card_order = _cms_card_orders()
     payload = {"parents": parents}
     if cards:
         payload["cards"] = cards
+    if card_order:
+        payload["cardOrder"] = card_order
     return payload
 
 
@@ -1016,6 +1067,171 @@ def _relocate_cms_cards_html(html, endpoint, homes):
     return html[:start] + body + html[end:]
 
 
+def _card_unit_span(html, card_start, card_end):
+    """Move a guest form as a whole; otherwise just the card element."""
+    form = _enclosing_form_span(html, card_start, card_end)
+    if not form:
+        return (card_start, card_end)
+    classes = (_start_tag_attrs(html, form[0]).get("class") or "").split()
+    if "cms-guest-card" in classes:
+        return form
+    return (card_start, card_end)
+
+
+def _ensure_form_id(html, start, hint):
+    attrs = _start_tag_attrs(html, start)
+    existing = (attrs.get("id") or "").strip()
+    if existing:
+        return html, existing
+    fid = hint
+    n = 2
+    while re.search(r'\sid="%s"' % re.escape(fid), html):
+        fid = "%s-%s" % (hint, n)
+        n += 1
+    gt = _tag_gt(html, start)
+    if gt < 0:
+        return html, fid
+    html = html[:gt] + ' id="%s"' % html_escape(fid, quote=True) + html[gt:]
+    return html, fid
+
+
+def _stamp_form_attr(fragment, form_id):
+    """Associate fields with a form they no longer sit inside, skipping nested forms."""
+    if not form_id:
+        return fragment
+    attr = ' form="%s"' % html_escape(form_id, quote=True)
+    out = []
+    i = 0
+    n = len(fragment)
+    depth = 0
+    while i < n:
+        if fragment.startswith("<!--", i):
+            endc = fragment.find("-->", i + 4)
+            endc = n if endc < 0 else endc + 3
+            out.append(fragment[i:endc])
+            i = endc
+            continue
+        if fragment[i] != "<":
+            nxt = fragment.find("<", i)
+            out.append(fragment[i:] if nxt < 0 else fragment[i:nxt])
+            if nxt < 0:
+                break
+            i = nxt
+            continue
+        gt = _tag_gt(fragment, i)
+        if gt < 0:
+            out.append(fragment[i:])
+            break
+        tag_html = fragment[i:gt + 1]
+        match = re.match(r"<(/)?([A-Za-z][A-Za-z0-9:-]*)", tag_html)
+        if not match:
+            out.append(tag_html)
+            i = gt + 1
+            continue
+        closing = bool(match.group(1))
+        name = match.group(2).lower()
+        self_close = (not closing) and (
+            tag_html.rstrip().endswith("/>") or name in {
+                "area", "base", "br", "col", "embed", "hr", "img", "input",
+                "link", "meta", "param", "source", "track", "wbr",
+            }
+        )
+        if name == "form":
+            if closing:
+                depth = max(0, depth - 1)
+            elif not self_close:
+                depth += 1
+            out.append(tag_html)
+            i = gt + 1
+            continue
+        if (
+            not closing
+            and depth == 0
+            and name in ("input", "textarea", "select", "button")
+            and not re.search(r"\sform\s*=", tag_html, re.I)
+        ):
+            if tag_html.rstrip().endswith("/>"):
+                tag_html = tag_html.rstrip()[:-2] + attr + "/>"
+            else:
+                tag_html = tag_html[:-1] + attr + ">"
+        out.append(tag_html)
+        i = gt + 1
+    return "".join(out)
+
+
+def _after_title_offset(inner_html):
+    """Byte index after the heading / subtitle so cards stay below the page title."""
+    gt = inner_html.find(">")
+    i = 0 if gt < 0 else gt + 1
+    last_end = i
+    while i < len(inner_html):
+        while i < len(inner_html) and inner_html[i] in " \t\r\n":
+            i += 1
+        if i >= len(inner_html) or inner_html.startswith("</", i) or inner_html[i] != "<":
+            break
+        span = _element_span(inner_html, i)
+        if not span:
+            break
+        chunk = inner_html[span[0]:span[1]]
+        lower = chunk[:200].lower()
+        is_title = (
+            "<h1" in chunk.lower()
+            or lower.startswith("<h1")
+            or bool(re.search(r"<p\b[^>]*class=\"[^\"]*\bsub\b", chunk, re.I))
+        )
+        if not is_title:
+            break
+        last_end = span[1]
+        i = span[1]
+    return last_end
+
+
+def _reorder_cms_cards_html(html, endpoint, saved_order):
+    inner = _content_inner_span(html)
+    if not inner:
+        return html
+    start, end = inner
+    body = html[start:end]
+    hits = _find_cms_cards(body)
+    current_ids = [card_id for card_id, _a, _b in hits]
+    desired = _apply_card_order(current_ids, saved_order)
+    if desired == current_ids:
+        return html
+
+    form_starts = []
+    for card_id, c_start, c_end in hits:
+        form = _enclosing_form_span(body, c_start, c_end)
+        if not form:
+            continue
+        classes = (_start_tag_attrs(body, form[0]).get("class") or "").split()
+        if "cms-guest-card" in classes:
+            continue
+        form_starts.append(form[0])
+    for index, form_start in enumerate(sorted(set(form_starts), reverse=True)):
+        hint = "cms-form-%s-%s" % (endpoint, index + 1)
+        body, _fid = _ensure_form_id(body, form_start, hint)
+
+    hits = _find_cms_cards(body)
+    units = {}
+    for card_id, c_start, c_end in reversed(hits):
+        unit_start, unit_end = _card_unit_span(body, c_start, c_end)
+        fragment = body[unit_start:unit_end]
+        form = _enclosing_form_span(body, c_start, c_end)
+        if form:
+            attrs = _start_tag_attrs(body, form[0])
+            classes = (attrs.get("class") or "").split()
+            fid = (attrs.get("id") or "").strip()
+            if "cms-guest-card" not in classes and fid:
+                fragment = _stamp_form_attr(fragment, fid)
+        units[card_id] = fragment
+        body = body[:unit_start] + body[unit_end:]
+
+    stacked = "\n".join(units[card_id] for card_id in desired if card_id in units)
+    insert_at = _after_title_offset(body)
+    body = body[:insert_at] + "\n" + stacked + "\n" + body[insert_at:]
+    return html[:start] + body + html[end:]
+
+
 @app.after_request
 def _relocate_editor_cards(response):
     if request.method != "GET":
@@ -1026,10 +1242,15 @@ def _relocate_editor_cards(response):
     if "html" not in (response.content_type or ""):
         return response
     homes = _cms_card_homes()
-    if not homes:
+    order = (_cms_card_orders().get(endpoint) or [])
+    if not homes and not order:
         return response
     html = response.get_data(as_text=True)
-    relocated = _relocate_cms_cards_html(html, endpoint, homes)
+    relocated = html
+    if homes:
+        relocated = _relocate_cms_cards_html(relocated, endpoint, homes)
+    if order:
+        relocated = _reorder_cms_cards_html(relocated, endpoint, order)
     if relocated != html:
         response.set_data(relocated)
     return response
@@ -1038,13 +1259,15 @@ def _relocate_editor_cards(response):
 @app.context_processor
 def _inject_cms_card_ui():
     if _auth_required() and not session.get("cms_auth"):
-        return {"cms_card_menus": [], "cms_card_homes": {}}
+        return {"cms_card_menus": [], "cms_card_homes": {}, "cms_card_page": ""}
+    endpoint = request.endpoint or ""
     return {
         "cms_card_menus": [
             {"endpoint": item["endpoint"], "label": item["label"]}
             for item in cms_assignable_items()
         ],
         "cms_card_homes": _cms_card_homes(),
+        "cms_card_page": endpoint,
     }
 
 
@@ -1626,6 +1849,8 @@ def homepage_save():
     shelf["headingLine1"] = request.form.get("shelf_headingLine1", "").strip()
     shelf["headingLine2"] = request.form.get("shelf_headingLine2", "").strip()
     shelf["subtitle"] = request.form.get("shelf_subtitle", "").strip()
+    shelf["theirsLabel"] = (request.form.get("shelf_theirsLabel", "").strip() or "Other Brands")
+    shelf["oursLabel"] = (request.form.get("shelf_oursLabel", "").strip() or "Emma Basic")
     shelf["theirs"] = lines_to_list(request.form.get("shelf_theirs", ""))
     shelf["ours"] = lines_to_list(request.form.get("shelf_ours", ""))
     shelf.pop("closingLine1", None)
@@ -1968,6 +2193,7 @@ def places_save():
     directory["heading"] = request.form.get("directory_heading", "").strip()
     directory["headingItalic"] = request.form.get("directory_headingItalic", "").strip()
     directory["hideHeading"] = form_checkbox("directory_hideHeading")
+    directory["missingNote"] = request.form.get("directory_missingNote", "").strip()
 
     # Headings, carousel, SEO and HQ are one modest form. The stockist
     # directory is saved separately (highlights, or one shop) so this save
@@ -2533,6 +2759,27 @@ def cms_card_home_save():
         dest = "index"
     suffix = "#" + card_id.replace(".", "-") if card_id else ""
     return redirect(url_for(dest) + suffix)
+
+
+@app.route("/cms-menu/cards/order", methods=["POST"])
+def cms_card_order_save():
+    """Persist a drag-and-drop reorder of editor cards on one CRM page."""
+    payload = request.get_json(silent=True) or {}
+    page = str(payload.get("page") or "").strip()
+    if page not in _cms_card_host_endpoints():
+        return {"ok": False, "error": "Unknown page"}, 400
+    cleaned = _cleaned_card_order_list(payload.get("order"))
+    data = load_site()
+    if not isinstance(data, dict):
+        data = {}
+    orders = dict(_cms_card_orders())
+    if cleaned:
+        orders[page] = cleaned
+    else:
+        orders.pop(page, None)
+    data["cmsMenu"] = _cms_menu_payload(card_order=orders)
+    save_data("site", data)
+    return {"ok": True}
 
 
 # ---------------------------------------------------------------------------

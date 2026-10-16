@@ -113,6 +113,8 @@ def _form_from_homepage(data):
         "shelf_headingLine1": shelf.get("headingLine1", ""),
         "shelf_headingLine2": shelf.get("headingLine2", ""),
         "shelf_subtitle": shelf.get("subtitle", ""),
+        "shelf_theirsLabel": shelf.get("theirsLabel") or "Other Brands",
+        "shelf_oursLabel": shelf.get("oursLabel") or "Emma Basic",
         "shelf_theirs": "\n".join(shelf.get("theirs") or []),
         "shelf_ours": "\n".join(shelf.get("ours") or []),
         "life_headingLine1": lifestyle.get("headingLine1", ""),

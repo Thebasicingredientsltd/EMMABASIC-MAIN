@@ -118,6 +118,9 @@ class PlacesPageTests(unittest.TestCase):
         self.assertIn("directory_hideHeading", html)
         self.assertIn('name="directory_heading"', html)
         self.assertIn('name="directory_headingItalic"', html)
+        self.assertIn('name="directory_missingNote"', html)
+        self.assertIn("Note under the map", html)
+        self.assertIn("If you stock Emma Basic and your store is missing", html)
         featured_italic = (load_data("places").get("directory") or {}).get("headingItalic") or ""
         if featured_italic:
             self.assertIn(featured_italic, html)
@@ -195,6 +198,26 @@ class PlacesPageTests(unittest.TestCase):
             directory = load_data("places")["directory"]
             self.assertEqual(directory.get("heading"), "")
             self.assertEqual(directory.get("headingItalic"), "")
+        finally:
+            with app.app_context():
+                save_data("places", original)
+
+    def test_saving_missing_store_note_persists_then_clears(self):
+        original = load_data("places")
+        marker = "If you stock Emma Basic and your store is missing, please let us know: test@thebasicingredients.com"
+        try:
+            payload = _form_from_places(original)
+            payload["directory_missingNote"] = marker
+            response = self.client.post("/places/save", data=payload)
+            self.assertEqual(response.status_code, 302)
+            self.assertEqual(load_data("places")["directory"].get("missingNote"), marker)
+            form = self.client.get("/places").get_data(as_text=True)
+            self.assertIn(marker, form)
+
+            payload["directory_missingNote"] = ""
+            response = self.client.post("/places/save", data=payload)
+            self.assertEqual(response.status_code, 302)
+            self.assertEqual(load_data("places")["directory"].get("missingNote"), "")
         finally:
             with app.app_context():
                 save_data("places", original)
@@ -337,13 +360,23 @@ class PlacesPageTests(unittest.TestCase):
         self.assertIn("Search by shop, town or postcode", source)
         self.assertIn("is-highlight", source)
         self.assertIn("s.highlight", source)
+        self.assertIn("eb-sm-missing", source)
+        self.assertIn("smLinkEmails", source)
+        self.assertIn("mailto:", source)
+        self.assertIn(
+            "If you stock Emma Basic and your store is missing, please let us know: Boris@thebasicingredients.com",
+            source,
+        )
+        self.assertNotIn("that we're aware of.", source)
+        self.assertNotIn("eb-sm-head-count", source)
+        self.assertNotIn('shops.length === 1 ? "stockist" : "stockists"', source)
         order = [places.index(tag) for tag in (
             "<StockistCarousel", "<SupplierMap", "<HowToOrder",
         )]
         self.assertEqual(order, sorted(order))
         self.assertNotIn("NearestShopFinder", places)
-        self.assertIn("SupplierMap.jsx?v=8", places)
-        self.assertNotIn("SupplierMap.jsx?v=5", places)
+        self.assertIn("SupplierMap.jsx?v=9", places)
+        self.assertNotIn("SupplierMap.jsx?v=8", places)
 
     def test_hq_map_is_not_on_people_or_find_us(self):
         root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -683,6 +716,10 @@ def _form_from_places(data):
         "featured_headingItalic": featured.get("headingItalic", ""),
         "directory_heading": directory.get("heading", "Where to find us."),
         "directory_headingItalic": directory.get("headingItalic", "Stocked across the UK."),
+        "directory_missingNote": directory.get(
+            "missingNote",
+            "If you stock Emma Basic and your store is missing, please let us know: Boris@thebasicingredients.com",
+        ),
         "retailer_count": str(len(retailers)),
         "shop_count": str(len(shops)),
         "hq_label": hq.get("label", ""),

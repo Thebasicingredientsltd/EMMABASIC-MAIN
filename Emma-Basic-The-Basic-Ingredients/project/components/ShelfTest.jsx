@@ -8,6 +8,8 @@ function ShelfTest() {
   const headingLine1 = S.headingLine1 || "Flip the pack.";
   const headingLine2 = S.headingLine2 || "Read the jar.";
   const subtitle = S.subtitle || 'Two packs of crispy seaweed.<br/>Both in the "healthy snacks" aisle.';
+  const theirsLabel = S.theirsLabel || "Other Brands";
+  const oursLabel = S.oursLabel || "Emma Basic";
   // Competitor: Yutaka Seasoned Seaweed Snack (widely sold in UK supermarkets)
   const supermarket = (Array.isArray(S.theirs) && S.theirs.length) ? S.theirs : [
     "Seaweed (70%)",
@@ -67,17 +69,18 @@ function ShelfTest() {
           gap: "clamp(16px, 2.4vw, 40px)",
           alignItems: "stretch",
         }}>
-          <LabelCard kind="theirs" items={supermarket} />
-          <LabelCard kind="ours" items={emma} />
+          <LabelCard kind="theirs" items={supermarket} label={theirsLabel} />
+          <LabelCard kind="ours" items={emma} label={oursLabel} />
         </div>
       </div>
     </section>
   );
 }
 
-function LabelCard({ kind, items }) {
+function LabelCard({ kind, items, label }) {
   const [ref, visible] = useReveal(0.15);
   const isOurs = kind === "ours";
+  const brandLabel = label || (isOurs ? "Emma Basic" : "Other Brands");
 
   return (
     <div ref={ref} style={{
@@ -98,7 +101,7 @@ function LabelCard({ kind, items }) {
         fontFamily: "var(--f-body)", fontSize: 10, letterSpacing: "0.22em",
         textTransform: "uppercase", color: isOurs ? "var(--ink)" : "var(--ink-60)",
       }}>
-        <span>{isOurs ? "Emma Basic" : "Competitor Benchmark"}</span>
+        <span>{brandLabel}</span>
         <span>Ingredients</span>
       </div>
 

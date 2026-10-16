@@ -170,12 +170,29 @@ function smMatches(s, q) {
   return q.toLowerCase().split(/\s+/).filter(Boolean).every(word => hay.indexOf(word) !== -1);
 }
 
-function SupplierMap({ heading, headingItalic, hideHeading }) {
+const SM_MISSING_NOTE = "If you stock Emma Basic and your store is missing, please let us know: Boris@thebasicingredients.com";
+
+function smLinkEmails(text) {
+  const parts = String(text || "").split(/([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})/i);
+  return parts.map((part, i) => {
+    if (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(part)) {
+      return (
+        <a key={i} href={"mailto:" + part} style={{ color: "inherit", textDecoration: "underline" }}>
+          {part}
+        </a>
+      );
+    }
+    return part;
+  });
+}
+
+function SupplierMap({ heading, headingItalic, hideHeading, missingNote }) {
   const cms = (typeof window !== "undefined" && window.EB_PLACES && window.EB_PLACES.directory) || {};
   const fromCms = heading === undefined;
   const _hideHeading = hideHeading === true || (fromCms && cms.hideHeading === true);
   const _heading = cmsCopy(heading, cms.heading, "Where to find us.");
   const _headingItalic = cmsCopy(headingItalic, cms.headingItalic, "Stocked across the UK.");
+  const _missingNote = cmsCopy(missingNote, cms.missingNote, SM_MISSING_NOTE);
   const showHeading = !_hideHeading && (_heading || _headingItalic);
 
   const shops = React.useMemo(() => {
@@ -387,7 +404,7 @@ function SupplierMap({ heading, headingItalic, hideHeading }) {
 
   const listLimit = isNarrow && !showAll && !q ? 6 : visible.length;
   const listed = visible.slice(0, listLimit);
-  let countText = shops.length + (shops.length === 1 ? " shop" : " shops");
+  let countText = "";
   if (mode === "looking") countText = "Looking up…";
   else if (mode === "near") countText = nearest.length + " nearest to " + origin.label;
   else if (q) countText = visible.length + " of " + shops.length + " shops";
@@ -406,13 +423,11 @@ function SupplierMap({ heading, headingItalic, hideHeading }) {
     }}>
       <div style={{ maxWidth: "var(--maxw)", margin: "0 auto" }}>
 
+        {showHeading ? (
         <Reveal>
           <div className="eb-sm-head" style={{
-            display: "grid", gridTemplateColumns: "1fr auto",
-            alignItems: "end", gap: 32,
             marginBottom: "clamp(40px, 6vh, 80px)",
           }}>
-            {showHeading ? (
             <h2 style={{
               fontFamily: "var(--f-display)", fontWeight: 400,
               fontSize: "clamp(44px, 6vw, 92px)",
@@ -427,25 +442,9 @@ function SupplierMap({ heading, headingItalic, hideHeading }) {
               </em>
               ) : null}
             </h2>
-            ) : <div />}
-            <div className="eb-sm-head-count" style={{ paddingBottom: 10, textAlign: "right" }}>
-              <span style={{
-                fontFamily: "var(--f-body)", fontSize: 10.5, letterSpacing: "0.22em",
-                textTransform: "uppercase", color: "var(--ink-60)", display: "block",
-              }}>
-                {shops.length} {shops.length === 1 ? "stockist" : "stockists"}
-              </span>
-              <span style={{
-                fontFamily: "var(--f-display)", fontStyle: "italic",
-                fontSize: "clamp(18px, 1.4vw, 24px)", color: "var(--ink)",
-                fontVariationSettings: '"opsz" 48, "SOFT" 60',
-                display: "block", marginTop: 8,
-              }}>
-                that we're aware of.
-              </span>
-            </div>
           </div>
         </Reveal>
+        ) : null}
 
         <div className="eb-sm-layout">
           <div className="eb-sm-mapwrap" ref={wrapEl}>
@@ -462,9 +461,11 @@ function SupplierMap({ heading, headingItalic, hideHeading }) {
                 placeholder="Search by shop, town or postcode"
                 autoComplete="off"
               />
+              {countText ? (
               <div className="eb-sm-count" aria-live="polite">
                 {countText}
               </div>
+              ) : null}
             </div>
             <ul className="eb-sm-items">
               {listed.map(s => (
@@ -495,6 +496,11 @@ function SupplierMap({ heading, headingItalic, hideHeading }) {
             ) : null}
           </div>
         </div>
+        {_missingNote ? (
+          <p className="eb-sm-missing">
+            {smLinkEmails(_missingNote)}
+          </p>
+        ) : null}
       </div>
 
       <style>{`
@@ -551,6 +557,11 @@ function SupplierMap({ heading, headingItalic, hideHeading }) {
           color: inherit; opacity: 0.6;
         }
         .eb-sm-empty { padding: 22px; font-family: var(--f-body); font-size: 14px; color: var(--ink-60); }
+        .eb-sm-missing {
+          margin: 18px 0 0;
+          font-family: var(--f-body); font-size: 15px; line-height: 1.7;
+          color: var(--ink-60);
+        }
         .eb-sm-more {
           border: 0; border-top: 1px solid var(--rule); background: transparent; padding: 16px 22px;
           font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
@@ -621,8 +632,6 @@ function SupplierMap({ heading, headingItalic, hideHeading }) {
           .eb-sm-mapwrap .leaflet-container { touch-action: pan-y !important; }
         }
         @media (max-width: 768px) {
-          .eb-sm-head { grid-template-columns: 1fr !important; gap: 12px !important; }
-          .eb-sm-head-count { text-align: left !important; padding-bottom: 0 !important; }
           .eb-sm-head h2 span { white-space: normal !important; }
           .eb-sm-layout { grid-template-columns: 1fr; }
           .eb-sm-mapwrap { border-right: 0; border-bottom: 1px solid var(--rule); }

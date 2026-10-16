@@ -101,6 +101,16 @@
     <textarea name="shelf_subtitle" rows="2">{{ h.shelfTest.subtitle }}</textarea>
     <div class="row">
       <div>
+        <label>Other Brands heading</label>
+        <input type="text" name="shelf_theirsLabel" value="{{ h.shelfTest.theirsLabel or 'Other Brands' }}"/>
+      </div>
+      <div>
+        <label>Emma Basic heading</label>
+        <input type="text" name="shelf_oursLabel" value="{{ h.shelfTest.oursLabel or 'Emma Basic' }}"/>
+      </div>
+    </div>
+    <div class="row">
+      <div>
         <label>Competitor ingredients — one per line</label>
         <textarea name="shelf_theirs" rows="9">{{ h.shelfTest.theirs | join('\n') }}</textarea>
       </div>

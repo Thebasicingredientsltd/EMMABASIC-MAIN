@@ -42,8 +42,9 @@ window.EB_PLACES = {
   },
   "directory": {
     "heading": "",
-    "headingItalic": "Stocked across the UK.",
-    "hideHeading": false
+    "headingItalic": "Stockist",
+    "hideHeading": false,
+    "missingNote": "If you stock Emma Basic and your store is missing, please let us know: Boris@thebasicingredients.com"
   },
   "hq": {
     "label": "London HQ",

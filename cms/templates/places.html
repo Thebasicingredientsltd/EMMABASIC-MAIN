@@ -130,6 +130,9 @@
         <input type="text" name="directory_headingItalic" value="{{ directory.get('headingItalic', 'Stocked across the UK.') }}"/>
       </div>
     </div>
+    <label>Note under the map</label>
+    <p class="field-help">This sits directly under the map of shops. An email address in the sentence becomes a click-to-email link. Leave it blank to hide the note.</p>
+    <textarea name="directory_missingNote" rows="2">{{ directory.get('missingNote', 'If you stock Emma Basic and your store is missing, please let us know: Boris@thebasicingredients.com') }}</textarea>
   </div>
   <div class="card" data-cms-card="places.hq">
     <h2 style="margin-top:0;">London HQ address</h2>

@@ -43,6 +43,8 @@ window.EB_HOME = {
     "headingLine1": "Flip the pack.",
     "headingLine2": "Read the Label.",
     "subtitle": "Two packs of crispy seaweed.<br/>Both in the \"healthy snacks\" aisle.",
+    "theirsLabel": "Other Brands",
+    "oursLabel": "Emma Basic",
     "theirs": [
       "Seaweed (70%)",
       "Soybean oil",
