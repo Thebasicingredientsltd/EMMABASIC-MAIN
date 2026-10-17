@@ -154,6 +154,15 @@ function pickFooterLinks(value, fallback) {
   return fallback;
 }
 
+function isFooterBlockVisible(F, key) {
+  const blocks = F && F.blocks;
+  const block = blocks && typeof blocks === "object" ? blocks[key] : null;
+  if (block && typeof block === "object" && !Array.isArray(block)) {
+    return block.visible !== false;
+  }
+  return true;
+}
+
 function FooterLines({ lines }) {
   return lines.map(function (line, i) {
     return (
@@ -189,20 +198,38 @@ function SiteFooter({ visible }) {
     "The Netherlands",
   ]);
   const wordmarkLines = pickFooterLines(F.wordmark, ["Emma", "Basic."]);
-  const cols = [
-    [pickFooterText(F.browseHeading, "Browse"), pickFooterLinks(F.browseLinks, [
+  const showContact = isFooterBlockVisible(F, "contact");
+  const showEmail = isFooterBlockVisible(F, "email");
+  const showLondon = isFooterBlockVisible(F, "london");
+  const showRotterdam = isFooterBlockVisible(F, "rotterdam");
+  const showWordmark = isFooterBlockVisible(F, "wordmark");
+  const showBrowse = isFooterBlockVisible(F, "browse");
+  const showCompany = isFooterBlockVisible(F, "company");
+  const showLegal = isFooterBlockVisible(F, "legal");
+  const showContactCol = showContact || showEmail;
+  const showAddressCol = showLondon || showRotterdam;
+  const showContactBanner = showContactCol || showAddressCol;
+  const cols = [];
+  if (showBrowse) {
+    cols.push([pickFooterText(F.browseHeading, "Browse"), pickFooterLinks(F.browseLinks, [
       { label: "Matcha", href: "Our Products.html#cat-matcha" },
       { label: "Oils", href: "Our Products.html#cat-oils" },
       { label: "Pantry", href: "Our Products.html#cat-pantry" },
       { label: "Full Collection", href: "Our Products.html" },
-    ])],
-    [pickFooterText(F.companyHeading, "Company"), pickFooterLinks(F.companyLinks, [
+    ])]);
+  }
+  if (showCompany) {
+    cols.push([pickFooterText(F.companyHeading, "Company"), pickFooterLinks(F.companyLinks, [
       { label: "Our Story", href: "Our Story.html" },
       { label: "People & Places", href: "People%20%26%20Places.html" },
       { label: "Find us", href: "Places.html" },
       { label: "Journal", href: "Journal.html" },
-    ])],
-  ];
+    ])]);
+  }
+  const showNav = showWordmark || cols.length > 0;
+  const navColumns = [];
+  if (showWordmark) navColumns.push("1.4fr");
+  cols.forEach(function () { navColumns.push("1fr"); });
   const legalLeft = pickFooterText(F.legalLeft, "© The Basic Ingredients Ltd · MMXXVI");
   const legalCenter = pickFooterText(F.legalCenter, "No Additives. Ever.");
   const legalRight = pickFooterText(F.legalRight, "London · Rotterdam");
@@ -211,16 +238,19 @@ function SiteFooter({ visible }) {
     <footer style={{ background: "var(--paper)", borderTop: "1px solid var(--rule)" }}>
       <div style={{ maxWidth: "var(--maxw)", margin: "0 auto" }}>
 
-        {/* Get in touch banner */}
+        {showContactBanner ? (
         <div className="eb-footer-contact" style={{
           padding: "clamp(40px, 5vw, 64px) var(--pad-x)",
           borderBottom: "1px solid var(--rule)",
           display: "grid",
-          gridTemplateColumns: "1fr 1fr",
+          gridTemplateColumns: showContactCol && showAddressCol ? "1fr 1fr" : "1fr",
           gap: "clamp(32px, 5vw, 80px)",
           alignItems: "start",
         }}>
+          {showContactCol ? (
           <div>
+            {showContact ? (
+            <React.Fragment>
             <div style={{
               fontFamily: "var(--f-body)", fontSize: 10, letterSpacing: "0.22em",
               textTransform: "uppercase", color: "var(--ink-60)", marginBottom: 16,
@@ -234,6 +264,9 @@ function SiteFooter({ visible }) {
             }}>
               {contactBody}
             </p>
+            </React.Fragment>
+            ) : null}
+            {showEmail ? (
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               <a href={"mailto:" + email} style={{
                 fontFamily: "var(--f-body)", fontSize: 16, letterSpacing: "0.14em",
@@ -244,10 +277,13 @@ function SiteFooter({ visible }) {
                 {email}
               </a>
             </div>
+            ) : null}
           </div>
+          ) : null}
 
-          {/* Office addresses */}
-          <div className="eb-footer-addresses" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32 }}>
+          {showAddressCol ? (
+          <div className="eb-footer-addresses" style={{ display: "grid", gridTemplateColumns: showLondon && showRotterdam ? "1fr 1fr" : "1fr", gap: 32 }}>
+            {showLondon ? (
             <div>
               <div style={{
                 fontFamily: "var(--f-body)", fontSize: 9.5, letterSpacing: "0.22em",
@@ -262,6 +298,8 @@ function SiteFooter({ visible }) {
                 <FooterLines lines={londonLines} />
               </address>
             </div>
+            ) : null}
+            {showRotterdam ? (
             <div>
               <div style={{
                 fontFamily: "var(--f-body)", fontSize: 9.5, letterSpacing: "0.22em",
@@ -276,15 +314,19 @@ function SiteFooter({ visible }) {
                 <FooterLines lines={rotterdamLines} />
               </address>
             </div>
+            ) : null}
           </div>
+          ) : null}
         </div>
+        ) : null}
 
-        {/* Nav + wordmark row */}
+        {showNav ? (
         <div className="eb-footer-nav" style={{
           padding: "clamp(40px, 5vw, 64px) var(--pad-x)",
-          display: "grid", gridTemplateColumns: "1.4fr repeat(2, 1fr)", gap: 40,
+          display: "grid", gridTemplateColumns: navColumns.join(" "), gap: 40,
           paddingBottom: 48,
         }}>
+          {showWordmark ? (
           <div>
             <div style={{
               fontFamily: "var(--f-display)", fontSize: "clamp(56px, 7vw, 96px)",
@@ -294,6 +336,7 @@ function SiteFooter({ visible }) {
               <FooterLines lines={wordmarkLines} />
             </div>
           </div>
+          ) : null}
           {cols.map(([h, items]) => (
             <div key={h}>
               <div style={{ fontFamily: "var(--f-body)", fontSize: 10.5, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ink-60)", marginBottom: 20 }}>{h}</div>
@@ -307,8 +350,9 @@ function SiteFooter({ visible }) {
             </div>
           ))}
         </div>
+        ) : null}
 
-        {/* Bottom bar */}
+        {showLegal ? (
         <div className="eb-footer-bottom" style={{
           padding: "24px var(--pad-x)",
           borderTop: "1px solid var(--rule)",
@@ -320,6 +364,7 @@ function SiteFooter({ visible }) {
           <span>{legalCenter}</span>
           <span>{legalRight}</span>
         </div>
+        ) : null}
       </div>
     </footer>
   );

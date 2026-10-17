@@ -4,6 +4,7 @@ Run with:  python test_site_footer.py
 """
 
 import os
+import re
 import sys
 import unittest
 
@@ -23,6 +24,22 @@ LIVE_CONTACT_BODY = (
 LIVE_EMAIL = "Boris@thebasicingredients.com"
 LIVE_LONDON = "4 New Concordia Wharf"
 LIVE_ROTTERDAM = "Westplein 12–14"
+
+FOOTER_BLOCKS = (
+    ("contact", "Show Get in touch on the live site"),
+    ("email", "Show Email on the live site"),
+    ("london", "Show London on the live site"),
+    ("rotterdam", "Show Rotterdam on the live site"),
+    ("wordmark", "Show Word mark on the live site"),
+    ("browse", "Show Browse on the live site"),
+    ("company", "Show Company on the live site"),
+    ("legal", "Show this legal line on the live site"),
+)
+
+
+def _checkbox(html, name):
+    match = re.search(r'<input[^>]*name="%s"[^>]*>' % re.escape(name), html)
+    return match.group(0) if match else ""
 
 
 def _homepage_footer_card(html):
@@ -78,6 +95,8 @@ def _full_footer_form(overrides=None):
         "site_footer_legal_center": "No Additives. Ever.",
         "site_footer_legal_right": "London · Rotterdam",
     })
+    for block_id, _label in FOOTER_BLOCKS:
+        payload["site_footer_%s_visible" % block_id] = "on"
     if overrides:
         payload.update(overrides)
     return payload
@@ -182,6 +201,88 @@ class SiteFooterCmsTests(unittest.TestCase):
         self.assertIn(LIVE_CONTACT_BODY, src)
         self.assertIn(LIVE_LONDON, src)
         self.assertIn(LIVE_ROTTERDAM, src)
+
+    def test_homepage_footer_card_has_hide_show_for_each_subhead(self):
+        html = self.client.get("/homepage").get_data(as_text=True)
+        card = _homepage_footer_card(html)
+        self.assertTrue(card)
+        for block_id, phrase in FOOTER_BLOCKS:
+            name = "site_footer_%s_visible" % block_id
+            self.assertIn('name="%s"' % name, card, name)
+            self.assertIn(phrase, card, phrase)
+            box = _checkbox(card, name)
+            self.assertTrue(box, name)
+            self.assertIn("checked", box, name)
+
+    def test_save_hides_wordmark_browse_company_and_keeps_copy(self):
+        home_original = load_data("homepage")
+        site_original = load_data("site")
+        try:
+            payload = _full_footer_form()
+            payload.pop("site_footer_wordmark_visible", None)
+            payload.pop("site_footer_browse_visible", None)
+            payload.pop("site_footer_company_visible", None)
+            response = self.client.post("/homepage/save", data=payload)
+            self.assertEqual(response.status_code, 302)
+            footer = load_data("site").get("footer") or {}
+            self.assertEqual(footer.get("wordmark"), "Emma\nBasic.")
+            self.assertEqual(footer.get("browseHeading"), "Browse")
+            self.assertEqual(footer.get("companyHeading"), "Company")
+            self.assertEqual((footer.get("browseLinks") or [])[0].get("label"), "Matcha")
+            blocks = footer.get("blocks") or {}
+            self.assertIs(blocks.get("wordmark", {}).get("visible"), False)
+            self.assertIs(blocks.get("browse", {}).get("visible"), False)
+            self.assertIs(blocks.get("company", {}).get("visible"), False)
+            self.assertIsNot(blocks.get("contact", {}).get("visible"), False)
+            self.assertIsNot(blocks.get("london", {}).get("visible"), False)
+
+            card = _homepage_footer_card(self.client.get("/homepage").get_data(as_text=True))
+            self.assertNotIn("checked", _checkbox(card, "site_footer_wordmark_visible"))
+            self.assertNotIn("checked", _checkbox(card, "site_footer_browse_visible"))
+            self.assertNotIn("checked", _checkbox(card, "site_footer_company_visible"))
+            self.assertIn("checked", _checkbox(card, "site_footer_contact_visible"))
+            self.assertIn("Emma", card)
+            self.assertIn("Matcha", card)
+            self.assertIn("Our Story", card)
+        finally:
+            with app.app_context():
+                save_data("homepage", home_original)
+                save_data("site", site_original)
+
+    def test_recheck_footer_blocks_shows_them_again(self):
+        home_original = load_data("homepage")
+        site_original = load_data("site")
+        try:
+            hidden = _full_footer_form()
+            hidden.pop("site_footer_wordmark_visible", None)
+            hidden.pop("site_footer_browse_visible", None)
+            hidden.pop("site_footer_company_visible", None)
+            self.assertEqual(self.client.post("/homepage/save", data=hidden).status_code, 302)
+            shown = _full_footer_form()
+            self.assertEqual(self.client.post("/homepage/save", data=shown).status_code, 302)
+            blocks = (load_data("site").get("footer") or {}).get("blocks") or {}
+            self.assertIs(blocks.get("wordmark", {}).get("visible"), True)
+            self.assertIs(blocks.get("browse", {}).get("visible"), True)
+            self.assertIs(blocks.get("company", {}).get("visible"), True)
+            card = _homepage_footer_card(self.client.get("/homepage").get_data(as_text=True))
+            self.assertIn("checked", _checkbox(card, "site_footer_wordmark_visible"))
+            self.assertIn("checked", _checkbox(card, "site_footer_browse_visible"))
+            self.assertIn("checked", _checkbox(card, "site_footer_company_visible"))
+        finally:
+            with app.app_context():
+                save_data("homepage", home_original)
+                save_data("site", site_original)
+
+    def test_live_site_footer_omits_hidden_blocks(self):
+        with open(SECTIONS_JSX, encoding="utf-8") as fh:
+            src = fh.read()
+        self.assertIn("function isFooterBlockVisible", src)
+        self.assertIn("visible !== false", src)
+        for key in (
+            "contact", "email", "london", "rotterdam",
+            "wordmark", "browse", "company", "legal",
+        ):
+            self.assertIn('isFooterBlockVisible(F, "%s")' % key, src, key)
 
 
 if __name__ == "__main__":

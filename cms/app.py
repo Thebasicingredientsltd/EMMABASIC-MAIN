@@ -2173,6 +2173,17 @@ def _apply_hero_form(hero):
     hero["visible"] = form_checkbox("hero_visible")
 
 
+SITE_FOOTER_BLOCK_IDS = (
+    "contact",
+    "email",
+    "london",
+    "rotterdam",
+    "wordmark",
+    "browse",
+    "company",
+    "legal",
+)
+
 SITE_FOOTER_DEFAULTS = {
     "contactHeading": "Get in touch",
     "contactBody": (
@@ -2213,7 +2224,15 @@ SITE_FOOTER_DEFAULTS = {
     "legalLeft": "© The Basic Ingredients Ltd · MMXXVI",
     "legalCenter": "No Additives. Ever.",
     "legalRight": "London · Rotterdam",
+    "blocks": {key: {"visible": True} for key in SITE_FOOTER_BLOCK_IDS},
 }
+
+
+def _site_footer_blocks_from_form():
+    return {
+        key: {"visible": form_checkbox("site_footer_%s_visible" % key)}
+        for key in SITE_FOOTER_BLOCK_IDS
+    }
 
 
 def site_footer_for_editor(site=None):
@@ -2225,10 +2244,21 @@ def site_footer_for_editor(site=None):
     if not isinstance(stored, dict):
         return merged
     for key in SITE_FOOTER_DEFAULTS:
+        if key == "blocks":
+            continue
         value = stored.get(key)
         if value in (None, "", []):
             continue
         merged[key] = value
+    stored_blocks = stored.get("blocks")
+    if isinstance(stored_blocks, dict):
+        for block_id in SITE_FOOTER_BLOCK_IDS:
+            block = stored_blocks.get(block_id)
+            if not isinstance(block, dict):
+                continue
+            merged["blocks"][block_id] = {
+                "visible": block.get("visible", True) is not False,
+            }
     return merged
 
 
@@ -2274,6 +2304,7 @@ def _apply_site_footer_form(site):
         "legalLeft": request.form.get("site_footer_legal_left", "").strip(),
         "legalCenter": request.form.get("site_footer_legal_center", "").strip(),
         "legalRight": request.form.get("site_footer_legal_right", "").strip(),
+        "blocks": _site_footer_blocks_from_form(),
     }
     return True
 

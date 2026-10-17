@@ -1,46 +1,56 @@
 {% set sf = site_footer or {} %}
+{% set blocks = sf.blocks or {} %}
 {% set browse_links = sf.browseLinks or [] %}
 {% set company_links = sf.companyLinks or [] %}
 {% set browse_n = [6, browse_links|length]|max %}
 {% set company_n = [6, company_links|length]|max %}
+{% macro footer_subhead(id, heading, show_label) %}
+{% set block = blocks[id] if id in blocks else {} %}
+<div class="footer-subhead">
+<h3>{{ heading }}{% if not is_section_visible(block) %} <span class="pill">Hidden on site</span>{% endif %}</h3>
+<label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
+  <input type="checkbox" name="site_footer_{{ id }}_visible" value="on" style="width:auto;" {{ 'checked' if is_section_visible(block) }}/> {{ show_label }}
+</label>
+{% endmacro %}
 
-<h3>Get in touch</h3>
+{{ footer_subhead('contact', 'Get in touch', 'Show Get in touch on the live site') }}
 <div class="row">
   <div>
     <label>Small label</label>
     <input type="text" name="site_footer_contact_heading" value="{{ sf.contactHeading or '' }}"/>
   </div>
-  <div>
-    <label>Email label</label>
-    <input type="text" name="site_footer_email_label" value="{{ sf.emailLabel or '' }}"/>
-  </div>
 </div>
 <label>Body</label>
 <textarea name="site_footer_contact_body" rows="4">{{ sf.contactBody or '' }}</textarea>
-<label>Email</label>
-<input type="text" name="site_footer_email" value="{{ sf.email or '' }}"/>
-
-<h3>Addresses</h3>
-<div class="row">
-  <div>
-    <label>London heading</label>
-    <input type="text" name="site_footer_london_heading" value="{{ sf.londonHeading or '' }}"/>
-    <label>London address (one line per row)</label>
-    <textarea name="site_footer_london_lines" rows="5">{{ (sf.londonLines or []) | join('\n') }}</textarea>
-  </div>
-  <div>
-    <label>Rotterdam heading</label>
-    <input type="text" name="site_footer_rotterdam_heading" value="{{ sf.rotterdamHeading or '' }}"/>
-    <label>Rotterdam address (one line per row)</label>
-    <textarea name="site_footer_rotterdam_lines" rows="5">{{ (sf.rotterdamLines or []) | join('\n') }}</textarea>
-  </div>
 </div>
 
-<h3>Wordmark</h3>
+{{ footer_subhead('email', 'Email', 'Show Email on the live site') }}
+<label>Email label</label>
+<input type="text" name="site_footer_email_label" value="{{ sf.emailLabel or '' }}"/>
+<label>Email</label>
+<input type="text" name="site_footer_email" value="{{ sf.email or '' }}"/>
+</div>
+
+{{ footer_subhead('london', 'London', 'Show London on the live site') }}
+<label>London heading</label>
+<input type="text" name="site_footer_london_heading" value="{{ sf.londonHeading or '' }}"/>
+<label>London address (one line per row)</label>
+<textarea name="site_footer_london_lines" rows="5">{{ (sf.londonLines or []) | join('\n') }}</textarea>
+</div>
+
+{{ footer_subhead('rotterdam', 'Rotterdam', 'Show Rotterdam on the live site') }}
+<label>Rotterdam heading</label>
+<input type="text" name="site_footer_rotterdam_heading" value="{{ sf.rotterdamHeading or '' }}"/>
+<label>Rotterdam address (one line per row)</label>
+<textarea name="site_footer_rotterdam_lines" rows="5">{{ (sf.rotterdamLines or []) | join('\n') }}</textarea>
+</div>
+
+{{ footer_subhead('wordmark', 'Word mark', 'Show Word mark on the live site') }}
 <label>Large name (line break = new line)</label>
 <textarea name="site_footer_wordmark" rows="2">{{ sf.wordmark or '' }}</textarea>
+</div>
 
-<h3>Browse</h3>
+{{ footer_subhead('browse', 'Browse', 'Show Browse on the live site') }}
 <p class="field-help">Footer column, not the top menu. Empty rows are ignored.</p>
 <label>Column heading</label>
 <input type="text" name="site_footer_browse_heading" value="{{ sf.browseHeading or '' }}"/>
@@ -51,8 +61,9 @@
   <div><label>Link {{ i + 1 }}</label><input type="text" name="site_footer_browse{{ i }}_href" value="{{ item.href or '' }}"/></div>
 </div>
 {% endfor %}
+</div>
 
-<h3>Company</h3>
+{{ footer_subhead('company', 'Company', 'Show Company on the live site') }}
 <p class="field-help">Footer column, not the top menu. Empty rows are ignored.</p>
 <label>Column heading</label>
 <input type="text" name="site_footer_company_heading" value="{{ sf.companyHeading or '' }}"/>
@@ -63,10 +74,12 @@
   <div><label>Link {{ i + 1 }}</label><input type="text" name="site_footer_company{{ i }}_href" value="{{ item.href or '' }}"/></div>
 </div>
 {% endfor %}
+</div>
 
-<h3>Legal line</h3>
+{{ footer_subhead('legal', 'Legal line', 'Show this legal line on the live site') }}
 <div class="row">
   <div><label>Left</label><input type="text" name="site_footer_legal_left" value="{{ sf.legalLeft or '' }}"/></div>
   <div><label>Centre</label><input type="text" name="site_footer_legal_center" value="{{ sf.legalCenter or '' }}"/></div>
   <div><label>Right</label><input type="text" name="site_footer_legal_right" value="{{ sf.legalRight or '' }}"/></div>
+</div>
 </div>
