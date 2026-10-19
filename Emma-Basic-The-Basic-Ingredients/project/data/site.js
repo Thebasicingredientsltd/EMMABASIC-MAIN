@@ -73,6 +73,19 @@ window.EB_SITE = {
     "legalRight": "London · Rotterdam"
   },
   "cmsMenu": {
-    "parents": {}
+    "parents": {},
+    "cardOrder": {
+      "homepage": [
+        "homepage.menu",
+        "homepage.hero",
+        "homepage.seo",
+        "homepage.banner",
+        "homepage.founder",
+        "homepage.comparison",
+        "homepage.lifestyle",
+        "homepage.footer",
+        "homepage.social"
+      ]
+    }
   }
 };
