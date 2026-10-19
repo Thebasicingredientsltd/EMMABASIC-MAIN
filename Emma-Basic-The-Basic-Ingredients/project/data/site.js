@@ -70,7 +70,33 @@ window.EB_SITE = {
     ],
     "legalLeft": "© The Basic Ingredients Ltd · MMXXVI",
     "legalCenter": "No Additives. Ever.",
-    "legalRight": "London · Rotterdam"
+    "legalRight": "London · Rotterdam",
+    "blocks": {
+      "contact": {
+        "visible": true
+      },
+      "email": {
+        "visible": true
+      },
+      "london": {
+        "visible": true
+      },
+      "rotterdam": {
+        "visible": true
+      },
+      "wordmark": {
+        "visible": false
+      },
+      "browse": {
+        "visible": false
+      },
+      "company": {
+        "visible": false
+      },
+      "legal": {
+        "visible": true
+      }
+    }
   },
   "cmsMenu": {
     "parents": {},
