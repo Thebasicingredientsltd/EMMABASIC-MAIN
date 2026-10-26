@@ -465,10 +465,7 @@ window.EB_CATALOG = {
             "Chicken thighs"
           ],
           "badges": [
-            "Great Taste",
-            "No Colourings",
-            "No Preservatives",
-            "Gluten Free"
+            "**MAY CONTAIN MILK**"
           ],
           "amazon": "https://www.amazon.co.uk/dp/B09K6SJ3V3",
           "sellingPoints": [
@@ -491,7 +488,7 @@ window.EB_CATALOG = {
             "salt": 9.55
           },
           "ingredients": "Palm oil (RSPO certified), chickpea powder, curry powder (turmeric, coriander, cumin, paprika powder, black pepper, cardamom, cinnamon, fennel, chilli powder, clove, celery seed, fenugreek), coconut milk powder, sugar, salt, tomato powder, yeast extract, garlic powder, onion powder.",
-          "allergens": "Contains celery (celery seed in curry powder). Free from other major allergens.",
+          "allergens": "Contains celery (celery seed in curry powder). May Contain Milk, Free from other major allergens.",
           "education": {
             "title": "Additive-free Japanese curry: what that actually means.",
             "body": [
@@ -499,7 +496,7 @@ window.EB_CATALOG = {
               "What's left is a roux built on fat, flour, and properly blended spice. It behaves the same way in the pan — dissolve in stock, simmer until thick — but the flavour is cleaner and more genuinely spiced."
             ]
           },
-          "updatedAt": "2026-09-28T16:32:37+00:00"
+          "updatedAt": "2026-10-26T11:41:58+00:00"
         },
         {
           "id": "katsu-curry-1kg",
