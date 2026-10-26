@@ -40,6 +40,38 @@
 
 <form method="post" action="{{ url_for('homepage_save') }}" enctype="multipart/form-data">
 
+  {% set n = h.notice or {} %}
+  <div class="card" data-cms-card="homepage.notice">
+    <h2 style="margin-top:0;">Customer notice{% if not is_section_visible(n) %} <span class="pill">Hidden on site</span>{% endif %}</h2>
+    <input type="hidden" name="notice_present" value="1"/>
+    <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
+      <input type="checkbox" name="notice_visible" value="on" style="width:auto;" {{ 'checked' if is_section_visible(n) }}/> Show this notice on the homepage
+    </label>
+    <p class="field-help">A product recall, or any message customers need to see before the rest of the page. Uncheck the box to take it off the site. The words and the PDF stay here for the next one.</p>
+    <label>Label</label>
+    <input type="text" name="notice_eyebrow" value="{{ n.eyebrow or '' }}" placeholder="Product recall"/>
+    <label>Headline</label>
+    <input type="text" name="notice_title" value="{{ n.title or '' }}"/>
+    <label>Message</label>
+    <textarea name="notice_body" rows="5">{{ n.body or '' }}</textarea>
+    <div class="row">
+      <div>
+        <label>Link label</label>
+        <input type="text" name="notice_link_label" value="{{ n.linkLabel or '' }}" placeholder="Read the full notice"/>
+      </div>
+      <div>
+        <label>Link or PDF path</label>
+        <input type="text" name="notice_href" value="{{ n.href or '' }}" placeholder="https://… or assets/notices/….pdf"/>
+      </div>
+    </div>
+    <label>Replace the PDF</label>
+    <input type="file" name="notice_file" accept="application/pdf,.pdf"/>
+    <p class="field-help">PDF only. A new file replaces the link above. Leave this empty to keep the current file.</p>
+    {% if n.href %}
+    <p class="field-help"><a href="{{ imgsrc(n.href) if n.href.startswith('assets/') else n.href }}" target="_blank" rel="noopener">Open the current notice</a></p>
+    {% endif %}
+  </div>
+
   <div class="card" data-cms-card="homepage.hero">
     <h2 style="margin-top:0;">Hero{% if not is_section_visible(h.hero) %} <span class="pill">Hidden on site</span>{% endif %}</h2>
     <label class="section-vis" style="display:flex; align-items:center; gap:8px; text-transform:none; letter-spacing:0; margin:0 0 6px; font-weight:500;">
