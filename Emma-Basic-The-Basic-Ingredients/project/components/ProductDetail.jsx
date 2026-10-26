@@ -103,7 +103,7 @@ function ProductDetail() {
       <main>
         <ProductHero product={product} />
         {product.heroImage && <ProductHeroImage product={product} />}
-        {product.ingredients && <ProductInfo product={product} />}
+        {product.warning && <ProductInfo product={product} />}
         {((product.extraSellingPoints && product.extraSellingPoints.length > 0) || (product.qa && product.qa.length > 0)) && <SellingPoints product={product} />}
         {product.education && <ProductEducation product={product} />}
         {product.extraImages && product.extraImages.length > 0 && <ProductExtraImages images={product.extraImages} gapBetween={!!product.extraImagesGap} />}
@@ -640,9 +640,9 @@ function InlineQA({ qa }) {
   );
 }
 
-/* ── Product Info: Ingredients + Allergens ────────────────── */
+/* ── Product advisory. Ingredients, allergens, and pairs-with are not shown. */
 function ProductInfo({ product }) {
-  if (!product.ingredients) return null;
+  if (!product.warning) return null;
   return (
     <section style={{
       background: "var(--paper)",
@@ -650,98 +650,27 @@ function ProductInfo({ product }) {
     }}>
       <div style={{
         maxWidth: "var(--maxw)", margin: "0 auto",
-        padding: "clamp(72px, 10vh, 120px) var(--pad-x)",
-        display: "grid",
-        gridTemplateColumns: "1fr 1fr",
-        gap: "0 clamp(48px, 8vw, 120px)",
-        alignItems: "start",
-      }} className="eb-prodinfo-grid">
-
-        {/* Left — ingredients */}
-        <div>
-          <Reveal>
-            <SectionLabel>Ingredients</SectionLabel>
-          </Reveal>
-          <Reveal delay={80}>
+        padding: "clamp(48px, 7vh, 80px) var(--pad-x)",
+      }}>
+        <Reveal>
+          <div style={{
+            borderTop: "1px solid var(--rule)",
+            padding: "clamp(20px, 2.5vh, 28px) 0",
+            display: "grid", gridTemplateColumns: "120px 1fr", gap: "0 24px", alignItems: "baseline",
+          }}>
+            <span style={{
+              fontFamily: "var(--f-body)", fontSize: 9.5, letterSpacing: "0.22em",
+              textTransform: "uppercase", color: "var(--ink)",
+            }}>Advisory</span>
             <p style={{
-              fontFamily: "var(--f-body)", fontStyle: "normal",
-              fontSize: "clamp(17px, 1.5vw, 21px)", lineHeight: 1.7,
-              color: "var(--ink-90)", margin: 0,
+              fontFamily: "var(--f-body)", fontSize: "clamp(14px, 1.1vw, 16px)", lineHeight: 1.6,
+              color: "var(--ink)", margin: 0, fontWeight: 500,
             }}>
-              {product.ingredients}
+              {product.warning}
             </p>
-          </Reveal>
-        </div>
-
-        {/* Right — allergens + pairings as labelled rows */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
-          {product.allergens && (
-            <Reveal delay={120}>
-              <div style={{
-                borderTop: "1px solid var(--rule)",
-                padding: "clamp(20px, 2.5vh, 28px) 0",
-                display: "grid", gridTemplateColumns: "120px 1fr", gap: "0 24px", alignItems: "baseline",
-              }}>
-                <span style={{
-                  fontFamily: "var(--f-body)", fontSize: 9.5, letterSpacing: "0.22em",
-                  textTransform: "uppercase", color: "var(--ink)",
-                }}>Allergens</span>
-                <p style={{
-                  fontFamily: "var(--f-body)", fontSize: "clamp(14px, 1.1vw, 16px)", lineHeight: 1.6,
-                  color: "var(--ink-90)", margin: 0,
-                }}>
-                  {product.allergens}
-                </p>
-              </div>
-            </Reveal>
-          )}
-          {product.warning && (
-            <Reveal delay={150}>
-              <div style={{
-                borderTop: "1px solid var(--rule)",
-                padding: "clamp(20px, 2.5vh, 28px) 0",
-                display: "grid", gridTemplateColumns: "120px 1fr", gap: "0 24px", alignItems: "baseline",
-              }}>
-                <span style={{
-                  fontFamily: "var(--f-body)", fontSize: 9.5, letterSpacing: "0.22em",
-                  textTransform: "uppercase", color: "var(--ink)",
-                }}>Advisory</span>
-                <p style={{
-                  fontFamily: "var(--f-body)", fontSize: "clamp(14px, 1.1vw, 16px)", lineHeight: 1.6,
-                  color: "var(--ink)", margin: 0, fontWeight: 500,
-                }}>
-                  {product.warning}
-                </p>
-              </div>
-            </Reveal>
-          )}
-          {product.pairings && product.pairings.length > 0 && (
-            <Reveal delay={180}>
-              <div style={{
-                borderTop: "1px solid var(--rule)",
-                padding: "clamp(20px, 2.5vh, 28px) 0",
-                display: "grid", gridTemplateColumns: "120px 1fr", gap: "0 24px", alignItems: "baseline",
-              }}>
-                <span style={{
-                  fontFamily: "var(--f-body)", fontSize: 9.5, letterSpacing: "0.22em",
-                  textTransform: "uppercase", color: "var(--ink)",
-                }}>Pairs with</span>
-                <p style={{
-                  fontFamily: "var(--f-body)", fontSize: "clamp(14px, 1.1vw, 16px)", lineHeight: 1.6,
-                  color: "var(--ink)", margin: 0,
-                }}>
-                  {product.pairings.join(" · ")}
-                </p>
-              </div>
-            </Reveal>
-          )}
-        </div>
+          </div>
+        </Reveal>
       </div>
-      <style>{`
-        @media (max-width: 640px) {
-          .eb-prodinfo-grid { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
     </section>
   );
 }

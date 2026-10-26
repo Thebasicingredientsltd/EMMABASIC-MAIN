@@ -14,7 +14,6 @@ function App() {
     return next;
   });
 
-  const [openId, setOpenId] = React.useState(null);
   const [editMode, setEditMode] = React.useState(false);
 
   React.useEffect(() => {
@@ -48,7 +47,6 @@ function App() {
     document.documentElement.style.setProperty("--paper-shade", c.shade);
   }, [state.paper]);
 
-  const open = openId ? PRODUCTS.find(p => p.id === openId) : null;
   const homeHero = (typeof window !== "undefined" && window.EB_HOME && window.EB_HOME.hero) || {};
   const homeNotice = (typeof window !== "undefined" && window.EB_HOME && window.EB_HOME.notice) || {};
   const homeFooter = (typeof window !== "undefined" && window.EB_HOME && window.EB_HOME.footer) || {};
@@ -62,7 +60,7 @@ function App() {
       <main>
         <CustomerNotice />
         <Hero />
-        <ProductRail onOpen={setOpenId} />
+        <ProductRail />
         <AdditiveFreeBanner />
         <ShelfTest />
         <LifestyleGrid />
@@ -70,7 +68,6 @@ function App() {
         <ExtraSections source={typeof window !== "undefined" ? window.EB_HOME : {}} />
       </main>
       <SiteFooter visible={homeFooter.visible} />
-      <SlideOutPanel product={open} open={!!openId} onClose={() => setOpenId(null)} />
       <TweakPanel open={editMode} state={state} setState={setState} />
     </>
   );
