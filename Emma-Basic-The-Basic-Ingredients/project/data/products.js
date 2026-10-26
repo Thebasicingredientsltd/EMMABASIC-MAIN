@@ -4,7 +4,7 @@ window.EB_PRODUCTS = [
     "id": "curry-cubes",
     "name": "Japanese Curry Cubes",
     "origin": "",
-    "lot": "CC-240410",
+    "lot": "",
     "pill": "BEST SELLER",
     "tagline": "Block-style roux. Dissolve into stock, add what's in the fridge.",
     "tone": "warm",
@@ -13,6 +13,7 @@ window.EB_PRODUCTS = [
     "imageZoom": null,
     "amazon": "https://www.amazon.co.uk/dp/B09K6SJ3V3",
     "usps": [
+      "** MAY CONTAIN MILK **",
       "Addictively tasty — formulated without additives while maintaining full flavour",
       "Ready in approximately 20 minutes",
       "Mild spice level — suitable for children",
@@ -32,12 +33,7 @@ window.EB_PRODUCTS = [
       "Garlic powder",
       "Onion powder"
     ],
-    "notTested": [
-      "MSG",
-      "Artificial colourings",
-      "Preservatives",
-      "Flavour enhancers"
-    ]
+    "notTested": []
   },
   {
     "id": "premium-matcha",
