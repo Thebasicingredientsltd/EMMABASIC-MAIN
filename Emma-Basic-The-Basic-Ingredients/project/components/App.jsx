@@ -50,12 +50,17 @@ function App() {
 
   const open = openId ? PRODUCTS.find(p => p.id === openId) : null;
   const homeHero = (typeof window !== "undefined" && window.EB_HOME && window.EB_HOME.hero) || {};
+  const homeNotice = (typeof window !== "undefined" && window.EB_HOME && window.EB_HOME.notice) || {};
   const homeFooter = (typeof window !== "undefined" && window.EB_HOME && window.EB_HOME.footer) || {};
+  const noticeOn = homeNotice.visible !== false && (
+    String(homeNotice.title || "").trim() || String(homeNotice.body || "").trim()
+  );
 
   return (
     <>
-      <TopNav hasHero={homeHero.visible !== false} />
+      <TopNav hasHero={homeHero.visible !== false && !noticeOn} />
       <main>
+        <CustomerNotice />
         <Hero />
         <ProductRail onOpen={setOpenId} />
         <AdditiveFreeBanner />

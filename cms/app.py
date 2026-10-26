@@ -84,6 +84,8 @@ DATA_FILES = {
 }
 
 ALLOWED_EXT = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".avif", ".svg"}
+NOTICE_EXT = {".pdf"}
+NOTICE_MAX_BYTES = 15 * 1024 * 1024
 
 # Image optimization settings. Uploaded photos are scaled down to at most
 # MAX_DIM on the longest edge and re-encoded to shed file size — the main
@@ -1500,6 +1502,69 @@ def resolve_image(form_key, existing=""):
     return request.form.get(form_key, existing).strip()
 
 
+def save_document(file_storage):
+    """Stage a customer-notice PDF under assets/notices. Returns its web path."""
+    if not file_storage or not file_storage.filename:
+        return None
+    ext = os.path.splitext(file_storage.filename)[1].lower()
+    if ext not in NOTICE_EXT:
+        raise ValueError("Upload a PDF for the customer notice.")
+    raw = file_storage.read()
+    if not raw.startswith(b"%PDF"):
+        raise ValueError("That file is not a PDF.")
+    if len(raw) > NOTICE_MAX_BYTES:
+        raise ValueError("That PDF is larger than 15 MB.")
+    base = secure_filename(os.path.splitext(file_storage.filename)[0]) or "notice"
+    stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+    name = "{base}-{stamp}{ext}".format(base=base, stamp=stamp, ext=ext)
+    _stage_file(PROJECT_REL + "/assets/notices/" + name, raw)
+    return "assets/notices/" + name
+
+
+def _safe_notice_href(value):
+    """Keep notice links to web URLs, mail, or files on this site."""
+    value = (value or "").strip()
+    if not value:
+        return ""
+    lower = value.lower()
+    if lower.startswith(("javascript:", "data:", "vbscript:", "//")):
+        return ""
+    if lower.startswith(("https://", "http://", "mailto:", "assets/", "/")):
+        return value
+    if ":" in value:
+        return ""
+    return value
+
+
+def _apply_notice_form(h):
+    """Write the homepage customer notice. Returns an error string, or None.
+
+    Saves that omit the notice card (older forms, other tests) leave it alone.
+    A rejected PDF keeps the previous file and still saves the words.
+    """
+    if "notice_present" not in request.form:
+        return None
+    notice = h.setdefault("notice", {})
+    notice["visible"] = form_checkbox("notice_visible")
+    notice["eyebrow"] = request.form.get("notice_eyebrow", "").strip()
+    notice["title"] = request.form.get("notice_title", "").strip()
+    notice["body"] = request.form.get("notice_body", "").strip()
+    notice["linkLabel"] = request.form.get("notice_link_label", "").strip()
+    typed = _safe_notice_href(request.form.get("notice_href", ""))
+    upload = request.files.get("notice_file")
+    if upload and upload.filename:
+        try:
+            saved = save_document(upload)
+        except ValueError as exc:
+            notice["href"] = typed or notice.get("href", "")
+            return str(exc)
+        if saved:
+            notice["href"] = saved
+            return None
+    notice["href"] = typed
+    return None
+
+
 def image_file_size(web_path):
     """Return a human-readable file size for a site image path (or None)."""
     if not web_path:
@@ -1853,6 +1918,7 @@ def homepage_save():
     hero["body"] = request.form.get("hero_body", "").strip()
     _apply_hero_buttons_form(hero)
     hero["visible"] = form_checkbox("hero_visible")
+    notice_error = _apply_notice_form(h)
     _apply_footer_form(h)
 
     banner = h.setdefault("banner", {})
@@ -1941,6 +2007,8 @@ def homepage_save():
     site = load_site()
     if _apply_site_footer_form(site):
         save_data("site", site)
+    if notice_error:
+        flash(notice_error, "error")
     flash("Homepage content saved.", "ok")
     return redirect(url_for("homepage"))
 
