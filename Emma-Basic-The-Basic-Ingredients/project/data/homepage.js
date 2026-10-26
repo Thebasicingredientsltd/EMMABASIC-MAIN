@@ -27,7 +27,7 @@ window.EB_HOME = {
     "title": "Emma Basic Japanese Style Curry, 200g",
     "body": "We are recalling selected best-before dates because this curry may contain milk, which is not declared on the label. If you are allergic or intolerant to milk, do not eat it. Packs that already show a \"may contain milk\" warning are not affected. Return the pack to the shop where you bought it for a full refund, or contact Boris on 020 7916 1192.",
     "linkLabel": "Read the full notice",
-    "href": "assets/notices/Emma-Basic-Japanese-Style-Curry-FSA-AA-49-2026.pdf"
+    "href": "https://alerts.food.gov.uk/news-alerts/alert/FSA-AA-49-2026"
   },
   "productRail": {
     "heading": "Our team's staples."
