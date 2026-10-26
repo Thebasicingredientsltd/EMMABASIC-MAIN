@@ -1,9 +1,9 @@
 /* ============================================================
    ProductRail — horizontal "shelf" row.
    Bottles stand side-by-side. Scroll horizontally (wheel/drag/arrows).
-   Click opens the Label Decoder drawer.
+   Click opens that product's page. A drag still scrolls the shelf.
    ============================================================ */
-function ProductRail({ onOpen }) {
+function ProductRail() {
   const R = (typeof window !== "undefined" && window.EB_HOME && window.EB_HOME.productRail) || {};
   const railHeading = R.heading || "Our team's staples.";
   const railRef = React.useRef(null);
@@ -118,7 +118,7 @@ function ProductRail({ onOpen }) {
         }}
       >
         {PRODUCTS.map((p, i) => (
-          <ShelfTile key={p.id} p={p} index={i} onOpen={() => { if (!dragRef.current.moved) onOpen(p.id); }} />
+          <ShelfTile key={p.id} p={p} index={i} dragRef={dragRef} />
         ))}
       </div>
 
@@ -135,19 +135,23 @@ function ProductRail({ onOpen }) {
   );
 }
 
-function ShelfTile({ p, index, onOpen }) {
+function ShelfTile({ p, index, dragRef }) {
   const [hover, setHover] = React.useState(false);
   const [ref, visible] = useReveal(0.12);
+  const href = "product.html?id=" + encodeURIComponent(p.id);
   return (
-    <button
+    <a
       ref={ref}
-      onClick={onOpen}
+      href={href}
+      draggable="false"
+      onClick={(e) => { if (dragRef.current.moved) e.preventDefault(); }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
       style={{
         scrollSnapAlign: "start",
         textAlign: "left", padding: 0, border: 0, background: "transparent",
         cursor: "pointer", fontFamily: "inherit", color: "inherit",
+        textDecoration: "none",
         display: "grid", gap: 20,
         opacity: visible ? 1 : 0,
         transform: `translateY(${visible ? 0 : 10}px)`,
@@ -209,7 +213,7 @@ function ShelfTile({ p, index, onOpen }) {
           {p.origin}
         </span>
       </div>
-    </button>
+    </a>
   );
 }
 
