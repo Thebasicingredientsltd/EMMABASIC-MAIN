@@ -5,7 +5,7 @@ window.EB_PRODUCTS = [
     "name": "Japanese Curry Cubes",
     "origin": "",
     "lot": "",
-    "pill": "BEST SELLER",
+    "pill": "** MAY CONTAIN MILK **",
     "tagline": "Block-style roux. Dissolve into stock, add what's in the fridge.",
     "tone": "warm",
     "image": "assets/products-original-backup/curry-cubes-homepage.png",
