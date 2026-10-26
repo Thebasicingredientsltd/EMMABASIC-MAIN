@@ -449,8 +449,8 @@ window.EB_CATALOG = {
           "image": "assets/uploads/2025_12_01_BasicIngredient-026-20260731-110857.jpg",
           "images": [
             "assets/uploads/2025_12_01_BasicIngredient-026-20260731-110902.jpg",
-            "assets/uploads/Recall_Image_for_Website-20261026-121141.png",
             "assets/uploads/2025_12_01_BasicIngredient-027-20260731-110904.jpg",
+            "assets/uploads/Recall_Image_for_Website-20261026-121141.png",
             "assets/uploads/B09HL7X6DV.PT01.jpg-20260731-110927.jpg",
             "assets/uploads/Runway_Nano_Banana_2_Show_me_a_close-up_macro_040126-20260731-110933.png",
             "assets/uploads/B09HL7X6DV.PT02-20260731-110941.jpg",
@@ -497,7 +497,7 @@ window.EB_CATALOG = {
               "What's left is a roux built on fat, flour, and properly blended spice. It behaves the same way in the pan — dissolve in stock, simmer until thick — but the flavour is cleaner and more genuinely spiced."
             ]
           },
-          "updatedAt": "2026-10-26T12:13:15+00:00"
+          "updatedAt": "2026-10-26T12:14:36+00:00"
         },
         {
           "id": "katsu-curry-1kg",
