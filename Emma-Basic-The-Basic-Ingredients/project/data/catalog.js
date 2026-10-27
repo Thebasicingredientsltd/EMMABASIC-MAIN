@@ -2643,6 +2643,22 @@ window.EB_CATALOG = {
           "updatedAt": "2026-09-28T16:32:37+00:00"
         },
         {
+          "id": "coolbeans",
+          "name": "Cool Beans",
+          "japanese": "",
+          "origin": "",
+          "tone": "warm",
+          "tagline": "Coming Soon",
+          "amazon": "",
+          "image": "assets/uploads/Image_20260913025810_49_126-20261027-102035.jpg",
+          "badges": [],
+          "pairings": [],
+          "sellingPoints": [],
+          "ingredients": "",
+          "allergens": "",
+          "updatedAt": "2026-10-27T10:20:52+00:00"
+        },
+        {
           "id": "wakame-salad",
           "imageOffset": {
             "x": 35,
@@ -2953,22 +2969,6 @@ window.EB_CATALOG = {
             ]
           },
           "updatedAt": "2026-09-28T16:32:37+00:00"
-        },
-        {
-          "id": "coolbeans",
-          "name": "Cool Beans",
-          "japanese": "",
-          "origin": "",
-          "tone": "warm",
-          "tagline": "Coming Soon",
-          "amazon": "",
-          "image": "assets/uploads/Image_20260913025810_49_126-20261027-102035.jpg",
-          "badges": [],
-          "pairings": [],
-          "sellingPoints": [],
-          "ingredients": "",
-          "allergens": "",
-          "updatedAt": "2026-10-27T10:20:52+00:00"
         }
       ]
     },
