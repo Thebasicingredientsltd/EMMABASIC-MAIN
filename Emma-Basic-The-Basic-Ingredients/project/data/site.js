@@ -111,6 +111,12 @@ window.EB_SITE = {
         "homepage.lifestyle",
         "homepage.footer",
         "homepage.social"
+      ],
+      "journal": [
+        "journal.header",
+        "journal.seo",
+        "journal.posts",
+        "journal.footer"
       ]
     }
   }
