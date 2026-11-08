@@ -130,12 +130,12 @@ window.EB_PEOPLE = {
         "email": "nancy@thebasicingredients.com"
       },
       {
-        "name": "Cotton",
-        "role": "Chief Hearding Office ( CHO)",
-        "bio": "Attends every tasting. Has never approved an additive.",
+        "name": "India Gabb",
+        "role": "Circular Designer",
+        "bio": "",
         "tone": "cool",
-        "image": "assets/Employees-page/cotton 1.jpg",
-        "image2": "assets/Employees-page/cotton 2.jpg",
+        "image": "assets/uploads/India-20261108-225419.jpg",
+        "image2": "assets/uploads/India_Personal-20261108-225423.jpg",
         "phone": ""
       }
     ],
