@@ -1204,7 +1204,7 @@ window.EB_JOURNAL = {
       "readTime": "5 Mins",
       "title": "A vegan product with a \"may contain milk\" warning is still vegan",
       "image": "assets/uploads/vegan-may-contain-milk_banner-3421x605-20261108-224438.png",
-      "imagePosition": "",
+      "imagePosition": "center 90%",
       "intro": "",
       "body": [
         {
