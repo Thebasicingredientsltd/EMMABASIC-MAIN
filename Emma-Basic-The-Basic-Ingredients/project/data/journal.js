@@ -343,25 +343,6 @@ window.EB_JOURNAL = {
         "ogType": "article",
         "noindex": false
       }
-    },
-    {
-      "id": "may_contains_milk",
-      "category": "Ingredient Stories",
-      "date": "26/10/2026",
-      "title": "A vegan product with a \"may contain milk\" warning is still vegan",
-      "author": "Emma",
-      "excerpt": "",
-      "image": "assets/uploads/vegan-may-contain-milk_banner-3421x605-20261108-224438.png",
-      "tone": "warm",
-      "featured": false,
-      "seo": {
-        "title": "",
-        "description": "",
-        "canonical": "",
-        "image": "",
-        "ogType": "article",
-        "noindex": false
-      }
     }
   ],
   "articles": {
@@ -1213,38 +1194,6 @@ window.EB_JOURNAL = {
         {
           "type": "p",
           "text": "Our buyers and category masters have put in 10,000 hours of learning to curate only the best items before they reach you. We do the meticulous work, so you can relax, pick up a pack of ours and simply cook."
-        }
-      ],
-      "author": "Emma"
-    },
-    "may_contains_milk": {
-      "category": "Ingredient Stories",
-      "date": "26/10/2026",
-      "readTime": "",
-      "title": "A vegan product with a \"may contain milk\" warning is still vegan",
-      "image": "assets/uploads/vegan-may-contain-milk_banner-3421x605-20261108-224527.png",
-      "imagePosition": "",
-      "intro": "",
-      "body": [
-        {
-          "type": "p",
-          "text": "The \"may contain\" statement is a voluntary precautionary allergen label (PAL) for safety, not an ingredient."
-        },
-        {
-          "type": "p",
-          "text": "•\tVegan is about the recipe: The product is made entirely from plant-based ingredients. No animal products are intentionally added to the recipe.\n•\t\"May contain\" is about the factory: The product is made in a facility also processes animal products. It is a legal safety warning for people with allergies due to the microscopic risk of cross-contamination."
-        },
-        {
-          "type": "p",
-          "text": "Think of it like baking a vegan cake at home right after making a traditional dairy cake. \nEven if you wash your counters and bowls thoroughly, a tiny spec of flour or milk dust from the previous bake could theoretically be in the air. \nThe cake itself is still strictly vegan, but you might warn a severely allergic friend just to be completely safe."
-        },
-        {
-          "type": "p",
-          "text": "Official resources :\n•\tThe FSA Guide to Vegan Food Labelling details that a vegan label simply means no intentional animal-origin ingredients were used. \n•\tFor the specific policy underlying this, the FSA Food Allergen Labelling Technical Guidance clarifies that a vegan claim communicates a completely different message than a \"free-from\" claim. While \"free-from\" guarantees the absolute absence of an allergen, a vegan claim is an ethical designation and does not inherently mean a product is medically free from microscopic cross-contact."
-        },
-        {
-          "type": "p",
-          "text": "Emma"
         }
       ],
       "author": "Emma"
