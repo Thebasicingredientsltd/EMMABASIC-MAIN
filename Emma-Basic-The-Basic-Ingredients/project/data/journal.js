@@ -1204,7 +1204,7 @@ window.EB_JOURNAL = {
       "readTime": "5 Mins",
       "title": "A vegan product with a \"may contain milk\" warning is still vegan",
       "image": "assets/uploads/vegan-may-contain-milk_banner-3421x605-20261108-224438.png",
-      "imagePosition": "center 90%",
+      "imagePosition": "90%",
       "intro": "",
       "body": [
         {
@@ -1213,7 +1213,11 @@ window.EB_JOURNAL = {
         },
         {
           "type": "p",
-          "text": "•\tVegan is about the recipe: The product is made entirely from plant-based ingredients. No animal products are intentionally added to the recipe.\n•\t\"May contain\" is about the factory: The product is made in a facility also processes animal products. It is a legal safety warning for people with allergies due to the microscopic risk of cross-contamination."
+          "text": "1. Vegan is about the recipe: The product is made entirely from plant-based ingredients. No animal products are intentionally added to the recipe."
+        },
+        {
+          "type": "p",
+          "text": "2. \"May contain\" is about the factory: The product is made in a facility also processes animal products. It is a legal safety warning for people with allergies due to the microscopic risk of cross-contamination."
         },
         {
           "type": "p",
