@@ -343,6 +343,25 @@ window.EB_JOURNAL = {
         "ogType": "article",
         "noindex": false
       }
+    },
+    {
+      "id": "may_contains_milk",
+      "category": "Ingredient Stories",
+      "date": "26/10/2026",
+      "title": "A vegan product with a \"may contain milk\" warning is still vegan",
+      "author": "Emma",
+      "excerpt": "",
+      "image": "assets/uploads/vegan-may-contain-milk_banner-3421x605-20261108-224438.png",
+      "tone": "warm",
+      "featured": false,
+      "seo": {
+        "title": "",
+        "description": "",
+        "canonical": "",
+        "image": "",
+        "ogType": "article",
+        "noindex": false
+      }
     }
   ],
   "articles": {
@@ -1203,7 +1222,7 @@ window.EB_JOURNAL = {
       "date": "26/10/2026",
       "readTime": "",
       "title": "A vegan product with a \"may contain milk\" warning is still vegan",
-      "image": "assets/uploads/vegan-may-contain-milk_banner-3421x605-20261108-224442.png",
+      "image": "assets/uploads/vegan-may-contain-milk_banner-3421x605-20261108-224527.png",
       "imagePosition": "",
       "intro": "",
       "body": [
