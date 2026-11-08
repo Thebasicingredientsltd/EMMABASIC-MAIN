@@ -20,6 +20,25 @@ window.EB_JOURNAL = {
   },
   "posts": [
     {
+      "id": "may_contains_milk",
+      "category": "Ingredient Stories",
+      "date": "26/10/2026",
+      "title": "A vegan product with a \"may contain milk\" warning is still vegan",
+      "author": "Emma",
+      "excerpt": "",
+      "image": "assets/uploads/vegan-may-contain-milk_banner-3421x605-20261108-224438.png",
+      "tone": "warm",
+      "featured": false,
+      "seo": {
+        "title": "",
+        "description": "",
+        "canonical": "",
+        "image": "",
+        "ogType": "article",
+        "noindex": false
+      }
+    },
+    {
       "id": "V001Y-ginger-Secret",
       "category": "Behind the Product",
       "date": "08 July 2026",
@@ -129,25 +148,6 @@ window.EB_JOURNAL = {
         "description": "Clean Label, often called Clean Dec (decoration) in UK food manufacturers, is not a familiar phrase to consumers. Neither is it a government regulated term such as organic.",
         "canonical": "https://emmabasic.co.uk/journal-post.html?id=clean-label",
         "image": "assets/uploads/Post_Image_480x480-20260927-115006-03.webp",
-        "ogType": "article",
-        "noindex": false
-      }
-    },
-    {
-      "id": "may_contains_milk",
-      "category": "Ingredient Stories",
-      "date": "26/10/2026",
-      "title": "A vegan product with a \"may contain milk\" warning is still vegan",
-      "author": "Emma",
-      "excerpt": "",
-      "image": "assets/uploads/vegan-may-contain-milk_banner-3421x605-20261108-224438.png",
-      "tone": "warm",
-      "featured": false,
-      "seo": {
-        "title": "",
-        "description": "",
-        "canonical": "",
-        "image": "",
         "ogType": "article",
         "noindex": false
       }
