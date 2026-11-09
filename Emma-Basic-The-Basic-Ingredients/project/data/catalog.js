@@ -1,7 +1,7 @@
 /* Emma Basic — full product catalog (CMS-managed). The payload below is strict JSON. */
 window.EB_CATALOG = {
   "hero": {
-    "eyebrow": "Our Products — N°01 through N°07",
+    "eyebrow": "Our Products — N°01 through N°10",
     "title": "Small shelf,",
     "titleItalic": "big intention.",
     "subtitle": "Ten categories. No additives, no fillers, no shortcuts. The range is growing slowly — each product earns its place, or it doesn't ship.",
